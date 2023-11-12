@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftLoader
 
 class addDescription: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextViewDelegate,UITextFieldDelegate {
     
@@ -13,6 +14,8 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
     var descriptionTextfieldHeader = UILabel()
     var descriptionTextfield = UITextView()
     var detailsCollectionView : UICollectionView!
+    var aiButton = UIButton()
+    var helpButton = UIButton()
     
     let mainConsole = CONSOLE()
     let extensConsole = extens()
@@ -61,8 +64,30 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         descriptionTextfieldHeaderCount.font = UIFont.systemFont(ofSize: 12)
         descriptionTextfieldHeaderCount.backgroundColor =  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         descriptionTextfieldHeaderCount.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-
         
+        
+        
+        //create but buy now and enter button
+        aiButton = UIButton(frame: CGRect(x: 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/2 - 10, height: 40))
+        aiButton.backgroundColor = #colorLiteral(red: 0.6862745098, green: 0.3215686275, blue: 0.8705882353, alpha: 1)
+        aiButton.setTitle("Beautify 💬", for: .normal)
+        aiButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        aiButton.layer.cornerRadius = 20
+        aiButton.setTitleColor(.white, for: .normal)
+        aiButton.addTarget(self, action: #selector(useAI), for: .touchUpInside)
+        
+        
+        helpButton = UIButton(frame: CGRect(x: aiButton.frame.maxX + 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/2 - 10, height: 40))
+        helpButton.backgroundColor = #colorLiteral(red: 1, green: 0.1764705882, blue: 0.3333333333, alpha: 1)
+        helpButton.setTitle("Help 💡", for: .normal)
+        helpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        helpButton.layer.cornerRadius = 20
+        helpButton.setTitleColor(.white, for: .normal)
+        helpButton.addTarget(self, action: #selector(useHelp), for: .touchUpInside)
+        
+
+        view.addSubview(aiButton)
+        view.addSubview(helpButton)
         view.addSubview(descriptionTextfield)
         view.addSubview(descriptionTextfieldHeader)
         view.addSubview(descriptionTextfieldHeaderCount)
@@ -70,13 +95,14 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        detailsCollectionView = UICollectionView(frame: CGRect(x: 10, y:descriptionTextfield.frame.maxY + 30, width: view.frame.width, height: view.frame.height - (descriptionTextfield.frame.minY + 30)), collectionViewLayout: layout)
+        detailsCollectionView = UICollectionView(frame: CGRect(x: 0, y:helpButton.frame.maxY + 10, width: view.frame.width, height: view.frame.height - (descriptionTextfield.frame.minY + 30)), collectionViewLayout: layout)
         detailsCollectionView.isPagingEnabled = false
         detailsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         detailsCollectionView.register(detailsCell.self, forCellWithReuseIdentifier: "detailsCell")
         detailsCollectionView.delegate = self
         detailsCollectionView.dataSource = self
-        //view.addSubview(detailsCollectionView)
+        view.addSubview(detailsCollectionView)
+        detailsCollectionView.isHidden = true
         
 
         
@@ -93,7 +119,7 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         // we want to set the collectionview
 
         
-       return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+       return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     }
   
     
@@ -166,17 +192,29 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         view.endEditing(true)
     }
     
-    func textFieldDidBeginEditing(productPrice textField: UITextField) {
-        //print("TextField did begin editing method called")
-        //count the number of words via the spaces in the string
-//        let spaceCount = self.speechToTextData.text.reduce(0) { $1 == " " ? $0 + 1 : $0 }
-//
-//
-//        self.speechToTextCount.text = "\(spaceCount + 1)"
+
+
+    @objc func useAI(sender: UIButton!) {
+      
+
+    }
+    @objc func useVoice(sender: UIButton!) {
+      
 
     }
 
+    @objc func useHelp(sender: UIButton!) {
+      
+        SwiftLoader.show(title: "Loading..", animated: true)
 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+            SwiftLoader.hide()
+            self.detailsCollectionView.isHidden = false
+
+        }
+        
+    }
  
     // UITextViewDelegate method
     func textViewDidChange(_ textView: UITextView) {
