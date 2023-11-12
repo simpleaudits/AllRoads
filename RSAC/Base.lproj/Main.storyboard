@@ -837,7 +837,7 @@
                         <viewLayoutGuide key="safeArea" id="LUT-VY-bla"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6JZ-hz-s0i">
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="6JZ-hz-s0i">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="q6w-ph-cjZ">
                             <connections>
                                 <action selector="addToAuditList:" destination="JPK-3h-a4i" id="eYN-KJ-n5T"/>
@@ -847,17 +847,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="167" y="2735"/>
+            <point key="canvasLocation" x="247" y="2735"/>
         </scene>
         <!--Add Description-->
         <scene sceneID="wvi-cP-oG3">
             <objects>
-                <viewController storyboardIdentifier="addDescription" id="5Gn-pp-wh6" customClass="addDescription" customModule="RoadSafetyAuditCloud" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addDescription" id="5Gn-pp-wh6" customClass="addDescription" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Xy-Vv-fSj">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="ebm-Oe-dRe"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4id-OP-MLA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -256,9 +256,7 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
     
     func errorUpload(errorMessage:String,subtitle:String){
         
-        // we want to close any activity loading
-        //IHProgressHUD.dismiss()
-        
+      
 
         
         let Alert = UIAlertController(title: "\(errorMessage)", message: "\(subtitle)", preferredStyle: .alert)

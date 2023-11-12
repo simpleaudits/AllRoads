@@ -43,6 +43,10 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
     var locationManager = CLLocationManager()
     
     
+    
+    
+    
+    
     override func viewDidLoad() {
 
         
@@ -103,6 +107,34 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
             self.layoverView.frame.origin.y = self.view.frame.height - 80 - (self.tabBarController?.tabBar.frame.size.height)!
 
         }, completion: nil)
+        
+        
+        
+        
+        //Ask user for site name:
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: "Site name:", message: "", preferredStyle: .alert)
+
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.text = ""
+            
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            self.navigationItem.title = textField!.text
+        }))
+        
+        let action1 = UIAlertAction(title: "Back",style: .cancel) { (action:UIAlertAction!) in
+                  
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        alert.addAction(action1)
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
 
     }
     

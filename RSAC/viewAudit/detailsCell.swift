@@ -43,6 +43,7 @@ class detailsCell: UICollectionViewCell{
         let labelUI = UILabel() // this allows us to assing images.
             //labelUI.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
             //labelUI.layer.opacity = 0.5
+            labelUI.numberOfLines = 0
             labelUI.text = "hello"
  
             
