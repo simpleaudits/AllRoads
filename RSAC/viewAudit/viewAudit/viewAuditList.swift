@@ -31,7 +31,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var projectName = String()
         let mainConsole = CONSOLE()
         let extensConsole = extens()
-        var listOfAudit: [auditListData] = [] // for the favourites
+        var listOfSites: [addSite] = [] // for the favourites
 
     
     override func viewDidLoad() {
@@ -70,24 +70,26 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                     .child(uid!)
                     .child("\(self.mainConsole.audit!)")
                     .child("\(auditID)")
-                    .child("\(self.mainConsole.auditList!)")
+
+                    .child("\(self.mainConsole.siteList!)")
+            
             
             thisUsersGamesRef.queryOrderedByKey()
                     .observe(.value, with: { snapshot in
                         
-                    var NewListOfAudit: [auditListData] = []
+                    var NewlistOfSites: [addSite] = []
                         
                         for child in snapshot.children {
                             
                             if let snapshot = child as? DataSnapshot,
-                                let listOfAudits = auditListData(snapshot: snapshot) {
-                                NewListOfAudit.append(listOfAudits)
+                                let listOfSites = addSite(snapshot: snapshot) {
+                                NewlistOfSites.append(listOfSites)
                                 
                
                                 
                             }
                         }
-                        self.listOfAudit = NewListOfAudit
+                        self.listOfSites = NewlistOfSites
                         self.collectionView.reloadData()
                     })
                 
@@ -131,7 +133,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
             case 1:
             //music
-            return listOfAudit.count
+            return listOfSites.count
        
 
             default:
@@ -147,14 +149,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         if indexPath.section == 1{
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
 
-            sectionHeader.headerName.text =  "Snapshots"
+            sectionHeader.headerName.text =  "Site Locations"
      
             return sectionHeader
      
         }else if indexPath.section == 0 {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
 
-            sectionHeader.headerName.text =  "Locations"
+            sectionHeader.headerName.text =  "Map"
 
             return sectionHeader
             
@@ -179,11 +181,27 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditCell", for: indexPath) as! viewAuditCell
              
-            let audititems = listOfAudit[indexPath.row]
+            let siteItems = listOfSites[indexPath.row]
             
-            cell.auditImage.sd_setImage(with: URL(string:audititems.imageURL))
-            cell.auditDate.text = audititems.date
-            cell.auditLabel.text = audititems.auditTitle
+            //cell.auditImage.sd_setImage(with: URL(string:audititems.imageURL))
+            //cell.auditDate.text = audititems.date
+            cell.auditLabel.text = siteItems.addSite
+            cell.auditDate.text = siteItems.date
+            //map reference
+            let annotation = MKPointAnnotation()
+            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
+            annotation.coordinate = centerCoordinate
+            //annotation.title = ItemName
+            //cell.mapUI.addAnnotation(annotation)
+            
+            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
+            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+            //mapview.region = region
+            cell.mapUI.setRegion(region, animated: false)
+            
+            
+            
 
             // Configure the cell
             cell.layer.cornerRadius = 10
@@ -200,14 +218,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditHeaderMap", for: indexPath) as! viewAuditHeaderMap
             
     
-            for x in listOfAudit{
+            for x in listOfSites{
             
                 
                 //map reference
                 let annotation = MKPointAnnotation()
                 let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(x.lat), longitude:CLLocationDegrees(x.long))
                 annotation.coordinate = centerCoordinate
-                annotation.title = x.auditTitle
+                annotation.title = x.addSite
                 cell.myLocations.addAnnotation(annotation)
                 
                 let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(x.lat), CLLocationDegrees(x.long))
@@ -240,7 +258,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 //
 //        if indexPath.section  == 0 {
 //
-//            //let auditData = listOfAudit[indexPath.row]
+//            //let auditData = listOfSites[indexPath.row]
 //
 //
 //
@@ -261,7 +279,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             
-             if let viewInfoView = segue.destination as?  addAudit{
+             if let viewInfoView = segue.destination as? createSite{
 
                  if auditID != ""{
                      viewInfoView.auditID = auditID

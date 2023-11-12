@@ -110,6 +110,7 @@ class CONSOLE: UIViewController {
     var post:String? = "post"  // "\(ParentJSON.Parent!)"
     var audit:String? = "audit" // "\(ParentJSON.Parent_child!)"
     var auditList:String? = "auditList" // "\(ParentJSON.Parent_child!)"
+    var siteList:String? = "siteList" // "\(ParentJSON.Parent_child!)"
     var userDetails:String? = "userDetails" // "\(ParentJSON.User_Details!)"
     var profileImage: String? = "profileImage"
     var listingImage: String? = "listingImage"

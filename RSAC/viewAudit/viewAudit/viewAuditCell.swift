@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class viewAuditCell: UICollectionViewCell {
 
@@ -15,6 +16,13 @@ class viewAuditCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame:frame)
+        
+        mapUI.frame = CGRect(
+            x:0,
+            y:0,
+            width: frame.width ,
+            height: frame.height
+        )
      
         auditImage.frame = CGRect(
             x: 0,
@@ -24,27 +32,27 @@ class viewAuditCell: UICollectionViewCell {
         //60
         
         auditLabel.frame = CGRect(
-            x: auditImage.frame.width + 10,
-            y:  5,
-            width: frame.width - (auditImage.frame.width + 30),
+            x: 0,
+            y:  frame.height - 20,
+            width: frame.width,
             height: 20)
         //60
         
         auditDate.frame = CGRect(
-            x: auditImage.frame.width + 10,
-            y: auditLabel.frame.maxY + 5,
-            width: frame.width - (auditImage.frame.width + 10),
+            x: 0,
+            y: auditLabel.frame.maxY,
+            width: frame.width,
             height: 20)
 
 
 
         //
         
-        
+        contentView.addSubview(mapUI)
         contentView.addSubview(auditImage)
         contentView.addSubview(auditLabel)
         contentView.addSubview(auditDate)
-
+       
 
         
     }
@@ -52,6 +60,18 @@ class viewAuditCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    let mapUI: MKMapView = {
+    //let placeHolderImage = UIImage(named: "yeezy.jpg")
+    let mapViewUI = MKMapView() // this allows us to assing images.
+    mapViewUI.mapType = .satelliteFlyover
+    mapViewUI.isUserInteractionEnabled = false
+
+    return mapViewUI
+
+
+    }()
+
     
     let auditImage: UIImageView = {
         let profile = UIImageView()
@@ -70,15 +90,20 @@ class viewAuditCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Loading.."
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.numberOfLines = 2
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         return label
     }()
     
     let auditDate: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.numberOfLines = 1
+        label.textAlignment = .right
+        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         return label
     }()
     
