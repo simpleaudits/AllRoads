@@ -68,7 +68,7 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         
         
         //create but buy now and enter button
-        aiButton = UIButton(frame: CGRect(x: 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/2 - 10, height: 40))
+        aiButton = UIButton(frame: CGRect(x: 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/3 - 10, height: 40))
         aiButton.backgroundColor = #colorLiteral(red: 0.6862745098, green: 0.3215686275, blue: 0.8705882353, alpha: 1)
         aiButton.setTitle("Beautify 💬", for: .normal)
         aiButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -77,7 +77,7 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         aiButton.addTarget(self, action: #selector(useAI), for: .touchUpInside)
         
         
-        helpButton = UIButton(frame: CGRect(x: aiButton.frame.maxX + 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/2 - 10, height: 40))
+        helpButton = UIButton(frame: CGRect(x: aiButton.frame.maxX + 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/3 - 10, height: 40))
         helpButton.backgroundColor = #colorLiteral(red: 1, green: 0.1764705882, blue: 0.3333333333, alpha: 1)
         helpButton.setTitle("Help 💡", for: .normal)
         helpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
