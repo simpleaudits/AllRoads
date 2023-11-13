@@ -250,30 +250,27 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//
-//
-//       // DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {self.performSegue(withIdentifier: "gameSettings", sender: indexPath.row);}
-//
-//        if indexPath.section  == 0 {
-//
-//            //let auditData = listOfSites[indexPath.row]
-//
-//
-//
-//
-//        }else if indexPath.section == 1{
-//
-//        }else if indexPath.section == 2{
-//
-//
-//
-//        }else{
-//
-//        }
-//    }
-//
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+       // DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {self.performSegue(withIdentifier: "gameSettings", sender: indexPath.row);}
+
+        if indexPath.section  == 0 {
+
+
+        }else if indexPath.section == 1{
+           // let auditData = listOfSites[indexPath.row]
+            
+            
+
+        }else if indexPath.section == 2{
+
+
+
+        }else{
+
+        }
+    }
+
     
     
     
@@ -281,6 +278,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
              if let viewInfoView = segue.destination as? createSite{
 
+                 if auditID != ""{
+                     viewInfoView.auditID = auditID
+                 }else{
+                     print("Failed to load data")
+                 }
+
+             }else if let viewInfoView = segue.destination as? addAuditSites{
+                 
                  if auditID != ""{
                      viewInfoView.auditID = auditID
                  }else{

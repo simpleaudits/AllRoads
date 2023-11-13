@@ -22,6 +22,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     var long = CGFloat()
     
     var auditID = String()
+    var siteID = String()
+    
     
     
     let mainConsole = CONSOLE()
@@ -121,7 +123,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                 locationLabel.text!.count > 0 {
                 
                 let uid = Auth.auth().currentUser?.uid
-                let uuid = UUID().uuidString
+                siteID = UUID().uuidString
                 
                 let saveData = addSite(
                     addSite: siteName.text!,
@@ -137,7 +139,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     .child("\(self.mainConsole.audit!)")
                     .child("\(auditID)")
                     .child("\(self.mainConsole.siteList!)")
-                    .child("\(uuid)")
+                    .child("\(siteID)")
 
              
                 //print(thisUsersGamesRef)
@@ -175,7 +177,9 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
          if let destination3 = segue.destination as? locationView {
             destination3.delegate = self
            
-            
+        }else if let destination4 = segue.destination as? addAuditSites {
+            destination4.siteID = siteID
+           
         }
         
     
@@ -194,14 +198,13 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
 
         
         let Alert = UIAlertController(title: Message, message: subtitle, preferredStyle: .alert)
-        let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+        let action1 = UIAlertAction(title: "Start Audit",style: .default) { (action:UIAlertAction!) in
             
+            self.performSegue(withIdentifier: "startAudit", sender: self)
             
-
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "mainView")
-            self.present(controller, animated: true, completion: nil)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let controller = storyboard.instantiateViewController(withIdentifier: "mainView")
+//            self.present(controller, animated: true, completion: nil)
             
      
         }

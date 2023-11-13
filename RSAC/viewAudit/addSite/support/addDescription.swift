@@ -8,6 +8,11 @@
 import UIKit
 import SwiftLoader
 
+
+protocol siteDecriptionString{
+    func finishPassing_decription(saveDescription: String)
+}
+
 class addDescription: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextViewDelegate,UITextFieldDelegate {
     
     var descriptionTextfieldHeaderCount = UILabel()
@@ -19,7 +24,7 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
     
     let mainConsole = CONSOLE()
     let extensConsole = extens()
-    
+    var delegate: siteDecriptionString?
     
     struct Section {
         var sectionName: String
@@ -223,6 +228,8 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
             let characterCount = text.count
            // print("Character count: \(characterCount)")
             descriptionTextfieldHeaderCount.text = "Character Count:\(characterCount)"
+            print(text)
+            self.delegate?.finishPassing_decription(saveDescription: text)
     
         }
     }

@@ -11,7 +11,7 @@ import SDWebImage
 import SwiftLoader
 import MapKit
 
-class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate {
+class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString {
     var scrollView = UIScrollView()
     var layoverView = UIView()
     var locationLabel = UILabel()
@@ -24,6 +24,9 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
     var imageArrayURL = [String]()
     
     var auditID = String()
+    var siteID = String()
+    var siteName = String()
+    var siteDescription = String()
     
     let mainConsole = CONSOLE()
     let extensConsole = extens()
@@ -44,7 +47,20 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
     
     
     
-    
+    func finishPassing_decription(saveDescription: String) {
+        
+        if (siteDescription != ""){
+            print ("not empty")
+            self.siteDescription = saveDescription
+            
+            
+        }else{
+            print ("empty")
+        }
+        
+        //---------------------------------------------------------------------------------------
+        
+    }
     
     
     override func viewDidLoad() {
@@ -53,12 +69,13 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
         super.viewDidLoad()
         findlocation()
         
+
+        
+        
+        self.navigationItem.setHidesBackButton(true, animated: true)
         
         descriptionTextfield.delegate = self
         picker.delegate = self
-        
-
-
         
 
         image = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - (tabBarController?.tabBar.frame.size.height)! - 100))
@@ -68,14 +85,7 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
 
         self.view.addSubview(image)
 
-        
-
-  
-
-        
-
-        
-        
+    
         layoverView = UIView(frame: CGRect(x: 15, y: view.frame.height , width: view.frame.width - 30, height: 80))
         layoverView.layer.borderWidth = 1
         layoverView.layer.cornerRadius = 30
@@ -125,6 +135,7 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             self.navigationItem.title = textField!.text
+            self.siteName = textField!.text!
         }))
         
         let action1 = UIAlertAction(title: "Back",style: .cancel) { (action:UIAlertAction!) in
@@ -264,6 +275,8 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
             .child("\(uid!)")
             .child("\(self.mainConsole.audit!)")
             .child("\(auditID)")
+            .child("\(self.mainConsole.siteList!)")
+            .child("\(siteID)")
             .child("\(uuid)")
             .child("snapshot.jpg")
         
@@ -307,7 +320,7 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
         //show progress view
         SwiftLoader.show(title: "Creating Audit", animated: true)
     
-        if  descriptionTextfield.text!.count > 0 {
+
             
             let uid = Auth.auth().currentUser?.uid
             let saveData = auditListData(
@@ -319,17 +332,23 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
                 lat: self.lat,
                 long: self.long,
                 completed: true)
+            
+            
 
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
+        
             let thisUsersGamesRef = reftest
                 .child("\(self.mainConsole.post!)")
                 .child(uid!)
                 .child("\(self.mainConsole.audit!)")
                 .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
                 .child("\(self.mainConsole.auditList!)")
                 .child("\(uuid)")
          
+            print("okay:\(thisUsersGamesRef)")
             
             thisUsersGamesRef.setValue(saveData.addAudit()){
                 (error:Error?, ref:DatabaseReference) in
@@ -349,12 +368,7 @@ class addAudit: UIViewController,UIImagePickerControllerDelegate,UITextViewDeleg
                   
             }
 
-        }
-        else{
-            SwiftLoader.hide()
-            extensConsole.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
-            
-        }
+   
   
         }
 

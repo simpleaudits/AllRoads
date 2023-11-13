@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-extension addAudit{
+extension addAuditSites{
     
     func findlocation(){
         

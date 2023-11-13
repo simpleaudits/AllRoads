@@ -827,10 +827,10 @@
             </objects>
             <point key="canvasLocation" x="-573.28244274809163" y="2734.5070422535214"/>
         </scene>
-        <!--Add Audit-->
+        <!--Add Audit Sites-->
         <scene sceneID="j04-Iu-YaU">
             <objects>
-                <viewController id="JPK-3h-a4i" customClass="addAudit" customModule="RSAC" sceneMemberID="viewController">
+                <viewController id="JPK-3h-a4i" customClass="addAuditSites" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ieK-EQ-7Hs">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -847,7 +847,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949" y="2995"/>
+            <point key="canvasLocation" x="949" y="2988"/>
         </scene>
         <!--Add Description-->
         <scene sceneID="wvi-cP-oG3">
@@ -953,35 +953,12 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="43" id="Dtp-vJ-2dy">
-                                        <rect key="frame" x="20" y="61" width="353" height="43"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dtp-vJ-2dy" id="uJp-Na-25m">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audit No. 0001" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZz-S9-aov">
-                                                    <rect key="frame" x="20" y="7" width="333" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <constraints>
-                                                <constraint firstItem="bZz-S9-aov" firstAttribute="leading" secondItem="uJp-Na-25m" secondAttribute="leading" constant="20" symbolic="YES" id="K8J-jp-c7E"/>
-                                                <constraint firstItem="bZz-S9-aov" firstAttribute="top" secondItem="uJp-Na-25m" secondAttribute="top" constant="7" id="MF7-Km-k2G"/>
-                                                <constraint firstAttribute="bottom" secondItem="bZz-S9-aov" secondAttribute="bottom" constant="7" id="qLg-mT-7qq"/>
-                                                <constraint firstAttribute="trailing" secondItem="bZz-S9-aov" secondAttribute="trailing" id="tkL-Gq-PSs"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Site" id="pNQ-il-wUg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="43" id="9wH-dB-OXK">
-                                        <rect key="frame" x="20" y="160" width="353" height="43"/>
+                                        <rect key="frame" x="20" y="117" width="353" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9wH-dB-OXK" id="uao-Qd-14b">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="43"/>
@@ -1009,7 +986,7 @@
                             <tableViewSection headerTitle="Location" id="ufW-z7-qaD">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="51" id="bol-Ms-aP4">
-                                        <rect key="frame" x="20" y="259" width="353" height="51"/>
+                                        <rect key="frame" x="20" y="216" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bol-Ms-aP4" id="kzE-Ff-85e">
                                             <rect key="frame" x="0.0" y="0.0" width="322.66666666666669" height="51"/>
@@ -1052,6 +1029,7 @@
                         <outlet property="siteName" destination="Gzk-dT-Vrk" id="YVq-26-Ax9"/>
                         <outlet property="timeDate" destination="zur-uo-3Zn" id="nhr-dv-iuj"/>
                         <segue destination="ytr-vm-7Ob" kind="show" identifier="location" id="n7w-SH-YOG"/>
+                        <segue destination="JPK-3h-a4i" kind="show" identifier="startAudit" id="hrR-Cm-g4M"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qX-9L-4AD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
