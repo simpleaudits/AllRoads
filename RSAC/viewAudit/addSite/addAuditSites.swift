@@ -266,6 +266,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         
         let uuid = UUID().uuidString
+        print("test:\(uuid)")
         let uid = Auth.auth().currentUser?.uid
         
         
@@ -323,34 +324,40 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
             
             let uid = Auth.auth().currentUser?.uid
-            let saveData = auditListData(
-                auditTitle:"",
-                auditReference: auditID,
-                imageURL: imageURL,
-                auditDescription: "",
-                date: "\(extensConsole.timeStamp())",
-                lat: self.lat,
-                long: self.long,
-                completed: true)
-            
-            
+    
 
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
         
+        
             let thisUsersGamesRef = reftest
-                .child("\(self.mainConsole.post!)")
-                .child(uid!)
-                .child("\(self.mainConsole.audit!)")
-                .child("\(auditID)")
-                .child("\(self.mainConsole.siteList!)")
-                .child("\(siteID)")
-                .child("\(self.mainConsole.auditList!)")
-                .child("\(uuid)")
+            .child("\(self.mainConsole.post!)")
+            .child("\(uid!)")
+            .child("\(self.mainConsole.audit!)")
+            .child("\(auditID)")
+            .child("\(self.mainConsole.siteList!)")
+            .child("\(siteID)")
+            .child("\(self.mainConsole.auditList!)")
+            .child("\(uuid)")
+       
+            let refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.auditList!)/\(uuid)"
+
+
+            let saveData = auditSiteData(
+            auditTitle:"\(siteName)",
+            auditReference: auditID,
+            imageURL: imageURL,
+            auditDescription:"\(siteDescription)",
+            date: "\(extensConsole.timeStamp())",
+            lat: self.lat,
+            long: self.long,
+            ref: "\(refData)",
+            completed: true)
+        
          
-            print("okay:\(thisUsersGamesRef)")
+    
             
-            thisUsersGamesRef.setValue(saveData.addAudit()){
+            thisUsersGamesRef.setValue(saveData.saveAuditData()){
                 (error:Error?, ref:DatabaseReference) in
                 
 
@@ -363,6 +370,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                     print("saved")
                     SwiftLoader.hide()
                     self.navigationController!.popViewController(animated: true)
+                    //self.performSegue(withIdentifier: "viewAuditSnaps", sender: self)
 
                 }
                   

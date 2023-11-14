@@ -23,8 +23,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     
     var auditID = String()
     var siteID = String()
-    
-    
+    var refData = String()
     
     let mainConsole = CONSOLE()
     
@@ -125,13 +124,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                 let uid = Auth.auth().currentUser?.uid
                 siteID = UUID().uuidString
                 
-                let saveData = addSite(
-                    addSite: siteName.text!,
-                    date: timeDate.text!,
-                    lat: self.lat,
-                    long: self.long,
-                    completed: true)
-    
+
                 let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
                 let thisUsersGamesRef = reftest
                     .child("\(self.mainConsole.post!)")
@@ -140,11 +133,20 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     .child("\(auditID)")
                     .child("\(self.mainConsole.siteList!)")
                     .child("\(siteID)")
+                
+                refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
 
              
-                //print(thisUsersGamesRef)
+                let saveData = createSiteData(
+                    siteName: siteName.text!,
+                    date: timeDate.text!,
+                    lat: self.lat,
+                    long: self.long,
+                    ref: "\(refData)",
+                    completed: true)
+    
                 
-                thisUsersGamesRef.setValue(saveData.addSiteData()){
+                thisUsersGamesRef.setValue(saveData.saveSiteData()){
                     (error:Error?, ref:DatabaseReference) in
                     
 
@@ -179,7 +181,13 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
            
         }else if let destination4 = segue.destination as? addAuditSites {
             destination4.siteID = siteID
-           
+            destination4.auditID = auditID
+          
+        }else if let destination4 = segue.destination as? viewSiteSnaps {
+            destination4.siteID = siteID
+            destination4.auditID = auditID
+            destination4.refData = refData
+          
         }
         
     

@@ -31,7 +31,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var projectName = String()
         let mainConsole = CONSOLE()
         let extensConsole = extens()
-        var listOfSites: [addSite] = [] // for the favourites
+        var listOfSites: [createSiteData] = [] // for the favourites
 
     
     override func viewDidLoad() {
@@ -77,12 +77,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             thisUsersGamesRef.queryOrderedByKey()
                     .observe(.value, with: { snapshot in
                         
-                    var NewlistOfSites: [addSite] = []
+                    var NewlistOfSites: [createSiteData] = []
                         
                         for child in snapshot.children {
                             
                             if let snapshot = child as? DataSnapshot,
-                                let listOfSites = addSite(snapshot: snapshot) {
+                                let listOfSites = createSiteData(snapshot: snapshot) {
                                 NewlistOfSites.append(listOfSites)
                                 
                
@@ -185,7 +185,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             //cell.auditImage.sd_setImage(with: URL(string:audititems.imageURL))
             //cell.auditDate.text = audititems.date
-            cell.auditLabel.text = siteItems.addSite
+            cell.auditLabel.text = siteItems.siteName
             cell.auditDate.text = siteItems.date
             //map reference
             let annotation = MKPointAnnotation()
@@ -225,7 +225,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 let annotation = MKPointAnnotation()
                 let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(x.lat), longitude:CLLocationDegrees(x.long))
                 annotation.coordinate = centerCoordinate
-                annotation.title = x.addSite
+                annotation.title = x.siteName
                 cell.myLocations.addAnnotation(annotation)
                 
                 let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(x.lat), CLLocationDegrees(x.long))

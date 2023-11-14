@@ -10,7 +10,7 @@
 import Foundation
 import Firebase
 
-struct auditListData{
+struct auditSiteData{
 
     
     //This is the basic Audit Settings
@@ -21,7 +21,9 @@ struct auditListData{
     let date: String
     let lat: CGFloat
     let long: CGFloat
+    let ref: String
     var completed: Bool
+    
     
     
     
@@ -33,6 +35,7 @@ struct auditListData{
         date: String,
         lat: CGFloat,
         long: CGFloat,
+        ref: String,
         completed: Bool
     )
     
@@ -45,6 +48,7 @@ struct auditListData{
         self.date = date
         self.lat = lat
         self.long = long
+        self.ref = ref
         self.completed = completed
         
     }
@@ -60,6 +64,7 @@ struct auditListData{
             let date = value["date"] as? String,
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
+            let ref = value["ref"] as? String,
             let completed = value["completed"] as? Bool else {
                 return nil
         }
@@ -70,11 +75,11 @@ struct auditListData{
         self.date = date
         self.lat = lat
         self.long = long
-
+        self.ref = ref
         self.completed = completed
     }
     
-    func addAudit() -> [String:Any] {
+    func saveAuditData() -> [String:Any] {
         return [
             "auditTitle": auditTitle,
             "auditReference": auditReference,
@@ -83,6 +88,7 @@ struct auditListData{
             "date": date,
             "lat": lat,
             "long": long,
+            "ref": ref,
             "completed": completed
         ]
     }

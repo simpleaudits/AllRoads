@@ -10,32 +10,35 @@
 import Foundation
 import Firebase
 
-struct addSite{
+struct createSiteData{
 
     
     //This is the basic Audit Settings
-    let addSite: String
+    let siteName: String
     let date: String
     let lat: CGFloat
     let long: CGFloat
+    let ref: String
     var completed: Bool
     
     
     
     init(
-        addSite: String,
+        siteName: String,
         date: String,
         lat: CGFloat,
         long: CGFloat,
+        ref:String,
         completed: Bool
     )
     
     
     {
-        self.addSite = addSite
+        self.siteName = siteName
         self.date = date
         self.lat = lat
         self.long = long
+        self.ref = ref
         self.completed = completed
         
     }
@@ -44,27 +47,29 @@ struct addSite{
         guard
             let value = snapshot.value as? [String: AnyObject],
             
-            let addSite = value["addSite"] as? String,
+            let siteName = value["siteName"] as? String,
             let date = value["date"] as? String,
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
+            let ref = value["ref"] as? String,
             let completed = value["completed"] as? Bool else {
                 return nil
         }
-        self.addSite = addSite
+        self.siteName = siteName
         self.date = date
         self.lat = lat
         self.long = long
-
+        self.ref = ref
         self.completed = completed
     }
     
-    func addSiteData() -> [String:Any] {
+    func saveSiteData() -> [String:Any] {
         return [
-            "addSite": addSite,
+            "siteName": siteName,
             "date": date,
             "lat": lat,
             "long": long,
+            "ref": ref,
             "completed": completed
         ]
     }
