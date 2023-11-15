@@ -143,6 +143,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     lat: self.lat,
                     long: self.long,
                     ref: "\(refData)",
+                    siteID: "\(siteID)",
                     completed: true)
     
                 

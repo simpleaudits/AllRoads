@@ -822,6 +822,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="rtl-i4-4U8" kind="show" identifier="viewAuditList" id="ZDo-IU-HkD"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXs-B5-Phi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -847,7 +850,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1637" y="2951"/>
+            <point key="canvasLocation" x="1763" y="2951"/>
         </scene>
         <!--Observations-->
         <scene sceneID="ACH-1h-pAB">
@@ -1080,10 +1083,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qX-9L-4AD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="175" y="2735"/>
+            <point key="canvasLocation" x="120" y="2735"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="ZDo-IU-HkD"/>
         <segue reference="Ypc-0i-t4p"/>
         <segue reference="n7w-SH-YOG"/>
     </inferredMetricsTieBreakers>

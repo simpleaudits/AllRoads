@@ -89,10 +89,10 @@ class viewAuditCell: UICollectionViewCell {
     let auditLabel: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.numberOfLines = 1
-        label.textAlignment = .left
-        label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        label.textAlignment = .right
+        //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         return label
     }()

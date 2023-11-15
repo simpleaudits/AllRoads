@@ -39,7 +39,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
        if let destination4 = segue.destination as? addAuditSites {
             destination4.siteID = siteID
             destination4.auditID = auditID
-//destination4.refData = refData
+
           
         }
         

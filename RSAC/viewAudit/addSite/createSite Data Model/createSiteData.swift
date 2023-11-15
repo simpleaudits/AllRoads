@@ -19,6 +19,7 @@ struct createSiteData{
     let lat: CGFloat
     let long: CGFloat
     let ref: String
+    let siteID: String
     var completed: Bool
     
     
@@ -29,6 +30,7 @@ struct createSiteData{
         lat: CGFloat,
         long: CGFloat,
         ref:String,
+        siteID:String,
         completed: Bool
     )
     
@@ -39,6 +41,7 @@ struct createSiteData{
         self.lat = lat
         self.long = long
         self.ref = ref
+        self.siteID = siteID
         self.completed = completed
         
     }
@@ -52,6 +55,7 @@ struct createSiteData{
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
             let ref = value["ref"] as? String,
+            let siteID = value["siteID"] as? String,
             let completed = value["completed"] as? Bool else {
                 return nil
         }
@@ -60,6 +64,7 @@ struct createSiteData{
         self.lat = lat
         self.long = long
         self.ref = ref
+        self.siteID = siteID
         self.completed = completed
     }
     
@@ -70,6 +75,7 @@ struct createSiteData{
             "lat": lat,
             "long": long,
             "ref": ref,
+            "siteID": siteID,
             "completed": completed
         ]
     }

@@ -345,13 +345,14 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
             let saveData = auditSiteData(
             auditTitle:"\(siteName)",
-            auditReference: auditID,
+            auditID: auditID,
             imageURL: imageURL,
             auditDescription:"\(siteDescription)",
             date: "\(extensConsole.timeStamp())",
             lat: self.lat,
             long: self.long,
             ref: "\(refData)",
+            siteID:"\(siteID)",
             completed: true)
         
          

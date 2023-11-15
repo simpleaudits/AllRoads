@@ -28,7 +28,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var padding: CGFloat = 16
 
         var auditID = String()
+    var siteID = String()
         var projectName = String()
+        var refData = String()
+    
+    
+    
         let mainConsole = CONSOLE()
         let extensConsole = extens()
         var listOfSites: [createSiteData] = [] // for the favourites
@@ -70,7 +75,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                     .child(uid!)
                     .child("\(self.mainConsole.audit!)")
                     .child("\(auditID)")
-
                     .child("\(self.mainConsole.siteList!)")
             
             
@@ -113,8 +117,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
         
     }
-    // MARK: UICollectionViewDataSource
-
+ 
 
 
     
@@ -205,7 +208,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
             // Configure the cell
             cell.layer.cornerRadius = 10
-            cell.layer.masksToBounds = false
+            cell.layer.masksToBounds = true
             cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             cell.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             cell.layer.shadowOffset = CGSize(width: 0, height: 4.0)
@@ -242,8 +245,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "auditCell", for: indexPath) as! auditCell
             
-        
-            
             return cell
             
         }
@@ -258,9 +259,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
 
         }else if indexPath.section == 1{
-           // let auditData = listOfSites[indexPath.row]
-            
-            
+            self.refData = "\(listOfSites[indexPath.row].ref)"
+            self.siteID = "\(listOfSites[indexPath.row].siteID)"
+            print(self.refData )
+            self.performSegue(withIdentifier: "viewAuditList", sender: self)
 
         }else if indexPath.section == 2{
 
@@ -292,6 +294,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                      print("Failed to load data")
                  }
 
+             }else if let viewInfoView = segue.destination as? viewSiteSnaps{
+                     viewInfoView.refData = refData
+                     viewInfoView.siteID = siteID
+                     viewInfoView.auditID = auditID
+
+             }else{
+                 
              }
          }
     
@@ -305,26 +314,21 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     func createLayout() -> UICollectionViewCompositionalLayout{
         //Compositional layout
         let layout = UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-           
-            
-            
+              
             if sectionNumber  == 1 {
                 
-                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
+                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3), heightDimension: .absolute(100)))
                         item.contentInsets.trailing = 20
                         item.contentInsets.leading = 20
                         //item.contentInsets.top = 20
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(300)),
+                        heightDimension: .absolute(100)),
                         subitems: [item])
             
 
                         let section = NSCollectionLayoutSection(group: group)
-                
                         section.orthogonalScrollingBehavior = .groupPaging
-          
-                
                 
                         section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
                 
