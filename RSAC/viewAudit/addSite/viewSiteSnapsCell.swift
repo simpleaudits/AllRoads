@@ -89,7 +89,7 @@ class viewSiteSnapsCell: UICollectionViewCell {
     let siteName: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 1
         label.textAlignment = .left
 //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -100,7 +100,7 @@ class viewSiteSnapsCell: UICollectionViewCell {
     let auditDate: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.numberOfLines = 1
         label.textAlignment = .left
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)

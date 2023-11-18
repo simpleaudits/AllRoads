@@ -11,14 +11,17 @@ import SDWebImage
 import SwiftLoader
 import MapKit
 
-class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString {
+class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString{
+ 
+    
     var scrollView = UIScrollView()
     var layoverView = UIView()
     var locationLabel = UILabel()
     var image = UIImageView()
+    var backgroundImage = UIView()
     var descriptionTextfieldHeader = UILabel()
     var descriptionTextfield = UITextView()
-    var commentButton = UIButton()
+    var editDescription = UIButton()
     var cameraButton = UIButton()
     let picker = UIImagePickerController()
     var imageArrayURL = [String]()
@@ -30,7 +33,6 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     let mainConsole = CONSOLE()
     let extensConsole = extens()
-    
     var localImageData = Data()
     
     var lat = CGFloat()
@@ -38,31 +40,36 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
 
     var imageCount = Int()
-    
     let storageReference = Storage.storage().reference()
     
     
     var location = String()
     var locationManager = CLLocationManager()
     
-    
-    
-    func finishPassing_decription(saveDescription: String) {
+
+
+    func finishPassing_decription_addSite(saveDescriptionData: String) {
+       
+            self.siteDescription = saveDescriptionData
+            self.descriptionTextfield.text = saveDescriptionData
+           
         
-        if (siteDescription != ""){
-            print ("not empty")
-            self.siteDescription = saveDescription
-            
-            
-        }else{
-            print ("empty")
-        }
-        
-        //---------------------------------------------------------------------------------------
-        
+
     }
-    
-    
+  
+    override func viewDidAppear(_ animated: Bool) {
+
+        
+
+//        editDescription = UIButton(frame: CGRect(x: -1, y: 0, width: layoverView.frame.width/2, height: 80))
+//        editDescription.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+//        editDescription.setTitle("Edit", for: .normal)
+//        editDescription.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+//        editDescription.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
+//        editDescription.addTarget(self, action: #selector(editDescriptionButton), for: .touchUpInside)
+ 
+
+    }
     override func viewDidLoad() {
 
         
@@ -78,52 +85,61 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         picker.delegate = self
         
 
-        image = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - (tabBarController?.tabBar.frame.size.height)! - 100))
-        image.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        image = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        image.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
         image.contentMode = .scaleAspectFill
-  
-
-        self.view.addSubview(image)
-
+        
+        
+        descriptionTextfield = UITextView(frame: CGRect(x: 0, y: view.frame.height * 0.7, width: view.frame.width, height: view.frame.height * 0.3))
+        descriptionTextfield.textColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+        descriptionTextfield.backgroundColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 0.2014693709)
+        descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 30)
+        descriptionTextfield.text = ""
+        descriptionTextfield.delegate = self
     
-        layoverView = UIView(frame: CGRect(x: 15, y: view.frame.height , width: view.frame.width - 30, height: 80))
-        layoverView.layer.borderWidth = 1
-        layoverView.layer.cornerRadius = 30
-        descriptionTextfield.layer.masksToBounds = true
 
-      
-
-        //create but buy now and enter button
-        commentButton = UIButton(frame: CGRect(x: -1, y: 0, width: layoverView.frame.width/2, height: 80))
-        commentButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-        commentButton.setTitle("Add Comments", for: .normal)
-        commentButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        commentButton.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
-        commentButton.addTarget(self, action: #selector(addComment), for: .touchUpInside)
-
-
-        cameraButton = UIButton(frame: CGRect(x: layoverView.frame.width/2 + 1, y: 0, width: layoverView.frame.width/2, height: 80))
-        cameraButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-        cameraButton.setTitle("Take Photo", for: .normal)
-        cameraButton.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
-        cameraButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        cameraButton.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
-        self.view.addSubview(layoverView)
-        layoverView.addSubview(cameraButton)
-        layoverView.addSubview(commentButton)
         
+        self.view.addSubview(image)
+        self.view.addSubview(descriptionTextfield)
         
-        UIView.animate(withDuration: 1, animations: {
-            self.layoverView.frame.origin.y = self.view.frame.height - 80 - (self.tabBarController?.tabBar.frame.size.height)!
-
-        }, completion: nil)
-        
+//        layoverView = UIView(frame: CGRect(x: 15, y: view.frame.height , width: view.frame.width - 30, height: 80))
+//        layoverView.layer.borderWidth = 1
+//        layoverView.layer.cornerRadius = 30
+//        descriptionTextfield.layer.masksToBounds = true
+//
+//
+//
+//        //create but buy now and enter button
+//        commentButton = UIButton(frame: CGRect(x: -1, y: 0, width: layoverView.frame.width/2, height: 80))
+//        commentButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+//        commentButton.setTitle("Add Comments", for: .normal)
+//        commentButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+//        commentButton.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
+//        commentButton.addTarget(self, action: #selector(addComment), for: .touchUpInside)
+//
+//
+//        cameraButton = UIButton(frame: CGRect(x: layoverView.frame.width/2 + 1, y: 0, width: layoverView.frame.width/2, height: 80))
+//        cameraButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+//        cameraButton.setTitle("Take Photo", for: .normal)
+//        cameraButton.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
+//        cameraButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+//        cameraButton.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
+//        self.view.addSubview(layoverView)
+//        layoverView.addSubview(cameraButton)
+//        layoverView.addSubview(commentButton)
+//
+//
+//        UIView.animate(withDuration: 1, animations: {
+//            self.layoverView.frame.origin.y = self.view.frame.height - 80 - (self.tabBarController?.tabBar.frame.size.height)!
+//
+//        }, completion: nil)
+//
         
         
         
         //Ask user for site name:
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Site name:", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Site name", message: "", preferredStyle: .alert)
 
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
@@ -132,10 +148,30 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         }
 
         // 3. Grab the value from the text field, and print it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { [weak alert] (_) in
+        alert.addAction(UIAlertAction(title: "Add Photo", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             self.navigationItem.title = textField!.text
             self.siteName = textField!.text!
+            self.navigationItem.title = textField!.text!
+           
+            if textField!.text! == ""{
+
+                let Alert = UIAlertController(title: "Whoops!⚠️", message: "Site name was empty", preferredStyle: .alert)
+                    let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
+                        self.navigationController?.popViewController(animated: true)
+    
+                    }
+      
+                Alert.addAction(action1)
+                self.present(Alert, animated: true, completion: nil)
+          
+                }else{
+                    
+                    self.selectImageType()
+                    
+                }
+                
+            
         }))
         
         let action1 = UIAlertAction(title: "Back",style: .cancel) { (action:UIAlertAction!) in
@@ -150,19 +186,23 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     }
     
     func presentModal() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "addDescription")
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        if let viewController = storyboard.instantiateViewController(withIdentifier: "addDescription") as? addDescription{
+//
+//            if let presentationController = viewController.presentationController as? UISheetPresentationController {
+//                presentationController.detents = [.medium(), .large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+//            }
+//
+//            self.present(viewController, animated: true)
+//        }
 
-        if let presentationController = viewController.presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium(), .large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
-        }
+        self.performSegue(withIdentifier: "addDescription", sender: self)
 
-        self.present(viewController, animated: true)
 
     }
     
-    @objc func addComment(sender: UIButton!) {
-        presentModal()
+    @objc func editDescriptionButton(sender: UIButton!) {
+        self.performSegue(withIdentifier: "addDescription", sender: self)
 
     }
     
@@ -241,6 +281,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         }
         
         picker.dismiss(animated: true, completion:nil)
+        presentModal()
         
 
         
@@ -380,7 +421,24 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
    
   
         }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         if let destination3 = segue.destination as? addDescription {
+            destination3.delegate = self
+           
+        }
+        
+    
+        else {
+            
+        }
+   
+            
+            
+        }
+    
+    
+    
 
 
     func textFieldDidBeginEditing(productPrice textField: UITextField) {

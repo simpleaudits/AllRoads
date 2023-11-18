@@ -10,8 +10,10 @@ import SwiftLoader
 
 
 protocol siteDecriptionString{
-    func finishPassing_decription(saveDescription: String)
+    func finishPassing_decription_addSite(saveDescriptionData: String)
 }
+
+
 
 class addDescription: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITextViewDelegate,UITextFieldDelegate {
     
@@ -21,6 +23,7 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
     var detailsCollectionView : UICollectionView!
     var aiButton = UIButton()
     var helpButton = UIButton()
+    var descriptionText = String()
     
     let mainConsole = CONSOLE()
     let extensConsole = extens()
@@ -40,10 +43,12 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
         
-       
+        self.navigationItem.setHidesBackButton(true, animated: true)
         
-        descriptionTextfieldHeader = UILabel(frame: CGRect(x: 10, y:10, width: view.frame.width, height: 20))
+        let height = navigationController?.navigationBar.frame.maxY
+        descriptionTextfieldHeader = UILabel(frame: CGRect(x:10, y:height! + 10, width: view.frame.width, height: 20))
         descriptionTextfieldHeader.text = "DESCRIBE THE SITE"
         descriptionTextfieldHeader.font = UIFont.systemFont(ofSize: 15)
         descriptionTextfieldHeader.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -116,7 +121,7 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
 
         // Do any additional setup after loading the view.
         
-        hideKeyboardWhenTappedAround()
+    
     }
     
 
@@ -197,7 +202,10 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         view.endEditing(true)
     }
     
-
+    @IBAction func saveDescription(_ sender: Any) {
+        self.navigationController!.popViewController(animated: true)
+    }
+    
 
     @objc func useAI(sender: UIButton!) {
       
@@ -208,6 +216,8 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
 
     }
 
+
+    
     @objc func useHelp(sender: UIButton!) {
       
         SwiftLoader.show(title: "Loading..", animated: true)
@@ -220,8 +230,9 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         }
         
     }
+
  
-    // UITextViewDelegate method
+
     func textViewDidChange(_ textView: UITextView) {
         // This method is called whenever the text changes
         if let text = textView.text {
@@ -229,9 +240,15 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
            // print("Character count: \(characterCount)")
             descriptionTextfieldHeaderCount.text = "Character Count:\(characterCount)"
             print(text)
-            self.delegate?.finishPassing_decription(saveDescription: text)
-    
+            self.descriptionText = text
+
+
+            self.delegate?.finishPassing_decription_addSite(saveDescriptionData: descriptionText)
+            print("EXIT")
+            print(self.descriptionText)
+
         }
     }
 
+    
 }

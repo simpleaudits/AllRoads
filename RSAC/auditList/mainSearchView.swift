@@ -255,7 +255,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
          
             let auditData = CompletedAuditsFilter[indexPath.row]
             
-            let Alert = UIAlertController(title: "You have selected:/n\(auditData.projectName)", message: "ref\(auditData.auditID)", preferredStyle: .alert)
+            let Alert = UIAlertController(title: "Audit Name:/n\(auditData.projectName)", message: "ref\(auditData.auditID)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
@@ -297,7 +297,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = InProgressAuditsAuditsFilter[indexPath.row]
             
-            let Alert = UIAlertController(title: "You have selected", message: "\(auditData.projectName)", preferredStyle: .alert)
+            let Alert = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
@@ -338,8 +338,8 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = ArchievedAuditsFilter[indexPath.row]
             
-            let Alert = UIAlertController(title: "You have selected", message: "\(auditData.projectName)", preferredStyle: .alert)
-                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
+            let Alert = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
+                        let action1 = UIAlertAction(title: "View audit",style: .cancel) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
                      

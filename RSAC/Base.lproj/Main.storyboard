@@ -847,6 +847,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="5Gn-pp-wh6" kind="show" identifier="addDescription" id="oeu-nH-3wF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -908,10 +911,17 @@
                         <viewLayoutGuide key="safeArea" id="ebm-Oe-dRe"/>
                         <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Kdd-Qb-geX">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="tiw-8y-2Uc">
+                            <connections>
+                                <action selector="saveDescription:" destination="5Gn-pp-wh6" id="1fg-d3-zry"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4id-OP-MLA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949" y="3646"/>
+            <point key="canvasLocation" x="1763" y="3675"/>
         </scene>
         <!--Search List-->
         <scene sceneID="0oL-Dw-6cq">
@@ -1087,9 +1097,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZDo-IU-HkD"/>
+        <segue reference="iW9-Zn-a16"/>
         <segue reference="Ypc-0i-t4p"/>
-        <segue reference="n7w-SH-YOG"/>
+        <segue reference="Uv5-2R-2fq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="firebase_logo_icon_168209.png" width="512" height="256"/>
