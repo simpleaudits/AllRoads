@@ -10,6 +10,8 @@
 		0139160A8806B8F73DBEF86C /* Pods_RSAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8348D075D9682BE578FF06DB /* Pods_RSAC.framework */; };
 		82445D0A2B00FF7D00319605 /* createSiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D092B00FF7D00319605 /* createSiteData.swift */; };
 		82445D0C2B0100A000319605 /* createSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D0B2B0100A000319605 /* createSite.swift */; };
+		827DFF4F2B0E185600029EDE /* PDFkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF4E2B0E185600029EDE /* PDFkit.swift */; };
+		827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF502B0E1BD300029EDE /* viewPDF.swift */; };
 		8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */; };
 		829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */; };
 		82E4A82D2AFCE0A800BE1D8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */; };
@@ -81,6 +83,8 @@
 		1E4E71F1426298B5A8EAD9D8 /* Pods-RSACTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSACTests.release.xcconfig"; path = "Target Support Files/Pods-RSACTests/Pods-RSACTests.release.xcconfig"; sourceTree = "<group>"; };
 		82445D092B00FF7D00319605 /* createSiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSiteData.swift; sourceTree = "<group>"; };
 		82445D0B2B0100A000319605 /* createSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSite.swift; sourceTree = "<group>"; };
+		827DFF4E2B0E185600029EDE /* PDFkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFkit.swift; sourceTree = "<group>"; };
+		827DFF502B0E1BD300029EDE /* viewPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPDF.swift; sourceTree = "<group>"; };
 		8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteSnaps.swift; sourceTree = "<group>"; };
 		8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewSiteSnapsCell.swift; sourceTree = "<group>"; };
 		82E4A8292AFCE0A800BE1D8B /* RSAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +191,8 @@
 				82E4A8852AFCE54400BE1D8B /* addAuditSites Data Model */,
 				8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */,
 				8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */,
+				827DFF4E2B0E185600029EDE /* PDFkit.swift */,
+				827DFF502B0E1BD300029EDE /* viewPDF.swift */,
 				82445D0E2B0242E000319605 /* support */,
 			);
 			path = addSite;
@@ -649,6 +655,7 @@
 				82E4A88F2AFCE54400BE1D8B /* InitialSignUp.swift in Sources */,
 				82E4A8A52AFCE54D00BE1D8B /* extensionFiles.swift in Sources */,
 				82E4A8A02AFCE54400BE1D8B /* addDescription.swift in Sources */,
+				827DFF4F2B0E185600029EDE /* PDFkit.swift in Sources */,
 				82445D0A2B00FF7D00319605 /* createSiteData.swift in Sources */,
 				82E4A8312AFCE0A800BE1D8B /* ViewController.swift in Sources */,
 				82E4A89C2AFCE54400BE1D8B /* addAuditSites.swift in Sources */,
@@ -661,6 +668,7 @@
 				82E4A88B2AFCE54400BE1D8B /* searchList.swift in Sources */,
 				82E4A82F2AFCE0A800BE1D8B /* SceneDelegate.swift in Sources */,
 				82E4A8992AFCE54400BE1D8B /* createAudit.swift in Sources */,
+				827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */,
 				82445D0C2B0100A000319605 /* createSite.swift in Sources */,
 				82E4A8962AFCE54400BE1D8B /* locationExtension.swift in Sources */,
 				82E4A89A2AFCE54400BE1D8B /* CategoryTableViewController.swift in Sources */,

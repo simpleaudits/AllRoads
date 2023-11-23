@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SDWebImage
 import FirebaseDatabase
-
+import PDFKit
 
 
 
@@ -26,6 +26,12 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
     var siteID = String()
     var listOfSitesData: [auditSiteData] = []
     
+    
+    var titleData = String()
+    var descriptionData = String()
+    
+ 
+
     //ARRAY
 
     
@@ -41,7 +47,11 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
             destination4.auditID = auditID
 
           
-        }
+       }else if let destination5 = segue.destination as? viewPDF {
+           let pdfCreator = PDFCreator(title: titleData,description: descriptionData)
+           destination5.documentData = pdfCreator.createFlyer()
+
+          }
         
     
         else {
@@ -57,6 +67,15 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
     override func viewDidLoad() {
     
         super.viewDidLoad()
+
+        
+        
+        
+        
+        
+        
+        
+        
         
 
         loadSiteAuditData()
@@ -114,6 +133,10 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
         cell.siteName.text = indexAudit.auditTitle
         cell.auditDate.text = indexAudit.date
         cell.siteImage.sd_setImage(with: URL(string:indexAudit.imageURL))
+        
+        titleData = indexAudit.auditTitle
+        descriptionData = indexAudit.auditDescription
+
       
     return cell
     }
@@ -150,9 +173,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
            
        }
     
-    
-    
- 
+
     
     
     

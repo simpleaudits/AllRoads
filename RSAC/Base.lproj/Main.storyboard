@@ -855,6 +855,32 @@
             </objects>
             <point key="canvasLocation" x="1763" y="2951"/>
         </scene>
+        <!--ViewPDF-->
+        <scene sceneID="Y83-Pj-P1s">
+            <objects>
+                <viewController id="fcI-nA-JTf" customClass="viewPDF" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="liH-UM-w43">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0bh-ez-HYb" customClass="PDFView">
+                                <rect key="frame" x="25" y="149" width="343" height="554"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="sAe-IV-bSC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hkj-GD-9Cd"/>
+                    <connections>
+                        <outlet property="pdfView" destination="0bh-ez-HYb" id="bAi-Pj-u5i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="My4-HV-CNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="949" y="3630"/>
+        </scene>
         <!--Observations-->
         <scene sceneID="ACH-1h-pAB">
             <objects>
@@ -890,11 +916,18 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Observations" id="XN6-Sd-paB">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="iJd-I3-8Sf">
-                            <connections>
-                                <segue destination="JPK-3h-a4i" kind="show" id="Rhx-aj-weA"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" systemItem="add" id="iJd-I3-8Sf">
+                                <connections>
+                                    <segue destination="JPK-3h-a4i" kind="show" id="Rhx-aj-weA"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" systemItem="compose" id="XXd-I5-Unb">
+                                <connections>
+                                    <segue destination="fcI-nA-JTf" kind="show" id="5j3-in-2Ql"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q3D-FL-d8O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
