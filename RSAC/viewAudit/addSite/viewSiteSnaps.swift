@@ -30,7 +30,8 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
     var titleData = String()
     var descriptionData = String()
     
- 
+    var dataStruct: [PDFCreatorData] = []
+    var myImage = UIImage()
 
     //ARRAY
 
@@ -48,9 +49,11 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
           
        }else if let destination5 = segue.destination as? viewPDF {
-           let pdfCreator = PDFCreator(title: titleData,description: descriptionData)
-           destination5.documentData = pdfCreator.createFlyer()
+          
+           destination5.documentData = createPDF()
+  
 
+    
           }
         
     
@@ -158,13 +161,33 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 if let snapshot = child as? DataSnapshot,
                    let List = auditSiteData(snapshot: snapshot) {
                     listOfSitesData.append(List)
+                    
+                    
+           
+                    
 
                 }
                 }
 
                 self.listOfSitesData = listOfSitesData
                 self.collectionView.reloadData()
+                  
+                //call it after all data is loaded to remove duplications:
+                for x in listOfSitesData{
 
+                    let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, image: x.imageURL)
+                    self.dataStruct.append(pdfCreator)
+                    
+                    
+          
+                    
+                   
+                }
+                print("PDFCreatorData:\(self.dataStruct)")
+                print("PDFCreatorData:\(self.dataStruct.count)")
+                    
+                
+           
                    
                })
                

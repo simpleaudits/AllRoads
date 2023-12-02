@@ -28,7 +28,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var padding: CGFloat = 16
 
         var auditID = String()
-    var siteID = String()
+        var siteID = String()
         var projectName = String()
         var refData = String()
     
@@ -340,13 +340,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             }else if sectionNumber  == 0 {
                 
 
-                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(400)))
+                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300)))
                          item.contentInsets.trailing = 20
                          item.contentInsets.leading = 20
                          //item.contentInsets.top = 20
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
-                         heightDimension: .absolute(400)),
+                         heightDimension: .absolute(300)),
                          subitems: [item])
          
 
