@@ -31,6 +31,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
     var descriptionData = String()
     
     var dataStruct: [PDFCreatorData] = []
+    var myImageView = UIImageView()
     var myImage = UIImage()
 
     //ARRAY

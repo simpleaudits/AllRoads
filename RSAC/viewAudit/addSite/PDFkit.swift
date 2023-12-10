@@ -67,11 +67,9 @@ extension viewSiteSnaps{
             // 5
             //create multiple pages based on data
           
-           
-              print("data123:\(self.dataStruct)")
               for x in dataStruct{
+                  // create a new page
                   context.beginPage()
-                  
                   // 6
                   let titleData = addTitle(pageRect: pageRect, titleData: x.title) // returns height y-coordinate of title
                   self.addImage(pageRect: pageRect, imageTop: addBodyText(pageRect: pageRect, textTop: titleData + 18.0, bodyData: x.body), imageData: x.image)
@@ -140,27 +138,46 @@ extension viewSiteSnaps{
           let scaledWidth =  aspectRatio
           let scaledHeight =  aspectRatio
           // 4
-          let imageX = (pageRect.width - scaledWidth) / 2.0
-          let imageRect = CGRect(x: imageX, y: imageTop,
-                                 width: scaledWidth, height: scaledHeight)
-          // 5
+            let imageX = (pageRect.width - scaledWidth)
+            let imageRect = CGRect(x: 200, y: 200,
+                                   width: scaledWidth, height: scaledHeight)
+            // 5
           
-  
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: URL(string: imageData)!) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        //self?.myImage = image
-                        image.draw(in: imageRect)
-                        
-                    }
-                }
+        
+            // Create URL
+           print("Begin of code")
+           let url = URL(string: "\(imageData)")!
+           
+           print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
+
+
+          downloadImage(from: url).draw(in: CGRectMake(100, 100, 100, 100))
+
+        }
+
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    func downloadImage(from url: URL) -> UIImage {
+        
+        var imageData123 = UIImage()
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            // always update the UI from the main thread
+            DispatchQueue.main.async() { [weak self] in
+                self?.myImageView.image = UIImage(data: data)
+                self?.myImageView.image = imageData123
+                
             }
         }
-
-        }
-
-        
+       return imageData123
+    }
     
     
 }
+
+
