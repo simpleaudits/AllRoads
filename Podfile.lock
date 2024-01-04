@@ -872,6 +872,7 @@ PODS:
     - SDWebImage/Core (= 5.15.0)
   - SDWebImage/Core (5.15.0)
   - SwiftLoader (1.0.0)
+  - TPPDF (2.4.1)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -880,6 +881,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseUI
   - SwiftLoader
+  - TPPDF
 
 SPEC REPOS:
   trunk:
@@ -926,6 +928,7 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
     - SwiftLoader
+    - TPPDF
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -971,7 +974,8 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   SDWebImage: 9bec4c5cdd9579e1f57104735ee0c37df274d593
   SwiftLoader: f12f3a6fb42576862a3a5eb80c7e59fc881b6982
+  TPPDF: cb3d0f01fa0e24a54246d6b742d9fe2e8a3894c1
 
-PODFILE CHECKSUM: 50a5214c6303932006ad6987cd04c16e3c56bc3e
+PODFILE CHECKSUM: 3be746602e24e4a24e829d2dd5fa0f54c122bf51
 
 COCOAPODS: 1.11.3

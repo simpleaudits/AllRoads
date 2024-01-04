@@ -33,6 +33,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
     var dataStruct: [PDFCreatorData] = []
     var myImageView = UIImageView()
     var myImage = UIImage()
+    var imageData123 = UIImage()
 
     //ARRAY
 
@@ -51,7 +52,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
           
        }else if let destination5 = segue.destination as? viewPDF {
           
-           destination5.documentData = createPDF()
+           //destination5.documentData = createPDF()
   
 
     
@@ -154,7 +155,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
            if Auth.auth().currentUser != nil {
   
                Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
-                .observe(.value, with: { snapshot in
+                   .observe(.value, with: { [self] snapshot in
 
                 var listOfSitesData: [auditSiteData] = []
                 for child in snapshot.children {
@@ -175,17 +176,40 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
                   
                 //call it after all data is loaded to remove duplications:
                 for x in listOfSitesData{
-
-                    let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, image: x.imageURL)
+     
+                    
+                    DispatchQueue.global(qos: .background).async {
+                           do
+                            {
+                                
+// turn URL into UIIMAGE. This process requires the app to download the image via URL and turn it into an image Data object. This needs to be processed in the background so it does not impact the appes performance.
+                                
+                                let data = try Data.init(contentsOf: URL.init(string:x.imageURL)!)
+                                DispatchQueue.main.async {
+                                    self.imageData123 = UIImage(data: data)!
+                      
+                                }
+                                print("PDFCreatorData:\(self.dataStruct)")
+                                print("PDFCreatorData:\(self.dataStruct.count)")
+                            }
+                        
+                        
+                           catch {
+                                  // error
+                                 }
+                    }
+                    // Here we want to create a data structure to store our firebase saved content
+                                                        
+                                     
+                             
+                    let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, imageData: self.imageData123, image: x.imageURL)
                     self.dataStruct.append(pdfCreator)
                     
-                    
-          
-                    
+    
+       
                    
                 }
-                print("PDFCreatorData:\(self.dataStruct)")
-                print("PDFCreatorData:\(self.dataStruct.count)")
+
                     
                 
            

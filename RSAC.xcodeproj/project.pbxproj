@@ -14,6 +14,9 @@
 		827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF502B0E1BD300029EDE /* viewPDF.swift */; };
 		8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */; };
 		829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */; };
+		82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C792B46861500F5F755 /* Image-1.jpg */; };
+		82BE9C7C2B46862000F5F755 /* Image-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C7B2B46862000F5F755 /* Image-2.jpg */; };
+		82BE9C7E2B46862500F5F755 /* Image-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C7D2B46862500F5F755 /* Image-3.jpg */; };
 		82E4A82D2AFCE0A800BE1D8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */; };
 		82E4A82F2AFCE0A800BE1D8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */; };
 		82E4A8312AFCE0A800BE1D8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A8302AFCE0A800BE1D8B /* ViewController.swift */; };
@@ -87,6 +90,9 @@
 		827DFF502B0E1BD300029EDE /* viewPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPDF.swift; sourceTree = "<group>"; };
 		8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteSnaps.swift; sourceTree = "<group>"; };
 		8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewSiteSnapsCell.swift; sourceTree = "<group>"; };
+		82BE9C792B46861500F5F755 /* Image-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-1.jpg"; sourceTree = "<group>"; };
+		82BE9C7B2B46862000F5F755 /* Image-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-2.jpg"; sourceTree = "<group>"; };
+		82BE9C7D2B46862500F5F755 /* Image-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-3.jpg"; sourceTree = "<group>"; };
 		82E4A8292AFCE0A800BE1D8B /* RSAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -241,10 +247,10 @@
 		82E4A82B2AFCE0A800BE1D8B /* RSAC */ = {
 			isa = PBXGroup;
 			children = (
-				82E4A8612AFCE54300BE1D8B /* auditList */,
-				82E4A8742AFCE54400BE1D8B /* createNewAudit */,
 				82E4A85E2AFCE54200BE1D8B /* Firebase */,
 				82E4A8662AFCE54300BE1D8B /* InitalView */,
+				82E4A8612AFCE54300BE1D8B /* auditList */,
+				82E4A8742AFCE54400BE1D8B /* createNewAudit */,
 				82E4A87C2AFCE54400BE1D8B /* viewAudit */,
 				82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */,
 				82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */,
@@ -257,6 +263,9 @@
 				82E4A8A72AFCE55500BE1D8B /* man.png */,
 				82E4A83A2AFCE0AA00BE1D8B /* Info.plist */,
 				82E4A8AA2AFCE7F600BE1D8B /* GoogleService-Info.plist */,
+				82BE9C792B46861500F5F755 /* Image-1.jpg */,
+				82BE9C7B2B46862000F5F755 /* Image-2.jpg */,
+				82BE9C7D2B46862500F5F755 /* Image-3.jpg */,
 			);
 			path = RSAC;
 			sourceTree = "<group>";
@@ -513,9 +522,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */,
+				82BE9C7E2B46862500F5F755 /* Image-3.jpg in Resources */,
 				82E4A8A92AFCE55500BE1D8B /* man.png in Resources */,
 				82E4A8392AFCE0AA00BE1D8B /* LaunchScreen.storyboard in Resources */,
 				82E4A8362AFCE0AA00BE1D8B /* Assets.xcassets in Resources */,
+				82BE9C7C2B46862000F5F755 /* Image-2.jpg in Resources */,
 				82E4A8AB2AFCE7F600BE1D8B /* GoogleService-Info.plist in Resources */,
 				82E4A8342AFCE0A800BE1D8B /* Main.storyboard in Resources */,
 				82E4A8A82AFCE55500BE1D8B /* firebase_logo_icon_168209.png in Resources */,

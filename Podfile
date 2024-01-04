@@ -11,6 +11,7 @@ target 'RSAC' do
   pod 'FirebaseUI'
   pod 'Firebase/Core'
   pod 'SwiftLoader'
+  pod 'TPPDF'
   
    
   post_install do |pi|
