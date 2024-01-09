@@ -24,11 +24,7 @@ class viewAuditCell: UICollectionViewCell {
             height: 80
         )
      
-        auditImage.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: 100,
-            height: 100)
+ 
         //60
         
         auditLabel.frame = CGRect(
@@ -37,6 +33,18 @@ class viewAuditCell: UICollectionViewCell {
             width: frame.width,
             height: 20)
         //60
+        
+        observationIcon.frame = CGRect(
+            x: mapUI.frame.maxX + 10,
+            y: auditLabel.frame.maxY + 10,
+            width: 20,
+            height: 20)
+        
+        observationCountLabel.frame = CGRect(
+            x: observationIcon.frame.maxX + 10,
+            y: auditLabel.frame.maxY + 10,
+            width: frame.width,
+            height: 20)
         
         auditDate.frame = CGRect(
             x: mapUI.frame.maxX + 10,
@@ -54,7 +62,8 @@ class viewAuditCell: UICollectionViewCell {
         //
         
         contentView.addSubview(mapUI)
-        contentView.addSubview(auditImage)
+        contentView.addSubview(observationIcon)
+        contentView.addSubview(observationCountLabel)
         contentView.addSubview(auditLabel)
         contentView.addSubview(auditDate)
         //contentView.addSubview(lineDivider1)
@@ -85,17 +94,18 @@ class viewAuditCell: UICollectionViewCell {
       }()
     
     
-    let auditImage: UIImageView = {
-        let profile = UIImageView()
-        //profile.image = UIImage(named: "frozen")
-        profile.contentMode = .scaleAspectFill
-        profile.layer.cornerRadius = 10
-        profile.layer.masksToBounds = true
+    let observationIcon: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "camera.on.rectangle.fill")
+        image.contentMode = .scaleAspectFill
+        image.tintColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+//        image.layer.cornerRadius = 10
+//        image.layer.masksToBounds = true
         //profile.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         //
         //profile.layer.borderWidth = 0.5
    
-        return profile
+        return image
     }()
 
     let auditLabel: UILabel = {
@@ -106,6 +116,16 @@ class viewAuditCell: UICollectionViewCell {
         label.textAlignment = .left
         //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        return label
+    }()
+    let observationCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Loading.."
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         return label
     }()
     

@@ -50,9 +50,9 @@ extension mainSearchView {
                     
                     SwiftLoader.hide()
                     
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
+                    self.collectionView.reloadData()
+            
+                    
                    
                 })
             

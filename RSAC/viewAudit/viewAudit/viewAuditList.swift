@@ -46,6 +46,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var CompletedAuditsFilter: [createSiteData] = []
         var ArchievedAuditsFilter: [createSiteData] = []
     
+    
+        var listOfSitesData: [auditSiteData] = []
+    
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -88,7 +92,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             
             auditData.queryOrderedByKey()
-                    .observe(.value, with: { snapshot in
+                .observe(.value, with: { [self] snapshot in
                         
                     var NewlistOfSites: [createSiteData] = []
                         
@@ -96,6 +100,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                             if let snapshot = child as? DataSnapshot,
                                 let listOfSites = createSiteData(snapshot: snapshot) {
                                 NewlistOfSites.append(listOfSites)
+                           
+
             
                             }
                         }
@@ -114,11 +120,49 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                         
                         self.collectionView.reloadData()
           
-                    
+                        
+             
+             
                     })
                 
         
             }
+    
+    func observationSnapshotCount(auditID: String, siteID : String) -> Int{
+    
+        let uid = Auth.auth().currentUser?.uid
+            //we want to get the database reference
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child(uid!)
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+                .child("\(self.mainConsole.auditList!)")
+        
+        auditData.queryOrderedByKey()
+            .observeSingleEvent(of: .value, with: { snapshot in
+                    var listOfSitesData: [auditSiteData] = []
+                    for child in snapshot.children {
+                        if let snapshot = child as? DataSnapshot,
+                            let listOfSites = auditSiteData(snapshot: snapshot) {
+                            listOfSitesData.append(listOfSites)
+                        }
+                    }
+                    self.listOfSitesData = listOfSitesData
+                    
+                    SwiftLoader.hide()
+                    self.collectionView.reloadData()
+      
+                
+                })
+            
+        return self.listOfSitesData.count
+        }
+        
             
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -210,12 +254,18 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             let siteItems = CompletedAuditsFilter[indexPath.row]
        
             
-            //cell.auditImage.sd_setImage(with: URL(string:audititems.imageURL))
-            //cell.auditDate.text = audititems.date
             cell.auditLabel.text = siteItems.siteName
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = false
+            
+            
+//            for x in siteItems.siteID{
 //
+//                let obsCount = self.observationSnapshotCount(auditID: self.auditID, siteID:"\(x)")
+//                cell.observationCountLabel.text = "\(obsCount)"
+//
+//            }
+
             
             //map reference
             let annotation = MKPointAnnotation()
@@ -230,25 +280,17 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             //mapview.region = region
             cell.mapUI.setRegion(region, animated: false)
             
+            // load and show the observation count
+     
             
-            
+        return cell
 
-            // Configure the cell
-//cell.layer.masksToBounds = true
-//            cell.layer.cornerRadius = 10
-//            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//            cell.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-//            cell.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-//            cell.layer.shadowRadius = 8.0
-//            cell.layer.shadowOpacity = 0.4
-            return cell
-            
             
         }else if indexPath.section  == mapSection {
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditHeaderMap", for: indexPath) as! viewAuditHeaderMap
             
     
-            for x in listOfSites{
+            for x in CompletedAuditsFilter{
             
                 
         //map reference
@@ -257,11 +299,16 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 annotation.coordinate = centerCoordinate
                 annotation.title = x.siteName
                 cell.myLocations.addAnnotation(annotation)
+
+                
+                
                 
                 let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(x.lat), CLLocationDegrees(x.long))
                 let span = MKCoordinateSpan.init(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                
                 let region = MKCoordinateRegion.init(center: mapCenter, span: span)
                 cell.myLocations.region = region
+                
             
             }
             
