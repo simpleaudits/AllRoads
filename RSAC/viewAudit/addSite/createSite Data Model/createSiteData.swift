@@ -21,7 +21,7 @@ struct createSiteData{
     let ref: String
     let siteID: String
     var completed: Bool
-    
+    let status: String
     
     
     init(
@@ -31,6 +31,7 @@ struct createSiteData{
         long: CGFloat,
         ref:String,
         siteID:String,
+        status:String,
         completed: Bool
     )
     
@@ -43,6 +44,7 @@ struct createSiteData{
         self.ref = ref
         self.siteID = siteID
         self.completed = completed
+        self.status = status
         
     }
     
@@ -56,6 +58,7 @@ struct createSiteData{
             let long = value["long"] as? CGFloat,
             let ref = value["ref"] as? String,
             let siteID = value["siteID"] as? String,
+            let status = value["status"] as? String,
             let completed = value["completed"] as? Bool else {
                 return nil
         }
@@ -65,6 +68,7 @@ struct createSiteData{
         self.long = long
         self.ref = ref
         self.siteID = siteID
+        self.status = status
         self.completed = completed
     }
     
@@ -75,6 +79,7 @@ struct createSiteData{
             "lat": lat,
             "long": long,
             "ref": ref,
+            "status": status,
             "siteID": siteID,
             "completed": completed
         ]

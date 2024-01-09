@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0139160A8806B8F73DBEF86C /* Pods_RSAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8348D075D9682BE578FF06DB /* Pods_RSAC.framework */; };
+		822BF9042B4C0B75003A141C /* viewSiteStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822BF9032B4C0B75003A141C /* viewSiteStage.swift */; };
 		82445D0A2B00FF7D00319605 /* createSiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D092B00FF7D00319605 /* createSiteData.swift */; };
 		82445D0C2B0100A000319605 /* createSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D0B2B0100A000319605 /* createSite.swift */; };
 		827DFF4F2B0E185600029EDE /* PDFkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF4E2B0E185600029EDE /* PDFkit.swift */; };
@@ -84,6 +85,7 @@
 		06A96D1B47885569966ABCA3 /* Pods_RSACTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RSACTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B437F435A4512DCCFB7023B /* Pods-RSAC-RSACUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSAC-RSACUITests.debug.xcconfig"; path = "Target Support Files/Pods-RSAC-RSACUITests/Pods-RSAC-RSACUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		1E4E71F1426298B5A8EAD9D8 /* Pods-RSACTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSACTests.release.xcconfig"; path = "Target Support Files/Pods-RSACTests/Pods-RSACTests.release.xcconfig"; sourceTree = "<group>"; };
+		822BF9032B4C0B75003A141C /* viewSiteStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteStage.swift; sourceTree = "<group>"; };
 		82445D092B00FF7D00319605 /* createSiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSiteData.swift; sourceTree = "<group>"; };
 		82445D0B2B0100A000319605 /* createSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSite.swift; sourceTree = "<group>"; };
 		827DFF4E2B0E185600029EDE /* PDFkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFkit.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		82E4A8202AFCE0A800BE1D8B = {
 			isa = PBXGroup;
 			children = (
+				82E4A8A42AFCE54D00BE1D8B /* extensionFiles.swift */,
 				82E4A82B2AFCE0A800BE1D8B /* RSAC */,
 				82E4A8422AFCE0AA00BE1D8B /* RSACTests */,
 				82E4A84C2AFCE0AA00BE1D8B /* RSACUITests */,
@@ -255,7 +258,6 @@
 				82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */,
 				82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */,
 				82E4A8302AFCE0A800BE1D8B /* ViewController.swift */,
-				82E4A8A42AFCE54D00BE1D8B /* extensionFiles.swift */,
 				82E4A8322AFCE0A800BE1D8B /* Main.storyboard */,
 				82E4A8352AFCE0AA00BE1D8B /* Assets.xcassets */,
 				82E4A8372AFCE0AA00BE1D8B /* LaunchScreen.storyboard */,
@@ -390,6 +392,7 @@
 			children = (
 				82E4A87F2AFCE54400BE1D8B /* viewAuditHeaderMap.swift */,
 				82E4A8802AFCE54400BE1D8B /* viewAuditCell.swift */,
+				822BF9032B4C0B75003A141C /* viewSiteStage.swift */,
 				82E4A8812AFCE54400BE1D8B /* viewAuditList.swift */,
 			);
 			path = viewAudit;
@@ -660,6 +663,7 @@
 			files = (
 				82E4A8982AFCE54400BE1D8B /* scopeDecription.swift in Sources */,
 				82E4A8872AFCE54400BE1D8B /* Save.swift in Sources */,
+				822BF9042B4C0B75003A141C /* viewSiteStage.swift in Sources */,
 				82E4A8932AFCE54400BE1D8B /* newUser.swift in Sources */,
 				8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */,
 				82E4A8922AFCE54400BE1D8B /* Alerts.swift in Sources */,

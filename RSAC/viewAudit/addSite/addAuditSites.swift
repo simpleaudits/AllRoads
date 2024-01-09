@@ -102,39 +102,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.view.addSubview(image)
         self.view.addSubview(descriptionTextfield)
         
-//        layoverView = UIView(frame: CGRect(x: 15, y: view.frame.height , width: view.frame.width - 30, height: 80))
-//        layoverView.layer.borderWidth = 1
-//        layoverView.layer.cornerRadius = 30
-//        descriptionTextfield.layer.masksToBounds = true
-//
-//
-//
-//        //create but buy now and enter button
-//        commentButton = UIButton(frame: CGRect(x: -1, y: 0, width: layoverView.frame.width/2, height: 80))
-//        commentButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-//        commentButton.setTitle("Add Comments", for: .normal)
-//        commentButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-//        commentButton.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
-//        commentButton.addTarget(self, action: #selector(addComment), for: .touchUpInside)
-//
-//
-//        cameraButton = UIButton(frame: CGRect(x: layoverView.frame.width/2 + 1, y: 0, width: layoverView.frame.width/2, height: 80))
-//        cameraButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-//        cameraButton.setTitle("Take Photo", for: .normal)
-//        cameraButton.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
-//        cameraButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-//        cameraButton.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
-//        self.view.addSubview(layoverView)
-//        layoverView.addSubview(cameraButton)
-//        layoverView.addSubview(commentButton)
-//
-//
-//        UIView.animate(withDuration: 1, animations: {
-//            self.layoverView.frame.origin.y = self.view.frame.height - 80 - (self.tabBarController?.tabBar.frame.size.height)!
-//
-//        }, completion: nil)
-//
-        
+
         
         
         //Ask user for site name:

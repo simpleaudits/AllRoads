@@ -118,8 +118,6 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
         super.viewDidLoad()
 
         projectName.delegate? = self
-
-        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -129,9 +127,6 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
         
     }
 
-    // MARK: - Table view data source
-
-
 
     @IBAction func createAudit(_ sender: UIBarButtonItem) {
     
@@ -139,8 +134,6 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
             SwiftLoader.show(title: "Creating Audit", animated: true)
 
 
-            
-            
             if  projectName.text!.count > 0 &&
                 auditStage.text!.count > 0 &&
                 scopeLabel.text!.count > 0 &&

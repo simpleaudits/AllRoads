@@ -27,11 +27,51 @@ class saveLocal: UIViewController {
             .child(uid!)
             .child("\(self.mainConsole.audit!)")
             .child("\(auditID)")
-//            .child("\(self.mainConsole.auditList!)")
-//            .child("\(uuid)")
+
         
         auditData.updateChildValues([
             "auditProgress": auditProgress,
+   
+            
+        ]){
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data could not be saved: \(error).")
+                
+                SwiftLoader.hide()
+                self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                
+   
+                
+            } else {
+                
+                print("Data saved successfully!")
+                
+                self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                SwiftLoader.hide()
+                
+                
+            }
+        }
+  
+    }
+    
+    func updateSiteProgress(siteStatus:String, auditID:String){
+        //status is either: "active" or "not active"
+        
+        SwiftLoader.show(title: "Updating", animated: true)
+        let uid = Auth.auth().currentUser?.uid
+        let reftest = Database.database().reference()
+            .child("\(self.mainConsole.prod!)")
+        let auditData = reftest
+            .child("\(self.mainConsole.post!)")
+            .child(uid!)
+            .child("\(self.mainConsole.audit!)")
+            .child("\(auditID)")
+
+        
+        auditData.updateChildValues([
+            "status": siteStatus,
    
             
         ]){

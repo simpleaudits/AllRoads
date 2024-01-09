@@ -15,11 +15,9 @@ class SignUpController: UICollectionViewController,UITextFieldDelegate,UITextVie
     
     let picker = UIImagePickerController()
     var QRImage = UIImage()
-
     let loginToList = "accountCreated"
     
     let usersRef = Database.database().reference(withPath: "online")
-    
     let storageReference = Storage.storage().reference()
     var ThecurrentUser = Auth.auth().currentUser
     var user: User!

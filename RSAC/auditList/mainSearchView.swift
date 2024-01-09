@@ -218,7 +218,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             let auditData = ArchievedAuditsFilter[indexPath.row]
             cell.projectName.text = auditData.projectName
         
-           
+    
             
             //map reference
             let annotation = MKPointAnnotation()
@@ -246,20 +246,14 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
       
-
-
-        
-       // DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {self.performSegue(withIdentifier: "gameSettings", sender: indexPath.row);}
-        
         if indexPath.section  == 0 {
          
             let auditData = CompletedAuditsFilter[indexPath.row]
             
-            let Alert = UIAlertController(title: "Audit Name:/n\(auditData.projectName)", message: "ref\(auditData.auditID)", preferredStyle: .actionSheet)
+            let Alert1 = UIAlertController(title: "Audit Name:/n\(auditData.projectName)", message: "ref\(auditData.auditID)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
-          
 
                         }
             let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
@@ -282,14 +276,15 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
                         }
            
 
-            Alert.addAction(action1)
-            Alert.addAction(action2)
-            Alert.addAction(action3)
-            Alert.addAction(action4)
-            Alert.addAction(action5)
+            Alert1.addAction(action1)
+            Alert1.addAction(action2)
+            Alert1.addAction(action3)
+            Alert1.addAction(action4)
+            Alert1.addAction(action5)
 
-            self.present(Alert, animated: true, completion: nil)
+            self.present(Alert1, animated: true, completion: nil)
             self.auditID = auditData.auditID
+            print("AuditID:\(self.auditID)")
             self.projectName = auditData.projectName
     
             
@@ -297,12 +292,10 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = InProgressAuditsAuditsFilter[indexPath.row]
             
-            let Alert = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
+            let Alert2 = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
-                       
-
 
                         }
             let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
@@ -324,31 +317,31 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
                             let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
                         }
            
-            Alert.addAction(action1)
-            Alert.addAction(action2)
-            Alert.addAction(action3)
-            Alert.addAction(action4)
-            Alert.addAction(action5)
+            Alert2.addAction(action1)
+            Alert2.addAction(action2)
+            Alert2.addAction(action3)
+            Alert2.addAction(action4)
+            Alert2.addAction(action5)
 
-            self.present(Alert, animated: true, completion: nil)
+            self.present(Alert2, animated: true, completion: nil)
             self.auditID = auditData.auditID
+            print("AuditID:\(self.auditID)")
             self.projectName = auditData.projectName
             
-        }else if indexPath.section == 2{
+        }else{
             
             let auditData = ArchievedAuditsFilter[indexPath.row]
             
-            let Alert = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
-                        let action1 = UIAlertAction(title: "View audit",style: .cancel) { (action:UIAlertAction!) in
+            let Alert3 = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
+                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
-                     
 
                         }
             let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.firebaseConsole.updateAuditProgress(auditProgress: mainConsole.archived!, auditID: auditID)
-
+                
                         }
             let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
                             //save this for headerview in view item
@@ -361,23 +354,20 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
                             
                         }
             
-            
                             let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
                         }
            
+            Alert3.addAction(action1)
+            Alert3.addAction(action2)
+            Alert3.addAction(action3)
+            Alert3.addAction(action4)
+            Alert3.addAction(action5)
 
-            Alert.addAction(action1)
-            Alert.addAction(action2)
-            Alert.addAction(action3)
-            Alert.addAction(action4)
-            Alert.addAction(action5)
-
-            self.present(Alert, animated: true, completion: nil)
+            self.present(Alert3, animated: true, completion: nil)
             self.auditID = auditData.auditID
+            print("AuditID:\(self.auditID)")
             self.projectName = auditData.projectName
 
-            
-        }else{
             
         }
     }

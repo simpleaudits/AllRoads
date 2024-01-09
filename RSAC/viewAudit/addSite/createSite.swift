@@ -144,6 +144,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     long: self.long,
                     ref: "\(refData)",
                     siteID: "\(siteID)",
+                    status: "In-Progress Audits",
                     completed: true)
     
                 

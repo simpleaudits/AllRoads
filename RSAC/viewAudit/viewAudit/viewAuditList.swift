@@ -9,12 +9,17 @@
 import UIKit
 import Firebase
 import MapKit
-
+import SwiftLoader
  
 
 class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayout,MKMapViewDelegate  {
     
-        //Rows in each section, these are subject to change.
+    // configure the section
+    let mapSection = 0
+    let auditListSection = 1
+    let archievedSection = 2
+    
+    //Rows in each section, these are subject to change.
         var SectionCount:Int = 3
 
         var rowsInSection1:Int = 3
@@ -36,8 +41,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
         let mainConsole = CONSOLE()
         let extensConsole = extens()
+        let firebaseConsole = saveLocal()
         var listOfSites: [createSiteData] = [] // for the favourites
-
+        var CompletedAuditsFilter: [createSiteData] = []
+        var ArchievedAuditsFilter: [createSiteData] = []
     
     override func viewDidLoad() {
 
@@ -65,12 +72,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
         func loadAuditSnapshots(){
             
+            SwiftLoader.show(title: "Loading Data", animated: true)
+            
             let uid = Auth.auth().currentUser?.uid
             
                 //we want to get the database reference
                 let reftest = Database.database().reference()
                     .child("\(self.mainConsole.prod!)")
-                let thisUsersGamesRef = reftest
+                let auditData = reftest
                     .child("\(self.mainConsole.post!)")
                     .child(uid!)
                     .child("\(self.mainConsole.audit!)")
@@ -78,23 +87,34 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                     .child("\(self.mainConsole.siteList!)")
             
             
-            thisUsersGamesRef.queryOrderedByKey()
+            auditData.queryOrderedByKey()
                     .observe(.value, with: { snapshot in
                         
                     var NewlistOfSites: [createSiteData] = []
                         
                         for child in snapshot.children {
-                            
                             if let snapshot = child as? DataSnapshot,
                                 let listOfSites = createSiteData(snapshot: snapshot) {
                                 NewlistOfSites.append(listOfSites)
-                                
-               
-                                
+            
                             }
                         }
                         self.listOfSites = NewlistOfSites
+                        SwiftLoader.hide()
+                        
+                        //all true completed
+                        self.CompletedAuditsFilter = self.listOfSites.filter(
+                            {return $0.status.localizedCaseInsensitiveContains("In-Progress Audits") })
+                        print("CompletedAuditsFilter:\(self.CompletedAuditsFilter.count)")
+
+                        //all false completed
+                        self.ArchievedAuditsFilter = self.listOfSites.filter(
+                            {return $0.status.localizedCaseInsensitiveContains("Archived") })
+                        print("ArchievedAuditsFilter:\(self.ArchievedAuditsFilter.count)")
+                        
                         self.collectionView.reloadData()
+          
+                    
                     })
                 
         
@@ -130,15 +150,18 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         switch section {
-            case 0:
+            case mapSection:
             //family
             return 1
-
-            case 1:
+            
+            case auditListSection:
             //music
-            return listOfSites.count
-       
-
+            return CompletedAuditsFilter.count
+            
+            case archievedSection:
+            //music
+            return ArchievedAuditsFilter.count
+        
             default:
             return 0
 
@@ -149,27 +172,27 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
-        if indexPath.section == 1{
+        if indexPath.section == auditListSection{
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
-
             sectionHeader.headerName.text =  "Site Locations"
-     
             return sectionHeader
      
-        }else if indexPath.section == 0 {
+        }else if indexPath.section == mapSection {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
 
             sectionHeader.headerName.text =  "Map"
-
             return sectionHeader
-            
+     
+        }else if indexPath.section == archievedSection {
+            let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
+            sectionHeader.headerName.text = mainConsole.archived
+            return sectionHeader
      
         }else{
-            let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
+            
+            //empty
 
-            sectionHeader.headerName.text = mainConsole.archived
-   
-            return sectionHeader
+            return UICollectionReusableView()
                                 
  
         }
@@ -180,16 +203,20 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
   
-        if indexPath.section  == 1 {
+        if indexPath.section  == auditListSection {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditCell", for: indexPath) as! viewAuditCell
              
-            let siteItems = listOfSites[indexPath.row]
+            let siteItems = CompletedAuditsFilter[indexPath.row]
+       
             
             //cell.auditImage.sd_setImage(with: URL(string:audititems.imageURL))
             //cell.auditDate.text = audititems.date
             cell.auditLabel.text = siteItems.siteName
             cell.auditDate.text = siteItems.date
+            cell.lineDivider1.isHidden = false
+//
+            
             //map reference
             let annotation = MKPointAnnotation()
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
@@ -207,24 +234,24 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
 
             // Configure the cell
-            cell.layer.cornerRadius = 10
-            cell.layer.masksToBounds = true
-            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            cell.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-            cell.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-            cell.layer.shadowRadius = 8.0
-            cell.layer.shadowOpacity = 0.4
+//cell.layer.masksToBounds = true
+//            cell.layer.cornerRadius = 10
+//            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//            cell.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+//            cell.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+//            cell.layer.shadowRadius = 8.0
+//            cell.layer.shadowOpacity = 0.4
             return cell
             
             
-        }else if indexPath.section  == 0 {
+        }else if indexPath.section  == mapSection {
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditHeaderMap", for: indexPath) as! viewAuditHeaderMap
             
     
             for x in listOfSites{
             
                 
-                //map reference
+        //map reference
                 let annotation = MKPointAnnotation()
                 let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(x.lat), longitude:CLLocationDegrees(x.long))
                 annotation.coordinate = centerCoordinate
@@ -241,12 +268,39 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             return cell
             
             
-        }else{
-        
-            let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "auditCell", for: indexPath) as! auditCell
+        }else if indexPath.section  == archievedSection{
+        //Archieved section
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditCell", for: indexPath) as! viewAuditCell
+             
+            let siteItems = ArchievedAuditsFilter[indexPath.row]
+
             
+            //cell.auditImage.sd_setImage(with: URL(string:audititems.imageURL))
+            //cell.auditDate.text = audititems.date
+            cell.auditLabel.text = siteItems.siteName
+            cell.auditDate.text = siteItems.date
+            cell.lineDivider1.isHidden = true
+//
+            
+            //map reference
+            let annotation = MKPointAnnotation()
+            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
+            annotation.coordinate = centerCoordinate
+            //annotation.title = ItemName
+            //cell.mapUI.addAnnotation(annotation)
+            
+            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
+            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+            //mapview.region = region
+            cell.mapUI.setRegion(region, animated: false)
+            
+            
+            
+
             return cell
-            
+        }else{
+            return UICollectionReusableView() as! UICollectionViewCell
         }
         
     }
@@ -255,21 +309,116 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
        // DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {self.performSegue(withIdentifier: "gameSettings", sender: indexPath.row);}
 
-        if indexPath.section  == 0 {
+        if indexPath.section  == mapSection {
+            //Map view
 
 
-        }else if indexPath.section == 1{
-            self.refData = "\(listOfSites[indexPath.row].ref)"
-            self.siteID = "\(listOfSites[indexPath.row].siteID)"
+        }else if indexPath.section == auditListSection{
+            // List of audits
+            
+            let auditData = CompletedAuditsFilter[indexPath.row]
+            
+            let Alert3 = UIAlertController(title: "Site Name", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
+                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
+                            //save this for headerview in view item
+                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
+
+                        }
+            let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
+                            //save this for headerview in view item
+                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
+                
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                    
+                }
+                
+                        }
+//            let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
+//                            //save this for headerview in view item
+//                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
+//
+//                DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//
+//                }
+//
+//                        }
+
+            
+                            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
+                        }
+           
+            Alert3.addAction(action1)
+            Alert3.addAction(action2)
+            Alert3.addAction(action3)
+            //Alert3.addAction(action4)
+   
+
+            
+            //archieved
+            self.present(Alert3, animated: true, completion: nil)
+            self.refData = "\(CompletedAuditsFilter[indexPath.row].ref)"
+            self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
             print(self.refData )
-            self.performSegue(withIdentifier: "viewAuditList", sender: self)
+            
+  
 
-        }else if indexPath.section == 2{
+        }else if indexPath.section == archievedSection{
+    
+            let auditData = ArchievedAuditsFilter[indexPath.row]
+            let Alert3 = UIAlertController(title: "Site Name", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
+                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
+                            //save this for headerview in view item
+                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
 
+                        }
+//            let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
+//                            //save this for headerview in view item
+//                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
+//
+//                DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//
+//                }
+//
+//                        }
+            let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
+                            //save this for headerview in view item
+                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
+                
+                DispatchQueue.main.async {
+                   
+                    self.collectionView.reloadData()
+                    
+                }
+                            
+                        }
 
+            
+                            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
+                        }
+           
+            Alert3.addAction(action1)
+           // Alert3.addAction(action2)
+            Alert3.addAction(action3)
+            Alert3.addAction(action4)
+   
+
+            
+            //archieved
+            self.present(Alert3, animated: true, completion: nil)
+            self.refData = "\(ArchievedAuditsFilter[indexPath.row].ref)"
+            self.siteID = "\(ArchievedAuditsFilter[indexPath.row].siteID)"
+            print(self.refData )
+            
+     
+           
 
         }else{
 
+            
+            //empty
         }
     }
 
@@ -306,43 +455,17 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     
     
-    
-
-    
-    
 
     func createLayout() -> UICollectionViewCompositionalLayout{
         //Compositional layout
         let layout = UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
               
-            if sectionNumber  == 1 {
-                
-                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3), heightDimension: .absolute(100)))
-                        item.contentInsets.trailing = 20
-                        item.contentInsets.leading = 20
-                        //item.contentInsets.top = 20
-                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(100)),
-                        subitems: [item])
-            
-
-                        let section = NSCollectionLayoutSection(group: group)
-                        section.orthogonalScrollingBehavior = .groupPaging
-                
-                        section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
-                
-                        section.contentInsets.leading = 10
-
-                
-                        return section
-
-            }else if sectionNumber  == 0 {
-                
+            if sectionNumber  == self.mapSection {
+                //MAPVIEW
 
                      let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300)))
-                         item.contentInsets.trailing = 20
-                         item.contentInsets.leading = 20
+                         item.contentInsets.trailing = 5
+                         item.contentInsets.leading = -15
                          //item.contentInsets.top = 20
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
@@ -362,8 +485,31 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
                          return section
 
-            }else if sectionNumber == 2 {
+            }else if sectionNumber  == self.auditListSection {
+                //AUDITVIEW
                 
+                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
+                        item.contentInsets.trailing = 20
+                        item.contentInsets.leading = 20
+                        item.contentInsets.top = 20
+                    let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(CGFloat(self.CompletedAuditsFilter.count) * 100)),
+                        subitems: [item])
+            
+
+                        let section = NSCollectionLayoutSection(group: group)
+                        section.orthogonalScrollingBehavior = .groupPaging
+                
+                        section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
+                
+                        section.contentInsets.leading = 10
+
+                
+                        return section
+
+            }else if sectionNumber == self.archievedSection {
+                //ARCHIEVED
                 
                      let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)))
                          item.contentInsets.trailing = 20
@@ -371,7 +517,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                          //item.contentInsets.top = 20
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
-                         heightDimension: .absolute(200)),
+                         heightDimension: .absolute(100)),
                          subitems: [item])
 
 
@@ -389,13 +535,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             }else{
                 
                 
-                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)))
+                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
                          item.contentInsets.trailing = 20
                          item.contentInsets.leading = 20
                          //item.contentInsets.top = 20
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
-                         heightDimension: .absolute(200)),
+                         heightDimension: .absolute(100)),
                          subitems: [item])
 
 

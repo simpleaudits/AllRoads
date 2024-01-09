@@ -13,24 +13,24 @@ extension mainSearchView {
     
     func loadAudits(){
         
-        let uid = Auth.auth().currentUser?.uid
+        SwiftLoader.show(title: "Loading Audits", animated: true)
         
+        let uid = Auth.auth().currentUser?.uid
             //we want to get the database reference
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
-            let thisUsersGamesRef = reftest
+            let auditDataList = reftest
                 .child("\(self.mainConsole.post!)")
                 .child(uid!)
                 .child("\(self.mainConsole.audit!)")
 
         
-        thisUsersGamesRef.queryOrderedByKey()
+        auditDataList.queryOrderedByKey()
                 .observe(.value, with: { snapshot in
                     
                 var myAudits: [newAuditDataset] = []
               
                     for child in snapshot.children {
-                        
                         if let snapshot = child as? DataSnapshot,
                             let proditem = newAuditDataset(snapshot: snapshot) {
                             myAudits.append(proditem)
@@ -48,7 +48,12 @@ extension mainSearchView {
                     self.ArchievedAuditsFilter = self.auditData.filter(
                         {return $0.auditProgress.localizedCaseInsensitiveContains("Archived") })
                     
-                    self.collectionView.reloadData()
+                    SwiftLoader.hide()
+                    
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                   
                 })
             
     

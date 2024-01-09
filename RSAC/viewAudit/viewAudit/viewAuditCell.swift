@@ -20,8 +20,8 @@ class viewAuditCell: UICollectionViewCell {
         mapUI.frame = CGRect(
             x:0,
             y:0,
-            width: frame.width ,
-            height: frame.height
+            width: 80 ,
+            height: 80
         )
      
         auditImage.frame = CGRect(
@@ -32,19 +32,24 @@ class viewAuditCell: UICollectionViewCell {
         //60
         
         auditLabel.frame = CGRect(
-            x: 0,
-            y:  frame.height - 20,
+            x: mapUI.frame.maxX + 10,
+            y: 0,
             width: frame.width,
             height: 20)
         //60
         
         auditDate.frame = CGRect(
-            x: 0,
-            y: auditLabel.frame.maxY,
+            x: mapUI.frame.maxX + 10,
+            y: mapUI.frame.maxY - 20,
             width: frame.width,
             height: 20)
 
-
+        lineDivider1.frame = CGRect(
+            x:0,
+            y:mapUI.frame.maxY + 1,
+            width: frame.width,
+            height: 1
+        )
 
         //
         
@@ -52,7 +57,7 @@ class viewAuditCell: UICollectionViewCell {
         contentView.addSubview(auditImage)
         contentView.addSubview(auditLabel)
         contentView.addSubview(auditDate)
-       
+        //contentView.addSubview(lineDivider1)
 
         
     }
@@ -71,7 +76,14 @@ class viewAuditCell: UICollectionViewCell {
 
 
     }()
+    
+    let lineDivider1: UIView = {
+        let Line = UIView() // this allows us to assing images.
+        Line.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
 
+        return Line
+      }()
+    
     
     let auditImage: UIImageView = {
         let profile = UIImageView()
@@ -91,9 +103,9 @@ class viewAuditCell: UICollectionViewCell {
         label.text = "Loading.."
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.numberOfLines = 1
-        label.textAlignment = .right
+        label.textAlignment = .left
         //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         return label
     }()
     
@@ -102,8 +114,8 @@ class viewAuditCell: UICollectionViewCell {
         label.text = "Loading.."
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textAlignment = .right
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textAlignment = .left
+        label.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         return label
     }()
     
