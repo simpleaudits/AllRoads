@@ -25,6 +25,12 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     var siteID = String()
     var refData = String()
     
+    
+
+    let extensConsole = extens()
+    let firebaseConsole = saveLocal()
+  
+    
     let mainConsole = CONSOLE()
     
     let a = extens()
@@ -98,12 +104,6 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
 
         
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
     }
 
     // MARK: - Table view data source
@@ -124,7 +124,6 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                 let uid = Auth.auth().currentUser?.uid
                 siteID = UUID().uuidString
                 
-
                 let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
                 let thisUsersGamesRef = reftest
                     .child("\(self.mainConsole.post!)")
@@ -136,7 +135,6 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                 
                 refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
 
-             
                 let saveData = createSiteData(
                     siteName: siteName.text!,
                     date: timeDate.text!,
@@ -145,12 +143,11 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     ref: "\(refData)",
                     siteID: "\(siteID)",
                     status: "In-Progress Audits",
+                    observationCount:"0",
                     completed: true)
     
-                
                 thisUsersGamesRef.setValue(saveData.saveSiteData()){
                     (error:Error?, ref:DatabaseReference) in
-                    
 
                     if let error = error {
                         print("Data could not be saved: \(error).")
@@ -162,20 +159,27 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                         SwiftLoader.hide()
  
                         self.successUpload(Message: "New Site Added!", subtitle: "")
+                        
+      
                     }
                       
                 }
+                
+                
+                
+                
     
             }
             else{
                 SwiftLoader.hide()
                 self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
-                
             }
             
     
         
     }
+    
+   
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          if let destination3 = segue.destination as? locationView {

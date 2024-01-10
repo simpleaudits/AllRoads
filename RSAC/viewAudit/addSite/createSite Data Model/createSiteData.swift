@@ -22,6 +22,7 @@ struct createSiteData{
     let siteID: String
     var completed: Bool
     let status: String
+    let observationCount: String
     
     
     init(
@@ -32,6 +33,7 @@ struct createSiteData{
         ref:String,
         siteID:String,
         status:String,
+        observationCount:String,
         completed: Bool
     )
     
@@ -43,6 +45,7 @@ struct createSiteData{
         self.long = long
         self.ref = ref
         self.siteID = siteID
+        self.observationCount = observationCount
         self.completed = completed
         self.status = status
         
@@ -57,6 +60,7 @@ struct createSiteData{
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
             let ref = value["ref"] as? String,
+            let observationCount = value["observationCount"] as? String,
             let siteID = value["siteID"] as? String,
             let status = value["status"] as? String,
             let completed = value["completed"] as? Bool else {
@@ -68,6 +72,7 @@ struct createSiteData{
         self.long = long
         self.ref = ref
         self.siteID = siteID
+        self.observationCount = observationCount
         self.status = status
         self.completed = completed
     }
@@ -78,6 +83,7 @@ struct createSiteData{
             "date": date,
             "lat": lat,
             "long": long,
+            "observationCount": observationCount,
             "ref": ref,
             "status": status,
             "siteID": siteID,

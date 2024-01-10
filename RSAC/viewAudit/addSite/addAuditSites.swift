@@ -35,6 +35,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     let extensConsole = extens()
     var localImageData = Data()
     
+    
     var lat = CGFloat()
     var long = CGFloat()
     
@@ -42,6 +43,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var imageCount = Int()
     let storageReference = Storage.storage().reference()
     
+    let firebaseConsole = saveLocal()
+    var listOfSitesData: [auditSiteData] = []
     
     var location = String()
     var locationManager = CLLocationManager()
@@ -377,17 +380,70 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                     SwiftLoader.hide()
                     
                 } else {
-                    print("saved")
-                    SwiftLoader.hide()
+                   
+                    print("saved data entry")
+                   
+                    
                     self.navigationController!.popViewController(animated: true)
                     //self.performSegue(withIdentifier: "viewAuditSnaps", sender: self)
-
+                    
+                    //1 load the obsevation count
+                    self.observationSnapshotCount(auditID: self.auditID, siteID: self.siteID)
+                    //2 save the key
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID)
+                        
+                        print("updated and saved observation")
+                        SwiftLoader.hide()
+                        
+                    })
+           
                 }
                   
             }
 
    
   
+        }
+    
+    
+    func observationSnapshotCount(auditID: String, siteID : String){
+    
+        let uid = Auth.auth().currentUser?.uid
+            //we want to get the database reference
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child(uid!)
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+                .child("\(self.mainConsole.auditList!)")
+        
+        print("obscount:\(auditData)")
+        
+        auditData.queryOrderedByKey()
+            .observeSingleEvent(of: .value, with: { snapshot in
+                    var listOfSitesData: [auditSiteData] = []
+                    for child in snapshot.children {
+                        if let snapshot = child as? DataSnapshot,
+                            let listOfSites = auditSiteData(snapshot: snapshot) {
+                            listOfSitesData.append(listOfSites)
+                        }
+                    }
+                
+                
+                    self.listOfSitesData = listOfSitesData
+                    print("obscount:\(self.listOfSitesData.count)")
+                    SwiftLoader.hide()
+
+               
+                })
+
+   
+
         }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

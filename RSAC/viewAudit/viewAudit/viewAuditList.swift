@@ -47,7 +47,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var ArchievedAuditsFilter: [createSiteData] = []
     
     
-        var listOfSitesData: [auditSiteData] = []
+  
     
     
     override func viewDidLoad() {
@@ -100,8 +100,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                             if let snapshot = child as? DataSnapshot,
                                 let listOfSites = createSiteData(snapshot: snapshot) {
                                 NewlistOfSites.append(listOfSites)
-                           
-
+         
             
                             }
                         }
@@ -117,51 +116,21 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                         self.ArchievedAuditsFilter = self.listOfSites.filter(
                             {return $0.status.localizedCaseInsensitiveContains("Archived") })
                         print("ArchievedAuditsFilter:\(self.ArchievedAuditsFilter.count)")
-                        
-                        self.collectionView.reloadData()
+                    
           
-                        
+                    
+                        self.collectionView.reloadData()
+      
              
-             
+                    
+    
                     })
                 
         
             }
     
-    func observationSnapshotCount(auditID: String, siteID : String) -> Int{
     
-        let uid = Auth.auth().currentUser?.uid
-            //we want to get the database reference
-            let reftest = Database.database().reference()
-                .child("\(self.mainConsole.prod!)")
-            let auditData = reftest
-                .child("\(self.mainConsole.post!)")
-                .child(uid!)
-                .child("\(self.mainConsole.audit!)")
-                .child("\(auditID)")
-                .child("\(self.mainConsole.siteList!)")
-                .child("\(siteID)")
-                .child("\(self.mainConsole.auditList!)")
-        
-        auditData.queryOrderedByKey()
-            .observeSingleEvent(of: .value, with: { snapshot in
-                    var listOfSitesData: [auditSiteData] = []
-                    for child in snapshot.children {
-                        if let snapshot = child as? DataSnapshot,
-                            let listOfSites = auditSiteData(snapshot: snapshot) {
-                            listOfSitesData.append(listOfSites)
-                        }
-                    }
-                    self.listOfSitesData = listOfSitesData
-                    
-                    SwiftLoader.hide()
-                    self.collectionView.reloadData()
-      
-                
-                })
-            
-        return self.listOfSitesData.count
-        }
+
         
             
 
@@ -257,14 +226,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.auditLabel.text = siteItems.siteName
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = false
+            cell.observationCountLabel.text = siteItems.observationCount
             
-            
-//            for x in siteItems.siteID{
-//
-//                let obsCount = self.observationSnapshotCount(auditID: self.auditID, siteID:"\(x)")
-//                cell.observationCountLabel.text = "\(obsCount)"
-//
-//            }
 
             
             //map reference
@@ -381,16 +344,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 }
                 
                         }
-//            let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
-//                            //save this for headerview in view item
-//                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
-//
-//                DispatchQueue.main.async {
-//                    self.collectionView.reloadData()
-//
-//                }
-//
-//                        }
+
 
             
                             let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
