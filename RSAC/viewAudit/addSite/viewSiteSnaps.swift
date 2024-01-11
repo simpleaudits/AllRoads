@@ -137,6 +137,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
         let indexAudit = listOfSitesData[indexPath.item]
         cell.siteName.text = indexAudit.auditTitle
         cell.auditDate.text = indexAudit.date
+        cell.auditDescription.text = indexAudit.auditDescription
         cell.siteImage.sd_setImage(with: URL(string:indexAudit.imageURL))
         
         titleData = indexAudit.auditTitle

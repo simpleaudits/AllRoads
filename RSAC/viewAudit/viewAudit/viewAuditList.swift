@@ -228,6 +228,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.lineDivider1.isHidden = false
             cell.observationCountLabel.text = siteItems.observationCount
             
+            
+            cell.layer.masksToBounds = true
+            cell.layer.cornerRadius = 15
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+            
 
             
             //map reference
@@ -292,6 +298,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.lineDivider1.isHidden = true
             cell.observationCountLabel.text = siteItems.observationCount
 //
+            cell.layer.masksToBounds = true
+            cell.layer.cornerRadius = 15
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
             
             //map reference
             let annotation = MKPointAnnotation()
@@ -513,10 +523,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             }else if sectionNumber == self.archievedSection {
                 //ARCHIEVED
                 
-                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)))
+                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/2), heightDimension: .absolute(100)))
                          item.contentInsets.trailing = 20
                          item.contentInsets.leading = 20
-                         //item.contentInsets.top = 20
+                         item.contentInsets.top = 20
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
                          heightDimension: .absolute(100)),

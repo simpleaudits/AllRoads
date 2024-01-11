@@ -35,7 +35,7 @@ class viewSiteSnapsCell: UICollectionViewCell {
             x: siteImage.frame.maxX + 5,
             y:  0,
             width: frame.width - (siteImage.frame.maxX + 5),
-            height: 20)
+            height: 30)
         //60
         
         auditDate.frame = CGRect(
@@ -44,6 +44,11 @@ class viewSiteSnapsCell: UICollectionViewCell {
             width: frame.width - (siteImage.frame.maxX + 5),
             height: 20)
 
+        auditDescription.frame = CGRect(
+            x: siteImage.frame.maxX + 5,
+            y: auditDate.frame.maxY,
+            width: frame.width - (siteImage.frame.maxX + 40),
+            height: 40)
 
 
         //
@@ -52,6 +57,7 @@ class viewSiteSnapsCell: UICollectionViewCell {
         contentView.addSubview(siteImage)
         contentView.addSubview(siteName)
         contentView.addSubview(auditDate)
+        contentView.addSubview(auditDescription)
        
 
         
@@ -100,13 +106,22 @@ class viewSiteSnapsCell: UICollectionViewCell {
     let auditDate: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
         label.textAlignment = .left
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return label
     }()
-    
+    let auditDescription: UILabel = {
+        let label = UILabel()
+        label.text = "Loading.."
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.numberOfLines = 3
+        label.textAlignment = .left
+        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        //label.backgroundColor = .red
+        return label
+    }()
     
   
     

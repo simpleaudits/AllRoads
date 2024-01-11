@@ -818,7 +818,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
-                        <barButtonItem key="rightBarButtonItem" image="plus.rectangle.fill.on.folder.fill" catalog="system" style="plain" id="YLj-e0-X1c">
+                        <barButtonItem key="rightBarButtonItem" image="folder.fill.badge.plus" catalog="system" style="plain" id="YLj-e0-X1c">
                             <color key="tintColor" systemColor="systemGreenColor"/>
                             <connections>
                                 <segue destination="NfU-JG-H9A" kind="show" id="t2V-3A-KJv"/>
@@ -1141,7 +1141,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iW9-Zn-a16"/>
+        <segue reference="ZDo-IU-HkD"/>
         <segue reference="Ypc-0i-t4p"/>
         <segue reference="Uv5-2R-2fq"/>
     </inferredMetricsTieBreakers>
@@ -1153,7 +1153,6 @@
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="plus.rectangle.fill.on.folder.fill" catalog="system" width="128" height="95"/>
         <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

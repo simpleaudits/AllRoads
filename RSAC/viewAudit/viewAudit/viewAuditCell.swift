@@ -80,6 +80,8 @@ class viewAuditCell: UICollectionViewCell {
     let mapViewUI = MKMapView() // this allows us to assing images.
     mapViewUI.mapType = .satelliteFlyover
     mapViewUI.isUserInteractionEnabled = false
+    mapViewUI.layer.cornerRadius = 10
+    mapViewUI.layer.masksToBounds = true
 
     return mapViewUI
 
