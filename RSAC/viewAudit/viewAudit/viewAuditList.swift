@@ -290,6 +290,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.auditLabel.text = siteItems.siteName
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = true
+            cell.observationCountLabel.text = siteItems.observationCount
 //
             
             //map reference

@@ -201,7 +201,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
             let region = MKCoordinateRegion.init(center: mapCenter, span: span)
             //mapview.region = region
-            cell.mapUI.setRegion(region, animated: true)
+            cell.mapUI.setRegion(region, animated: false)
             
             
             
@@ -231,7 +231,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
             let region = MKCoordinateRegion.init(center: mapCenter, span: span)
             //mapview.region = region
-            cell.mapUI.setRegion(region, animated: true)
+            cell.mapUI.setRegion(region, animated: false)
             
             
             
@@ -250,7 +250,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
          
             let auditData = CompletedAuditsFilter[indexPath.row]
             
-            let Alert1 = UIAlertController(title: "Audit Name:/n\(auditData.projectName)", message: "ref\(auditData.auditID)", preferredStyle: .actionSheet)
+            let Alert1 = UIAlertController(title: "Audit Name:\n\(auditData.projectName)", message: "Audit Reference:\n\(auditData.auditID)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
@@ -292,7 +292,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = InProgressAuditsAuditsFilter[indexPath.row]
             
-            let Alert2 = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
+            let Alert2 = UIAlertController(title: "Audit Name:\n\(auditData.projectName)", message: "Audit Reference:\n\(auditData.auditID)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);
@@ -332,7 +332,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = ArchievedAuditsFilter[indexPath.row]
             
-            let Alert3 = UIAlertController(title: "Audit Name", message: "\(auditData.projectName)", preferredStyle: .actionSheet)
+            let Alert3 = UIAlertController(title: "Audit Name:\n\(auditData.projectName)", message: "Audit Reference:\n\(auditData.auditID)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewItemDetails", sender: indexPath.row);

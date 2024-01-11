@@ -63,10 +63,10 @@ class auditCell:UICollectionViewCell{
     
 
         let labelUI: UILabel = {
-        //let placeHolderImage = UIImage(named: "yeezy.jpg")
+        
         let labelUI = UILabel() // this allows us to assing images.
             labelUI.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            labelUI.layer.opacity = 0.5
+            labelUI.layer.opacity = 0.8
  
             
         return labelUI
@@ -80,7 +80,7 @@ class auditCell:UICollectionViewCell{
         label.text = "CN-54654"
         label.numberOfLines = 2 // label height should be 50
         label.textAlignment = .left
-        label.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         label.backgroundColor = .clear
         return label
 
