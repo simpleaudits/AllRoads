@@ -10,23 +10,23 @@ import PDFKit
 import TPPDF
 
 
-extension viewSiteSnaps{
+extension viewPDF{
     
-     
-
     struct PDFCreatorData {
         
         let title: String
         let body: String
         let image: String
         let imageData: UIImage
+        let date: String
         
         
-        init(title: String, description:String,imageData:UIImage, image:String) {
+        init(title: String, description:String,imageData:UIImage, image:String, date:String) {
             self.title = title
             self.body = description
             self.image = image
             self.imageData = imageData
+            self.date = date
             
         }
     }
