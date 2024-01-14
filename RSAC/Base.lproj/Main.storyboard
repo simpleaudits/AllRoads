@@ -313,9 +313,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="systemGreenColor"/>
-                        <color key="selectedImageTintColor" systemColor="systemGreenColor"/>
+                        <color key="selectedImageTintColor" systemColor="systemOrangeColor"/>
                         <tabBarAppearance key="standardAppearance">
-                            <color key="selectionIndicatorTintColor" systemColor="systemGreenColor"/>
+                            <color key="selectionIndicatorTintColor" systemColor="systemOrangeColor"/>
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
@@ -610,7 +610,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="iOQ-eB-RhR">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <color key="tintColor" systemColor="systemOrangeColor"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Zvd-yM-9xX" kind="relationship" relationship="rootViewController" id="rzK-22-ctL"/>
@@ -653,7 +653,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Audits" largeTitleDisplayMode="always" id="Hnc-3G-bVb">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="search" id="swA-Et-A9A">
-                            <color key="tintColor" systemColor="systemGreenColor"/>
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <segue destination="vEE-iT-pq0" kind="show" id="RVk-XU-vN9"/>
                             </connections>
@@ -686,6 +686,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="x9r-8z-bM8">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemOrangeColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -819,7 +820,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
                         <barButtonItem key="rightBarButtonItem" image="folder.fill.badge.plus" catalog="system" style="plain" id="YLj-e0-X1c">
-                            <color key="tintColor" systemColor="systemGreenColor"/>
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <segue destination="NfU-JG-H9A" kind="show" id="t2V-3A-KJv"/>
                             </connections>
@@ -844,7 +845,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="6JZ-hz-s0i">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.arrow.down.fill" catalog="system" style="plain" id="q6w-ph-cjZ">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="q6w-ph-cjZ">
                             <color key="tintColor" systemColor="systemGreenColor"/>
                             <connections>
                                 <action selector="addToAuditList:" destination="JPK-3h-a4i" id="eYN-KJ-n5T"/>
@@ -1141,9 +1142,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZDo-IU-HkD"/>
+        <segue reference="iW9-Zn-a16"/>
         <segue reference="Ypc-0i-t4p"/>
-        <segue reference="Uv5-2R-2fq"/>
+        <segue reference="n7w-SH-YOG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text.fill" catalog="system" width="115" height="128"/>

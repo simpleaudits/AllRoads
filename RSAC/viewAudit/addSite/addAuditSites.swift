@@ -10,14 +10,24 @@ import Firebase
 import SDWebImage
 import SwiftLoader
 import MapKit
+import PencilKit
 
-class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString{
+class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString, UIPencilInteractionDelegate{
  
     
     var scrollView = UIScrollView()
     var layoverView = UIView()
     var locationLabel = UILabel()
+    
+    //edit image:
     var image = UIImageView()
+
+    var canvasView: PKCanvasView!
+    var imgForMarkup: UIImage?
+    var editImage = UIButton()
+    var clearImage = UIButton()
+    
+    
     var backgroundImage = UIView()
     var descriptionTextfieldHeader = UILabel()
     var descriptionTextfield = UITextView()
@@ -61,22 +71,23 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     }
   
     override func viewDidAppear(_ animated: Bool) {
-
         
+        if let window = self.view.window, let toolPicker = PKToolPicker.shared(for: window) {
+        toolPicker.setVisible(true, forFirstResponder: self.canvasView)
+        toolPicker.addObserver(self.canvasView)
 
-//        editDescription = UIButton(frame: CGRect(x: -1, y: 0, width: layoverView.frame.width/2, height: 80))
-//        editDescription.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-//        editDescription.setTitle("Edit", for: .normal)
-//        editDescription.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-//        editDescription.setTitleColor(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), for: .normal)
-//        editDescription.addTarget(self, action: #selector(editDescriptionButton), for: .touchUpInside)
- 
+        }
+
+    
 
     }
     override func viewDidLoad() {
 
         
         super.viewDidLoad()
+ 
+        
+        
         findlocation()
         
 
@@ -90,7 +101,15 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
         image = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         image.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
+        
+        //initiliaze the canvas:
+        self.canvasView = PKCanvasView.init(frame: self.image.frame)
+        self.canvasView.isOpaque = false
+
+        
+
+        
         
         
         descriptionTextfield = UITextView(frame: CGRect(x: 0, y: view.frame.height * 0.7, width: view.frame.width, height: view.frame.height * 0.3))
@@ -100,12 +119,34 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         descriptionTextfield.text = ""
         descriptionTextfield.delegate = self
     
+        
+        //Buttons:
+        editImage = UIButton(frame: CGRect(x: 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
+        editImage.setTitleColor(UIColor.white, for: .normal)
+        editImage.setTitle("Edit Image", for: .normal)
+        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
+        editImage.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        editImage.layer.cornerRadius = 15
+        editImage.layer.masksToBounds = true
+        editImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
+        
+        
+        clearImage = UIButton(frame: CGRect(x: editImage.frame.maxX + 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
+        clearImage.setTitleColor(UIColor.white, for: .normal)
+        clearImage.setTitle("Clear Image", for: .normal)
+        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
+        clearImage.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        clearImage.layer.cornerRadius = 15
+        clearImage.layer.masksToBounds = true
+        clearImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
+
 
         
         self.view.addSubview(image)
         self.view.addSubview(descriptionTextfield)
-        
-
+        self.view.addSubview(self.canvasView)
+        self.view.addSubview(editImage)
+        self.view.addSubview(clearImage)
         
         
         //Ask user for site name:
@@ -155,6 +196,45 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.present(alert, animated: true, completion: nil)
 
     }
+    
+    @objc func  onClear(_ sender : UIButton) {
+        canvasView.drawing = PKDrawing()
+    }
+    
+    @IBAction func saveDrawing(_ sender : UIButton) {
+        var drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
+        if let markedupImage = self.saveImage(drawing: drawing){
+            // Save the image or do whatever with the Marked up Image
+
+    self.navigationController?.popViewController(animated: true)
+    }
+    
+}
+    
+    @objc func editImageButton(_ sender: UIButton) {
+        
+        self.canvasView.drawingPolicy = .anyInput
+        self.canvasView?.drawing = PKDrawing()
+        self.canvasView.becomeFirstResponder()
+        print("Edit Image button pressed")
+
+        
+    }
+    
+
+    func saveImage(drawing : UIImage) -> UIImage? {
+    let bottomImage = self.imgForMarkup!
+    let newImage = autoreleasepool { () -> UIImage in
+    UIGraphicsBeginImageContextWithOptions(self.canvasView!.frame.size, false, 0.0)
+    bottomImage.draw(in: CGRect(origin: CGPoint.zero, size: self.canvasView!.frame.size))
+    drawing.draw(in: CGRect(origin: CGPoint.zero, size: self.canvasView!.frame.size))
+    let createdImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+        return createdImage!
+    }
+        return newImage
+    }
+    
     
     func presentModal() {
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
