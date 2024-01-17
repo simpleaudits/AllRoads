@@ -12,6 +12,41 @@ import SwiftLoader
 import MapKit
 import PencilKit
 
+//EXTENSION FOR UIIMAGE------------------------------------------
+extension UIImage {
+    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
+        // Determine the scale factor that preserves aspect ratio
+        let widthRatio = targetSize.width / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        let scaleFactor = min(widthRatio, heightRatio)
+        
+        // Compute the new image size that preserves aspect ratio
+        let scaledImageSize = CGSize(
+            width: size.width * scaleFactor,
+            height: size.height * scaleFactor
+        )
+
+        // Draw and return the resized UIImage
+        let renderer = UIGraphicsImageRenderer(
+            size: scaledImageSize
+        )
+
+        let scaledImage = renderer.image { _ in
+            self.draw(in: CGRect(
+                origin: .zero,
+                size: scaledImageSize
+            ))
+        }
+        
+        return scaledImage
+    }
+}
+
+//EXTENSION FOR UIIMAGE------------------------------------------
+
+
+
 class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString, UIPencilInteractionDelegate{
  
     
@@ -61,6 +96,15 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
 
 
+    
+
+    
+    
+    
+    
+    
+    
+    
     func finishPassing_decription_addSite(saveDescriptionData: String) {
        
             self.siteDescription = saveDescriptionData
@@ -99,8 +143,13 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         picker.delegate = self
         
 
-        image = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        
+        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+                    (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        image = UIImageView(frame: CGRect(x: 0, y: topBarHeight, width: view.frame.width, height: 400))
         image.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        //image.layer.borderWidth = 2
         image.contentMode = .scaleAspectFit
         
         //initiliaze the canvas:
@@ -108,15 +157,22 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.canvasView.isOpaque = false
 
         
-
+        layoverView = UIView(frame: CGRect(x: 0, y: topBarHeight, width: view.frame.width, height: 397))
+        layoverView.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        layoverView.layer.borderWidth = 2
+        layoverView.isHidden = true
+       
         
         
-        
-        descriptionTextfield = UITextView(frame: CGRect(x: 0, y: view.frame.height * 0.7, width: view.frame.width, height: view.frame.height * 0.3))
-        descriptionTextfield.textColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
-        descriptionTextfield.backgroundColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 0.2014693709)
-        descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 30)
+        let tabBarHeight = tabBarController?.tabBar.frame.size.height
+        descriptionTextfield = UITextView(frame: CGRect(x: 5, y: image.frame.maxY , width: view.frame.width - 10, height: view.frame.height - (image.frame.maxY + tabBarHeight!)))
+        descriptionTextfield.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        descriptionTextfield.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+        descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 20)
         descriptionTextfield.text = ""
+        descriptionTextfield.layer.cornerRadius = 10
+        descriptionTextfield.layer.masksToBounds = true
+        descriptionTextfield.isUserInteractionEnabled = false
         descriptionTextfield.delegate = self
     
         
@@ -144,6 +200,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         self.view.addSubview(image)
         self.view.addSubview(descriptionTextfield)
+        self.view.addSubview(layoverView)
         self.view.addSubview(self.canvasView)
         self.view.addSubview(editImage)
         self.view.addSubview(clearImage)
@@ -217,6 +274,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.canvasView?.drawing = PKDrawing()
         self.canvasView.becomeFirstResponder()
         print("Edit Image button pressed")
+    
+        self.layoverView.isHidden = false
 
         
     }
@@ -313,15 +372,16 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         if let jpegData = editedImage.jpegData(compressionQuality: 0.5){
             try? jpegData.write(to: imagePath)
-            
-
-            
+ 
+      
             //We want to save the image URL string and then loop later to save in firebase.
-            
-        
-            
+           
             let imageURLtoNSData = NSURL(string: "\(imagePath)")
             let imageData = NSData (contentsOf: imageURLtoNSData! as URL)
+            
+            
+            
+            
             self.localImageData = imageData! as Data
             image.image = UIImage(data: localImageData)
             

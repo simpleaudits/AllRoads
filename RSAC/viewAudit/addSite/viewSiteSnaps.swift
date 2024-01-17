@@ -38,9 +38,13 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
     //ARRAY
 
     
-
+    override func viewDidDisappear(_ animated: Bool) {
+        print("View removed, data remove from memory")
+        
+        
+        
+    }
     
-   
 
 
       

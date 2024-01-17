@@ -10,6 +10,7 @@ import PDFKit
 import TPPDF
 import WebKit
 import Firebase
+import SwiftLoader
 
 class viewPDF: UIViewController {
     @IBOutlet weak var webView: WKWebView!
@@ -33,6 +34,7 @@ class viewPDF: UIViewController {
         print("passed:\(refData)")
         loadSiteAuditData()
         
+        
         //PDF created:
 //        if let data = documentData {
 //
@@ -43,16 +45,23 @@ class viewPDF: UIViewController {
 //            })
 //
         
+        SwiftLoader.show(title: "Creating PDF", animated: true)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: { [self] in
-            createPDFData()
-
+           
+            SwiftLoader.show(title: "Nearly Done", animated: true)
+            
+            perform(#selector(createPDFData), with: nil, afterDelay: TimeInterval(saveData.count))
         })
         
        
      }
         
         
-    func createPDFData(){
+    @objc func createPDFData(){
+        
+        SwiftLoader.hide()
+        
         let document = PDFDocument(format: .a4)
         
         //add the data here:
@@ -173,6 +182,9 @@ class viewPDF: UIViewController {
                //add space seperator
                document.add(space: 15.0)
                
+               //add line
+               document.addLineSeparator(PDFContainer.contentLeft, style: style1)
+               
                
                //Create a colums to insert data
                let tableOfUserData = PDFTable(rows: 4, columns: 2)
@@ -216,18 +228,6 @@ class viewPDF: UIViewController {
         
        
         
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         //Export the file
@@ -240,11 +240,11 @@ class viewPDF: UIViewController {
                 let url = try generator.generateURL(filename: filename)
                 print("Output URL:", url)
   
-
                 DispatchQueue.main.async {
-        
                     // Load PDF into a webview from the temporary file
                     self.webView.load(URLRequest(url: url))
+                    
+                    
                 }
             } catch {
                 print("Error while generating PDF: " + error.localizedDescription)
@@ -257,61 +257,70 @@ class viewPDF: UIViewController {
     
 
 
-       func loadSiteAuditData(){
+    func loadSiteAuditData(){
 
-           if Auth.auth().currentUser != nil {
-
-               Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
-                   .observe(.value, with: { [self] snapshot in
-
-                var listOfSitesData: [auditSiteData] = []
-                for child in snapshot.children {
-
-                if let snapshot = child as? DataSnapshot,
-                   let List = auditSiteData(snapshot: snapshot) {
-                    listOfSitesData.append(List)
-                }
-                }
-                self.listOfSitesData = listOfSitesData
-                //call it after all data is loaded to remove duplications:
-          
-                 
-                    for x in listOfSitesData{
+        
                    
+        
+                    if Auth.auth().currentUser != nil {
+
+                    Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
+                    .observe(.value, with: { [self] snapshot in
+
+                    var listOfSitesData: [auditSiteData] = []
+                    for child in snapshot.children {
+
+                    if let snapshot = child as? DataSnapshot,
+                    let List = auditSiteData(snapshot: snapshot) {
+                    listOfSitesData.append(List)
+                    }
+                    }
+                    self.listOfSitesData = listOfSitesData
+                    //call it after all data is loaded to remove duplications:
+                        
+            
+
+                        
+                   
+
+
+                    for x in listOfSitesData{
+
                     DispatchQueue.global(qos: .background).async {
-                       do
+                        do
                         {
-                                let data = try Data.init(contentsOf: URL.init(string:x.imageURL)!)
-                                    DispatchQueue.main.async {
-                                        self.imageData = UIImage(data: data)!
-                            
-                                        let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, imageData: self.imageData, image: "", date: x.date)
-                                        
-                                        self.saveData.append(pdfCreator)
-                                        
-                                        
-                                        
-                
-              
+                        let data = try Data.init(contentsOf: URL.init(string:x.imageURL)!)
+                            DispatchQueue.main.async {
+                                
+                                self.imageData = UIImage(data: data)!
+                                let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, imageData: self.imageData, image: "", date: x.date)
+                                self.saveData.append(pdfCreator)
+                                
+                                
+                                
+                               
+
                         }
-                        }
-                  
-                        catch {
+                                
+
+                        }catch {
                         // error
                         }
-                       
-                        
                     }
-                    
-                }
-         
+                        
 
-                       
-               })
+                    }
+
+           
+                    print("end")
 
 
-           }
+                    })
 
-       }
 
-}
+                    }
+
+                    }
+
+
+                    }
