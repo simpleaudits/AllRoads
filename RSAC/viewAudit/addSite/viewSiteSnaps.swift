@@ -37,13 +37,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
     //ARRAY
 
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print("View removed, data remove from memory")
-        
-        
-        
-    }
+
     
 
 
@@ -139,7 +133,8 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
         cell.siteName.text = indexAudit.auditTitle
         cell.auditDate.text = indexAudit.date
         cell.auditDescription.text = indexAudit.auditDescription
-        cell.siteImage.sd_setImage(with: URL(string:indexAudit.imageURL))
+        let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 300, height: 300), scaleMode: .fill)
+        cell.siteImage.sd_setImage(with: URL(string:indexAudit.imageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
         
         titleData = indexAudit.auditTitle
         descriptionData = indexAudit.auditDescription
@@ -154,7 +149,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
        
        func loadSiteAuditData(){
      
-           if Auth.auth().currentUser != nil {
+           //if Auth.auth().currentUser != nil {
   
                Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
                    .observe(.value, with: { [self] snapshot in
@@ -180,7 +175,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
                })
                
 
-           }
+          // }
            
        }
     

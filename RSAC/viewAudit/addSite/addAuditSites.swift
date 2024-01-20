@@ -60,7 +60,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var canvasView: PKCanvasView!
     var imgForMarkup: UIImage?
     var editImage = UIButton()
-    var clearImage = UIButton()
+    var saveImage = UIButton()
     
     
     var backgroundImage = UIView()
@@ -187,14 +187,14 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         editImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
         
         
-        clearImage = UIButton(frame: CGRect(x: editImage.frame.maxX + 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
-        clearImage.setTitleColor(UIColor.white, for: .normal)
-        clearImage.setTitle("Clear Image", for: .normal)
+        saveImage = UIButton(frame: CGRect(x: editImage.frame.maxX + 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
+        saveImage.setTitleColor(UIColor.white, for: .normal)
+        saveImage.setTitle("Save Edits", for: .normal)
         //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        clearImage.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-        clearImage.layer.cornerRadius = 15
-        clearImage.layer.masksToBounds = true
-        clearImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
+        saveImage.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        saveImage.layer.cornerRadius = 15
+        saveImage.layer.masksToBounds = true
+        saveImage.addTarget(self, action: #selector(saveDrawing(_:)), for: .touchUpInside)
 
 
         
@@ -203,7 +203,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.view.addSubview(layoverView)
         self.view.addSubview(self.canvasView)
         self.view.addSubview(editImage)
-        self.view.addSubview(clearImage)
+        self.view.addSubview(saveImage)
         
         
         //Ask user for site name:
@@ -258,14 +258,18 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         canvasView.drawing = PKDrawing()
     }
     
-    @IBAction func saveDrawing(_ sender : UIButton) {
+    @objc func saveDrawing(_ sender : UIButton){
         var drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
         if let markedupImage = self.saveImage(drawing: drawing){
             // Save the image or do whatever with the Marked up Image
+            
+            let data = markedupImage.pngData()
+            self.localImageData = data! as Data
+  
 
-    self.navigationController?.popViewController(animated: true)
     }
     
+        
 }
     
     @objc func editImageButton(_ sender: UIButton) {
@@ -282,10 +286,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
 
     func saveImage(drawing : UIImage) -> UIImage? {
-    let bottomImage = self.imgForMarkup!
+    let bottomImage = image.image
     let newImage = autoreleasepool { () -> UIImage in
     UIGraphicsBeginImageContextWithOptions(self.canvasView!.frame.size, false, 0.0)
-    bottomImage.draw(in: CGRect(origin: CGPoint.zero, size: self.canvasView!.frame.size))
+    bottomImage!.draw(in: CGRect(origin: CGPoint.zero, size: self.canvasView!.frame.size))
     drawing.draw(in: CGRect(origin: CGPoint.zero, size: self.canvasView!.frame.size))
     let createdImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
@@ -375,15 +379,14 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
  
       
             //We want to save the image URL string and then loop later to save in firebase.
-           
             let imageURLtoNSData = NSURL(string: "\(imagePath)")
             let imageData = NSData (contentsOf: imageURLtoNSData! as URL)
             
             
             
             
-            self.localImageData = imageData! as Data
-            image.image = UIImage(data: localImageData)
+            //self.localImageData = imageData! as Data
+            image.image = UIImage(data: jpegData)
             
             //Update the the collectionview here.
             
