@@ -133,7 +133,7 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
         cell.siteName.text = indexAudit.auditTitle
         cell.auditDate.text = indexAudit.date
         cell.auditDescription.text = indexAudit.auditDescription
-        let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 300, height: 300), scaleMode: .fill)
+        let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 150, height: 150), scaleMode: .fill)
         cell.siteImage.sd_setImage(with: URL(string:indexAudit.imageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
         
         titleData = indexAudit.auditTitle
@@ -169,13 +169,16 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 }
 
                 self.listOfSitesData = listOfSitesData
-                self.collectionView.reloadData()
+                    
                   
                
                })
                
 
-          // }
+               DispatchQueue.main.async {
+                   self.collectionView.reloadData()
+                   
+               }
            
        }
     

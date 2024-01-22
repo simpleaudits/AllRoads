@@ -24,12 +24,14 @@ extension mainSearchView {
                 .child(uid!)
                 .child("\(self.mainConsole.audit!)")
 
-        
+
         auditDataList.queryOrderedByKey()
-                .observe(.value, with: { snapshot in
+            .observeSingleEvent(of: .value, with: { snapshot in
                     
                 var myAudits: [newAuditDataset] = []
               
+
+             
                     for child in snapshot.children {
                         if let snapshot = child as? DataSnapshot,
                             let proditem = newAuditDataset(snapshot: snapshot) {
@@ -38,7 +40,7 @@ extension mainSearchView {
                         }
                     }
                     self.auditData = myAudits
-                    
+
                     self.CompletedAuditsFilter = self.auditData.filter(
                         {return $0.auditProgress.localizedCaseInsensitiveContains("Completed Audits") })
 
@@ -47,15 +49,16 @@ extension mainSearchView {
 
                     self.ArchievedAuditsFilter = self.auditData.filter(
                         {return $0.auditProgress.localizedCaseInsensitiveContains("Archived") })
-                    
+
                     SwiftLoader.hide()
-                    
-                    self.collectionView.reloadData()
+
+                   self.collectionView.reloadData()
             
                     
                    
                 })
-            
+        
+                     
     
         }
     

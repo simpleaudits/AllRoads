@@ -61,7 +61,7 @@ class viewAuditCell: UICollectionViewCell {
 
         //
         
-        contentView.addSubview(mapUI)
+        //contentView.addSubview(mapUI)
         contentView.addSubview(observationIcon)
         contentView.addSubview(observationCountLabel)
         contentView.addSubview(auditLabel)

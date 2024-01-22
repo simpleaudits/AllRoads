@@ -39,7 +39,7 @@ class auditCell:UICollectionViewCell{
             height: frame.height * 0.3
         )
   
-        contentView.addSubview(mapUI)
+        //contentView.addSubview(mapUI)
         contentView.addSubview(labelUI)
         contentView.addSubview(projectName)
       

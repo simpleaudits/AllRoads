@@ -827,7 +827,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="rtl-i4-4U8" kind="show" identifier="viewAuditList" id="ZDo-IU-HkD"/>
+                        <segue destination="q4L-Y8-fSb" kind="show" identifier="viewAuditList" id="2ez-JG-Dkp"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXs-B5-Phi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1140,14 +1140,64 @@
             </objects>
             <point key="canvasLocation" x="120" y="2735"/>
         </scene>
+        <!--Observations-->
+        <scene sceneID="4dy-zl-y9j">
+            <objects>
+                <tableViewController id="q4L-Y8-fSb" customClass="TableViewController" customModule="RSAC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="wby-u3-m8Y">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="kGI-oh-LAT" rowHeight="81" style="IBUITableViewCellStyleDefault" id="TW4-aS-BJY">
+                                <rect key="frame" x="0.0" y="50" width="393" height="81"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TW4-aS-BJY" id="40K-ff-hl4">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="81"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kGI-oh-LAT">
+                                            <rect key="frame" x="20" y="0.0" width="353" height="81"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="q4L-Y8-fSb" id="IG7-F0-jcR"/>
+                            <outlet property="delegate" destination="q4L-Y8-fSb" id="bec-H3-IZU"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Observations" id="5Z3-TP-5TA">
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="m54-8o-2N0">
+                            <rect key="frame" x="115" y="5.6666666666666679" width="163" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Complete"/>
+                                <segment title="Archieved"/>
+                            </segments>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="doc.text.fill.viewfinder" catalog="system" id="9V5-yS-yD3">
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8ot-dU-KDu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="119.84732824427481" y="3431.6901408450708"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iW9-Zn-a16"/>
-        <segue reference="Ypc-0i-t4p"/>
+        <segue reference="05a-tf-gx5"/>
         <segue reference="n7w-SH-YOG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text.fill" catalog="system" width="115" height="128"/>
+        <image name="doc.text.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="firebase_logo_icon_168209.png" width="512" height="256"/>
         <image name="folder" catalog="system" width="128" height="96"/>
         <image name="folder.fill.badge.plus" catalog="system" width="128" height="92"/>

@@ -47,7 +47,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func viewDidLoad() {
         
-
+        loadAudits()
         
         collectionView?.register(auditCell.self, forCellWithReuseIdentifier: "auditCell")
         collectionView?.register(auditHeader.self, forSupplementaryViewOfKind: "auditHeader", withReuseIdentifier: "auditHeader")
@@ -62,14 +62,14 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         super.viewDidLoad()
         
-        loadAudits()
+     
         
 
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         print("YES")
-        auditData.removeAll()
+//        auditData.removeAll()
 
     }
     
@@ -162,18 +162,18 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
         
            
             
-            //map reference
-            let annotation = MKPointAnnotation()
-            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
-            annotation.coordinate = centerCoordinate
-            //annotation.title = ItemName
-            //cell.mapUI.addAnnotation(annotation)
-            
-            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
-            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-            //mapview.region = region
-            cell.mapUI.setRegion(region, animated: false)
+//            //map reference
+//            let annotation = MKPointAnnotation()
+//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
+//            annotation.coordinate = centerCoordinate
+//            //annotation.title = ItemName
+//            //cell.mapUI.addAnnotation(annotation)
+//
+//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
+//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+//            //mapview.region = region
+//            cell.mapUI.setRegion(region, animated: false)
             
             
             
@@ -190,18 +190,18 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
         
            
             
-            //map reference
-            let annotation = MKPointAnnotation()
-            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
-            annotation.coordinate = centerCoordinate
-            //annotation.title = ItemName
-            //cell.mapUI.addAnnotation(annotation)
-            
-            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
-            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-            //mapview.region = region
-            cell.mapUI.setRegion(region, animated: false)
+//            //map reference
+//            let annotation = MKPointAnnotation()
+//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
+//            annotation.coordinate = centerCoordinate
+//            //annotation.title = ItemName
+//            //cell.mapUI.addAnnotation(annotation)
+//
+//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
+//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+//            //mapview.region = region
+//            cell.mapUI.setRegion(region, animated: false)
             
             
             
@@ -219,19 +219,19 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             cell.projectName.text = auditData.projectName
         
     
-            
-            //map reference
-            let annotation = MKPointAnnotation()
-            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
-            annotation.coordinate = centerCoordinate
-            //annotation.title = ItemName
-            //cell.mapUI.addAnnotation(annotation)
-            
-            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
-            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-            //mapview.region = region
-            cell.mapUI.setRegion(region, animated: false)
+//            
+//            //map reference
+//            let annotation = MKPointAnnotation()
+//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
+//            annotation.coordinate = centerCoordinate
+//            //annotation.title = ItemName
+//            //cell.mapUI.addAnnotation(annotation)
+//            
+//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
+//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+//            //mapview.region = region
+//            cell.mapUI.setRegion(region, animated: false)
             
             
             

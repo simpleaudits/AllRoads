@@ -22,11 +22,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     //Rows in each section, these are subject to change.
         var SectionCount:Int = 3
 
-        var rowsInSection1:Int = 3
-        var rowsInSection2:Int = 10
-        var rowsInSection3:Int = 5
-        var rowsInSection4:Int = 5
-
+    
 
 
         var CellHeight: CGFloat = 80
@@ -63,7 +59,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
         
         self.collectionView.collectionViewLayout = createLayout()
-        
+
         self.navigationItem.title = projectName
 
 
@@ -170,10 +166,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             case auditListSection:
             //music
             return CompletedAuditsFilter.count
+         
             
             case archievedSection:
             //music
             return ArchievedAuditsFilter.count
+    
         
             default:
             return 0
@@ -460,7 +458,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                      viewInfoView.siteID = siteID
                      viewInfoView.auditID = auditID
 
-             }else{
+             }else if let viewInfoView = segue.destination as? TableViewController{
+                 viewInfoView.refData = refData
+                 viewInfoView.siteID = siteID
+                 viewInfoView.auditID = auditID
+
+         }else{
                  
              }
          }

@@ -280,8 +280,6 @@ class viewPDF: UIViewController {
                         
             
 
-                        
-                   
 
 
                     for x in listOfSitesData{
@@ -296,9 +294,6 @@ class viewPDF: UIViewController {
                                 let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, imageData: self.imageData, image: "", date: x.date)
                                 self.saveData.append(pdfCreator)
                                 
-                                
-                                
-                               
 
                         }
                                 
