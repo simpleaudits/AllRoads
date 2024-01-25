@@ -120,9 +120,13 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         toolPicker.setVisible(true, forFirstResponder: self.canvasView)
         toolPicker.addObserver(self.canvasView)
 
-        }
+            
 
-    
+            
+        }
+        presentModal()
+        
+        
 
     }
     override func viewDidLoad() {
@@ -130,12 +134,11 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         super.viewDidLoad()
  
+
         
         
         findlocation()
-        
-
-        
+  
         
         self.navigationItem.setHidesBackButton(true, animated: true)
         
@@ -206,51 +209,51 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.view.addSubview(saveImage)
         
         
-        //Ask user for site name:
-        //1. Create the alert controller.
-        let alert = UIAlertController(title: "Site name", message: "", preferredStyle: .alert)
-
-        //2. Add the text field. You can configure it however you need.
-        alert.addTextField { (textField) in
-            textField.text = ""
-            
-        }
-
-        // 3. Grab the value from the text field, and print it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "Add Photo", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            self.navigationItem.title = textField!.text
-            self.siteName = textField!.text!
-            self.navigationItem.title = textField!.text!
-           
-            if textField!.text! == ""{
-
-                let Alert = UIAlertController(title: "Whoops!⚠️", message: "Site name was empty", preferredStyle: .alert)
-                    let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
-                        self.navigationController?.popViewController(animated: true)
-    
-                    }
-      
-                Alert.addAction(action1)
-                self.present(Alert, animated: true, completion: nil)
-          
-                }else{
-                    
-                    self.selectImageType()
-                    
-                }
-                
-            
-        }))
-        
-        let action1 = UIAlertAction(title: "Back",style: .cancel) { (action:UIAlertAction!) in
-                  
-            self.navigationController?.popViewController(animated: true)
-        }
-        
-        alert.addAction(action1)
-        // 4. Present the alert.
-        self.present(alert, animated: true, completion: nil)
+//        //Ask user for site name:
+//        //1. Create the alert controller.
+//        let alert = UIAlertController(title: "Site name", message: "", preferredStyle: .alert)
+//
+//        //2. Add the text field. You can configure it however you need.
+//        alert.addTextField { (textField) in
+//            textField.text = ""
+//
+//        }
+//
+//        // 3. Grab the value from the text field, and print it when the user clicks OK.
+//        alert.addAction(UIAlertAction(title: "Add Photo", style: .default, handler: { [weak alert] (_) in
+//            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+//            self.navigationItem.title = textField!.text
+//            self.siteName = textField!.text!
+//            self.navigationItem.title = textField!.text!
+//
+//            if textField!.text! == ""{
+//
+//                let Alert = UIAlertController(title: "Whoops!⚠️", message: "Site name was empty", preferredStyle: .alert)
+//                    let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
+//                        self.navigationController?.popViewController(animated: true)
+//
+//                    }
+//
+//                Alert.addAction(action1)
+//                self.present(Alert, animated: true, completion: nil)
+//
+//                }else{
+//
+//                    self.selectImageType()
+//
+//                }
+//
+//
+//        }))
+//
+//        let action1 = UIAlertAction(title: "Back",style: .cancel) { (action:UIAlertAction!) in
+//
+//            self.navigationController?.popViewController(animated: true)
+//        }
+//
+//        alert.addAction(action1)
+//        // 4. Present the alert.
+//        self.present(alert, animated: true, completion: nil)
 
     }
     
@@ -300,17 +303,20 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     
     func presentModal() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        if let viewController = storyboard.instantiateViewController(withIdentifier: "addDescription") as? addDescription{
-//
-//            if let presentationController = viewController.presentationController as? UISheetPresentationController {
-//                presentationController.detents = [.medium(), .large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
-//            }
-//
-//            self.present(viewController, animated: true)
-//        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let viewController = storyboard.instantiateViewController(withIdentifier: "addSiteDetails") as? addSiteDetails{
 
-        self.performSegue(withIdentifier: "addDescription", sender: self)
+            if let presentationController = viewController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium(), .large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                presentationController.prefersGrabberVisible = true
+                presentationController.preferredCornerRadius = 45
+                presentationController.largestUndimmedDetentIdentifier = .medium
+            }
+
+           self.present(viewController, animated: true)
+        }
+
+       //self.performSegue(withIdentifier: "addDescription", sender: self)
 
 
     }
@@ -395,7 +401,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         }
         
         picker.dismiss(animated: true, completion:nil)
-        presentModal()
+       // presentModal()
         
 
         
@@ -419,9 +425,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         // Saving the image data into Storage - not real time database.
         // This link is for the storage directory
         
-        
         let uuid = UUID().uuidString
-        print("test:\(uuid)")
         let uid = Auth.auth().currentUser?.uid
         
         
@@ -507,8 +511,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             lat: self.lat,
             long: self.long,
             ref: "\(refData)",
+            observationID: "\(uuid)",
             siteID:"\(siteID)",
-            completed: true)
+            status: "true")
         
          
     

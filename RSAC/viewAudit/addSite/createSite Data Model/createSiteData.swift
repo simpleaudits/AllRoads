@@ -25,6 +25,7 @@ struct createSiteData{
     let observationCount: String
     
     
+    
     init(
         siteName: String,
         date: String,

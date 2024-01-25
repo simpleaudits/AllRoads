@@ -43,12 +43,14 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         hideKeyboardWhenTappedAround()
         
-        self.navigationItem.setHidesBackButton(true, animated: true)
+        //self.navigationItem.setHidesBackButton(true, animated: true)
         
-        let height = navigationController?.navigationBar.frame.maxY
-        descriptionTextfieldHeader = UILabel(frame: CGRect(x:10, y:height! + 10, width: view.frame.width, height: 20))
+        //let height = navigationController?.navigationBar.frame.maxY
+        
+        descriptionTextfieldHeader = UILabel(frame: CGRect(x:10, y: 0, width: view.frame.width, height: 20))
         descriptionTextfieldHeader.text = "DESCRIBE THE SITE"
         descriptionTextfieldHeader.font = UIFont.systemFont(ofSize: 15)
         descriptionTextfieldHeader.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -59,14 +61,14 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         descriptionTextfield = UITextView(frame: CGRect(x: 0, y: Int(descriptionTextfieldHeader.frame.maxY) + 10, width: Int(view.frame.width), height: 200 ))
         descriptionTextfield.font = UIFont.systemFont(ofSize: 20)
         descriptionTextfield.delegate = self
-//        descriptionTextfield.layer.borderWidth = 2
-//        descriptionTextfield.layer.cornerRadius = 20
-//        descriptionTextfield.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//        descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-//        descriptionTextfield.layer.masksToBounds = false
-//        descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-//        descriptionTextfield.layer.shadowRadius = 8.0
-//        descriptionTextfield.layer.shadowOpacity = 0.4
+        descriptionTextfield.layer.borderWidth = 2
+        descriptionTextfield.layer.cornerRadius = 20
+        descriptionTextfield.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        descriptionTextfield.layer.masksToBounds = false
+        descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        descriptionTextfield.layer.shadowRadius = 8.0
+        descriptionTextfield.layer.shadowOpacity = 0.4
         
         
         descriptionTextfieldHeaderCount = UILabel(frame: CGRect(x: 0, y:descriptionTextfield.frame.maxY, width: view.frame.width, height: 20))
@@ -77,47 +79,47 @@ class addDescription: UIViewController,UICollectionViewDataSource, UICollectionV
         
         
         
-        //create but buy now and enter button
-        aiButton = UIButton(frame: CGRect(x: 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/3 - 10, height: 40))
-        aiButton.backgroundColor = #colorLiteral(red: 0.6862745098, green: 0.3215686275, blue: 0.8705882353, alpha: 1)
-        aiButton.setTitle("Beautify 💬", for: .normal)
-        aiButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        aiButton.layer.cornerRadius = 20
-        aiButton.setTitleColor(.white, for: .normal)
-        aiButton.addTarget(self, action: #selector(useAI), for: .touchUpInside)
-        
-        
-        helpButton = UIButton(frame: CGRect(x: aiButton.frame.maxX + 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/3 - 10, height: 40))
-        helpButton.backgroundColor = #colorLiteral(red: 1, green: 0.1764705882, blue: 0.3333333333, alpha: 1)
-        helpButton.setTitle("Help 💡", for: .normal)
-        helpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        helpButton.layer.cornerRadius = 20
-        helpButton.setTitleColor(.white, for: .normal)
-        helpButton.addTarget(self, action: #selector(useHelp), for: .touchUpInside)
+//        //create but buy now and enter button
+//        aiButton = UIButton(frame: CGRect(x: 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/3 - 10, height: 40))
+//        aiButton.backgroundColor = #colorLiteral(red: 0.6862745098, green: 0.3215686275, blue: 0.8705882353, alpha: 1)
+//        aiButton.setTitle("Beautify 💬", for: .normal)
+//        aiButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+//        aiButton.layer.cornerRadius = 20
+//        aiButton.setTitleColor(.white, for: .normal)
+//        aiButton.addTarget(self, action: #selector(useAI), for: .touchUpInside)
+//
+//
+//        helpButton = UIButton(frame: CGRect(x: aiButton.frame.maxX + 10, y: descriptionTextfieldHeaderCount.frame.maxY + 10, width: (view.frame.width  - 10)/3 - 10, height: 40))
+//        helpButton.backgroundColor = #colorLiteral(red: 1, green: 0.1764705882, blue: 0.3333333333, alpha: 1)
+//        helpButton.setTitle("Help 💡", for: .normal)
+//        helpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+//        helpButton.layer.cornerRadius = 20
+//        helpButton.setTitleColor(.white, for: .normal)
+//        helpButton.addTarget(self, action: #selector(useHelp), for: .touchUpInside)
         
 
-        view.addSubview(aiButton)
-        view.addSubview(helpButton)
+//        view.addSubview(aiButton)
+//        view.addSubview(helpButton)
         view.addSubview(descriptionTextfield)
         view.addSubview(descriptionTextfieldHeader)
         view.addSubview(descriptionTextfieldHeaderCount)
         
        
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        detailsCollectionView = UICollectionView(frame: CGRect(x: 0, y:helpButton.frame.maxY + 10, width: view.frame.width, height: view.frame.height - (descriptionTextfield.frame.minY + 30)), collectionViewLayout: layout)
-        detailsCollectionView.isPagingEnabled = false
-        detailsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        detailsCollectionView.register(detailsCell.self, forCellWithReuseIdentifier: "detailsCell")
-        detailsCollectionView.delegate = self
-        detailsCollectionView.dataSource = self
-        view.addSubview(detailsCollectionView)
-        detailsCollectionView.isHidden = true
-        
-
-        
-    
-        detailsCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+//        let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .vertical
+//        detailsCollectionView = UICollectionView(frame: CGRect(x: 0, y:helpButton.frame.maxY + 10, width: view.frame.width, height: view.frame.height - (descriptionTextfield.frame.minY + 30)), collectionViewLayout: layout)
+//        detailsCollectionView.isPagingEnabled = false
+//        detailsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+//        detailsCollectionView.register(detailsCell.self, forCellWithReuseIdentifier: "detailsCell")
+//        detailsCollectionView.delegate = self
+//        detailsCollectionView.dataSource = self
+//        view.addSubview(detailsCollectionView)
+//        detailsCollectionView.isHidden = true
+//
+//
+//
+//
+//        detailsCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
 
         // Do any additional setup after loading the view.
         

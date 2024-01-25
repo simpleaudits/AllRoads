@@ -113,45 +113,115 @@ class cellData: UITableViewCell{
 }
 
 
-class TableViewController: UITableViewController {
+class Observation: UITableViewController,UISearchBarDelegate {
 
     
     let mainConsole = CONSOLE()
     let mainFunction = extens()
+    let firebaseConsole = saveLocal()
     var refData = String()
     var ListReferenceDataAdd = String()
     
     var auditID = String()
     var siteID = String()
     var listOfSitesData: [auditSiteData] = []
+    var filterData: [auditSiteData] = []
     
+    @IBOutlet var filterSearch: UISearchBar!
+    @IBOutlet weak var segmentControlOutlet: UISegmentedControl!
     
     var titleData = String()
     var descriptionData = String()
     
 
-    var myImageView = UIImageView()
-    var myImage = UIImage()
-    var imageData123 = UIImage()
+
+    var toggle = Bool()
+    
+    
 
 
-    @IBOutlet var filterSearch: UISearchBar!
+    override func viewDidAppear(_ animated: Bool) {
+        //filterData = listOfSitesData
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(auditID)
-        
+        //load observation data:
         loadSiteAuditData()
         
+        //register cell
         tableView.register(cellData.self, forCellReuseIdentifier: "cellData")
 
+        //conform to search bar delegate
+        filterSearch?.delegate = self
+        filterSearch.placeholder = "Search by observation title"
+        
+      
+  
     }
 
- 
+//    @IBAction func indexChanged(_ sender: Any) {
+//        switch segmentControlOutlet.selectedSegmentIndex {
+//        case 0:
+//            print("Working")
+//            toggle = true
+//
+//            filterData = listOfSitesData.filter(
+//                {return $0.status.description.localizedCaseInsensitiveContains("true") })
+//
+//            tableView.reloadData()
+//
+//
+//        case 1:
+//            print("Archive")
+//            toggle = false
+//
+//
+//            filterData = listOfSitesData.filter(
+//                {return $0.status.description.localizedCaseInsensitiveContains("false") })
+//
+//            tableView.reloadData()
+//
+//        default:
+//            break
+//        }
+//
+//    }
 
+    //Search bar function
+    @objc func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        // if the user does not search, the table does not update.
+        if searchText == "" {
+            filterData.removeAll()
+            filterData = listOfSitesData
+
+
+            tableView.reloadData()
+
+        }
+        //if the user decides to type, we update the table accordingly.
+        else{
+            filterData = listOfSitesData.filter(
+                {return $0.auditTitle.localizedCaseInsensitiveContains(searchText)  ||  $0.auditDescription.localizedCaseInsensitiveContains(searchText) })
+
+
+            //tableView.reloadData()
+        }
+
+
+    }
+    @objc func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        filterSearch.endEditing(true)
+        tableView.reloadData()
+    }
+
+
+    
+    
     //get the list of users that applied. (3)
-       
        func loadSiteAuditData(){
      
            //if Auth.auth().currentUser != nil {
@@ -165,18 +235,18 @@ class TableViewController: UITableViewController {
                 if let snapshot = child as? DataSnapshot,
                    let List = auditSiteData(snapshot: snapshot) {
                     listOfSitesData.append(List)
-                    
-     
 
                 }
                 }
 
                 self.listOfSitesData = listOfSitesData
+                filterData = self.listOfSitesData
+                       
+     
+                       
                 self.tableView.reloadData()
                   
-               
                })
-               
 
 //               DispatchQueue.main.async {
 //                   self.tableView.reloadData()
@@ -185,15 +255,50 @@ class TableViewController: UITableViewController {
            
        }
     
-
     
+//    override func tableView(_ tableView: UITableView,
+//                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+//    {
+//        let items = filterData[indexPath.row]
+//
+//        let item = UIContextualAction(style: .destructive, title: "Undo") { [self]  (contextualAction, view, boolValue) in
+//            //Write your code in here
+//            self.firebaseConsole.updateObservationStatus(status: "true", ref: items.ref)
+//
+//            tableView.reloadData()
+//
+//        }
+//
+//        item.backgroundColor = .purple
+//        let swipeActions = UISwipeActionsConfiguration(actions: [item])
+//        return swipeActions
+//    }
+
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let items = filterData[indexPath.row]
+        
+        let item = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
+            //Write your code in here
+            //self.firebaseConsole.updateObservationStatus(status: "false", ref: items.ref)
+            
+            let itemRef = Database.database().reference(withPath: "\(items.ref)")
+            itemRef.removeValue()
+            
+            
+           
+        }
+     
+        tableView.reloadData()
+        let swipeActions = UISwipeActionsConfiguration(actions: [item])
+        return swipeActions
+    }
     
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellData", for: indexPath) as! cellData
         
         
-        let items = listOfSitesData[indexPath.row]
+        let items = filterData[indexPath.row]
 //        cell.textLabel?.text = items.auditTitle
 //        cell.detailTextLabel?.text = items.siteID
         cell.siteName.text = items.auditTitle
@@ -201,6 +306,8 @@ class TableViewController: UITableViewController {
         cell.auditDescription.text = items.auditDescription
         let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 150, height: 150), scaleMode: .fill)
         cell.siteImage.sd_setImage(with: URL(string:items.imageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
+        
+        cell.accessoryType = .disclosureIndicator
         
 
 
@@ -210,11 +317,32 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        return listOfSitesData.count
+        return filterData.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
        return 120
+    }
+    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     if let destination4 = segue.destination as? addAuditSites {
+          destination4.siteID = siteID
+          destination4.auditID = auditID
+
+        
+     }else if let destination5 = segue.destination as? viewPDF {
+         destination5.refData = refData
+
+      }
+      
+
+      else {
+          
+      }
+
+          
+          
     }
 
 }

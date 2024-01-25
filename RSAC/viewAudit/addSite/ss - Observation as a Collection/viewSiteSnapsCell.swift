@@ -17,12 +17,12 @@ class viewSiteSnapsCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame:frame)
         
-        mapUI.frame = CGRect(
-            x:0,
-            y:0,
-            width: frame.width ,
-            height: frame.height
-        )
+//        mapUI.frame = CGRect(
+//            x:0,
+//            y:0,
+//            width: frame.width ,
+//            height: frame.height
+//        )
      
         siteImage.frame = CGRect(
             x: 0,
@@ -67,16 +67,16 @@ class viewSiteSnapsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let mapUI: MKMapView = {
-    //let placeHolderImage = UIImage(named: "yeezy.jpg")
-    let mapViewUI = MKMapView() // this allows us to assing images.
-    mapViewUI.mapType = .satelliteFlyover
-    mapViewUI.isUserInteractionEnabled = false
-
-    return mapViewUI
-
-
-    }()
+//    let mapUI: MKMapView = {
+//    //let placeHolderImage = UIImage(named: "yeezy.jpg")
+//    let mapViewUI = MKMapView() // this allows us to assing images.
+//    mapViewUI.mapType = .satelliteFlyover
+//    mapViewUI.isUserInteractionEnabled = false
+//
+//    return mapViewUI
+//
+//
+//    }()
 
     
     let siteImage: UIImageView = {

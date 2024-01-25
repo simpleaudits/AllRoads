@@ -22,8 +22,9 @@ struct auditSiteData{
     let lat: CGFloat
     let long: CGFloat
     let ref: String
+    let observationID: String
     let siteID: String
-    var completed: Bool
+    var status: String
     
     
     
@@ -37,8 +38,9 @@ struct auditSiteData{
         lat: CGFloat,
         long: CGFloat,
         ref: String,
+        observationID: String,
         siteID: String,
-        completed: Bool
+        status: String
     )
     
     
@@ -51,8 +53,9 @@ struct auditSiteData{
         self.lat = lat
         self.long = long
         self.ref = ref
+        self.observationID = observationID
         self.siteID = siteID
-        self.completed = completed
+        self.status = status
         
     }
     
@@ -68,8 +71,9 @@ struct auditSiteData{
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
             let ref = value["ref"] as? String,
+            let observationID = value["observationID"] as? String,
             let siteID = value["siteID"] as? String,
-            let completed = value["completed"] as? Bool else {
+            let status = value["status"] as? String else {
                 return nil
         }
         self.auditTitle = auditTitle
@@ -80,8 +84,9 @@ struct auditSiteData{
         self.lat = lat
         self.long = long
         self.ref = ref
+        self.observationID = observationID
         self.siteID = siteID
-        self.completed = completed
+        self.status = status
     }
     
     func saveAuditData() -> [String:Any] {
@@ -94,8 +99,9 @@ struct auditSiteData{
             "lat": lat,
             "long": long,
             "ref": ref,
+            "observationID": observationID,
             "siteID": siteID,
-            "completed": completed
+            "status": status
         ]
     }
 }

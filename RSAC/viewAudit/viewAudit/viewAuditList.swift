@@ -458,7 +458,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                      viewInfoView.siteID = siteID
                      viewInfoView.auditID = auditID
 
-             }else if let viewInfoView = segue.destination as? TableViewController{
+             }else if let viewInfoView = segue.destination as? Observation{
                  viewInfoView.refData = refData
                  viewInfoView.siteID = siteID
                  viewInfoView.auditID = auditID

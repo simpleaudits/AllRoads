@@ -33,12 +33,12 @@ class locationView: UIViewController,UISearchBarDelegate,UITextFieldDelegate, MK
         
     }
     
+    @IBAction func locateMe(_ sender: Any) {
+        findMyLocation()
+        
+    }
     override func viewDidAppear(_ animated: Bool) {
-        
-
-
-        
-        
+     
         // Do any additional setup after loading the view.
         
         locationLabel = UILabel(frame: CGRect(x: 0, y:  (navigationController?.navigationBar.frame.maxY)!, width: view.frame.width, height: 50))
@@ -51,32 +51,22 @@ class locationView: UIViewController,UISearchBarDelegate,UITextFieldDelegate, MK
         mapViewUI.mapType = .satelliteFlyover
         self.view.addSubview(mapViewUI)
         
-        buttonUI = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y:  mapViewUI.frame.maxY - 50 - 10, width: 200, height: 50))
-        buttonUI.setTitleColor(UIColor.white, for: .normal)
-        buttonUI.setTitle("My Location", for: .normal)
-        buttonUI.backgroundColor = .systemBlue
-        buttonUI.layer.cornerRadius = 25
-        buttonUI.layer.masksToBounds = true
-        buttonUI.addTarget(self, action: #selector(findMyLocation(_:)), for: .touchUpInside)
-        self.view.addSubview(buttonUI)
+//        buttonUI = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y:  mapViewUI.frame.maxY - 50 - 10, width: 200, height: 50))
+//        buttonUI.setTitleColor(UIColor.white, for: .normal)
+//        buttonUI.setTitle("My Location", for: .normal)
+//        buttonUI.backgroundColor = .systemBlue
+//        buttonUI.layer.cornerRadius = 25
+//        buttonUI.layer.masksToBounds = true
+//        buttonUI.addTarget(self, action: #selector(findMyLocation(_:)), for: .touchUpInside)
+//        self.view.addSubview(buttonUI)
        
         
     }
     
-    @objc func findMyLocation(_ sender: UIButton) {
+    func findMyLocation() {
        // do your stuff here
-      print("you clicked on button \(sender.tag)")
         findlocation()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
