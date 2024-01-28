@@ -395,8 +395,8 @@
 		82E4A87C2AFCE54400BE1D8B /* viewAudit */ = {
 			isa = PBXGroup;
 			children = (
-				82445D082B00FF6400319605 /* addSite */,
 				82E4A87E2AFCE54400BE1D8B /* viewAudit */,
+				82445D082B00FF6400319605 /* addSite */,
 			);
 			path = viewAudit;
 			sourceTree = "<group>";

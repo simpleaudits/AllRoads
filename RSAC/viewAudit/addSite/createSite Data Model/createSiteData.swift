@@ -14,6 +14,7 @@ struct createSiteData{
 
     
     //This is the basic Audit Settings
+    let locationImageURL: String
     let siteName: String
     let date: String
     let lat: CGFloat
@@ -27,6 +28,7 @@ struct createSiteData{
     
     
     init(
+        locationImageURL: String,
         siteName: String,
         date: String,
         lat: CGFloat,
@@ -40,6 +42,7 @@ struct createSiteData{
     
     
     {
+        self.locationImageURL = locationImageURL
         self.siteName = siteName
         self.date = date
         self.lat = lat
@@ -55,7 +58,7 @@ struct createSiteData{
     init?(snapshot: DataSnapshot) {
         guard
             let value = snapshot.value as? [String: AnyObject],
-            
+            let locationImageURL = value["locationImageURL"] as? String,
             let siteName = value["siteName"] as? String,
             let date = value["date"] as? String,
             let lat = value["lat"] as? CGFloat,
@@ -67,6 +70,7 @@ struct createSiteData{
             let completed = value["completed"] as? Bool else {
                 return nil
         }
+        self.locationImageURL = locationImageURL
         self.siteName = siteName
         self.date = date
         self.lat = lat
@@ -80,6 +84,7 @@ struct createSiteData{
     
     func saveSiteData() -> [String:Any] {
         return [
+            "locationImageURL": locationImageURL,
             "siteName": siteName,
             "date": date,
             "lat": lat,

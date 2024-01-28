@@ -17,51 +17,51 @@ class viewAuditCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame:frame)
         
-        mapUI.frame = CGRect(
+        imageUI.frame = CGRect(
             x:0,
             y:0,
             width: 80 ,
-            height: 80
+            height: frame.height
         )
      
  
         //60
         
         auditLabel.frame = CGRect(
-            x: mapUI.frame.maxX + 10,
+            x: imageUI.frame.maxX + 10 + 10,
             y: 0,
             width: frame.width,
             height: 20)
         //60
         
         observationIcon.frame = CGRect(
-            x: mapUI.frame.maxX + 10,
+            x: imageUI.frame.maxX + 10 + 10,
             y: auditLabel.frame.maxY + 10,
             width: 20,
             height: 20)
         
         observationCountLabel.frame = CGRect(
-            x: observationIcon.frame.maxX + 10,
+            x: observationIcon.frame.maxX + 10 + 10,
             y: auditLabel.frame.maxY + 10,
             width: frame.width,
             height: 20)
         
         auditDate.frame = CGRect(
-            x: mapUI.frame.maxX + 10,
-            y: mapUI.frame.maxY - 20,
+            x: imageUI.frame.maxX + 10 + 10,
+            y: imageUI.frame.maxY - 20,
             width: frame.width,
             height: 20)
 
         lineDivider1.frame = CGRect(
             x:0,
-            y:mapUI.frame.maxY + 1,
+            y:imageUI.frame.maxY + 1,
             width: frame.width,
             height: 1
         )
 
         //
         
-        //contentView.addSubview(mapUI)
+        contentView.addSubview(imageUI)
         contentView.addSubview(observationIcon)
         contentView.addSubview(observationCountLabel)
         contentView.addSubview(auditLabel)
@@ -75,19 +75,13 @@ class viewAuditCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let mapUI: MKMapView = {
-    //let placeHolderImage = UIImage(named: "yeezy.jpg")
-    let mapViewUI = MKMapView() // this allows us to assing images.
-    mapViewUI.mapType = .satelliteFlyover
-    mapViewUI.isUserInteractionEnabled = false
-    mapViewUI.layer.cornerRadius = 10
-    mapViewUI.layer.masksToBounds = true
-
-    return mapViewUI
+    let imageUI: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+    return image
 
 
     }()
-    
     let lineDivider1: UIView = {
         let Line = UIView() // this allows us to assing images.
         Line.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)

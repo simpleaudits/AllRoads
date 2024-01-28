@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import MapKit
+import SDWebImage
 
  
 
@@ -160,22 +161,9 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             let auditData = CompletedAuditsFilter[indexPath.row]
             cell.projectName.text = auditData.projectName
         
-           
-            
-//            //map reference
-//            let annotation = MKPointAnnotation()
-//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
-//            annotation.coordinate = centerCoordinate
-//            //annotation.title = ItemName
-//            //cell.mapUI.addAnnotation(annotation)
-//
-//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
-//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-//            //mapview.region = region
-//            cell.mapUI.setRegion(region, animated: false)
-            
-            
+            let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 500, height: 500), scaleMode: .fill)
+            cell.imageUI.sd_setImage(with: URL(string:auditData.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
+    
             
             cell.layer.cornerRadius = 8
             cell.layer.masksToBounds = true
@@ -187,23 +175,11 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = InProgressAuditsAuditsFilter[indexPath.row]
             cell.projectName.text = auditData.projectName
-        
-           
-            
-//            //map reference
-//            let annotation = MKPointAnnotation()
-//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
-//            annotation.coordinate = centerCoordinate
-//            //annotation.title = ItemName
-//            //cell.mapUI.addAnnotation(annotation)
-//
-//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
-//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-//            //mapview.region = region
-//            cell.mapUI.setRegion(region, animated: false)
             
             
+            let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 500, height: 500), scaleMode: .fill)
+            cell.imageUI.sd_setImage(with: URL(string:auditData.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
+          
             
             cell.layer.cornerRadius = 8
             cell.layer.masksToBounds = true
@@ -217,23 +193,10 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             let auditData = ArchievedAuditsFilter[indexPath.row]
             cell.projectName.text = auditData.projectName
-        
-    
-//            
-//            //map reference
-//            let annotation = MKPointAnnotation()
-//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(auditData.lat), longitude:CLLocationDegrees(auditData.long))
-//            annotation.coordinate = centerCoordinate
-//            //annotation.title = ItemName
-//            //cell.mapUI.addAnnotation(annotation)
-//            
-//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(auditData.lat), CLLocationDegrees(auditData.long))
-//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-//            //mapview.region = region
-//            cell.mapUI.setRegion(region, animated: false)
+              
             
-            
+            let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 150, height: 150), scaleMode: .fill)
+            cell.imageUI.sd_setImage(with: URL(string:auditData.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
             
             cell.layer.cornerRadius = 8
             cell.layer.masksToBounds = true

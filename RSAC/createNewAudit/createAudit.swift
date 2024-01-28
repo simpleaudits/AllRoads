@@ -8,6 +8,7 @@
 import UIKit
 import SwiftLoader
 import Firebase
+import MapKit
 
 class createAudit: UITableViewController,UINavigationControllerDelegate, auditStage,scopeDecriptionString,locationDecriptionString , UITextFieldDelegate,UITextViewDelegate {
 
@@ -25,9 +26,17 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
     var long = CGFloat()
     
     let mainConsole = CONSOLE()
+    let extensConsole = extens()
     
-    let a = extens()
+    
+    
 
+    let options: MKMapSnapshotter.Options = .init()
+    var localImageData = Data()
+    
+    
+    //storage for image
+    let storageReference = Storage.storage().reference()
     
     
     func finishPassing_location(saveLocation: String, lat: CGFloat, long: CGFloat){
@@ -37,6 +46,10 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
             self.locationLabel.text = saveLocation
             self.lat = lat
             self.long = long
+            
+            print(lat)
+            print(long)
+            
         }else{
             print ("empty")
         }
@@ -111,8 +124,8 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
     override func viewDidLoad() {
         
        
-        timeDate.text = a.timeStamp()
-        auditID.text = "\(a.auditID())"
+        timeDate.text = extensConsole.timeStamp()
+        auditID.text = "\(extensConsole.auditID())"
         
         
         super.viewDidLoad()
@@ -130,60 +143,10 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
 
     @IBAction func createAudit(_ sender: UIBarButtonItem) {
     
-            //show progress view
-            SwiftLoader.show(title: "Creating Audit", animated: true)
-
-
-            if  projectName.text!.count > 0 &&
-                auditStage.text!.count > 0 &&
-                scopeLabel.text!.count > 0 &&
-                locationLabel.text!.count > 0 {
-                
-                let uid = Auth.auth().currentUser?.uid
-                let saveData = newAuditDataset(
-                    date: timeDate.text!,
-                    auditID: "\(auditID.text!)",
-                    projectName: projectName.text!,
-                    location: locationLabel.text!,
-                    projectStage: auditStage.text!,
-                    auditCover: "",
-                    lat: self.lat,
-                    long: self.long,
-                    auditProgress: "\(self.mainConsole.progress!)",
-                    auditReference: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID.text!)",
-                    nestedNode: "",
-                    completed: true)
-    
-                let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
-                let thisUsersGamesRef = reftest.child("\(self.mainConsole.post!)").child(uid!).child("\(self.mainConsole.audit!)").child("\(auditID.text!)")
-             
-                //print(thisUsersGamesRef)
-                
-                thisUsersGamesRef.setValue(saveData.addAudit()){
-                    (error:Error?, ref:DatabaseReference) in
-                    
-
-                    if let error = error {
-                        print("Data could not be saved: \(error).")
-                        self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
-                        SwiftLoader.hide()
-                        
-                    } else {
-                        print("saved")
-                        SwiftLoader.hide()
- 
-                        self.successUpload(Message: "New Audit Created!", subtitle: "")
-                    }
-                      
-                }
-    
-            }
-            else{
-                SwiftLoader.hide()
-                self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
-                
-            }
-            
+        
+     // create audit here
+        
+        createImageFromMap(lat: self.lat, long: self.long)
     
         
     }
@@ -263,6 +226,181 @@ class createAudit: UITableViewController,UINavigationControllerDelegate, auditSt
         self.present(Alert, animated: true, completion: nil)
         
     }
+    
+    func createImageFromMap(lat:CGFloat, long:CGFloat){
+         
+        options.region = MKCoordinateRegion(
+           center: CLLocationCoordinate2D(
+                      latitude: lat,
+                      longitude: long
+                  
+           ), span: MKCoordinateSpan(latitudeDelta: 0.000000001, longitudeDelta: 0.000000001)
+           
+        )
+        options.mapType = .satellite
+        options.showsBuildings = true
+        
+        let snapshotter = MKMapSnapshotter(
+            options: options
+        )
+        snapshotter.start { snapshot, error in
+           if let snapshot = snapshot {
+            
+               
+               let data = snapshot.image.pngData()
+               self.localImageData = data! as Data
+               
+               self.uploadSiteImageViaMap(imageData: self.localImageData)
+               
+         
+           } else if let error = error {
+              print("Something went wrong \(error.localizedDescription)")
+           }
+        }
+        
+        
+ 
+    }
+    
+    
+    func saveData(imageURL:String){
+        //show progress view
+        SwiftLoader.show(title: "Creating Audit", animated: true)
+
+
+        if
+            projectName.text!.count > 0 &&
+            auditStage.text!.count > 0 &&
+            scopeLabel.text!.count > 0 &&
+            locationLabel.text!.count > 0 {
+            
+            let uid = Auth.auth().currentUser?.uid
+            let saveData = newAuditDataset(
+                locationImageURL: imageURL,
+                date: timeDate.text!,
+                auditID: "\(auditID.text!)",
+                projectName: projectName.text!,
+                location: locationLabel.text!,
+                projectStage: auditStage.text!,
+                auditCover: "",
+                lat: self.lat,
+                long: self.long,
+                auditProgress: "\(self.mainConsole.progress!)",
+                auditReference: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID.text!)",
+                nestedNode: "",
+                completed: true)
+
+            let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+            let thisUsersGamesRef = reftest.child("\(self.mainConsole.post!)").child(uid!).child("\(self.mainConsole.audit!)").child("\(auditID.text!)")
+         
+            //print(thisUsersGamesRef)
+            
+            thisUsersGamesRef.setValue(saveData.addAudit()){
+                (error:Error?, ref:DatabaseReference) in
+                
+
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                    SwiftLoader.hide()
+                    
+                } else {
+                    print("saved")
+                    SwiftLoader.hide()
+
+                    self.successUpload(Message: "New Audit Created!", subtitle: "")
+                }
+                  
+            }
+
+        }
+        else{
+            SwiftLoader.hide()
+            self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
+            
+        }
+        
+    }
+    
+    
+    func uploadSiteImageViaMap(imageData:Data){
+
+        //activity indicator
+        SwiftLoader.show(title: "Uploading Image (1/2)", animated: true)
+
+        // Saving the image data into Storage - not real time database.
+        // This link is for the storage directory
+
+        let uuid = UUID().uuidString
+        let uid = Auth.auth().currentUser?.uid
+
+
+        let Ref = storageReference
+            .child("\(self.mainConsole.prod!)")
+            .child("\(self.mainConsole.post!)")
+            .child("\(uid!)")
+            .child("\(self.mainConsole.audit!)")
+            .child("\(auditID.text!)")
+            .child("\(self.mainConsole.auditSiteData!)")
+            .child("\(uuid)")
+            .child("snapshot.jpg")
+
+
+
+
+        let uploadMetaData = StorageMetadata()
+        uploadMetaData.contentType = "image/jpeg"
+
+        //Save image in the refecence directory above
+        Ref.putData(imageData as Data, metadata: uploadMetaData) { (uploadedImageMeta, error) in
+
+            if error != nil
+            {
+                SwiftLoader.hide()
+                //Could not upload data
+                self.extensConsole.errorUpload(errorMessage: "Could no upload picture",subtitle: "\(String(describing: error?.localizedDescription))")
+                return
+
+            } else {
+
+                SwiftLoader.hide()
+                Ref.downloadURL { [self] url, error in
+                    if error != nil {
+                        // Handle any errors
+                    }else{
+
+                        //save the data
+                        saveData(imageURL: "\(url!)")
+
+                    }
+                }
+            }
+
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

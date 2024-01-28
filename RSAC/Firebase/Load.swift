@@ -26,7 +26,7 @@ extension mainSearchView {
 
 
         auditDataList.queryOrderedByKey()
-            .observeSingleEvent(of: .value, with: { snapshot in
+            .observe(.value, with: { snapshot in
                     
                 var myAudits: [newAuditDataset] = []
               

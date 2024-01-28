@@ -33,8 +33,6 @@ class extens: UIViewController {
     func auditID() -> String{
         //creating a NSURL
         let uuid = UUID().uuidString
-
-        
         return String(uuid)
     }
     
@@ -107,14 +105,16 @@ class extens: UIViewController {
 
 class CONSOLE: UIViewController {
     var prod:String? = "prod"
-    var post:String? = "post"  // "\(ParentJSON.Parent!)"
-    var audit:String? = "audit" // "\(ParentJSON.Parent_child!)"
-    var auditList:String? = "observationList" // "\(ParentJSON.Parent_child!)"
-    var siteList:String? = "siteList" // "\(ParentJSON.Parent_child!)"
-    var userDetails:String? = "userDetails" // "\(ParentJSON.User_Details!)"
+    var post:String? = "post"
+    var audit:String? = "audit"
+    var auditList:String? = "observationList"
+    var siteList:String? = "siteList"
+    var auditSiteData:String? = "auditSiteData"
+    var siteData:String? = "siteData"
+    var userDetails:String? = "userDetails"
     var profileImage: String? = "profileImage"
     var listingImage: String? = "listingImage"
-    var auditProductList:String? = "auditProductList" // "\(ParentJSON.ProductList!)"
+    var auditProductList:String? = "auditProductList"
     
  
     

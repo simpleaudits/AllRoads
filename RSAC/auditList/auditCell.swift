@@ -18,7 +18,7 @@ class auditCell:UICollectionViewCell{
 
         super.init(frame:frame)
   
-        mapUI.frame = CGRect(
+        imageUI.frame = CGRect(
             x:0,
             y:0,
             width: frame.width ,
@@ -39,7 +39,7 @@ class auditCell:UICollectionViewCell{
             height: frame.height * 0.3
         )
   
-        //contentView.addSubview(mapUI)
+        contentView.addSubview(imageUI)
         contentView.addSubview(labelUI)
         contentView.addSubview(projectName)
       
@@ -50,13 +50,10 @@ class auditCell:UICollectionViewCell{
     }
     
 
-        let mapUI: MKMapView = {
-        //let placeHolderImage = UIImage(named: "yeezy.jpg")
-        let mapViewUI = MKMapView() // this allows us to assing images.
-        mapViewUI.mapType = .satelliteFlyover
-        mapViewUI.isUserInteractionEnabled = false
-
-        return mapViewUI
+        let imageUI: UIImageView = {
+            let image = UIImageView()
+            image.contentMode = .scaleAspectFill
+        return image
 
 
         }()

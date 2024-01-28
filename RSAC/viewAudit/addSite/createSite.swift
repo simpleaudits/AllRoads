@@ -8,6 +8,7 @@
 import UIKit
 import SwiftLoader
 import Firebase
+import MapKit
 
 class createSite: UITableViewController,UINavigationControllerDelegate, UITextFieldDelegate,UITextViewDelegate, locationDecriptionString {
 
@@ -29,6 +30,11 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
 
     let extensConsole = extens()
     let firebaseConsole = saveLocal()
+    
+    //storage for image
+    let storageReference = Storage.storage().reference()
+    let options: MKMapSnapshotter.Options = .init()
+    var localImageData = Data()
   
     
     let mainConsole = CONSOLE()
@@ -49,7 +55,166 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
         }
     }
     
+    
+    func createImageFromMap(lat:CGFloat, long:CGFloat){
+         
+        options.region = MKCoordinateRegion(
+           center: CLLocationCoordinate2D(
+                      latitude: lat,
+                      longitude: long
+                  
+           ), span: MKCoordinateSpan(latitudeDelta: 0.000000001, longitudeDelta: 0.000000001)
+           
+        )
+        options.mapType = .satellite
+        options.showsBuildings = true
+        
+        let snapshotter = MKMapSnapshotter(
+            options: options
+        )
+        snapshotter.start { snapshot, error in
+           if let snapshot = snapshot {
+            
+               
+               let data = snapshot.image.pngData()
+               self.localImageData = data! as Data
+               
+               self.uploadSiteImageViaMap(imageData: self.localImageData)
+               
+         
+           } else if let error = error {
+              print("Something went wrong \(error.localizedDescription)")
+           }
+        }
+        
+        
+ 
+    }
+    
+    func saveData(imageURL:String){
+        
+                //show progress view
+                SwiftLoader.show(title: "Creating Site", animated: true)
+
+                if  siteName.text!.count > 0 &&
+                    locationLabel.text!.count > 0 {
+                    
+                    let uid = Auth.auth().currentUser?.uid
+                    siteID = UUID().uuidString
+                    
+                    let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+                    let thisUsersGamesRef = reftest
+                        .child("\(self.mainConsole.post!)")
+                        .child(uid!)
+                        .child("\(self.mainConsole.audit!)")
+                        .child("\(auditID)")
+                        .child("\(self.mainConsole.siteList!)")
+                        .child("\(siteID)")
+                    
+                    refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
+
+                    let saveData = createSiteData(
+                        locationImageURL: imageURL,
+                        siteName: siteName.text!,
+                        date: timeDate.text!,
+                        lat: self.lat,
+                        long: self.long,
+                        ref: "\(refData)",
+                        siteID: "\(siteID)",
+                        status: "In-Progress Audits",
+                        observationCount:"0",
+                        completed: true)
+        
+                    thisUsersGamesRef.setValue(saveData.saveSiteData()){
+                        (error:Error?, ref:DatabaseReference) in
+
+                        if let error = error {
+                            print("Data could not be saved: \(error).")
+                            self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                            SwiftLoader.hide()
+                            
+                        } else {
+                            print("saved")
+                            SwiftLoader.hide()
+     
+                            self.successUpload(Message: "New Site Added!", subtitle: "")
+                            
+          
+                        }
+                          
+                    }
+                    
+                    
+                    
+                    
+        
+                }
+                else{
+                    SwiftLoader.hide()
+                    self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
+                }
+ 
+        
+    }
+    
   
+    
+    func uploadSiteImageViaMap(imageData:Data){
+
+        //activity indicator
+        SwiftLoader.show(title: "Uploading Image (1/2)", animated: true)
+
+        // Saving the image data into Storage - not real time database.
+        // This link is for the storage directory
+
+        let uuid = UUID().uuidString
+        let uid = Auth.auth().currentUser?.uid
+
+
+        let Ref = storageReference
+            .child("\(self.mainConsole.prod!)")
+            .child("\(self.mainConsole.post!)")
+            .child("\(uid!)")
+            .child("\(self.mainConsole.audit!)")
+            .child("\(auditID)")
+            .child("\(self.mainConsole.siteList!)")
+            .child("\(uuid)")
+            .child("snapshot.jpg")
+
+
+
+
+        let uploadMetaData = StorageMetadata()
+        uploadMetaData.contentType = "image/jpeg"
+
+        //Save image in the refecence directory above
+        Ref.putData(imageData as Data, metadata: uploadMetaData) { (uploadedImageMeta, error) in
+
+            if error != nil
+            {
+                SwiftLoader.hide()
+                //Could not upload data
+                self.extensConsole.errorUpload(errorMessage: "Could no upload picture",subtitle: "\(String(describing: error?.localizedDescription))")
+                return
+
+            } else {
+
+                SwiftLoader.hide()
+                Ref.downloadURL { [self] url, error in
+                    if error != nil {
+                        // Handle any errors
+                    }else{
+
+                        //save the data
+                        saveData(imageURL: "\(url!)")
+
+                    }
+                }
+            }
+
+        }
+
+    }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -111,71 +276,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
 
 
     @IBAction func createAudit(_ sender: UIBarButtonItem) {
-    
-            //show progress view
-            SwiftLoader.show(title: "Creating Site", animated: true)
-
-
             
-            
-            if  siteName.text!.count > 0 &&
-                locationLabel.text!.count > 0 {
-                
-                let uid = Auth.auth().currentUser?.uid
-                siteID = UUID().uuidString
-                
-                let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
-                let thisUsersGamesRef = reftest
-                    .child("\(self.mainConsole.post!)")
-                    .child(uid!)
-                    .child("\(self.mainConsole.audit!)")
-                    .child("\(auditID)")
-                    .child("\(self.mainConsole.siteList!)")
-                    .child("\(siteID)")
-                
-                refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
-
-                let saveData = createSiteData(
-                    siteName: siteName.text!,
-                    date: timeDate.text!,
-                    lat: self.lat,
-                    long: self.long,
-                    ref: "\(refData)",
-                    siteID: "\(siteID)",
-                    status: "In-Progress Audits",
-                    observationCount:"0",
-                    completed: true)
-    
-                thisUsersGamesRef.setValue(saveData.saveSiteData()){
-                    (error:Error?, ref:DatabaseReference) in
-
-                    if let error = error {
-                        print("Data could not be saved: \(error).")
-                        self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
-                        SwiftLoader.hide()
-                        
-                    } else {
-                        print("saved")
-                        SwiftLoader.hide()
- 
-                        self.successUpload(Message: "New Site Added!", subtitle: "")
-                        
-      
-                    }
-                      
-                }
-                
-                
-                
-                
-    
-            }
-            else{
-                SwiftLoader.hide()
-                self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
-            }
-            
-    
+        createImageFromMap(lat: self.lat, long: self.long)
         
     }
     
@@ -190,6 +292,12 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             destination4.auditID = auditID
           
         }else if let destination4 = segue.destination as? viewSiteSnaps {
+            destination4.siteID = siteID
+            destination4.auditID = auditID
+            destination4.refData = refData
+          
+        }
+        else if let destination4 = segue.destination as? Observation {
             destination4.siteID = siteID
             destination4.auditID = auditID
             destination4.refData = refData

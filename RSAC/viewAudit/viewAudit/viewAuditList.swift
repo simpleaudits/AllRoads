@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import MapKit
 import SwiftLoader
+import SDWebImage
  
 
 class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayout,MKMapViewDelegate  {
@@ -167,14 +168,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             //music
             return CompletedAuditsFilter.count
          
-            
-            case archievedSection:
-            //music
-            return ArchievedAuditsFilter.count
-    
-        
             default:
-            return 0
+            return ArchievedAuditsFilter.count
 
         }
     }
@@ -194,18 +189,11 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             sectionHeader.headerName.text =  "Map"
             return sectionHeader
      
-        }else if indexPath.section == archievedSection {
+        }else {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
-            sectionHeader.headerName.text = mainConsole.archived
+            sectionHeader.headerName.text = "Achieved"
             return sectionHeader
      
-        }else{
-            
-            //empty
-
-            return UICollectionReusableView()
-                                
- 
         }
         
     }
@@ -226,6 +214,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.lineDivider1.isHidden = false
             cell.observationCountLabel.text = siteItems.observationCount
             
+            let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 100, height: 100), scaleMode: .fill)
+            cell.imageUI.sd_setImage(with: URL(string:siteItems.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
+            
+            
             
             cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 15
@@ -233,19 +225,19 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
             
 
-            
-            //map reference
-            let annotation = MKPointAnnotation()
-            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
-            annotation.coordinate = centerCoordinate
-            //annotation.title = ItemName
-            //cell.mapUI.addAnnotation(annotation)
-            
-            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
-            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-            //mapview.region = region
-            cell.mapUI.setRegion(region, animated: false)
+//
+//            //map reference
+//            let annotation = MKPointAnnotation()
+//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
+//            annotation.coordinate = centerCoordinate
+//            //annotation.title = ItemName
+//            //cell.mapUI.addAnnotation(annotation)
+//
+//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
+//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+//            //mapview.region = region
+//            cell.mapUI.setRegion(region, animated: false)
             
             // load and show the observation count
      
@@ -267,12 +259,9 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 annotation.title = x.siteName
                 cell.myLocations.addAnnotation(annotation)
 
-                
-                
-                
                 let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(x.lat), CLLocationDegrees(x.long))
                 let span = MKCoordinateSpan.init(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                
+
                 let region = MKCoordinateRegion.init(center: mapCenter, span: span)
                 cell.myLocations.region = region
                 
@@ -282,7 +271,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             return cell
             
             
-        }else if indexPath.section  == archievedSection{
+        }else {
         //Archieved section
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditCell", for: indexPath) as! viewAuditCell
              
@@ -295,31 +284,32 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = true
             cell.observationCountLabel.text = siteItems.observationCount
-//
+            
+            
+            let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 100, height: 100), scaleMode: .fill)
+            cell.imageUI.sd_setImage(with: URL(string:siteItems.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
+            
+
             cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 15
             cell.layer.borderWidth = 2
             cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
             
-            //map reference
-            let annotation = MKPointAnnotation()
-            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
-            annotation.coordinate = centerCoordinate
-            //annotation.title = ItemName
-            //cell.mapUI.addAnnotation(annotation)
-            
-            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
-            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-            //mapview.region = region
-            cell.mapUI.setRegion(region, animated: false)
-            
-            
-            
+//            //map reference
+//            let annotation = MKPointAnnotation()
+//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
+//            annotation.coordinate = centerCoordinate
+//            //annotation.title = ItemName
+//            //cell.mapUI.addAnnotation(annotation)
+//
+//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
+//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
+//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
+//            //mapview.region = region
+//            cell.mapUI.setRegion(region, animated: false)
+
 
             return cell
-        }else{
-            return UICollectionReusableView() as! UICollectionViewCell
         }
         
     }
@@ -374,7 +364,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
   
 
-        }else if indexPath.section == archievedSection{
+        }else {
     
             let auditData = ArchievedAuditsFilter[indexPath.row]
             let Alert3 = UIAlertController(title: "Site Name", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
@@ -425,10 +415,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
      
            
 
-        }else{
-
-            
-            //empty
         }
     }
 
@@ -479,8 +465,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 //MAPVIEW
 
                      let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300)))
-                         item.contentInsets.trailing = 5
-                         item.contentInsets.leading = -15
+//                         item.contentInsets.trailing = 5
+//                         item.contentInsets.leading = -15
                          //item.contentInsets.top = 20
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
@@ -492,10 +478,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                          let section = NSCollectionLayoutSection(group: group)
                          section.orthogonalScrollingBehavior = .groupPaging
 
-
-                         section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
-
-                         section.contentInsets.leading = 10
+//
+//                         section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
+//
+                        //section.contentInsets.leading = 10
 
 
                          return section
@@ -506,7 +492,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
                         item.contentInsets.trailing = 20
                         item.contentInsets.leading = 20
-                        item.contentInsets.top = 20
+                        item.contentInsets.top = 5
                     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
                         heightDimension: .absolute(CGFloat(self.CompletedAuditsFilter.count) * 100)),
@@ -523,18 +509,17 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 
                         return section
 
-            }else if sectionNumber == self.archievedSection {
+            }else {
                 //ARCHIEVED
                 
                      let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/2), heightDimension: .absolute(100)))
                          item.contentInsets.trailing = 20
                          item.contentInsets.leading = 20
-                         item.contentInsets.top = 20
+                         item.contentInsets.top = 5
                      let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                          widthDimension: .fractionalWidth(1),
                          heightDimension: .absolute(100)),
                          subitems: [item])
-
 
                          let section = NSCollectionLayoutSection(group: group)
                          section.orthogonalScrollingBehavior = .groupPaging
@@ -547,30 +532,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
                          return section
 
-            }else{
-                
-                
-                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                         item.contentInsets.trailing = 20
-                         item.contentInsets.leading = 20
-                         //item.contentInsets.top = 20
-                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
-                         widthDimension: .fractionalWidth(1),
-                         heightDimension: .absolute(100)),
-                         subitems: [item])
-
-
-                         let section = NSCollectionLayoutSection(group: group)
-                         section.orthogonalScrollingBehavior = .groupPaging
-
-
-                         section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
-
-                         section.contentInsets.leading = 10
-
-
-                         return section
-       }
+            }
         }
             
         return layout

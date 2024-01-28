@@ -14,6 +14,7 @@ struct newAuditDataset{
 
     
     //This is the basic Audit Settings
+    let locationImageURL: String
     let date: String
     let auditID: String
     let projectName: String
@@ -33,7 +34,8 @@ struct newAuditDataset{
     
     
     
-    init(date: String,
+    init(locationImageURL: String,
+        date: String,
      auditID: String,
      projectName: String,
      location: String,
@@ -48,6 +50,7 @@ struct newAuditDataset{
     
     
     {
+        self.locationImageURL = locationImageURL
         self.date = date
         self.auditID = auditID
         self.projectName = projectName
@@ -67,7 +70,7 @@ struct newAuditDataset{
         guard
             let value = snapshot.value as? [String: AnyObject],
             
-        
+            let locationImageURL = value["locationImageURL"] as? String,
             let date = value["date"] as? String,
             let auditID = value["auditID"] as? String,
             let projectName = value["projectName"] as? String,
@@ -82,7 +85,7 @@ struct newAuditDataset{
             let completed = value["completed"] as? Bool else {
                 return nil
         }
-        
+        self.locationImageURL = locationImageURL
         self.date = date
         self.auditID = auditID
         self.projectName = projectName
@@ -99,6 +102,7 @@ struct newAuditDataset{
     
     func addAudit() -> [String:Any] {
         return [
+            "locationImageURL": locationImageURL,
             "date": date,
             "auditID": auditID,
             "projectName": projectName,

@@ -16,6 +16,8 @@ class saveLocal: UIViewController {
     //let mainSearchViewFunc = mainSearchView()
     var listenForUpdate = String()
     
+
+    
     func updateAuditProgress(auditProgress:String, auditID:String){
         
         SwiftLoader.show(title: "Updating", animated: true)
@@ -146,7 +148,6 @@ class saveLocal: UIViewController {
         //This goes to: siteList node
         
         SwiftLoader.show(title: "Updating", animated: true)
-        let uid = Auth.auth().currentUser?.uid
         let reftest = Database.database().reference(withPath:"\(ref)")
         
         
@@ -173,4 +174,7 @@ class saveLocal: UIViewController {
             }
         }
     }
+    
+    
+  
 }
