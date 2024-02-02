@@ -13,6 +13,7 @@ import CoreLocation
 import Firebase
 import FirebaseDatabase
 import SDWebImage
+import SwiftLoader
 
 class cellSettings: UITableViewCell{
     
@@ -69,12 +70,12 @@ class cellSettings: UITableViewCell{
     
     let siteImage: UIImageView = {
         let profile = UIImageView()
-        profile.image = UIImage(systemName: "person.fill.badge.plus")
+        //profile.image = UIImage(systemName: "person.fill.badge.plus")
         profile.contentMode = .scaleAspectFit
         profile.layer.cornerRadius = 10
         profile.layer.masksToBounds = true
         profile.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        //
+        profile.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         //profile.layer.borderWidth = 0.5
    
         return profile
@@ -86,7 +87,7 @@ class cellSettings: UITableViewCell{
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.numberOfLines = 1
         label.textAlignment = .left
-//label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        //label.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         return label
     }()
@@ -97,6 +98,7 @@ class cellSettings: UITableViewCell{
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
         label.textAlignment = .left
+        //label.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return label
     }()
@@ -107,13 +109,13 @@ class cellSettings: UITableViewCell{
         label.numberOfLines = 1
         label.textAlignment = .left
         label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        //label.backgroundColor = .red
+        //label.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         return label
     }()
 }
 
 
-class settingsPage: UITableViewController,UISearchBarDelegate {
+class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPickerViewDelegate {
 
     
     let mainConsole = CONSOLE()
@@ -133,7 +135,14 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
     var titleData = String()
     var descriptionData = String()
     
-
+    //storage for image
+    let storageReference = Storage.storage().reference()
+    var companyImageURL = String()
+    var ThecurrentUser = Auth.auth().currentUser
+    let picker = UIImagePickerController()
+    
+    var companyImage = Data()
+    var companyName: String? = "Company"
 
     var toggle = Bool()
     
@@ -164,7 +173,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
         //register cell
         tableView.register(cellSettings.self, forCellReuseIdentifier: "cellSettings")
 
-
+        //declare picker
+        picker.delegate = self
+        
         
       
   
@@ -292,18 +303,18 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
                 cell.siteImage.isHidden = true
                 cell.auditDescription.isHidden = false
                 cell.settingsLabel.text = "Company name"
-                cell.auditDescription.text = "Johns Audits"
+                cell.auditDescription.text = companyName
                 
                 cell.settingsLabel.frame = CGRect(
                     x: 20,
                     y:  10,
-                    width: cell.frame.width - 20,
+                    width: cell.frame.width - 80,
                     height: 20)
                 //60
                 cell.auditDescription.frame = CGRect(
                     x: 20,
                     y: cell.settingsLabel.frame.maxY + 5,
-                    width: cell.frame.width - 20,
+                    width: cell.frame.width - 80,
                     height: 20 )
                 
                 
@@ -312,8 +323,10 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
                 cell.siteImage.isHidden = false
                 cell.settingsLabel.text = "Company Logo"
                 
+                cell.siteImage.image = UIImage(data: companyImage)
+                
                 cell.siteImage.frame = CGRect(
-                    x: cell.contentView.frame.width - 60,
+                    x: cell.frame.width - 80,
                     y:cell.frame.height/2 - 20,
                     width: 40,
                     height: 40)
@@ -321,20 +334,26 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
                 cell.settingsLabel.frame = CGRect(
                     x: 20, //siteImage.frame.maxX + 5,
                     y:  cell.frame.height/2 - 15,
-                    width: cell.frame.width - 20,
+                    width: cell.frame.width - 80,
                     height: 30)
                 
                 
             }else{
-                cell.siteImage.isHidden = true
+                cell.siteImage.isHidden = false
                 cell.auditDescription.isHidden = true
                 cell.settingsLabel.text = "Signature"
                 
                 cell.settingsLabel.frame = CGRect(
-                    x: 20, //siteImage.frame.maxX + 5,
-                    y:  cell.frame.height/2 - 15,
-                    width: cell.frame.width - 20,
-                    height: 30)
+                    x: 20,
+                    y:  10,
+                    width: cell.frame.width - 80,
+                    height: 20)
+                
+                cell.siteImage.frame = CGRect(
+                    x: 20,
+                    y:cell.settingsLabel.frame.maxY + 10,
+                    width: cell.frame.width - 80,
+                    height: 90)
                 
                 
              
@@ -353,7 +372,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
             cell.settingsLabel.frame = CGRect(
                 x: 20, //siteImage.frame.maxX + 5,
                 y:  cell.frame.height/2 - 15,
-                width: cell.frame.width - 20,
+                width: cell.frame.width - 80,
                 height: 30)
             
             
@@ -397,24 +416,36 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return 75
+        if indexPath.section == profileSection{
+            if indexPath.row == 0{
+                
+            }else if indexPath.row == 1{
+                
+            }else{
+                return 150
+            }
+        }
+        
+        
+        return 75
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == profileSection{
+            if indexPath.row == 0{
+                //change Company name
+                uploadCompanyName()
+                
+            }else if indexPath.row == 1{
+                
+                // open image picker
+                uploadImageAlert()
+                
+            }else{
+                
+            }
+        }
+    }
     
     
     
@@ -438,5 +469,259 @@ class settingsPage: UITableViewController,UISearchBarDelegate {
           
           
     }
+    
+    
+    //SAVE user configuration settings here:
+    
+    func updateName(companyName:String, ref:String){
+        
+        SwiftLoader.show(title: "Updating", animated: true)
+        let reftest = Database.database().reference(withPath:ref)
+        
+        
+        reftest.updateChildValues([
+            "companyName": companyName,
+        ]){
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("\(companyName) could not update: \(error).")
+                SwiftLoader.hide()
+                self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+            } else {
+                print("\(companyName) updated")
+                self.mainFunction.successUpload(Message: "Updated", subtitle: "")
+                SwiftLoader.hide()
+
+            }
+        }
+    }
+    
+    
+    func updateCompanyImage(imageData:Data, ref:String){
+        //activity indicator
+        SwiftLoader.show(title: "Uploading Image", animated: true)
+    
+
+        // constantly override the image
+        let companyImageRef = storageReference
+            .child("\(self.mainConsole.prod!)")
+            .child("\(self.mainConsole.post!)")
+            .child(ThecurrentUser!.uid)
+            //.child("\(self.mainConsole.audit!)")
+            .child("\(mainConsole.userDetails!)")
+            .child("\(mainConsole.settingsConfig!)")
+            .child("companyProfile.jpg")
+
+    
+        let uploadMetaData = StorageMetadata()
+        uploadMetaData.contentType = "image/jpeg"
+        
+        //Save image in the refecence directory above
+        companyImageRef.putData(imageData as Data, metadata: uploadMetaData) { (uploadedImageMeta, error) in
+            
+            if error != nil
+            {
+                SwiftLoader.hide()
+                //Could not upload data
+                self.mainFunction.errorUpload(errorMessage: "Could no upload Company Picture",subtitle: "\(String(describing: error?.localizedDescription))")
+                
+                return
+                
+            } else {
+                
+              
+                companyImageRef.downloadURL { [self] url, error in
+                    if error != nil {
+
+                        
+                    }else{
+
+                
+                        companyImageURL = "\(url!)"
+                   
+                        let reftest = Database.database().reference(withPath:ref)
+                        
+                        reftest.updateChildValues([
+                            "imageURL": companyImageURL,
+                        ]){
+                            (error:Error?, ref:DatabaseReference) in
+                            if let error = error {
+                                print("could not update company image URL: \(error).")
+                                SwiftLoader.hide()
+                                self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                            } else {
+                                print("company image URL updated")
+                                self.mainFunction.successUpload(Message: "Updated", subtitle: "")
+                                SwiftLoader.hide()
+
+                            }
+                        }
+
+        
+                        
+                        
+                    }
+                }
+            }
+            
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    //alert view for compnay name change
+    func uploadCompanyName() {
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: "Company name", message: "", preferredStyle: .alert)
+
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.text = ""
+
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            //self.navigationItem.title = textField!.text
+            self.companyName = textField!.text!
+            self.tableView.reloadData()
+       
+
+            if textField!.text! == ""{
+
+                let Alert = UIAlertController(title: "Whoops!⚠️", message: "Textfield was empty", preferredStyle: .alert)
+                    let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
+                        self.navigationController?.popViewController(animated: true)
+
+                    }
+
+                Alert.addAction(action1)
+                self.present(Alert, animated: true, completion: nil)
+
+                }else{
+
+                    // SAVE Data function here
+  
+
+                }
+
+
+        }))
+
+        let action1 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
+
+        self.navigationController?.popViewController(animated: true)
+        }
+
+        alert.addAction(action1)
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //alert view for image content
+    func uploadImageAlert() {
+        let alertController = UIAlertController(title: "Company Logo", message: "", preferredStyle: .alert)
+        let imageView = UIImageView(frame: CGRect(x: alertController.view.frame.maxX/2 - 160, y: 50, width: 200, height: 200))
+        imageView.image = UIImage(data: companyImage) // Your image here...
+        imageView.layer.cornerRadius = 40
+        imageView.layer.masksToBounds = true
+        alertController.view.addSubview(imageView)
+        let height = NSLayoutConstraint(item: alertController.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 320)
+        let width = NSLayoutConstraint(item: alertController.view!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250)
+        alertController.view.addConstraint(height)
+        alertController.view.addConstraint(width)
+
+ 
+        
+        
+        let action1 = UIAlertAction(title: "Change",style: .default) { (action:UIAlertAction!) in
+            // Perform action
+            
+            //open camera
+            self.picker.allowsEditing = true
+            self.picker.sourceType = .photoLibrary
+            self.present(self.picker, animated: true, completion: nil)
+            
+            
+            
+            //
+        }
+
+        let action3 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
+            print("Cancel button tapped");
+        }
+        alertController.addAction(action1)
+        //alertController.addAction(action2)
+        alertController.addAction(action3)
+        
+        alertController.view.addSubview(imageView)
+        // change the background color
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    
+       func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+           // Local variable inserted by Swift 4.2 migrator.
+           let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+   
+   
+           //We allow the user to pick an image, which they can edit.
+           if let profileImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage,
+   
+                let optimizedImageData = profileImage.jpegData(compressionQuality: 0.1)// image quality.
+                               {
+                                   // assign user image to uiimageview
+                                   //save the image as object
+                                   companyImage = optimizedImageData
+                                   tableView.reloadData()
+                       
+   
+                               }
+   
+                                picker.dismiss(animated: true, completion:nil)
+   
+                   }
+   
+       // Helper function inserted by Swift 4.2 migrator.
+       fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+           return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+       }
+   
+       // Helper function inserted by Swift 4.2 migrator.
+       fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+           return input.rawValue
+       }
+       func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+           dismiss(animated: true, completion: nil)
+       }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }

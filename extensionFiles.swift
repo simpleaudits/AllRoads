@@ -15,7 +15,6 @@ class extens: UIViewController {
     func timeStamp() -> String{
         //creating a NSURL
         
-        
         let date = NSDate()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -35,9 +34,7 @@ class extens: UIViewController {
         let uuid = UUID().uuidString
         return String(uuid)
     }
-    
-    
-    
+ 
   
     func localAlert(message:String,submessage:String){
         
@@ -83,7 +80,6 @@ class extens: UIViewController {
         
         // we want to close any activity loading
         //IHProgressHUD.dismiss()
-        
 
         
         let Alert = UIAlertController(title: "\(errorMessage)", message: "\(subtitle)", preferredStyle: .alert)
@@ -97,6 +93,15 @@ class extens: UIViewController {
         self.present(Alert, animated: true, completion: nil)
         
     }
+    
+    
+
+    
+    
+    
+    
+    
+    
     
     
     
@@ -115,7 +120,7 @@ class CONSOLE: UIViewController {
     var profileImage: String? = "profileImage"
     var listingImage: String? = "listingImage"
     var auditProductList:String? = "auditProductList"
-    
+    var settingsConfig:String? = "settingsConfig"
  
     
     var complete: String? = "Completed Audits"

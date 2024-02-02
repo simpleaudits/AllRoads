@@ -16,7 +16,13 @@ class saveLocal: UIViewController {
     //let mainSearchViewFunc = mainSearchView()
     var listenForUpdate = String()
     
-
+    //storage for image
+    let storageReference = Storage.storage().reference()
+ 
+    
+    
+    
+    
     
     func updateAuditProgress(auditProgress:String, auditID:String){
         
@@ -176,5 +182,61 @@ class saveLocal: UIViewController {
     }
     
     
-  
+    
+    func uploadSiteImageViaMap(imageData:Data, auditID:String){
+
+        //activity indicator
+        SwiftLoader.show(title: "Uploading Image (1/2)", animated: true)
+
+        // Saving the image data into Storage - not real time database.
+        // This link is for the storage directory
+
+        let uuid = UUID().uuidString
+        let uid = Auth.auth().currentUser?.uid
+
+
+        let Ref = storageReference
+            .child("\(self.mainConsole.prod!)")
+            .child("\(self.mainConsole.post!)")
+            .child("\(uid!)")
+            .child("\(self.mainConsole.audit!)")
+            .child("\(auditID)")
+            .child("\(self.mainConsole.auditSiteData!)")
+            .child("\(uuid)")
+            .child("snapshot.jpg")
+
+
+
+
+        let uploadMetaData = StorageMetadata()
+        uploadMetaData.contentType = "image/jpeg"
+
+        //Save image in the refecence directory above
+        Ref.putData(imageData as Data, metadata: uploadMetaData) { (uploadedImageMeta, error) in
+
+            if error != nil
+            {
+                SwiftLoader.hide()
+                //Could not upload data
+                //self.extensConsole.errorUpload(errorMessage: "Could no upload picture",subtitle: "\(String(describing: error?.localizedDescription))")
+                return
+
+            } else {
+
+                SwiftLoader.hide()
+                Ref.downloadURL { [self] url, error in
+                    if error != nil {
+                        // Handle any errors
+                    }else{
+
+                        //Not only are we saving the image url string, but all of the contents that relate to user details - hence calling the processdata function.
+                        //processdata(imageURL: "\(url!)", uuid: uuid)
+
+                    }
+                }
+            }
+
+        }
+
+    }
 }

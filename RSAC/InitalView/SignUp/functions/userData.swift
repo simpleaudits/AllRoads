@@ -47,8 +47,6 @@ extension SignUpController {
             cell1.lastName.text!.count > 0 &&
             cell1.Name.text!.count > 0 {
             
-          
-    
             
 //############################################################################
             let uid = Auth.auth().currentUser?.uid
@@ -79,9 +77,10 @@ extension SignUpController {
                     SwiftLoader.hide()
                     
                 } else {
-                    print("saved")
+                    print("user info saved")
                     SwiftLoader.hide()
-                    self.successUpload(Message: "Welcome!", subtitle: "")
+                    self.saveSettings()
+                   
                 }
                   
             }
@@ -103,6 +102,50 @@ extension SignUpController {
     }
     
     
+    func saveSettings(){
+        //show progress view
+        SwiftLoader.show(title: "Adding Settings", animated: true)
+            
+            let uid = Auth.auth().currentUser?.uid
+            let saveData = settingsData(companyName: "",
+                                        date: "",
+                                        userID: "",
+                                        userRef: "",
+                                        imageURL: "",
+                                        signatureURL: "",
+                                        nest1: "",
+                                        nest2: "",
+                                        nest3: "",
+                                        nest4: "",
+                                        nest5: "",
+                                        nest6: "",
+                                        completed: true)
+            
+           
+            let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+            let thisUsersGamesRef = reftest.child("\(self.mainConsole.post!)").child(uid!).child("\(self.mainConsole.userDetails!)")
+         
+
+            thisUsersGamesRef.setValue(saveData.addSettingsData()){
+                (error:Error?, ref:DatabaseReference) in
+                
+
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                    SwiftLoader.hide()
+                    
+                } else {
+                    print("settings saved")
+                    SwiftLoader.hide()
+                    self.successUpload(Message: "Welcome!", subtitle: "")
+                }
+                  
+            }
+            
+        
+
+    }
 
     
 }
