@@ -16,21 +16,22 @@
         <scene sceneID="pgt-Xz-MJG">
             <objects>
                 <tableViewController id="hEx-mR-gaj" customClass="InitialSignUp" customModule="RSAC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="XpS-bv-rcG">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="XpS-bv-rcG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection id="XQz-UJ-8hw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="105" id="f91-Ri-Jgl">
-                                        <rect key="frame" x="20" y="18" width="353" height="105"/>
+                                        <rect key="frame" x="0.0" y="18" width="393" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f91-Ri-Jgl" id="irS-2j-bbR">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="105"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="105"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bQf-aV-UWX">
-                                                    <rect key="frame" x="13" y="22" width="327" height="61"/>
+                                                    <rect key="frame" x="13" y="22" width="367" height="61"/>
                                                     <color key="textColor" systemColor="tintColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" spellCheckingType="no"/>
@@ -45,14 +46,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="102" id="Wfb-OF-hNL">
-                                        <rect key="frame" x="20" y="123" width="353" height="102"/>
+                                        <rect key="frame" x="0.0" y="123" width="393" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wfb-OF-hNL" id="8jm-Fa-Yw5">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="102"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="102"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ypv-wU-ao3">
-                                                    <rect key="frame" x="13" y="21" width="327" height="61"/>
+                                                    <rect key="frame" x="13" y="21" width="367" height="61"/>
                                                     <color key="textColor" systemColor="tintColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" spellCheckingType="no"/>
@@ -67,15 +68,15 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="134" id="bfa-Xg-mto">
-                                        <rect key="frame" x="20" y="225" width="353" height="134"/>
+                                        <rect key="frame" x="0.0" y="225" width="393" height="134"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bfa-Xg-mto" id="HwF-WN-ipX">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="134"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="134"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-PT-YL0">
-                                                    <rect key="frame" x="14" y="36" width="325" height="63"/>
-                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                    <rect key="frame" x="14" y="36" width="365" height="63"/>
+                                                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Create Account">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -176,7 +177,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng2-iW-I31">
                                                     <rect key="frame" x="34" y="36" width="325" height="63"/>
-                                                    <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Log In">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -224,25 +225,14 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Powered by:" id="qBz-tF-F5f">
+                            <tableViewSection id="qBz-tF-F5f">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="nmc-SS-jwJ">
-                                        <rect key="frame" x="0.0" y="549" width="393" height="60"/>
+                                        <rect key="frame" x="0.0" y="529" width="393" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nmc-SS-jwJ" id="BhB-Gj-dpC">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="firebase_logo_icon_168209.png" translatesAutoresizingMaskIntoConstraints="NO" id="Joh-iu-Cak">
-                                                    <rect key="frame" x="15" y="6" width="363" height="49"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Joh-iu-Cak" secondAttribute="bottom" constant="5" id="Kit-1t-jyx"/>
-                                                <constraint firstItem="Joh-iu-Cak" firstAttribute="top" secondItem="BhB-Gj-dpC" secondAttribute="top" constant="6" id="L3o-61-YJV"/>
-                                                <constraint firstAttribute="trailing" secondItem="Joh-iu-Cak" secondAttribute="trailing" constant="15" id="dLq-GK-QgM"/>
-                                                <constraint firstItem="Joh-iu-Cak" firstAttribute="leading" secondItem="BhB-Gj-dpC" secondAttribute="leading" constant="15" id="v1W-F4-iLV"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
@@ -321,6 +311,7 @@
                     <connections>
                         <segue destination="hZr-GK-abL" kind="relationship" relationship="viewControllers" id="adQ-AP-Yrx"/>
                         <segue destination="zcS-W6-JkR" kind="relationship" relationship="viewControllers" id="Jk6-r0-piN"/>
+                        <segue destination="emF-WN-8cj" kind="relationship" relationship="viewControllers" id="Owo-qa-uGh"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0S-cn-Uyr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -363,7 +354,7 @@
             </objects>
             <point key="canvasLocation" x="-5495.419847328244" y="1662.6760563380283"/>
         </scene>
-        <!--New Audit-->
+        <!--New Project-->
         <scene sceneID="eAq-TX-I2V">
             <objects>
                 <tableViewController id="pTG-pi-Fb5" customClass="createAudit" customModule="RSAC" sceneMemberID="viewController">
@@ -384,7 +375,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28/07/2023" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMn-CV-TGO">
                                                     <rect key="frame" x="20" y="7" width="333" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                     <color key="textColor" systemColor="systemGray4Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -539,7 +530,7 @@
                             <outlet property="delegate" destination="pTG-pi-Fb5" id="CRu-um-AZ6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Audit" id="AIX-CD-ktZ">
+                    <navigationItem key="navigationItem" title="New Project" id="AIX-CD-ktZ">
                         <barButtonItem key="rightBarButtonItem" image="square.and.arrow.up" catalog="system" style="plain" id="nKW-lH-R1U">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
@@ -564,6 +555,22 @@
             </objects>
             <point key="canvasLocation" x="120" y="1963"/>
         </scene>
+        <!--PDF's-->
+        <scene sceneID="IAe-lL-fRe">
+            <objects>
+                <viewController id="emF-WN-8cj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mMI-70-3Rr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Tqy-UO-lZm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="PDF's" image="doc.text" catalog="system" id="Onw-pb-dDR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e4d-CN-Llb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2486" y="2397"/>
+        </scene>
         <!--Audits-->
         <scene sceneID="ETd-nB-tnQ">
             <objects>
@@ -584,7 +591,7 @@
             </objects>
             <point key="canvasLocation" x="-1587" y="1963"/>
         </scene>
-        <!--Audits-->
+        <!--Project's-->
         <scene sceneID="uIQ-JK-z3m">
             <objects>
                 <collectionViewController id="Zvd-yM-9xX" customClass="mainSearchView" customModule="RSAC" sceneMemberID="viewController">
@@ -615,7 +622,7 @@
                             <outlet property="delegate" destination="Zvd-yM-9xX" id="Qwh-sC-d4J"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Audits" largeTitleDisplayMode="always" id="Hnc-3G-bVb">
+                    <navigationItem key="navigationItem" title="Project's" largeTitleDisplayMode="always" id="Hnc-3G-bVb">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="search" id="swA-Et-A9A">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
@@ -822,10 +829,10 @@
                             <outlet property="delegate" destination="RVj-ct-PG1" id="cUQ-NG-9Gc"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
+                    <navigationItem key="navigationItem" prompt="Status:" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="DR0-Qt-oqZ">
-                            <rect key="frame" x="53" y="5.6666666666666679" width="275" height="33"/>
+                            <rect key="frame" x="53" y="39.666666666666671" width="275" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Complete"/>
@@ -997,7 +1004,7 @@
             </objects>
             <point key="canvasLocation" x="-1344" y="2735"/>
         </scene>
-        <!--New Site-->
+        <!--Create Site-->
         <scene sceneID="eGP-p0-lYM">
             <objects>
                 <tableViewController id="NfU-JG-H9A" customClass="createSite" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
@@ -1094,7 +1101,7 @@
                             <outlet property="delegate" destination="NfU-JG-H9A" id="GON-jL-a3h"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Site" id="GXW-US-QEu">
+                    <navigationItem key="navigationItem" title="Create Site" id="GXW-US-QEu">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" style="plain" id="t1X-GA-bIB">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
@@ -1146,7 +1153,7 @@
                             <outlet property="delegate" destination="q4L-Y8-fSb" id="bec-H3-IZU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Observations" prompt="Site name" id="5Z3-TP-5TA">
+                    <navigationItem key="navigationItem" title="Observations" prompt="Status:" id="5Z3-TP-5TA">
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="T7N-xV-EBc">
                             <rect key="frame" x="98" y="39.666666666666671" width="183" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1181,12 +1188,12 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2y7-dC-yeP"/>
-        <segue reference="05a-tf-gx5"/>
-        <segue reference="n7w-SH-YOG"/>
+        <segue reference="Ypc-0i-t4p"/>
+        <segue reference="Uv5-2R-2fq"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="doc.text.fill.viewfinder" catalog="system" width="128" height="115"/>
-        <image name="firebase_logo_icon_168209.png" width="512" height="256"/>
         <image name="folder" catalog="system" width="128" height="96"/>
         <image name="folder.fill.badge.plus" catalog="system" width="128" height="92"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
@@ -1201,9 +1208,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
