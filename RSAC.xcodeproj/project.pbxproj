@@ -16,9 +16,11 @@
 		827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF502B0E1BD300029EDE /* viewPDF.swift */; };
 		8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */; };
 		829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */; };
+		8297CFFD2B6F594100450513 /* Road-audit.png in Resources */ = {isa = PBXBuildFile; fileRef = 8297CFFC2B6F594100450513 /* Road-audit.png */; };
+		8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */; };
+		8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */; };
 		82B023212B612AAE00DA87A3 /* addSiteDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B023202B612AAE00DA87A3 /* addSiteDetails.swift */; };
 		82BC45452B67BAA600FB2650 /* settingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC45442B67BAA600FB2650 /* settingsPage.swift */; };
-		82BC45472B6A91FF00FB2650 /* settingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC45462B6A91FF00FB2650 /* settingsData.swift */; };
 		82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C792B46861500F5F755 /* Image-1.jpg */; };
 		82BE9C7C2B46862000F5F755 /* Image-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C7B2B46862000F5F755 /* Image-2.jpg */; };
 		82BE9C7E2B46862500F5F755 /* Image-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C7D2B46862500F5F755 /* Image-3.jpg */; };
@@ -97,9 +99,11 @@
 		827DFF502B0E1BD300029EDE /* viewPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPDF.swift; sourceTree = "<group>"; };
 		8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteSnaps.swift; sourceTree = "<group>"; };
 		8293110F2B039128006F4694 /* viewSiteSnapsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewSiteSnapsCell.swift; sourceTree = "<group>"; };
+		8297CFFC2B6F594100450513 /* Road-audit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Road-audit.png"; sourceTree = "<group>"; };
+		8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 14 _ 15 Pro Max - 1 (19).png"; sourceTree = "<group>"; };
+		8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iPhone-14-_-15-Pro-Max---1-(19).jpg"; sourceTree = "<group>"; };
 		82B023202B612AAE00DA87A3 /* addSiteDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSiteDetails.swift; sourceTree = "<group>"; };
 		82BC45442B67BAA600FB2650 /* settingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsPage.swift; sourceTree = "<group>"; };
-		82BC45462B6A91FF00FB2650 /* settingsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsData.swift; sourceTree = "<group>"; };
 		82BE9C792B46861500F5F755 /* Image-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-1.jpg"; sourceTree = "<group>"; };
 		82BE9C7B2B46862000F5F755 /* Image-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-2.jpg"; sourceTree = "<group>"; };
 		82BE9C7D2B46862500F5F755 /* Image-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-3.jpg"; sourceTree = "<group>"; };
@@ -246,17 +250,8 @@
 			isa = PBXGroup;
 			children = (
 				82BC45442B67BAA600FB2650 /* settingsPage.swift */,
-				82BC45482B6A920900FB2650 /* data model */,
 			);
 			path = settings;
-			sourceTree = "<group>";
-		};
-		82BC45482B6A920900FB2650 /* data model */ = {
-			isa = PBXGroup;
-			children = (
-				82BC45462B6A91FF00FB2650 /* settingsData.swift */,
-			);
-			path = "data model";
 			sourceTree = "<group>";
 		};
 		82E4A8202AFCE0A800BE1D8B = {
@@ -304,6 +299,9 @@
 				82BE9C792B46861500F5F755 /* Image-1.jpg */,
 				82BE9C7B2B46862000F5F755 /* Image-2.jpg */,
 				82BE9C7D2B46862500F5F755 /* Image-3.jpg */,
+				8297CFFC2B6F594100450513 /* Road-audit.png */,
+				8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */,
+				8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */,
 			);
 			path = RSAC;
 			sourceTree = "<group>";
@@ -463,6 +461,7 @@
 				82E4A8252AFCE0A800BE1D8B /* Sources */,
 				82E4A8262AFCE0A800BE1D8B /* Frameworks */,
 				82E4A8272AFCE0A800BE1D8B /* Resources */,
+				8297CFFE2B6F5A9800450513 /* ShellScript */,
 				C69D5393A8596B2294D094F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -564,10 +563,13 @@
 				82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */,
 				82BE9C7E2B46862500F5F755 /* Image-3.jpg in Resources */,
 				82E4A8A92AFCE55500BE1D8B /* man.png in Resources */,
+				8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */,
+				8297CFFD2B6F594100450513 /* Road-audit.png in Resources */,
 				82E4A8392AFCE0AA00BE1D8B /* LaunchScreen.storyboard in Resources */,
 				82E4A8362AFCE0AA00BE1D8B /* Assets.xcassets in Resources */,
 				82BE9C7C2B46862000F5F755 /* Image-2.jpg in Resources */,
 				82E4A8AB2AFCE7F600BE1D8B /* GoogleService-Info.plist in Resources */,
+				8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */,
 				82E4A8342AFCE0A800BE1D8B /* Main.storyboard in Resources */,
 				82E4A8A82AFCE55500BE1D8B /* firebase_logo_icon_168209.png in Resources */,
 			);
@@ -633,6 +635,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8297CFFE2B6F5A9800450513 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/bash;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\n";
 		};
 		A33064743ACAFABFC024C58E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -733,7 +752,6 @@
 				82E4A89F2AFCE54400BE1D8B /* viewAuditList.swift in Sources */,
 				82E4A8A12AFCE54400BE1D8B /* detailsCell.swift in Sources */,
 				82E4A8942AFCE54400BE1D8B /* fundsAvaliable.swift in Sources */,
-				82BC45472B6A91FF00FB2650 /* settingsData.swift in Sources */,
 				82E4A89D2AFCE54400BE1D8B /* viewAuditHeaderMap.swift in Sources */,
 				82E4A8912AFCE54400BE1D8B /* userData.swift in Sources */,
 				82E4A8A32AFCE54400BE1D8B /* auditSiteData.swift in Sources */,
@@ -931,7 +949,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = RSAC.RSAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -961,7 +979,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = RSAC.RSAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

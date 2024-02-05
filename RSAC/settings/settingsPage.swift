@@ -480,7 +480,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
         
         
         reftest.updateChildValues([
-            "companyName": companyName,
+            "Username": companyName,
         ]){
             (error:Error?, ref:DatabaseReference) in
             if let error = error {
@@ -509,9 +509,10 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
             .child(ThecurrentUser!.uid)
             //.child("\(self.mainConsole.audit!)")
             .child("\(mainConsole.userDetails!)")
-            .child("\(mainConsole.settingsConfig!)")
-            .child("companyProfile.jpg")
+            .child("\(mainConsole.profileImage!)")
+            .child("\(ThecurrentUser!.uid)-\(mainConsole.profileImage!).jpg")
 
+       
     
         let uploadMetaData = StorageMetadata()
         uploadMetaData.contentType = "image/jpeg"
@@ -542,7 +543,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                         let reftest = Database.database().reference(withPath:ref)
                         
                         reftest.updateChildValues([
-                            "imageURL": companyImageURL,
+                            "DPimage": companyImageURL,
                         ]){
                             (error:Error?, ref:DatabaseReference) in
                             if let error = error {
@@ -585,15 +586,13 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
         }
 
         // 3. Grab the value from the text field, and print it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { [weak alert] (_) in
+        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { [self, weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             //self.navigationItem.title = textField!.text
-            self.companyName = textField!.text!
-            self.tableView.reloadData()
+            
        
 
             if textField!.text! == ""{
-
                 let Alert = UIAlertController(title: "Whoops!⚠️", message: "Textfield was empty", preferredStyle: .alert)
                     let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
                         self.navigationController?.popViewController(animated: true)
@@ -606,6 +605,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 }else{
 
                     // SAVE Data function here
+                    
+                    self.updateName(companyName: "\(textField!.text!)", ref: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(ThecurrentUser!.uid)/\(self.mainConsole.userDetails!)")
+                    self.tableView.reloadData()
   
 
                 }

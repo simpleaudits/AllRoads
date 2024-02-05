@@ -11,7 +11,7 @@ import Foundation
 import Firebase
 
 struct userDetails{
-    let ref: DatabaseReference?
+  
 
     
     let UserReferenceLink: String
@@ -25,6 +25,15 @@ struct userDetails{
     let nestedNode:String
     let dateJoined:String
     var completed: Bool
+    let userRef: String
+    let signatureURL: String
+    let nest1: String
+    let nest2: String
+    let nest3: String
+    let nest4: String
+    let nest5: String
+    let nest6: String
+
     //[10]
     
     
@@ -38,7 +47,16 @@ struct userDetails{
          listingMax:Int,
          nestedNode:String,
          dateJoined:String,
-         completed:Bool) {
+         completed:Bool,
+         userRef: String,
+         signatureURL: String,
+         nest1: String,
+         nest2: String,
+         nest3: String,
+         nest4: String,
+         nest5: String,
+         nest6: String
+        ) {
 
         self.UserReferenceLink = UserReferenceLink
         self.Username = Username
@@ -51,7 +69,14 @@ struct userDetails{
         self.nestedNode = nestedNode
         self.completed = completed
         self.dateJoined = dateJoined
-        self.ref = nil
+        self.userRef = userRef
+        self.signatureURL = signatureURL
+        self.nest1 = nest1
+        self.nest2 = nest2
+        self.nest3 = nest3
+        self.nest4 = nest4
+        self.nest5 = nest5
+        self.nest6 = nest6
 
 
     }
@@ -70,13 +95,25 @@ struct userDetails{
             let listingMax = value["listingMax"] as? Int,
             let nestedNode = value["nestedNode"] as? String,
             let dateJoined = value["dateJoined"] as? String,
+            
+            let userRef = value["userRef"] as? String,
+            let signatureURL = value["signatureURL"] as? String,
+            let nest1 = value["nest1"] as? String,
+            let nest2 = value["nest2"] as? String,
+            let nest3 = value["nest3"] as? String,
+            let nest4 = value["nest4"] as? String,
+            let nest5 = value["nest5"] as? String,
+            let nest6 = value["nest6"] as? String,
             let completed = value["completed"] as? Bool
+                
+                
+                
         
         else {
 
             return nil
         }
-        self.ref = snapshot.ref
+
         
         self.UserReferenceLink = UserReferenceLink
         self.Username = Username
@@ -89,6 +126,17 @@ struct userDetails{
         self.nestedNode = nestedNode
         self.dateJoined = dateJoined
         self.completed = completed
+        
+        
+        
+        self.userRef = userRef
+        self.signatureURL = signatureURL
+        self.nest1 = nest1
+        self.nest2 = nest2
+        self.nest3 = nest3
+        self.nest4 = nest4
+        self.nest5 = nest5
+        self.nest6 = nest6
     }
     
     func saveUserData() -> [String:Any] {
@@ -103,7 +151,17 @@ struct userDetails{
             "listingMax": listingMax,
             "nestedNode": nestedNode,
             "dateJoined": dateJoined,
-            "completed": completed
+            "completed": completed,
+            
+            "nest1": nest1,
+            "nest2": nest2,
+            "nest3": nest3,
+            "nest4": nest4,
+            "nest5": nest5,
+            "nest6": nest6,
+            "signatureURL": signatureURL,
+            "userRef": userRef
+            
         ]
     }
 }

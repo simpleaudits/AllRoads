@@ -52,6 +52,8 @@ class LogIn: UITableViewController,UITextFieldDelegate,UITextViewDelegate {
         self.username.delegate = self
         self.password.delegate = self
         
+        
+        navigationItem.prompt = "Version:\(getAppVersion() )"
 
         
 
@@ -77,6 +79,12 @@ class LogIn: UITableViewController,UITextFieldDelegate,UITextViewDelegate {
         password.layer.borderColor = UIColor(red:220/255, green:220/255, blue:220/255, alpha: 1).cgColor
         password.layer.borderWidth = 1.0;
  }
+    
+    func getAppVersion() -> String {
+
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"]
+        return appVersion as! String
+        }
     
     func nextview(){
         performSegue(withIdentifier: loginToList, sender: self)

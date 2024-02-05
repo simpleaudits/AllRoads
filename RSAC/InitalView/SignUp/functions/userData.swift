@@ -50,17 +50,28 @@ extension SignUpController {
             
 //############################################################################
             let uid = Auth.auth().currentUser?.uid
-            let saveData = userDetails(UserReferenceLink: "\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.userDetails!)",
-                                       Username: cell1.userName.text!,
-                                       orgType: cell1.lastName.text!,
-                                       contact: 0,
-                                       accountVerificationStatus: true,
-                                       userStatus: "bronze",
-                                       DPimage: DPDataURL,
-                                       listingMax: 3,
-                                       nestedNode: "",
-                                       dateJoined: timeStamp(),
-                                       completed: true)
+
+            
+            let saveData = userDetails(
+                UserReferenceLink: "\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.userDetails!)",
+                Username: cell1.userName.text!,
+                orgType: cell1.lastName.text!,
+                contact: 0,
+                accountVerificationStatus: true,
+                userStatus: "bronze",
+                DPimage: DPDataURL,
+                listingMax: 3,
+                nestedNode: "",
+                dateJoined: timeStamp(),
+                completed: true,
+                userRef: "",
+                signatureURL: "",
+                nest1: "",
+                nest2: "",
+                nest3: "",
+                nest4: "",
+                nest5: "",
+                nest6: "")
             
            
             let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
@@ -79,7 +90,8 @@ extension SignUpController {
                 } else {
                     print("user info saved")
                     SwiftLoader.hide()
-                    self.saveSettings()
+                    self.successUpload(Message: "Welcome!", subtitle: "")
+    
                    
                 }
                   
@@ -101,51 +113,7 @@ extension SignUpController {
 
     }
     
-    
-    func saveSettings(){
-        //show progress view
-        SwiftLoader.show(title: "Adding Settings", animated: true)
-            
-            let uid = Auth.auth().currentUser?.uid
-            let saveData = settingsData(companyName: "",
-                                        date: "",
-                                        userID: "",
-                                        userRef: "",
-                                        imageURL: "",
-                                        signatureURL: "",
-                                        nest1: "",
-                                        nest2: "",
-                                        nest3: "",
-                                        nest4: "",
-                                        nest5: "",
-                                        nest6: "",
-                                        completed: true)
-            
-           
-            let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
-            let thisUsersGamesRef = reftest.child("\(self.mainConsole.post!)").child(uid!).child("\(self.mainConsole.userDetails!)")
-         
 
-            thisUsersGamesRef.setValue(saveData.addSettingsData()){
-                (error:Error?, ref:DatabaseReference) in
-                
-
-                if let error = error {
-                    print("Data could not be saved: \(error).")
-                    self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
-                    SwiftLoader.hide()
-                    
-                } else {
-                    print("settings saved")
-                    SwiftLoader.hide()
-                    self.successUpload(Message: "Welcome!", subtitle: "")
-                }
-                  
-            }
-            
-        
-
-    }
 
     
 }
