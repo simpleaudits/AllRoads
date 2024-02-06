@@ -98,8 +98,11 @@ class cellSettings: UITableViewCell{
 
             var auditID = String()
             var siteID = String()
-            var listOfSitesData: [auditSiteData] = []
-            var filterData: [auditSiteData] = []
+            var userData: [userDetails] = []
+            var companyNameData: String? = "Loading.."
+            var companyDPData: String? = "Loading.."
+                
+
 
             @IBOutlet var filterSearch: UISearchBar!
             @IBOutlet weak var segmentControlOutlet: UISegmentedControl!
@@ -114,7 +117,7 @@ class cellSettings: UITableViewCell{
             let picker = UIImagePickerController()
 
             var companyImage = Data()
-            var companyName: String? = "Company"
+
 
             var toggle = Bool()
 
@@ -132,15 +135,14 @@ class cellSettings: UITableViewCell{
 
 
             override func viewDidAppear(_ animated: Bool) {
-            //filterData = listOfSitesData
-            tableView.reloadData()
+
             }
 
             override func viewDidLoad() {
             super.viewDidLoad()
 
-            //load observation data:
-            //loadSiteAuditData()
+            //load user data:
+            loadUserSettingsData(ref: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(ThecurrentUser!.uid)")
 
             //register cell
             tableView.register(cellSettings.self, forCellReuseIdentifier: "cellSettings")
@@ -184,28 +186,29 @@ class cellSettings: UITableViewCell{
 
 
             //get the list of users that applied. (3)
-            func loadSiteAuditData(){
+            func loadUserSettingsData(ref:String){
 
             //if Auth.auth().currentUser != nil {
 
-            Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
+            Database.database().reference(withPath:ref)
             .observe(.value, with: { [self] snapshot in
 
-            var listOfSitesData: [auditSiteData] = []
+            var userData: [userDetails] = []
             for child in snapshot.children {
 
             if let snapshot = child as? DataSnapshot,
-            let List = auditSiteData(snapshot: snapshot) {
-            listOfSitesData.append(List)
+            let List = userDetails(snapshot: snapshot) {
+                userData.append(List)
+                
+                companyNameData = List.Username
+                companyDPData = List.DPimage
+                
+                print(userData)
 
             }
             }
 
-            self.listOfSitesData = listOfSitesData
-            filterData = self.listOfSitesData
-
-
-
+            self.userData = userData
             self.tableView.reloadData()
 
             })
@@ -256,146 +259,159 @@ class cellSettings: UITableViewCell{
             //    }
             //
             override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-            if section == profileSection {
-            return "Profile Settings"
-            } else if section == reportSection{
-            return "Report Settings"
-            }else{
-            return "Rate AllRoads"
-            }
+                if section == profileSection {
+                return "Profile Settings"
+                    
+                }else if section == reportSection{
+                    
+                return "Report Settings"
+                }else{
+                    
+                return "Rate AllRoads"
+                }
             }
 
             override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-            if indexPath.section == profileSection{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
-            cell.accessoryType = .disclosureIndicator
+                if indexPath.section == profileSection{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
+                cell.accessoryType = .disclosureIndicator
 
-            if indexPath.row == 0 {
-            cell.siteImage.isHidden = true
-            cell.auditDescription.isHidden = false
-            cell.settingsLabel.text = "Company name"
-            cell.auditDescription.text = companyName
-
-            cell.settingsLabel.frame = CGRect(
-            x: 20,
-            y:  10,
-            width: cell.frame.width - 80,
-            height: 20)
-            //60
-            cell.auditDescription.frame = CGRect(
-            x: 20,
-            y: cell.settingsLabel.frame.maxY + 5,
-            width: cell.frame.width - 80,
-            height: 20 )
+                if indexPath.row == 0 {
+                    
+                    cell.siteImage.isHidden = true
+                    cell.auditDescription.isHidden = false
+                    cell.settingsLabel.text = "Company name"
+                    cell.auditDescription.text = companyNameData
+                    
+ 
+              
 
 
-            }else  if indexPath.row == 1{
-            cell.auditDescription.isHidden = true
-            cell.siteImage.isHidden = false
-            cell.settingsLabel.text = "Company Logo"
-
-            cell.siteImage.image = UIImage(data: companyImage)
-
-            cell.siteImage.frame = CGRect(
-            x: cell.frame.width - 80,
-            y:cell.frame.height/2 - 20,
-            width: 40,
-            height: 40)
-
-            cell.settingsLabel.frame = CGRect(
-            x: 20, //siteImage.frame.maxX + 5,
-            y:  cell.frame.height/2 - 15,
-            width: cell.frame.width - 80,
-            height: 30)
+                    cell.settingsLabel.frame = CGRect(
+                    x: 20,
+                    y:  10,
+                    width: cell.frame.width - 80,
+                    height: 20)
+                    //60
+                    cell.auditDescription.frame = CGRect(
+                    x: 20,
+                    y: cell.settingsLabel.frame.maxY + 5,
+                    width: cell.frame.width - 80,
+                    height: 20 )
 
 
-            }else{
-            cell.siteImage.isHidden = false
-            cell.auditDescription.isHidden = true
-            cell.settingsLabel.text = "Signature"
+                }else  if indexPath.row == 1{
+                    
+                    cell.auditDescription.isHidden = true
+                    cell.siteImage.isHidden = false
+                    cell.settingsLabel.text = "Company Logo"
 
-            cell.settingsLabel.frame = CGRect(
-            x: 20,
-            y:  10,
-            width: cell.frame.width - 80,
-            height: 20)
+                    //cell.siteImage.image = UIImage(data: companyImage)
+                    
+                    let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 500, height: 500), scaleMode: .fill)
+                    cell.siteImage.sd_setImage(with: URL(string:companyDPData!), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
+                    
 
-            cell.siteImage.frame = CGRect(
-            x: 20,
-            y:cell.settingsLabel.frame.maxY + 10,
-            width: cell.frame.width - 80,
-            height: 90)
+                    cell.siteImage.frame = CGRect(
+                    x: cell.frame.width - 80,
+                    y:cell.frame.height/2 - 20,
+                    width: 40,
+                    height: 40)
 
-
-            }
-
-            return cell
-            }else if indexPath.section == reportSection{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
-            cell.accessoryType = .disclosureIndicator
+                    cell.settingsLabel.frame = CGRect(
+                    x: 20, //siteImage.frame.maxX + 5,
+                    y:  cell.frame.height/2 - 15,
+                    width: cell.frame.width - 80,
+                    height: 30)
 
 
-            cell.settingsLabel.text = "Report Configuration"
-            cell.siteImage.isHidden = true
-            cell.auditDescription.isHidden = true
+                }else{
+                    
+                    cell.siteImage.isHidden = false
+                    cell.auditDescription.isHidden = true
+                    cell.settingsLabel.text = "Signature"
 
-            cell.settingsLabel.frame = CGRect(
-            x: 20, //siteImage.frame.maxX + 5,
-            y:  cell.frame.height/2 - 15,
-            width: cell.frame.width - 80,
-            height: 30)
+                    cell.settingsLabel.frame = CGRect(
+                    x: 20,
+                    y:  10,
+                    width: cell.frame.width - 80,
+                    height: 20)
 
-            return cell
+                    cell.siteImage.frame = CGRect(
+                    x: 20,
+                    y:cell.settingsLabel.frame.maxY + 10,
+                    width: cell.frame.width - 80,
+                    height: 90)
 
-            }else{
 
-            //rateAppSection
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
-            cell.accessoryType = .disclosureIndicator
+                }
 
-            cell.settingsLabel.text = "Rate!"
-            cell.siteImage.isHidden = true
-            cell.auditDescription.isHidden = true
+                return cell
+                }else if indexPath.section == reportSection{
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
+                    cell.accessoryType = .disclosureIndicator
 
-            return cell
 
-            }
+                    cell.settingsLabel.text = "Report Configuration"
+                    cell.siteImage.isHidden = true
+                    cell.auditDescription.isHidden = true
+
+                    cell.settingsLabel.frame = CGRect(
+                    x: 20, //siteImage.frame.maxX + 5,
+                    y:  cell.frame.height/2 - 15,
+                    width: cell.frame.width - 80,
+                    height: 30)
+
+                    return cell
+
+                }else{
+
+                //rateAppSection
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
+                cell.accessoryType = .disclosureIndicator
+
+                cell.settingsLabel.text = "Rate!"
+                cell.siteImage.isHidden = true
+                cell.auditDescription.isHidden = true
+
+                return cell
+
+                }
 
             }
 
             override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             // #warning Incomplete implementation, return the number of rows
 
-            switch section {
-            case profileSection:
-            return profileSectionRow
+                switch section {
+                case profileSection:
+                    return profileSectionRow
 
-            case reportSection:
-            return reportSectionRow
+                case reportSection:
+                    return reportSectionRow
 
-            default: // rateAppSection
-            return 1
-            }
-            }
-
-            override func numberOfSections(in tableView: UITableView) -> Int {
-            return 3
+                default: // rateAppSection
+                    return 1
+                }
             }
 
-            override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            if indexPath.section == profileSection{
-            if indexPath.row == 0{
+                override func numberOfSections(in tableView: UITableView) -> Int {
+                    return 3
+                }
 
-            }else if indexPath.row == 1{
+                override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+                if indexPath.section == profileSection{
+                if indexPath.row == 0{
 
-            }else{
-            return 150
-            }
-            }
+                }else if indexPath.row == 1{
 
-
-            return 75
+                }else{
+                    return 150
+                }
+                    
+                }
+                    return 75
             }
 
             override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -526,7 +542,7 @@ class cellSettings: UITableViewCell{
                 }else{
                             //change user compnay name here, using ref:
                             self.updateName(companyName: "\(textField!.text!)", ref: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(ThecurrentUser!.uid)/\(self.mainConsole.userDetails!)")
-                            self.tableView.reloadData()
+                          
                 }
 
                 }))
@@ -586,7 +602,8 @@ class cellSettings: UITableViewCell{
                 //PREVIEW THE CURRENT IMAGE WITHIN ALERT
                 let alertController = UIAlertController(title: "Company Logo", message: "", preferredStyle: .alert)
                 let imageView = UIImageView(frame: CGRect(x: alertController.view.frame.maxX/2 - 160, y: 50, width: 200, height: 200))
-                imageView.image = UIImage(data: companyImage) // Your image here...
+                let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 500, height: 500), scaleMode: .fill)
+                imageView.sd_setImage(with: URL(string:companyDPData!), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
                 imageView.layer.cornerRadius = 40
                 imageView.layer.masksToBounds = true
                 alertController.view.addSubview(imageView)
@@ -638,12 +655,18 @@ class cellSettings: UITableViewCell{
                 {
                 // assign user image to uiimageview
                 //save the image as object
-                companyImage = optimizedImageData
-                tableView.reloadData()
+                    companyImage = optimizedImageData
+                
 
 
                 }
-                    picker.dismiss(animated: true, completion:nil)
+                //dismiss the current view
+                picker.dismiss(animated: true, completion:nil)
+
+                //save and update new image
+                self.updateCompanyImage(imageData: companyImage, ref: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(ThecurrentUser!.uid)/\(self.mainConsole.userDetails!)")
+                
+                
                 }
                 
                 

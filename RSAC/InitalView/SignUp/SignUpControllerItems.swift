@@ -219,10 +219,10 @@ class SignUpItemsCell: UICollectionViewCell, UITextViewDelegate{
     }()
     let DP:UIImageView = {
        let image = UIImageView()
-        image.layer.cornerRadius = 50
-        image.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.09803921569)
-        image.layer.borderWidth = 5
-        image.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        //image.layer.cornerRadius = 50
+        //image.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.09803921569)
+        //image.layer.borderWidth = 5
+        //image.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         image.layer.masksToBounds = true
         image.image = UIImage(named: "man")
         return image
