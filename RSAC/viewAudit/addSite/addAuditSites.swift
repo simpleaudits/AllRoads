@@ -210,7 +210,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         //Ask user for site name:
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Site name", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Site Name:", message: "", preferredStyle: .alert)
 
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in

@@ -18,9 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        
-        let settings = FirestoreSettings()
-        
 
         
         return true

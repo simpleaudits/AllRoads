@@ -43,6 +43,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var CompletedAuditsFilter: [createSiteData] = []
         var ArchievedAuditsFilter: [createSiteData] = []
     
+    @IBOutlet weak var statusSegment: UISegmentedControl!
     
   
     
@@ -52,6 +53,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         super.viewDidLoad()
         
         loadAuditSnapshots()
+        
+        
 
  
         self.collectionView?.register(auditHeader.self, forSupplementaryViewOfKind: "auditHeader", withReuseIdentifier: "auditHeader")
@@ -66,10 +69,35 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
     }
     
+//Change project Status---------------------------------------------------------------------------------------------------------------------[START]
+        @IBAction func indexChanged(_ sender: Any) {
+            switch statusSegment.selectedSegmentIndex {
+            case 0:
+                print("Complete")
+                self.firebaseConsole.updateAuditProgress(auditProgress: mainConsole.complete!, auditID: auditID)
+                
+                break
+            case 1:
+                print("In-Progress")
+                self.firebaseConsole.updateAuditProgress(auditProgress: mainConsole.progress!, auditID: auditID)
+   
+                break
+            default:
+                print("Archieved")
+                
+                self.firebaseConsole.updateAuditProgress(auditProgress: mainConsole.archived!, auditID: auditID)
+                
+                break
+            }
+    
+        }
+//Change project Status---------------------------------------------------------------------------------------------------------------------[END]
     
     
-    //Get data from the favourites list
-    //---------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+//Load Data from Firebase---------------------------------------------------------------------------------------------------------------------[START]
 
         func loadAuditSnapshots(){
             
@@ -87,7 +115,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                     .child("\(auditID)")
                     .child("\(self.mainConsole.siteList!)")
             
-            
             auditData.queryOrderedByKey()
                 .observe(.value, with: { [self] snapshot in
                         
@@ -97,12 +124,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                             if let snapshot = child as? DataSnapshot,
                                 let listOfSites = createSiteData(snapshot: snapshot) {
                                 NewlistOfSites.append(listOfSites)
-         
-            
                             }
                         }
                         self.listOfSites = NewlistOfSites
-                        SwiftLoader.hide()
+                       
                         
                         //all true completed
                         self.CompletedAuditsFilter = self.listOfSites.filter(
@@ -113,23 +138,98 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                         self.ArchievedAuditsFilter = self.listOfSites.filter(
                             {return $0.status.localizedCaseInsensitiveContains("Archived") })
                         print("ArchievedAuditsFilter:\(self.ArchievedAuditsFilter.count)")
-                    
-          
+    
+                   
                     
                         self.collectionView.reloadData()
-      
-             
                     
-    
+                        // get user status:
+                        checkUserStatus()
+      
+
                     })
-                
         
             }
     
+//Load Data from Firebase---------------------------------------------------------------------------------------------------------------------[END]
+//Load project data from Firebase---------------------------------------------------------------------------------------------------------------------[START]
     
-
+     func checkUserStatus(){
+           
+          if Auth.auth().currentUser != nil {
+              
+              let uid = Auth.auth().currentUser?.uid
+              
+              let reftest = Database.database().reference()
+                  .child("\(self.mainConsole.prod!)")
+              let auditData = reftest
+                  .child("\(self.mainConsole.post!)")
+                  .child(uid!)
+                  .child("\(self.mainConsole.audit!)")
+                  .child("\(auditID)")
         
+
+              auditData.queryOrderedByKey()
+                  .observe( .value, with: { snapshot in
+                            guard let dict = snapshot.value as? [String:Any] else {
+                            //error here
+                            return
+                            }
+
+                             let status = dict["auditProgress"] as? String
+                             print("status:\(status!)")
+                             SwiftLoader.hide()
+                      
+                       
+                              switch status{
+                              case self.mainConsole.complete!:
+                              self.statusSegment.selectedSegmentIndex = 0;
+                              break
+                              case self.mainConsole.progress!:
+                              self.statusSegment.selectedSegmentIndex = 1;
+                              break
+                              default:
+                              self.statusSegment.selectedSegmentIndex = 2;
+                              break
+                              }
+
+                        
+                            
+                        
+                })
+                                 
+                  
+            }
+
+      }
             
+    
+    
+//Load project data from Firebase---------------------------------------------------------------------------------------------------------------------[END]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     override func viewDidDisappear(_ animated: Bool) {
         print("YES")
@@ -139,12 +239,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     override func viewDidAppear(_ animated: Bool) {
 
-      
-        
-     
-
- 
-        
+   
         
     }
  
@@ -225,22 +320,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
             
 
-//
-//            //map reference
-//            let annotation = MKPointAnnotation()
-//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
-//            annotation.coordinate = centerCoordinate
-//            //annotation.title = ItemName
-//            //cell.mapUI.addAnnotation(annotation)
-//
-//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
-//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-//            //mapview.region = region
-//            cell.mapUI.setRegion(region, animated: false)
-            
-            // load and show the observation count
-     
             
         return cell
 
@@ -295,18 +374,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.layer.borderWidth = 2
             cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
             
-//            //map reference
-//            let annotation = MKPointAnnotation()
-//            let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(siteItems.lat), longitude:CLLocationDegrees(siteItems.long))
-//            annotation.coordinate = centerCoordinate
-//            //annotation.title = ItemName
-//            //cell.mapUI.addAnnotation(annotation)
-//
-//            let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(siteItems.lat), CLLocationDegrees(siteItems.long))
-//            let span = MKCoordinateSpan.init(latitudeDelta: 0.001, longitudeDelta: 0.001)
-//            let region = MKCoordinateRegion.init(center: mapCenter, span: span)
-//            //mapview.region = region
-//            cell.mapUI.setRegion(region, animated: false)
 
 
             return cell
@@ -327,7 +394,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             let auditData = CompletedAuditsFilter[indexPath.row]
             
-            let Alert3 = UIAlertController(title: "Site Name", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
+            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewAuditList", sender: self)
@@ -344,8 +411,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 
                         }
 
-
-            
                             let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
                         }
            
@@ -367,22 +432,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         }else {
     
             let auditData = ArchievedAuditsFilter[indexPath.row]
-            let Alert3 = UIAlertController(title: "Site Name", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
+            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
                         let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
                             //save this for headerview in view item
                             self.performSegue(withIdentifier: "viewAuditList", sender: self)
 
                         }
-//            let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
-//                            //save this for headerview in view item
-//                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
-//
-//                DispatchQueue.main.async {
-//                    self.collectionView.reloadData()
-//
-//                }
-//
-//                        }
+
+            
             let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
                             //save this for headerview in view item
                 self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")

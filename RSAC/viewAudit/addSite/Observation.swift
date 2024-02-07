@@ -13,6 +13,7 @@ import CoreLocation
 import Firebase
 import FirebaseDatabase
 import SDWebImage
+import SwiftLoader
 
 class cellData: UITableViewCell{
     
@@ -128,7 +129,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
     var filterData: [auditSiteData] = []
     
     @IBOutlet var filterSearch: UISearchBar!
-    @IBOutlet weak var segmentControlOutlet: UISegmentedControl!
+    @IBOutlet weak var statusSegment: UISegmentedControl!
     
     var titleData = String()
     var descriptionData = String()
@@ -220,11 +221,12 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
 
     
-    
-    //get the list of users that applied. (3)
+
        func loadSiteAuditData(){
      
            //if Auth.auth().currentUser != nil {
+           
+           SwiftLoader.show(title: "Loading Data", animated: true)
   
                Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
                    .observe(.value, with: { [self] snapshot in
@@ -242,9 +244,14 @@ class Observation: UITableViewController,UISearchBarDelegate {
                 self.listOfSitesData = listOfSitesData
                 filterData = self.listOfSitesData
                        
+                self.tableView.reloadData()
+                       
+                       
+                checkUserStatus()
+                       
      
                        
-                self.tableView.reloadData()
+                
                   
                })
 
@@ -254,6 +261,87 @@ class Observation: UITableViewController,UISearchBarDelegate {
 //               }
            
        }
+    
+
+//Load project data from Firebase---------------------------------------------------------------------------------------------------------------------[START]
+        
+         func checkUserStatus(){
+               
+              if Auth.auth().currentUser != nil {
+                  
+                  let uid = Auth.auth().currentUser?.uid
+                  
+                  let reftest = Database.database().reference(withPath:"\(refData)")
+
+                  reftest.queryOrderedByKey()
+                      .observe( .value, with: { snapshot in
+                                guard let dict = snapshot.value as? [String:Any] else {
+                                //error here
+                                return
+                                }
+
+                                 let status = dict["status"] as? String
+                                 print("status:\(status!)")
+                                 SwiftLoader.hide()
+                          
+                           
+                                  switch status{
+                                  case self.mainConsole.progress!:
+                                  self.statusSegment.selectedSegmentIndex = 0;
+                                  break
+                                  default:
+                                  self.statusSegment.selectedSegmentIndex = 1;
+                                  break
+                                  }
+
+                            
+                                
+                            
+                    })
+                                     
+                      
+                }
+
+          }
+                
+        
+        
+//Load project data from Firebase---------------------------------------------------------------------------------------------------------------------[END]
+        
+    
+//Change project Status---------------------------------------------------------------------------------------------------------------------[START]
+            @IBAction func indexChanged(_ sender: Any) {
+                switch statusSegment.selectedSegmentIndex {
+           
+                case 0:
+                    print("In-Progress")
+                    self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(siteID)")
+       
+                    break
+                default:
+                    print("Archieved")
+                    
+                    self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(siteID)")
+                    
+                    break
+                }
+        
+            }
+//Change project Status---------------------------------------------------------------------------------------------------------------------[END]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 //    override func tableView(_ tableView: UITableView,
