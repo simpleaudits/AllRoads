@@ -426,16 +426,39 @@ class cellSettings: UITableViewCell{
             uploadImageAlert()
 
             }else{
+                
+            //open the signatureview
+            presentModal()
 
             }
             }
             }
 
+// present the signature viewcontroller  --------------------------------------------------------------------------------------------------------------------[START]
+                
+            func presentModal() {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                if let viewController = storyboard.instantiateViewController(withIdentifier: "signatureViewController") as? signatureViewController{
+
+                    if let presentationController = viewController.presentationController as? UISheetPresentationController {
+                        presentationController.detents = [.medium()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                        //presentationController.prefersGrabberVisible = true
+                        presentationController.preferredCornerRadius = 45
+                        presentationController.presentingViewController.navigationItem.title = "Signature"
+                        //presentationController.largestUndimmedDetentIdentifier = .medium
+                    }
+
+                self.present(viewController, animated: true)
+                }
+
+               //self.performSegue(withIdentifier: "signatureViewController", sender: self)
 
 
+            }
 
 
-
+// present the signature viewcontroller  --------------------------------------------------------------------------------------------------------------------[END]
 
 // Change user display picture  --------------------------------------------------------------------------------------------------------------------[START]
            

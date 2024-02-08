@@ -307,7 +307,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.auditLabel.text = siteItems.siteName
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = false
-            cell.observationCountLabel.text = siteItems.observationCount
+            cell.observationCountLabel.text = "| \(siteItems.observationCount)"
             
             let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 100, height: 100), scaleMode: .fill)
             cell.imageUI.sd_setImage(with: URL(string:siteItems.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
@@ -316,7 +316,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 15
-            cell.layer.borderWidth = 2
+            cell.layer.borderWidth = 1
             cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
             
 
@@ -335,7 +335,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 let annotation = MKPointAnnotation()
                 let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(x.lat), longitude:CLLocationDegrees(x.long))
                 annotation.coordinate = centerCoordinate
-                annotation.title = x.siteName
+                annotation.title = "Location: \(x.siteName)\n\nObservations: \(x.observationCount)"
+                //annotation.subtitle = "Observations:\(x.observationCount)"
                 cell.myLocations.addAnnotation(annotation)
 
                 let mapCenter = CLLocationCoordinate2DMake(CLLocationDegrees(x.lat), CLLocationDegrees(x.long))
@@ -569,7 +570,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             }else {
                 //ARCHIEVED
                 
-                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/2), heightDimension: .absolute(100)))
+                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
                          item.contentInsets.trailing = 20
                          item.contentInsets.leading = 20
                          item.contentInsets.top = 5

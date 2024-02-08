@@ -30,9 +30,9 @@ class cellData: UITableViewCell{
         //60
         
         siteName.frame = CGRect(
-            x: siteImage.frame.maxX + 5,
-            y:  0,
-            width: frame.width - (siteImage.frame.maxX + 5),
+            x: siteImage.frame.maxX + 20,
+            y:  5,
+            width: frame.width - (siteImage.frame.maxX + 20),
             height: 30)
         //60
         auditDescription.frame = CGRect(
@@ -97,7 +97,7 @@ class cellData: UITableViewCell{
         label.text = "Loading.."
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textAlignment = .left
+        label.textAlignment = .right
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return label
     }()

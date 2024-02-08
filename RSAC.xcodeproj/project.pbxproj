@@ -19,6 +19,7 @@
 		8297CFFD2B6F594100450513 /* Road-audit.png in Resources */ = {isa = PBXBuildFile; fileRef = 8297CFFC2B6F594100450513 /* Road-audit.png */; };
 		8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */; };
 		8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */; };
+		8297D0062B74F41100450513 /* signatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8297D0052B74F41100450513 /* signatureViewController.swift */; };
 		82B023212B612AAE00DA87A3 /* addSiteDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B023202B612AAE00DA87A3 /* addSiteDetails.swift */; };
 		82BC45452B67BAA600FB2650 /* settingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC45442B67BAA600FB2650 /* settingsPage.swift */; };
 		82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C792B46861500F5F755 /* Image-1.jpg */; };
@@ -102,6 +103,7 @@
 		8297CFFC2B6F594100450513 /* Road-audit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Road-audit.png"; sourceTree = "<group>"; };
 		8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 14 _ 15 Pro Max - 1 (19).png"; sourceTree = "<group>"; };
 		8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iPhone-14-_-15-Pro-Max---1-(19).jpg"; sourceTree = "<group>"; };
+		8297D0052B74F41100450513 /* signatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signatureViewController.swift; sourceTree = "<group>"; };
 		82B023202B612AAE00DA87A3 /* addSiteDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSiteDetails.swift; sourceTree = "<group>"; };
 		82BC45442B67BAA600FB2650 /* settingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsPage.swift; sourceTree = "<group>"; };
 		82BE9C792B46861500F5F755 /* Image-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-1.jpg"; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				82BC45442B67BAA600FB2650 /* settingsPage.swift */,
+				8297D0052B74F41100450513 /* signatureViewController.swift */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -745,6 +748,7 @@
 				827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */,
 				82445D0C2B0100A000319605 /* createSite.swift in Sources */,
 				82E4A8962AFCE54400BE1D8B /* locationExtension.swift in Sources */,
+				8297D0062B74F41100450513 /* signatureViewController.swift in Sources */,
 				82E4A89A2AFCE54400BE1D8B /* CategoryTableViewController.swift in Sources */,
 				829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */,
 				82E4A89E2AFCE54400BE1D8B /* viewAuditCell.swift in Sources */,

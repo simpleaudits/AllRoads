@@ -18,19 +18,17 @@ class viewAuditCell: UICollectionViewCell {
         super.init(frame:frame)
         
         imageUI.frame = CGRect(
-            x:0,
-            y:0,
-            width: 80 ,
-            height: frame.height
+            x:10,
+            y:10,
+            width: 70 ,
+            height: frame.height - 20
         )
      
- 
-        //60
         
         auditLabel.frame = CGRect(
             x: imageUI.frame.maxX + 10 + 10,
-            y: 0,
-            width: frame.width,
+            y: imageUI.frame.minY,
+            width: frame.width - (imageUI.frame.maxX + 10 + 20),
             height: 20)
         //60
         
@@ -41,15 +39,15 @@ class viewAuditCell: UICollectionViewCell {
             height: 20)
         
         observationCountLabel.frame = CGRect(
-            x: observationIcon.frame.maxX + 10 + 10,
+            x: observationIcon.frame.maxX + 10,
             y: auditLabel.frame.maxY + 10,
-            width: frame.width,
+            width: frame.width - (observationIcon.frame.maxX + 20),
             height: 20)
         
         auditDate.frame = CGRect(
             x: imageUI.frame.maxX + 10 + 10,
             y: imageUI.frame.maxY - 20,
-            width: frame.width,
+            width: frame.width - (imageUI.frame.maxX + 10 + 20),
             height: 20)
 
         lineDivider1.frame = CGRect(
@@ -78,6 +76,10 @@ class viewAuditCell: UICollectionViewCell {
     let imageUI: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 10
+        image.layer.borderWidth = 0.5
+        image.layer.masksToBounds = true
+        
     return image
 
 
@@ -94,12 +96,8 @@ class viewAuditCell: UICollectionViewCell {
         let image = UIImageView()
         image.image = UIImage(systemName: "camera.on.rectangle.fill")
         image.contentMode = .scaleAspectFill
-        image.tintColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-//        image.layer.cornerRadius = 10
-//        image.layer.masksToBounds = true
-        //profile.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        //
-        //profile.layer.borderWidth = 0.5
+        image.tintColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
+
    
         return image
     }()
@@ -107,7 +105,7 @@ class viewAuditCell: UICollectionViewCell {
     let auditLabel: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 1
         label.textAlignment = .left
         //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -117,11 +115,11 @@ class viewAuditCell: UICollectionViewCell {
     let observationCountLabel: UILabel = {
         let label = UILabel()
         label.text = "Loading.."
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.numberOfLines = 1
         label.textAlignment = .left
         //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        label.textColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        label.textColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
         return label
     }()
     
@@ -130,8 +128,9 @@ class viewAuditCell: UICollectionViewCell {
         label.text = "Loading.."
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textAlignment = .left
+        label.textAlignment = .right
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        //label.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         return label
     }()
     

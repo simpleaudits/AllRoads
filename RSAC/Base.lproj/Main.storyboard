@@ -901,7 +901,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250" y="3534"/>
+            <point key="canvasLocation" x="283" y="3534"/>
         </scene>
         <!--Add Site Details-->
         <scene sceneID="BEi-4A-2j9">
@@ -1210,6 +1210,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ot-dU-KDu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-529" y="3534"/>
+        </scene>
+        <!--Signature View Controller-->
+        <scene sceneID="DLx-YA-kmU">
+            <objects>
+                <viewController storyboardIdentifier="signatureViewController" modalPresentationStyle="formSheet" id="v1d-jE-UOb" customClass="signatureViewController" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JOh-wq-6cX">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="8j1-oW-fXz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="pq3-mM-AFt">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="QU7-nv-8TD">
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
+                            <connections>
+                                <action selector="addToAuditList:" destination="v1d-jE-UOb" id="uS9-aU-qM7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pCe-hZ-7hu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1587" y="643"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
