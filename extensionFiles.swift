@@ -118,6 +118,7 @@ class CONSOLE: UIViewController {
     var siteData:String? = "siteData"
     var userDetails:String? = "userDetails"
     var profileImage: String? = "profileImage"
+    var profileSignature: String? = "profileSignature"
     var listingImage: String? = "listingImage"
     var auditProductList:String? = "auditProductList"
     var settingsConfig:String? = "settingsConfig"

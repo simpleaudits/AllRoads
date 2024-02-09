@@ -42,12 +42,11 @@ class cellSettings: UITableViewCell{
 
             let siteImage: UIImageView = {
             let profile = UIImageView()
-            //profile.image = UIImage(systemName: "person.fill.badge.plus")
             profile.contentMode = .scaleAspectFit
             profile.layer.cornerRadius = 10
             profile.layer.masksToBounds = true
             profile.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            profile.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            //profile.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             //profile.layer.borderWidth = 0.5
 
             return profile
@@ -101,6 +100,7 @@ class cellSettings: UITableViewCell{
             var userData: [userDetails] = []
             var companyNameData: String? = "Loading.."
             var companyDPData: String? = "Loading.."
+            var companySigData: String? = "Loading.."
                 
 
 
@@ -202,6 +202,8 @@ class cellSettings: UITableViewCell{
                 
                 companyNameData = List.Username
                 companyDPData = List.DPimage
+                companySigData = List.signatureURL
+                
                 
                 print(userData)
 
@@ -331,6 +333,9 @@ class cellSettings: UITableViewCell{
                     cell.siteImage.isHidden = false
                     cell.auditDescription.isHidden = true
                     cell.settingsLabel.text = "Signature"
+                    
+                  
+                    cell.siteImage.sd_setImage(with: URL(string:companySigData!), placeholderImage: nil)
 
                     cell.settingsLabel.frame = CGRect(
                     x: 20,
