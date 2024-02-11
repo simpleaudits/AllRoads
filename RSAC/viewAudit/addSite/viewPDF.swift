@@ -103,7 +103,7 @@ class viewPDF: UIViewController {
         tableOfUserData.content = [
 //            ["Signed",      nil],
 //            ["John doe",      nil],
-            [Image(named: "Image-1.jpg")!, nil],
+            [Image(named: "whiteBackdrop.png")!, nil],
    
         ]
         tableOfUserData.rows.allRowsAlignment = [.right, .left]

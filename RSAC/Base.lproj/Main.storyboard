@@ -880,14 +880,14 @@
         <!--Add Audit Sites-->
         <scene sceneID="j04-Iu-YaU">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="JPK-3h-a4i" customClass="addAuditSites" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Main" modalPresentationStyle="fullScreen" id="JPK-3h-a4i" customClass="addAuditSites" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ieK-EQ-7Hs">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="LUT-VY-bla"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="6JZ-hz-s0i">
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="6JZ-hz-s0i">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="q6w-ph-cjZ">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
@@ -896,28 +896,29 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="5Gn-pp-wh6" kind="show" identifier="addDescription" id="oeu-nH-3wF"/>
+                        <segue destination="lL7-90-5Jt" kind="show" identifier="addDescription" id="TpG-2R-Fwl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="283" y="3534"/>
         </scene>
-        <!--Add Site Details-->
+        <!--Comments:-->
         <scene sceneID="BEi-4A-2j9">
             <objects>
-                <viewController storyboardIdentifier="addSiteDetails" id="lL7-90-5Jt" customClass="addSiteDetails" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="formSheet" id="lL7-90-5Jt" customClass="addSiteDetails" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="61o-0O-7lx">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="o1a-1q-qjl"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" id="cYS-gd-FoT"/>
+                    <navigationItem key="navigationItem" title="Comments:" largeTitleDisplayMode="always" id="cYS-gd-FoT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFW-bG-bVJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250" y="4236"/>
+            <point key="canvasLocation" x="1024" y="3534"/>
         </scene>
         <!--ViewPDF-->
         <scene sceneID="Y83-Pj-P1s">
@@ -948,29 +949,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="My4-HV-CNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-529" y="4236"/>
-        </scene>
-        <!--Add Description-->
-        <scene sceneID="wvi-cP-oG3">
-            <objects>
-                <viewController storyboardIdentifier="addDescription" id="5Gn-pp-wh6" customClass="addDescription" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3Xy-Vv-fSj">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="ebm-Oe-dRe"/>
-                        <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Kdd-Qb-geX">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="tiw-8y-2Uc">
-                            <color key="tintColor" systemColor="systemGreenColor"/>
-                            <connections>
-                                <action selector="saveDescription:" destination="5Gn-pp-wh6" id="1fg-d3-zry"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4id-OP-MLA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1053" y="3534"/>
         </scene>
         <!--Search List-->
         <scene sceneID="0oL-Dw-6cq">

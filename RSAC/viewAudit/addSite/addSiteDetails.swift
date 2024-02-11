@@ -7,16 +7,21 @@
 
 import UIKit
 
+
+protocol saveDescription{
+    func saveDescription(text:String)
+}
+
+
 class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
+    var delegate: saveDescription?
     var descriptionTextfield = UITextView()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
        
         
@@ -36,14 +41,31 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
+    {
+        if(text == "\n")
+        {
+            view.endEditing(true)
+            
+            self.delegate?.saveDescription(text: self.descriptionTextfield.text)
+           
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                self.navigationController?.popViewController(animated: true)
+                
+                self.dismiss(animated: true, completion: nil)
+                
+             
+            })
+            
+       
+            
+            return false
+        }
+        else
+        {
+            return true
+        }
     }
-    */
 
 }

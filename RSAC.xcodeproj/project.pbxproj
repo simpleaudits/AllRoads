@@ -22,9 +22,6 @@
 		8297D0062B74F41100450513 /* signatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8297D0052B74F41100450513 /* signatureViewController.swift */; };
 		82B023212B612AAE00DA87A3 /* addSiteDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B023202B612AAE00DA87A3 /* addSiteDetails.swift */; };
 		82BC45452B67BAA600FB2650 /* settingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC45442B67BAA600FB2650 /* settingsPage.swift */; };
-		82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C792B46861500F5F755 /* Image-1.jpg */; };
-		82BE9C7C2B46862000F5F755 /* Image-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C7B2B46862000F5F755 /* Image-2.jpg */; };
-		82BE9C7E2B46862500F5F755 /* Image-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82BE9C7D2B46862500F5F755 /* Image-3.jpg */; };
 		82D527F32B7654D000A9655D /* whiteBackdrop.png in Resources */ = {isa = PBXBuildFile; fileRef = 82D527F22B7654D000A9655D /* whiteBackdrop.png */; };
 		82E4A82D2AFCE0A800BE1D8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */; };
 		82E4A82F2AFCE0A800BE1D8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */; };
@@ -107,9 +104,6 @@
 		8297D0052B74F41100450513 /* signatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signatureViewController.swift; sourceTree = "<group>"; };
 		82B023202B612AAE00DA87A3 /* addSiteDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSiteDetails.swift; sourceTree = "<group>"; };
 		82BC45442B67BAA600FB2650 /* settingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsPage.swift; sourceTree = "<group>"; };
-		82BE9C792B46861500F5F755 /* Image-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-1.jpg"; sourceTree = "<group>"; };
-		82BE9C7B2B46862000F5F755 /* Image-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-2.jpg"; sourceTree = "<group>"; };
-		82BE9C7D2B46862500F5F755 /* Image-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Image-3.jpg"; sourceTree = "<group>"; };
 		82D527F22B7654D000A9655D /* whiteBackdrop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteBackdrop.png; sourceTree = "<group>"; };
 		82E4A8292AFCE0A800BE1D8B /* RSAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -302,9 +296,6 @@
 				82E4A83A2AFCE0AA00BE1D8B /* Info.plist */,
 				82E4A8AA2AFCE7F600BE1D8B /* GoogleService-Info.plist */,
 				82D527F22B7654D000A9655D /* whiteBackdrop.png */,
-				82BE9C792B46861500F5F755 /* Image-1.jpg */,
-				82BE9C7B2B46862000F5F755 /* Image-2.jpg */,
-				82BE9C7D2B46862500F5F755 /* Image-3.jpg */,
 				8297CFFC2B6F594100450513 /* Road-audit.png */,
 				8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */,
 				8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */,
@@ -566,15 +557,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82BE9C7A2B46861500F5F755 /* Image-1.jpg in Resources */,
-				82BE9C7E2B46862500F5F755 /* Image-3.jpg in Resources */,
 				82E4A8A92AFCE55500BE1D8B /* man.png in Resources */,
 				82D527F32B7654D000A9655D /* whiteBackdrop.png in Resources */,
 				8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */,
 				8297CFFD2B6F594100450513 /* Road-audit.png in Resources */,
 				82E4A8392AFCE0AA00BE1D8B /* LaunchScreen.storyboard in Resources */,
 				82E4A8362AFCE0AA00BE1D8B /* Assets.xcassets in Resources */,
-				82BE9C7C2B46862000F5F755 /* Image-2.jpg in Resources */,
 				82E4A8AB2AFCE7F600BE1D8B /* GoogleService-Info.plist in Resources */,
 				8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */,
 				82E4A8342AFCE0A800BE1D8B /* Main.storyboard in Resources */,
@@ -947,6 +935,8 @@
 				DEVELOPMENT_TEAM = 2NLMXJ7CVV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RSAC/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AllRoads;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -977,6 +967,8 @@
 				DEVELOPMENT_TEAM = 2NLMXJ7CVV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RSAC/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AllRoads;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

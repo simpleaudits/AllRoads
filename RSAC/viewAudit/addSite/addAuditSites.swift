@@ -47,7 +47,8 @@ extension UIImage {
 
 
 
-class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, siteDecriptionString, UIPencilInteractionDelegate{
+class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription, UIPencilInteractionDelegate{
+
  
     
     var scrollView = UIScrollView()
@@ -61,7 +62,6 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var imgForMarkup: UIImage?
     var editImage = UIButton()
     var saveImage = UIButton()
-    
     
     var backgroundImage = UIView()
     var descriptionTextfieldHeader = UILabel()
@@ -96,22 +96,12 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
 
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-    func finishPassing_decription_addSite(saveDescriptionData: String) {
-       
-            self.siteDescription = saveDescriptionData
-            self.descriptionTextfield.text = saveDescriptionData
-           
+    func saveDescription(text: String) {
+            self.siteDescription = text
+            self.descriptionTextfield.text = text
         
-
+    
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -119,16 +109,15 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         if let window = self.view.window, let toolPicker = PKToolPicker.shared(for: window) {
         toolPicker.setVisible(true, forFirstResponder: self.canvasView)
         toolPicker.addObserver(self.canvasView)
-
-            
-
-            
+         
         }
         //presentModal()
-        
+        print("return")
         
 
     }
+    
+   
     override func viewDidLoad() {
 
         
@@ -146,10 +135,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
 
         
-        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
-                    (self.navigationController?.navigationBar.frame.height ?? 0.0)
-        image = UIImageView(frame: CGRect(x: 0, y: topBarHeight, width: view.frame.width, height: 400))
-        image.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+//        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+//                          (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        image = UIImageView(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)!, width: view.frame.width, height: 400))
+        //image.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         //image.layer.borderWidth = 2
         image.contentMode = .scaleAspectFit
@@ -159,26 +148,57 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.canvasView.isOpaque = false
 
         
-        layoverView = UIView(frame: CGRect(x: 0, y: topBarHeight, width: view.frame.width, height: 397))
+        layoverView = UIView.init(frame: self.image.frame)
         layoverView.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         layoverView.layer.borderWidth = 2
         layoverView.isHidden = true
        
         
         
+        descriptionTextfieldHeader = UILabel(frame:CGRect(x: 0, y: image.frame.maxY, width: image.frame.width, height: 20))
+        descriptionTextfieldHeader.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        descriptionTextfieldHeader.text = "Comments:"
+        descriptionTextfieldHeader.font = UIFont.boldSystemFont(ofSize: 20)
+
+        
+        
+        
         let tabBarHeight = tabBarController?.tabBar.frame.size.height
-        descriptionTextfield = UITextView(frame: CGRect(x: 5, y: image.frame.maxY , width: view.frame.width - 10, height: view.frame.height - (image.frame.maxY + tabBarHeight!)))
+        descriptionTextfield = UITextView(frame: CGRect(x: 5, y: descriptionTextfieldHeader.frame.maxY + 10 , width: view.frame.width - 10, height: view.frame.height - (descriptionTextfieldHeader.frame.maxY + 10 + tabBarHeight!)))
         descriptionTextfield.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        descriptionTextfield.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+        descriptionTextfield.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 20)
         descriptionTextfield.text = ""
-        descriptionTextfield.layer.cornerRadius = 10
-        descriptionTextfield.layer.masksToBounds = true
+        //descriptionTextfield.layer.cornerRadius = 10
+        //descriptionTextfield.layer.masksToBounds = true
+        descriptionTextfield.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        descriptionTextfield.layer.borderWidth = 1
         descriptionTextfield.isUserInteractionEnabled = false
         descriptionTextfield.delegate = self
     
         
         //Buttons:
+        editDescription = UIButton(frame: CGRect(x: descriptionTextfield.frame.maxX - 80 - 10, y:  descriptionTextfield.frame.maxY - 20 - 10, width: 80, height: 20))
+        editDescription.setTitleColor(UIColor.black, for: .normal)
+        editDescription.setTitle("Edit", for: .normal)
+
+        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
+        editDescription.backgroundColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)
+        editDescription.layer.cornerRadius = 10
+        editDescription.layer.masksToBounds = true
+        editDescription.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         editImage = UIButton(frame: CGRect(x: 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
         editImage.setTitleColor(UIColor.white, for: .normal)
         editImage.setTitle("Edit Image", for: .normal)
@@ -202,6 +222,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         self.view.addSubview(image)
         self.view.addSubview(descriptionTextfield)
+        self.view.addSubview(descriptionTextfieldHeader)
+        self.view.addSubview(editDescription)
         self.view.addSubview(layoverView)
         self.view.addSubview(self.canvasView)
         self.view.addSubview(editImage)
@@ -302,26 +324,46 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     
     func presentModal() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let viewController = storyboard.instantiateViewController(withIdentifier: "addSiteDetails") as? addSiteDetails{
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        if let viewController = storyboard.instantiateViewController(withIdentifier: "addSiteDetails") as? addSiteDetails{
+//
+//            if let presentationController = viewController.presentationController as? UISheetPresentationController {
+//                presentationController.detents = [.medium(), .large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+//                presentationController.prefersGrabberVisible = true
+//                presentationController.preferredCornerRadius = 45
+//                presentationController.largestUndimmedDetentIdentifier = .medium
+//            }
+//
+//
+//
+//          self.present(viewController, animated: true)
+//
+         
+//    }
 
-            if let presentationController = viewController.presentationController as? UISheetPresentationController {
-                presentationController.detents = [.medium(), .large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
-                presentationController.prefersGrabberVisible = true
-                presentationController.preferredCornerRadius = 45
-                presentationController.largestUndimmedDetentIdentifier = .medium
-            }
-
-           self.present(viewController, animated: true)
-        }
-
-       //self.performSegue(withIdentifier: "addDescription", sender: self)
-
+       
+    self.performSegue(withIdentifier: "addDescription", sender: self)
+        
+        
+//        let pageSheet = addSiteDetails()
+//        let nav = UINavigationController(rootViewController: pageSheet)
+//        nav.title = "Description"
+//        nav.modalPresentationStyle = .pageSheet
+//
+//        if let sheet = nav.sheetPresentationController {
+//            sheet.detents = [.medium()]
+//            sheet.prefersGrabberVisible = true
+//            sheet.preferredCornerRadius = 40
+//            sheet.largestUndimmedDetentIdentifier = .medium
+//        }
+//
+//        present(nav, animated: true, completion: nil)
 
     }
     
-    @objc func editDescriptionButton(sender: UIButton!) {
-        self.performSegue(withIdentifier: "addDescription", sender: self)
+    @objc func editDescriptionButton(_ sender: UIButton) {
+        //self.performSegue(withIdentifier: "addDescription", sender: self)
+        
 
     }
     
@@ -400,7 +442,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         }
         
         picker.dismiss(animated: true, completion:nil)
-       // presentModal()
+        presentModal()
         
 
         
@@ -594,7 +636,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         if let destination3 = segue.destination as? addDescription {
+         if let destination3 = segue.destination as? addSiteDetails {
             destination3.delegate = self
            
         }
