@@ -135,9 +135,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
 
         
-//        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
-//                          (self.navigationController?.navigationBar.frame.height ?? 0.0)
-        image = UIImageView(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)!, width: view.frame.width, height: 400))
+        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+                          (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        image = UIImageView(frame: CGRect(x: 0, y: Int(topBarHeight), width: Int(view.frame.width), height: 400))
         //image.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         //image.layer.borderWidth = 2
@@ -164,70 +164,57 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         
         let tabBarHeight = tabBarController?.tabBar.frame.size.height
-        descriptionTextfield = UITextView(frame: CGRect(x: 5, y: descriptionTextfieldHeader.frame.maxY + 10 , width: view.frame.width - 10, height: view.frame.height - (descriptionTextfieldHeader.frame.maxY + 10 + tabBarHeight!)))
+        descriptionTextfield = UITextView(frame: CGRect(x: 5, y: descriptionTextfieldHeader.frame.maxY + 10 , width: view.frame.width - 10, height: view.frame.height - (descriptionTextfieldHeader.frame.maxY + 30 + tabBarHeight!)))
         descriptionTextfield.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         descriptionTextfield.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 20)
         descriptionTextfield.text = ""
-        //descriptionTextfield.layer.cornerRadius = 10
-        //descriptionTextfield.layer.masksToBounds = true
-        descriptionTextfield.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        descriptionTextfield.layer.borderWidth = 1
         descriptionTextfield.isUserInteractionEnabled = false
         descriptionTextfield.delegate = self
+        descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        descriptionTextfield.layer.cornerRadius = 20
+        descriptionTextfield.layer.masksToBounds = false
+        descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        descriptionTextfield.layer.shadowRadius = 8.0
+        descriptionTextfield.layer.shadowOpacity = 0.4
     
         
         //Buttons:
         editDescription = UIButton(frame: CGRect(x: descriptionTextfield.frame.maxX - 80 - 10, y:  descriptionTextfield.frame.maxY - 20 - 10, width: 80, height: 20))
-        editDescription.setTitleColor(UIColor.black, for: .normal)
+        editDescription.setTitleColor(UIColor.white, for: .normal)
         editDescription.setTitle("Edit", for: .normal)
 
         //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        editDescription.backgroundColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)
+        editDescription.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.8039215686, blue: 0.2549019608, alpha: 1)
         editDescription.layer.cornerRadius = 10
         editDescription.layer.masksToBounds = true
         editDescription.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        editImage = UIButton(frame: CGRect(x: 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
+  
+        editImage = UIButton(frame: CGRect(x: 10, y:  image.frame.maxY - 50 - 10, width: 40, height: 40))
         editImage.setTitleColor(UIColor.white, for: .normal)
-        editImage.setTitle("Edit Image", for: .normal)
-        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        editImage.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        //editImage.setTitle("Edit Image", for: .normal)
+        editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
+        editImage.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        editImage.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         editImage.layer.cornerRadius = 15
         editImage.layer.masksToBounds = true
         editImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
+        editImage.isHidden = true
         
-        
-        saveImage = UIButton(frame: CGRect(x: editImage.frame.maxX + 10, y:  descriptionTextfield.frame.minY - 50 - 10, width: 150, height: 40))
-        saveImage.setTitleColor(UIColor.white, for: .normal)
-        saveImage.setTitle("Save Edits", for: .normal)
-        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        saveImage.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-        saveImage.layer.cornerRadius = 15
-        saveImage.layer.masksToBounds = true
-        saveImage.addTarget(self, action: #selector(saveDrawing(_:)), for: .touchUpInside)
+
 
 
         
         self.view.addSubview(image)
         self.view.addSubview(descriptionTextfield)
         self.view.addSubview(descriptionTextfieldHeader)
-        self.view.addSubview(editDescription)
         self.view.addSubview(layoverView)
         self.view.addSubview(self.canvasView)
         self.view.addSubview(editImage)
-        self.view.addSubview(saveImage)
+        self.view.addSubview(editDescription)
+ 
         
         
         //Ask user for site name:
@@ -282,13 +269,16 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         canvasView.drawing = PKDrawing()
     }
     
-    @objc func saveDrawing(_ sender : UIButton){
+    func saveDrawing(){
         var drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
         if let markedupImage = self.saveImage(drawing: drawing){
             // Save the image or do whatever with the Marked up Image
             
             let data = markedupImage.pngData()
             self.localImageData = data! as Data
+            
+            //save the drawing to database
+            self.uploadDP(imageData: localImageData)
   
 
     }
@@ -362,7 +352,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     }
     
     @objc func editDescriptionButton(_ sender: UIButton) {
-        //self.performSegue(withIdentifier: "addDescription", sender: self)
+        self.performSegue(withIdentifier: "addDescription", sender: self)
         
 
     }
@@ -377,8 +367,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
 
     @IBAction func addToAuditList(_ sender: Any) {
-        self.uploadDP(imageData: localImageData)
+        //self.uploadDP(imageData: localImageData)
         
+        //save drawing and upload to database
+        saveDrawing()
     }
     
     //###############-UPLOAD IMAGE-###############U
@@ -435,7 +427,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             //self.localImageData = imageData! as Data
             image.image = UIImage(data: jpegData)
             
-            //Update the the collectionview here.
+            //show edit button
+            editImage.isHidden = false
             
  
             
@@ -638,6 +631,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          if let destination3 = segue.destination as? addSiteDetails {
             destination3.delegate = self
+             destination3.stringData = siteDescription
            
         }
         

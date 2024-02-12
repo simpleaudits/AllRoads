@@ -17,6 +17,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
     var delegate: saveDescription?
     var descriptionTextfield = UITextView()
+    var stringData = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,17 +26,22 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
 
        
         
-        descriptionTextfield = UITextView(frame: CGRect(x: 10, y: 20, width: Int(view.frame.width) - 20, height: 200 ))
+                let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+                                  (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        
+        descriptionTextfield = UITextView(frame: CGRect(x: 10, y: Int(topBarHeight), width: Int(view.frame.width) - 20, height: 200 ))
         descriptionTextfield.font = UIFont.systemFont(ofSize: 20)
         descriptionTextfield.delegate = self
         descriptionTextfield.layer.borderWidth = 2
         descriptionTextfield.layer.cornerRadius = 20
         descriptionTextfield.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        //descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        descriptionTextfield.text = stringData
+        
+        descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         descriptionTextfield.layer.masksToBounds = false
-//        descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-//        descriptionTextfield.layer.shadowRadius = 8.0
-//        descriptionTextfield.layer.shadowOpacity = 0.4
+        descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        descriptionTextfield.layer.shadowRadius = 8.0
+        descriptionTextfield.layer.shadowOpacity = 0.4
         
         view.addSubview(descriptionTextfield)
     }
