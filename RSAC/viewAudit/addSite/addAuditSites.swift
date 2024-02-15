@@ -78,6 +78,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
  
     
     var scrollView = UIScrollView()
+    var backOfScroll = UIView()
     var editViewButton = UIView()
     var layoverView = UIView()
     var locationLabel = UILabel()
@@ -227,12 +228,12 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
         
         //Buttons:
-        editDescription = UIButton(frame: CGRect(x: descriptionTextfield.frame.maxX - 80 - 10, y:  descriptionTextfield.frame.maxY + 20, width: 60, height: 30))
-        editDescription.setTitleColor(UIColor.white, for: .normal)
+        editDescription = UIButton(frame: CGRect(x: 10, y:  descriptionTextfield.frame.maxY + 5, width: view.frame.width - 20, height: 30))
+        editDescription.setTitleColor(UIColor.red, for: .normal)
         editDescription.setTitle("Edit", for: .normal)
 
         //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        editDescription.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.8039215686, blue: 0.2549019608, alpha: 1)
+        editDescription.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         editDescription.layer.cornerRadius = 10
         editDescription.layer.masksToBounds = true
         editDescription.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
@@ -255,8 +256,11 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         scrollView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
 
         
-        editViewButton = UIScrollView(frame: CGRect(x: scrollView.frame.maxX, y: image.frame.maxY + 10 + 20, width: view.frame.width, height: view.frame.height ))
+        editViewButton = UIView(frame: CGRect(x: scrollView.frame.maxX, y: image.frame.maxY + 10 + 20, width: view.frame.width, height: view.frame.height ))
         editViewButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        
+        backOfScroll = UIView(frame: CGRect(x: 0, y: descriptionTextfield.frame.maxY - 50, width: view.frame.width, height: scrollView.frame.height ))
+        backOfScroll.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
  
 
 
@@ -273,6 +277,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         view.addSubview(editViewButton)
         self.view.addSubview(editImage)
         
+        scrollView.addSubview(backOfScroll)
         scrollView.addSubview(editDescription)
         scrollView.addSubview(descriptionTextfield)
         scrollView.addSubview(descriptionTextfieldHeader)
