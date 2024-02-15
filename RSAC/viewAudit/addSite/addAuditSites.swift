@@ -12,6 +12,32 @@ import SwiftLoader
 import MapKit
 import PencilKit
 
+
+
+
+
+extension UITextView {
+    func setTextWithTypeAnimation(typedText: String, characterDelay: TimeInterval = 5.0) {
+        text = ""
+        var writingTask: DispatchWorkItem?
+        writingTask = DispatchWorkItem { [weak weakSelf = self] in
+            for character in typedText {
+                DispatchQueue.main.async {
+                    weakSelf?.text!.append(character)
+                }
+                Thread.sleep(forTimeInterval: characterDelay/100)
+            }
+        }
+        
+        if let task = writingTask {
+            let queue = DispatchQueue(label: "typespeed", qos: DispatchQoS.userInteractive)
+            queue.asyncAfter(deadline: .now() + 0.05, execute: task)
+        }
+    }
+    
+}
+
+
 //EXTENSION FOR UIIMAGE------------------------------------------
 extension UIImage {
     func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
@@ -52,6 +78,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
  
     
     var scrollView = UIScrollView()
+    var editViewButton = UIView()
     var layoverView = UIView()
     var locationLabel = UILabel()
     
@@ -63,6 +90,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var editImage = UIButton()
     var saveImage = UIButton()
     
+    var clearDrawingButton = UIButton()
+    var saveDrawingButton = UIButton()
+    
     var backgroundImage = UIView()
     var descriptionTextfieldHeader = UILabel()
     var descriptionTextfield = UITextView()
@@ -70,6 +100,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var cameraButton = UIButton()
     let picker = UIImagePickerController()
     var imageArrayURL = [String]()
+   
+    
+    
+    var maxScroll = 1000.00
     
     var auditID = String()
     var siteID = String()
@@ -95,11 +129,14 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var locationManager = CLLocationManager()
     
 
+    var ButtonPressed: Int = 0
 
 
     func saveDescription(text: String) {
             self.siteDescription = text
-            self.descriptionTextfield.text = text
+            //self.descriptionTextfield.text = text
+        
+            self.descriptionTextfield.setTextWithTypeAnimation(typedText: text, characterDelay:  2) //less delay is faster
         
     
     }
@@ -111,9 +148,11 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         toolPicker.addObserver(self.canvasView)
          
         }
-        //presentModal()
-        print("return")
+
         
+        
+        self.canvasView?.drawing = PKDrawing()
+        self.canvasView.drawingPolicy = .anyInput
 
     }
     
@@ -123,7 +162,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         super.viewDidLoad()
         
- 
+     
+
        
         findlocation()
   
@@ -135,13 +175,18 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
 
         
-        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
-                          (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        let topBarHeight = (self.navigationController?.navigationBar.frame.height ?? 0.0) + 10
         image = UIImageView(frame: CGRect(x: 0, y: Int(topBarHeight), width: Int(view.frame.width), height: 400))
         //image.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         //image.layer.borderWidth = 2
         image.contentMode = .scaleAspectFit
+        image.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        image.layer.cornerRadius = 20
+        image.layer.masksToBounds = false
+        image.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        image.layer.shadowRadius = 8.0
+        image.layer.shadowOpacity = 0.4
         
         //initiliaze the canvas:
         self.canvasView = PKCanvasView.init(frame: self.image.frame)
@@ -155,22 +200,24 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
        
         
         
-        descriptionTextfieldHeader = UILabel(frame:CGRect(x: 0, y: image.frame.maxY, width: image.frame.width, height: 20))
-        descriptionTextfieldHeader.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        descriptionTextfieldHeader.text = "Comments:"
-        descriptionTextfieldHeader.font = UIFont.boldSystemFont(ofSize: 20)
+        descriptionTextfieldHeader = UILabel(frame:CGRect(x: 10, y:image.frame.maxY / 2 + 10 /*image.frame.maxY*/, width: image.frame.width, height: 30))
+        //descriptionTextfieldHeader.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        descriptionTextfieldHeader.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        descriptionTextfieldHeader.text = ""
+        descriptionTextfieldHeader.font = UIFont.boldSystemFont(ofSize: 30)
 
         
         
         
-        let tabBarHeight = tabBarController?.tabBar.frame.size.height
-        descriptionTextfield = UITextView(frame: CGRect(x: 5, y: descriptionTextfieldHeader.frame.maxY + 10 , width: view.frame.width - 10, height: view.frame.height - (descriptionTextfieldHeader.frame.maxY + 30 + tabBarHeight!)))
+       
+        descriptionTextfield = UITextView(frame: CGRect(x: 0, y: descriptionTextfieldHeader.frame.maxY + 20 , width: view.frame.width, height: 200))
         descriptionTextfield.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         descriptionTextfield.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 20)
+        descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 15)
         descriptionTextfield.text = ""
         descriptionTextfield.isUserInteractionEnabled = false
         descriptionTextfield.delegate = self
+        descriptionTextfield.textAlignment = .center
         descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         descriptionTextfield.layer.cornerRadius = 20
         descriptionTextfield.layer.masksToBounds = false
@@ -180,7 +227,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
         
         //Buttons:
-        editDescription = UIButton(frame: CGRect(x: descriptionTextfield.frame.maxX - 80 - 10, y:  descriptionTextfield.frame.maxY - 20 - 10, width: 80, height: 20))
+        editDescription = UIButton(frame: CGRect(x: descriptionTextfield.frame.maxX - 80 - 10, y:  descriptionTextfield.frame.maxY + 20, width: 60, height: 30))
         editDescription.setTitleColor(UIColor.white, for: .normal)
         editDescription.setTitle("Edit", for: .normal)
 
@@ -192,7 +239,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         
   
-        editImage = UIButton(frame: CGRect(x: 10, y:  image.frame.maxY - 50 - 10, width: 40, height: 40))
+        editImage = UIButton(frame: CGRect(x: 10, y:  image.frame.maxY - 10 - 50, width: 40, height: 40))
         editImage.setTitleColor(UIColor.white, for: .normal)
         //editImage.setTitle("Edit Image", for: .normal)
         editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
@@ -203,18 +250,34 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         editImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
         editImage.isHidden = true
         
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: image.frame.minY, width: view.frame.width, height: view.frame.height ))
+        scrollView.contentSize.height = maxScroll
+        scrollView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
 
+        
+        editViewButton = UIScrollView(frame: CGRect(x: scrollView.frame.maxX, y: image.frame.maxY + 10 + 20, width: view.frame.width, height: view.frame.height ))
+        editViewButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+ 
 
 
         
         self.view.addSubview(image)
-        self.view.addSubview(descriptionTextfield)
-        self.view.addSubview(descriptionTextfieldHeader)
+        //self.view.addSubview(descriptionTextfield)
+        //self.view.addSubview(descriptionTextfieldHeader)
         self.view.addSubview(layoverView)
         self.view.addSubview(self.canvasView)
+        
+        //self.view.addSubview(editDescription)
+        
+        view.addSubview(scrollView)
+        view.addSubview(editViewButton)
         self.view.addSubview(editImage)
-        self.view.addSubview(editDescription)
- 
+        
+        scrollView.addSubview(editDescription)
+        scrollView.addSubview(descriptionTextfield)
+        scrollView.addSubview(descriptionTextfieldHeader)
+        
+        
         
         
         //Ask user for site name:
@@ -288,13 +351,36 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     @objc func editImageButton(_ sender: UIButton) {
         
-        self.canvasView.drawingPolicy = .anyInput
-        self.canvasView?.drawing = PKDrawing()
+        //self.canvasView.drawingPolicy = .anyInput
+        //self.canvasView?.drawing = PKDrawing()
         self.canvasView.becomeFirstResponder()
-        print("Edit Image button pressed")
-    
-        self.layoverView.isHidden = false
 
+  
+        
+        //animate scroll to the left
+        ButtonPressed += 1
+        
+        if ButtonPressed % 2 == 0  {
+            //hide edit options
+            self.layoverView.isHidden = true
+            UIView.animate(withDuration: 1, delay: 0, animations: {
+                self.scrollView.frame.origin.x += self.view.frame.width
+                self.editViewButton.frame.origin.x += self.view.frame.width
+                self.canvasView.isUserInteractionEnabled = false
+            })
+     
+        }else{
+            // show edit options
+            self.layoverView.isHidden = false
+            UIView.animate(withDuration: 1, delay: 0, animations: {
+               
+                self.scrollView.frame.origin.x -= self.view.frame.width
+                self.editViewButton.frame.origin.x -= self.view.frame.width
+                self.canvasView.isUserInteractionEnabled = true
+               
+            })
+            
+        }
         
     }
     
@@ -372,6 +458,11 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         //save drawing and upload to database
         saveDrawing()
     }
+    
+    
+   
+    
+    
     
     //###############-UPLOAD IMAGE-###############U
         func selectImageType() {

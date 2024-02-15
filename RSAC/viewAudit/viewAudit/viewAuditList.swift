@@ -298,7 +298,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
   
         if indexPath.section  == auditListSection {
-            
+            //Working Audits
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditCell", for: indexPath) as! viewAuditCell
              
             let siteItems = CompletedAuditsFilter[indexPath.row]
@@ -308,6 +308,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = false
             cell.observationCountLabel.text = "| \(siteItems.observationCount)"
+            cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 0.5)
             
             let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 100, height: 100), scaleMode: .fill)
             cell.imageUI.sd_setImage(with: URL(string:siteItems.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
@@ -317,7 +318,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 15
             cell.layer.borderWidth = 1
-            cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+            cell.layer.borderColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
             
 
             
@@ -364,6 +365,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             cell.auditDate.text = siteItems.date
             cell.lineDivider1.isHidden = true
             cell.observationCountLabel.text = siteItems.observationCount
+            cell.backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 0.5)
             
             
             let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 100, height: 100), scaleMode: .fill)
@@ -372,8 +374,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
             cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 15
-            cell.layer.borderWidth = 2
-            cell.layer.borderColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
             
 
 
