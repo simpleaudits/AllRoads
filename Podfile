@@ -12,6 +12,7 @@ target 'RSAC' do
   pod 'Firebase/Core'
   pod 'SwiftLoader'
   pod 'TPPDF'
+  pod 'ActionSheetPicker-3.0'
   
    
   post_install do |pi|

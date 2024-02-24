@@ -76,6 +76,8 @@ extension UIImage {
 class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription, UIPencilInteractionDelegate{
 
  
+    var line1 = UIView()
+    var line2 = UIView()
     
     var scrollView = UIScrollView()
     var backOfScroll = UIView()
@@ -92,7 +94,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var saveImage = UIButton()
     
     var clearDrawingButton = UIButton()
-    var saveDrawingButton = UIButton()
+    var backEditsButton = UIButton()
     
     var backgroundImage = UIView()
     var descriptionTextfieldHeader = UILabel()
@@ -137,7 +139,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             self.siteDescription = text
             //self.descriptionTextfield.text = text
         
-            self.descriptionTextfield.setTextWithTypeAnimation(typedText: text, characterDelay:  2) //less delay is faster
+            self.descriptionTextfield.setTextWithTypeAnimation(typedText: "\n\(text)", characterDelay:  10) //less delay is faster
         
     
     }
@@ -149,11 +151,13 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         toolPicker.addObserver(self.canvasView)
          
         }
+        
+
+   
+        self.canvasView.drawingPolicy = .anyInput
 
         
-        
-        self.canvasView?.drawing = PKDrawing()
-        self.canvasView.drawingPolicy = .anyInput
+
 
     }
     
@@ -162,9 +166,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
         
         super.viewDidLoad()
-        
-     
-
+        //new canvas on load, so it doesnt renew everytime.
+        self.canvasView?.drawing = PKDrawing()
        
         findlocation()
   
@@ -176,8 +179,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
 
         
-        let topBarHeight = (self.navigationController?.navigationBar.frame.height ?? 0.0) + 10
-        image = UIImageView(frame: CGRect(x: 0, y: Int(topBarHeight), width: Int(view.frame.width), height: 400))
+    
+        image = UIImageView(frame: CGRect(x: 0, y: -3, width: Int(view.frame.width), height: 400))
         //image.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         //image.layer.borderWidth = 2
@@ -216,71 +219,141 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         descriptionTextfield.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         descriptionTextfield.font = UIFont.boldSystemFont(ofSize: 15)
         descriptionTextfield.text = ""
-        descriptionTextfield.isUserInteractionEnabled = false
+        descriptionTextfield.isUserInteractionEnabled = true
+        descriptionTextfield.isEditable = false
         descriptionTextfield.delegate = self
-        descriptionTextfield.textAlignment = .center
+        descriptionTextfield.textAlignment = .left
         descriptionTextfield.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         descriptionTextfield.layer.cornerRadius = 20
         descriptionTextfield.layer.masksToBounds = false
         descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-        descriptionTextfield.layer.shadowRadius = 8.0
+        descriptionTextfield.layer.shadowRadius = 4.0
         descriptionTextfield.layer.shadowOpacity = 0.4
+        descriptionTextfield.isHidden = true
     
         
-        //Buttons:
-        editDescription = UIButton(frame: CGRect(x: 10, y:  descriptionTextfield.frame.maxY + 5, width: view.frame.width - 20, height: 30))
-        editDescription.setTitleColor(UIColor.red, for: .normal)
-        editDescription.setTitle("Edit", for: .normal)
+        
+        
 
-        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        editDescription.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-        editDescription.layer.cornerRadius = 10
-        editDescription.layer.masksToBounds = true
-        editDescription.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
         
         
-  
-        editImage = UIButton(frame: CGRect(x: 10, y:  image.frame.maxY - 10 - 50, width: 40, height: 40))
-        editImage.setTitleColor(UIColor.white, for: .normal)
-        //editImage.setTitle("Edit Image", for: .normal)
-        editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-        editImage.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        editImage.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-        editImage.layer.cornerRadius = 15
-        editImage.layer.masksToBounds = true
-        editImage.addTarget(self, action: #selector(editImageButton(_:)), for: .touchUpInside)
-        editImage.isHidden = true
+        
+        //Buttons:
+
+        
+        
+        
+ 
         
         scrollView = UIScrollView(frame: CGRect(x: 0, y: image.frame.minY, width: view.frame.width, height: view.frame.height ))
         scrollView.contentSize.height = maxScroll
         scrollView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
 
         
-        editViewButton = UIView(frame: CGRect(x: scrollView.frame.maxX, y: image.frame.maxY + 10 + 20, width: view.frame.width, height: view.frame.height ))
-        editViewButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        editViewButton = UIView(frame: CGRect(x: scrollView.frame.maxX, y: image.frame.maxY + 10 + 20, width: view.frame.width, height: view.frame.height - (image.frame.maxY + 10 + 20) ))
+        editViewButton.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        editViewButton.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        editViewButton.layer.cornerRadius = 20
+        editViewButton.layer.masksToBounds = false
+        editViewButton.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        editViewButton.layer.shadowRadius = 8.0
+        editViewButton.layer.shadowOpacity = 0.4
+        
+        backEditsButton = UIButton(frame: CGRect(x: view.frame.width*1/4 - 50, y:  30, width: 100, height: 100))
+        backEditsButton.setTitleColor(UIColor.white, for: .normal)
+        backEditsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        backEditsButton.setTitle("Done", for: .normal)
+        //backEditsButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+        backEditsButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        backEditsButton.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+        backEditsButton.layer.cornerRadius = 50
+        backEditsButton.layer.masksToBounds = true
+        backEditsButton.addTarget(self, action: #selector(backEdits(_:)), for: .touchUpInside)
+   
+        
+        clearDrawingButton = UIButton(frame: CGRect(x: view.frame.width*3/4 - 50, y:  30, width: 100, height: 100))
+        clearDrawingButton.setTitleColor(UIColor.white, for: .normal)
+        clearDrawingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        clearDrawingButton.setTitle("Clear", for: .normal)
+        //clearDrawingButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+        clearDrawingButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        clearDrawingButton.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        clearDrawingButton.layer.cornerRadius = 50
+        clearDrawingButton.layer.masksToBounds = true
+        clearDrawingButton.addTarget(self, action: #selector(onClear(_:)), for: .touchUpInside)
+  
+        
+        
         
         backOfScroll = UIView(frame: CGRect(x: 0, y: descriptionTextfield.frame.maxY - 50, width: view.frame.width, height: scrollView.frame.height ))
         backOfScroll.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
  
-
-
+   
+        line1 = UIView(frame: CGRect(x: 10, y: descriptionTextfield.frame.maxY + 30, width: view.frame.width - 20, height: 0.5))
+        line1.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        line1.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        line1.layer.cornerRadius = 20
+        line1.layer.masksToBounds = false
+        line1.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        line1.layer.shadowRadius = 8.0
+        line1.layer.shadowOpacity = 0.4
         
-        self.view.addSubview(image)
+        line2 = UIView(frame: CGRect(x: 10, y: line1.frame.maxY + 30 + 50, width: view.frame.width - 20, height: 0.5))
+        line2.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        line2.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        line2.layer.cornerRadius = 20
+        line2.layer.masksToBounds = false
+        line2.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        line2.layer.shadowRadius = 8.0
+        line2.layer.shadowOpacity = 0.4
+        
+        
+        editDescription = UIButton(frame: CGRect(x: 10, y:  line2.frame.maxY + 80, width: view.frame.width - 20, height: 40))
+        editDescription.setTitleColor(UIColor.white, for: .normal)
+        editDescription.setTitle("Edit description", for: .normal)
+        editDescription.backgroundColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
+        editDescription.layer.cornerRadius = 20
+        editDescription.layer.masksToBounds = true
+        editDescription.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
+        editDescription.isHidden = true
+        
+        
+        editImage = UIButton(frame: CGRect(x: 10, y:  line2.frame.maxY + 30, width: view.frame.width - 20, height: 40))
+        editImage.setTitleColor(UIColor.white, for: .normal)
+        editImage.setTitle("Edit Image", for: .normal)
+        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
+        editImage.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        editImage.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+        editImage.layer.cornerRadius = 20
+        editImage.layer.masksToBounds = true
+        editImage.addTarget(self, action: #selector(editImageButton), for: .touchUpInside)
+        editImage.isHidden = true
+        
+        
+
+        view.addSubview(image)
         //self.view.addSubview(descriptionTextfield)
         //self.view.addSubview(descriptionTextfieldHeader)
-        self.view.addSubview(layoverView)
-        self.view.addSubview(self.canvasView)
+        view.addSubview(layoverView)
+        view.addSubview(self.canvasView)
         
         //self.view.addSubview(editDescription)
         
         view.addSubview(scrollView)
         view.addSubview(editViewButton)
-        self.view.addSubview(editImage)
+ 
+        
+        editViewButton.addSubview(backEditsButton)
+        editViewButton.addSubview(clearDrawingButton)
+        
         
         scrollView.addSubview(backOfScroll)
         scrollView.addSubview(editDescription)
+        scrollView.addSubview(editImage)
         scrollView.addSubview(descriptionTextfield)
         scrollView.addSubview(descriptionTextfieldHeader)
+        scrollView.addSubview(line1)
+        scrollView.addSubview(line2)
         
         
         
@@ -337,24 +410,31 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         canvasView.drawing = PKDrawing()
     }
     
-    func saveDrawing(){
-        var drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
-        if let markedupImage = self.saveImage(drawing: drawing){
-            // Save the image or do whatever with the Marked up Image
-            
-            let data = markedupImage.pngData()
-            self.localImageData = data! as Data
-            
-            //save the drawing to database
-            self.uploadDP(imageData: localImageData)
-  
+    @objc func  backEdits(_ sender : UIButton) {
+
+        editImageButton()
+
+    }
+        
+     func  saveData() {
+ 
+         var drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
+         if let markedupImage = self.saveImage(drawing: drawing){
+             // Save the image or do whatever with the Marked up Image
+             
+             let data = markedupImage.pngData()
+             self.localImageData = data! as Data
+             
+
+             self.saveImageDataFirebase(imageData: localImageData)
+             
+             
+         }
+
 
     }
     
-        
-}
-    
-    @objc func editImageButton(_ sender: UIButton) {
+    @objc func editImageButton(){
         
         //self.canvasView.drawingPolicy = .anyInput
         //self.canvasView?.drawing = PKDrawing()
@@ -458,10 +538,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
 
     @IBAction func addToAuditList(_ sender: Any) {
-        //self.uploadDP(imageData: localImageData)
+        //self.saveImageDataFirebase(imageData: localImageData)
         
         //save drawing and upload to database
-        saveDrawing()
+        saveData()
     }
     
     
@@ -525,6 +605,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             
             //show edit button
             editImage.isHidden = false
+            editDescription.isHidden = false
+            descriptionTextfield.isHidden = false
             
  
             
@@ -547,7 +629,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     }
   
     
-    func uploadDP(imageData:Data){
+    func saveImageDataFirebase(imageData:Data){
         
         //activity indicator
         SwiftLoader.show(title: "Uploading Image (1/2)", animated: true)

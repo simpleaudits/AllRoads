@@ -887,7 +887,7 @@
                         <viewLayoutGuide key="safeArea" id="LUT-VY-bla"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="6JZ-hz-s0i">
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="never" id="6JZ-hz-s0i">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="q6w-ph-cjZ">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>

@@ -596,6 +596,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - ActionSheetPicker-3.0 (2.7.3)
   - AppAuth (1.6.0):
     - AppAuth/Core (= 1.6.0)
     - AppAuth/ExternalUserAgent (= 1.6.0)
@@ -875,6 +876,7 @@ PODS:
   - TPPDF (2.4.1)
 
 DEPENDENCIES:
+  - ActionSheetPicker-3.0
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -886,6 +888,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - ActionSheetPicker-3.0
     - AppAuth
     - BoringSSL-GRPC
     - FBAEMKit
@@ -932,6 +935,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
+  ActionSheetPicker-3.0: d75d1808aa471baedeefd4d9eb1ebc2405d0306a
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
@@ -976,6 +980,6 @@ SPEC CHECKSUMS:
   SwiftLoader: f12f3a6fb42576862a3a5eb80c7e59fc881b6982
   TPPDF: cb3d0f01fa0e24a54246d6b742d9fe2e8a3894c1
 
-PODFILE CHECKSUM: 3be746602e24e4a24e829d2dd5fa0f54c122bf51
+PODFILE CHECKSUM: cfc3e6b1cbd4465e5fd7f0ed7b0b87abdd3ddbeb
 
 COCOAPODS: 1.11.3
