@@ -133,6 +133,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
 
     var ButtonPressed: Int = 0
+    
+    
+
 
 
     func saveDescription(text: String) {
@@ -151,13 +154,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         toolPicker.addObserver(self.canvasView)
          
         }
-        
-
-   
+  
         self.canvasView.drawingPolicy = .anyInput
-
-        
-
 
     }
     
@@ -191,10 +189,16 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         image.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         image.layer.shadowRadius = 8.0
         image.layer.shadowOpacity = 0.4
+        image.layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        image.layer.borderWidth = 4
+        
         
         //initiliaze the canvas:
         self.canvasView = PKCanvasView.init(frame: self.image.frame)
+        self.canvasView .contentMode = .scaleAspectFit
         self.canvasView.isOpaque = false
+        self.canvasView.layer.borderColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        self.canvasView.layer.borderWidth = 2
 
         
         layoverView = UIView.init(frame: self.image.frame)
@@ -229,7 +233,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         descriptionTextfield.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         descriptionTextfield.layer.shadowRadius = 4.0
         descriptionTextfield.layer.shadowOpacity = 0.4
-        descriptionTextfield.isHidden = true
+  
     
         
         
@@ -248,9 +252,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         scrollView = UIScrollView(frame: CGRect(x: 0, y: image.frame.minY, width: view.frame.width, height: view.frame.height ))
         scrollView.contentSize.height = maxScroll
         scrollView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        scrollView.isHidden = true
 
         
-        editViewButton = UIView(frame: CGRect(x: scrollView.frame.maxX, y: image.frame.maxY + 10 + 20, width: view.frame.width, height: view.frame.height - (image.frame.maxY + 10 + 20) ))
+        editViewButton = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height))
         editViewButton.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
         editViewButton.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         editViewButton.layer.cornerRadius = 20
@@ -315,7 +320,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         editDescription.layer.cornerRadius = 20
         editDescription.layer.masksToBounds = true
         editDescription.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
-        editDescription.isHidden = true
+     
         
         
         editImage = UIButton(frame: CGRect(x: 10, y:  line2.frame.maxY + 30, width: view.frame.width - 20, height: 40))
@@ -327,7 +332,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         editImage.layer.cornerRadius = 20
         editImage.layer.masksToBounds = true
         editImage.addTarget(self, action: #selector(editImageButton), for: .touchUpInside)
-        editImage.isHidden = true
+   
         
         
 
@@ -354,6 +359,18 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         scrollView.addSubview(descriptionTextfieldHeader)
         scrollView.addSubview(line1)
         scrollView.addSubview(line2)
+        
+        
+        
+  
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -449,9 +466,18 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             //hide edit options
             self.layoverView.isHidden = true
             UIView.animate(withDuration: 1, delay: 0, animations: {
-                self.scrollView.frame.origin.x += self.view.frame.width
-                self.editViewButton.frame.origin.x += self.view.frame.width
+                
+                
+                self.scrollView.frame.origin.y -= self.view.frame.height
+                self.editViewButton.frame.origin.y += self.view.frame.height
                 self.canvasView.isUserInteractionEnabled = false
+                
+                let navBarHeight = CGFloat((self.navigationController?.navigationBar.frame.maxY)!)
+              
+                
+                self.image.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.layoverView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.canvasView.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
      
         }else{
@@ -459,10 +485,22 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             self.layoverView.isHidden = false
             UIView.animate(withDuration: 1, delay: 0, animations: {
                
-                self.scrollView.frame.origin.x -= self.view.frame.width
-                self.editViewButton.frame.origin.x -= self.view.frame.width
                 self.canvasView.isUserInteractionEnabled = true
-               
+                
+                self.scrollView.frame.origin.y += self.view.frame.height
+
+              
+                //adjust the image so its center here
+                let navBarHeight = CGFloat((self.navigationController?.navigationBar.frame.maxY)!)
+
+
+                self.image.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                self.layoverView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                self.canvasView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+ 
+                self.editViewButton.frame = CGRect(x: 0, y: self.image.frame.maxY + 20,  width: self.view.frame.width , height: self.view.frame.height - (self.image.frame.maxY) )
+
+
             })
             
         }
@@ -604,9 +642,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             image.image = UIImage(data: jpegData)
             
             //show edit button
-            editImage.isHidden = false
-            editDescription.isHidden = false
-            descriptionTextfield.isHidden = false
+            scrollView.isHidden = false
+
             
  
             
