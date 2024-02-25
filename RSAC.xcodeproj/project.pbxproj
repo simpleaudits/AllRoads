@@ -12,6 +12,7 @@
 		822BF9042B4C0B75003A141C /* viewSiteStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822BF9032B4C0B75003A141C /* viewSiteStage.swift */; };
 		82445D0A2B00FF7D00319605 /* createSiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D092B00FF7D00319605 /* createSiteData.swift */; };
 		82445D0C2B0100A000319605 /* createSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D0B2B0100A000319605 /* createSite.swift */; };
+		824D559B2B8ACDC700197638 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 824D559A2B8ACDC600197638 /* GoogleService-Info.plist */; };
 		827DFF4F2B0E185600029EDE /* PDFkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF4E2B0E185600029EDE /* PDFkit.swift */; };
 		827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF502B0E1BD300029EDE /* viewPDF.swift */; };
 		8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */; };
@@ -65,7 +66,6 @@
 		82E4A8A52AFCE54D00BE1D8B /* extensionFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A8A42AFCE54D00BE1D8B /* extensionFiles.swift */; };
 		82E4A8A82AFCE55500BE1D8B /* firebase_logo_icon_168209.png in Resources */ = {isa = PBXBuildFile; fileRef = 82E4A8A62AFCE55400BE1D8B /* firebase_logo_icon_168209.png */; };
 		82E4A8A92AFCE55500BE1D8B /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 82E4A8A72AFCE55500BE1D8B /* man.png */; };
-		82E4A8AB2AFCE7F600BE1D8B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82E4A8AA2AFCE7F600BE1D8B /* GoogleService-Info.plist */; };
 		C131521118F6E218013AFD58 /* Pods_RSACTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A96D1B47885569966ABCA3 /* Pods_RSACTests.framework */; };
 		FD89080BFE28FEE347FC28A9 /* Pods_RSAC_RSACUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B6B5DF398EABFA7A5CB225F /* Pods_RSAC_RSACUITests.framework */; };
 /* End PBXBuildFile section */
@@ -95,6 +95,7 @@
 		822BF9032B4C0B75003A141C /* viewSiteStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteStage.swift; sourceTree = "<group>"; };
 		82445D092B00FF7D00319605 /* createSiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSiteData.swift; sourceTree = "<group>"; };
 		82445D0B2B0100A000319605 /* createSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSite.swift; sourceTree = "<group>"; };
+		824D559A2B8ACDC600197638 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		827DFF4E2B0E185600029EDE /* PDFkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFkit.swift; sourceTree = "<group>"; };
 		827DFF502B0E1BD300029EDE /* viewPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPDF.swift; sourceTree = "<group>"; };
 		8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteSnaps.swift; sourceTree = "<group>"; };
@@ -152,7 +153,6 @@
 		82E4A8A42AFCE54D00BE1D8B /* extensionFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensionFiles.swift; sourceTree = "<group>"; };
 		82E4A8A62AFCE55400BE1D8B /* firebase_logo_icon_168209.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firebase_logo_icon_168209.png; sourceTree = "<group>"; };
 		82E4A8A72AFCE55500BE1D8B /* man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = man.png; sourceTree = "<group>"; };
-		82E4A8AA2AFCE7F600BE1D8B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8348D075D9682BE578FF06DB /* Pods_RSAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RSAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B3CB19F07F73A3520EB373C /* Pods-RSACTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSACTests.debug.xcconfig"; path = "Target Support Files/Pods-RSACTests/Pods-RSACTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9B6B5DF398EABFA7A5CB225F /* Pods_RSAC_RSACUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RSAC_RSACUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -297,7 +297,7 @@
 				82E4A8A62AFCE55400BE1D8B /* firebase_logo_icon_168209.png */,
 				82E4A8A72AFCE55500BE1D8B /* man.png */,
 				82E4A83A2AFCE0AA00BE1D8B /* Info.plist */,
-				82E4A8AA2AFCE7F600BE1D8B /* GoogleService-Info.plist */,
+				824D559A2B8ACDC600197638 /* GoogleService-Info.plist */,
 				82D527F22B7654D000A9655D /* whiteBackdrop.png */,
 				8297CFFC2B6F594100450513 /* Road-audit.png */,
 				8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */,
@@ -562,12 +562,12 @@
 			files = (
 				82D527F52B8ABB5C00A9655D /* versionControl.rtf in Resources */,
 				82E4A8A92AFCE55500BE1D8B /* man.png in Resources */,
+				824D559B2B8ACDC700197638 /* GoogleService-Info.plist in Resources */,
 				82D527F32B7654D000A9655D /* whiteBackdrop.png in Resources */,
 				8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */,
 				8297CFFD2B6F594100450513 /* Road-audit.png in Resources */,
 				82E4A8392AFCE0AA00BE1D8B /* LaunchScreen.storyboard in Resources */,
 				82E4A8362AFCE0AA00BE1D8B /* Assets.xcassets in Resources */,
-				82E4A8AB2AFCE7F600BE1D8B /* GoogleService-Info.plist in Resources */,
 				8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */,
 				82E4A8342AFCE0A800BE1D8B /* Main.storyboard in Resources */,
 				82E4A8A82AFCE55500BE1D8B /* firebase_logo_icon_168209.png in Resources */,
@@ -934,13 +934,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2NLMXJ7CVV;
+				DEVELOPMENT_TEAM = CR3RP73V2H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RSAC/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AllRoads;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -952,8 +956,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = RSAC.RSAC;
+				PRODUCT_BUNDLE_IDENTIFIER = Allroads;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -966,13 +971,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2NLMXJ7CVV;
+				DEVELOPMENT_TEAM = CR3RP73V2H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RSAC/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AllRoads;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -984,8 +993,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = RSAC.RSAC;
+				PRODUCT_BUNDLE_IDENTIFIER = Allroads;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
