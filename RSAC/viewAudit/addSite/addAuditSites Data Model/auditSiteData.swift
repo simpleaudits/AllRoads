@@ -24,6 +24,7 @@ struct auditSiteData{
     let ref: String
     let observationID: String
     let siteID: String
+    let riskRating: Int
     var status: String
     
     
@@ -40,6 +41,7 @@ struct auditSiteData{
         ref: String,
         observationID: String,
         siteID: String,
+        riskRating: Int,
         status: String
     )
     
@@ -55,6 +57,7 @@ struct auditSiteData{
         self.ref = ref
         self.observationID = observationID
         self.siteID = siteID
+        self.riskRating = riskRating
         self.status = status
         
     }
@@ -71,6 +74,7 @@ struct auditSiteData{
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
             let ref = value["ref"] as? String,
+            let riskRating = value["riskRating"] as? Int,
             let observationID = value["observationID"] as? String,
             let siteID = value["siteID"] as? String,
             let status = value["status"] as? String else {
@@ -85,6 +89,7 @@ struct auditSiteData{
         self.long = long
         self.ref = ref
         self.observationID = observationID
+        self.riskRating = riskRating
         self.siteID = siteID
         self.status = status
     }
@@ -96,6 +101,7 @@ struct auditSiteData{
             "imageURL": imageURL,
             "auditDescription": auditDescription,
             "date": date,
+            "riskRating": riskRating,
             "lat": lat,
             "long": long,
             "ref": ref,

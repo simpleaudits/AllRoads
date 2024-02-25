@@ -10,15 +10,19 @@ import ActionSheetPicker_3_0
 
 protocol saveDescription{
     func saveDescription(text:String)
+    func saveRisk(text:String)
+    
 }
 
 
 class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
     var delegate: saveDescription?
+    
 
     var scrollView = UIScrollView()
     var stringData = String()
+    var safetRiskValue: Int = 0
     
     var maxScroll = 1000.00
     
@@ -38,12 +42,16 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     var riskFactorButton = UIButton()
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        getSafetyRiskStatus()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
-       
+ 
         
         let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
                                   (self.navigationController?.navigationBar.frame.height ?? 0.0)
@@ -168,9 +176,8 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     @objc func saveData(_ sender: UIButton) {
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             self.navigationController?.popViewController(animated: true)
-            
             self.dismiss(animated: true, completion: nil)
             
          
@@ -200,18 +207,27 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
                             
                             self.safetyRatingTextfield.text = "No Risk"
                             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-   
+                
+                            //save the enum of the safety risk
+                            self.delegate?.saveRisk(text: "0")
                             
                             break
                         case "[1]":
                             
                             self.safetyRatingTextfield.text = "Low Risk"
                             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+                            
+                            //save the enum of the safety risk
+                            self.delegate?.saveRisk(text: "1")
+                            
                             break
                         case "[2]":
                             
                             self.safetyRatingTextfield.text = "Medium Risk"
                             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+                            
+                            //save the enum of the safety risk
+                            self.delegate?.saveRisk(text: "2")
                             
                             break
                             
@@ -220,6 +236,9 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
                             self.safetyRatingTextfield.text = "High Risk"
                             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
                             
+                            //save the enum of the safety risk
+                            self.delegate?.saveRisk(text: "3")
+                            
                             break
                             
                             
@@ -227,6 +246,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
                             
                         default:
             
+                   
                             
                             break
                         }
@@ -243,6 +263,60 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
         
 
     }
+    
+    
+    
+    
+    
+    func getSafetyRiskStatus(){
+        
+        print(safetRiskValue)
+        
+        switch safetRiskValue {
+        case 0:
+            
+            self.safetyRatingTextfield.text = "No Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            
+            break
+        case 1:
+            
+            self.safetyRatingTextfield.text = "Low Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+            
+            break
+        case 2:
+            
+            self.safetyRatingTextfield.text = "Medium Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+
+            
+            break
+            
+        case 3:
+            
+            
+            self.safetyRatingTextfield.text = "High Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+            
+            
+            break
+            
+            
+            
+            
+        default:
+
+            
+            break
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool

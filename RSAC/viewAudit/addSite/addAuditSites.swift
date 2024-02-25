@@ -84,6 +84,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     var editViewButton = UIView()
     var layoverView = UIView()
     var locationLabel = UILabel()
+    var safetyRating = UILabel()
+    var safetyRatingHeading = UILabel()
+    var safetyRatingValue: Int = 4
     
     //edit image:
     var image = UIImageView()
@@ -141,10 +144,55 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     func saveDescription(text: String) {
             self.siteDescription = text
             //self.descriptionTextfield.text = text
-        
             self.descriptionTextfield.setTextWithTypeAnimation(typedText: "\n\(text)", characterDelay:  10) //less delay is faster
-        
+  
     
+    }
+    
+    func saveRisk(text: String) {
+        
+        switch text {
+        case "0":
+            
+            self.safetyRating.text = "No Risk"
+            self.safetyRating.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            safetyRatingValue = 0
+
+            
+            break
+        case "1":
+            
+            self.safetyRating.text = "Low Risk"
+            self.safetyRating.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+            safetyRatingValue = 1
+            
+            break
+        case "2":
+            
+            self.safetyRating.text = "Medium Risk"
+            self.safetyRating.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            safetyRatingValue = 2
+
+            
+            break
+            
+        case "3":
+            
+            self.safetyRating.text = "High Risk"
+            self.safetyRating.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+            safetyRatingValue = 3
+            
+            break
+            
+            
+            
+            
+        default:
+
+            
+            break
+        }
+  
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -156,6 +204,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         }
   
         self.canvasView.drawingPolicy = .anyInput
+        self.canvasView.isUserInteractionEnabled = false
 
     }
     
@@ -167,9 +216,14 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         //new canvas on load, so it doesnt renew everytime.
         self.canvasView?.drawing = PKDrawing()
        
+        
+        
+        
+        
+        
         findlocation()
   
-        
+    
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         descriptionTextfield.delegate = self
@@ -236,18 +290,14 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
   
     
         
-        
-        
+    
+   
 
         
         
         
         //Buttons:
 
-        
-        
-        
- 
         
         scrollView = UIScrollView(frame: CGRect(x: 0, y: image.frame.minY, width: view.frame.width, height: view.frame.height ))
         scrollView.contentSize.height = maxScroll
@@ -257,6 +307,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         editViewButton = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height))
         editViewButton.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        editViewButton.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         editViewButton.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         editViewButton.layer.cornerRadius = 20
         editViewButton.layer.masksToBounds = false
@@ -302,6 +353,37 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         line1.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         line1.layer.shadowRadius = 8.0
         line1.layer.shadowOpacity = 0.4
+        
+        
+        
+        
+        safetyRatingHeading = UILabel(frame:CGRect(x: 10, y: descriptionTextfield.frame.maxY + 30, width: 160, height: 40))
+        //safetyRating.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        safetyRatingHeading.text = "Safety Rating:"
+        safetyRatingHeading.numberOfLines = 1
+        safetyRatingHeading.font = UIFont.boldSystemFont(ofSize: 20)
+        safetyRatingHeading.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        safetyRatingHeading.layer.cornerRadius = 8
+        safetyRatingHeading.textAlignment = .center
+        safetyRatingHeading.layer.masksToBounds = false
+        safetyRatingHeading.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        safetyRatingHeading.layer.shadowRadius = 8.0
+        safetyRatingHeading.layer.shadowOpacity = 0.4
+        
+        
+        safetyRating = UILabel(frame:CGRect(x: safetyRatingHeading.frame.maxX + 10, y: descriptionTextfield.frame.maxY + 30, width: view.frame.width - (safetyRatingHeading.frame.maxX + 20), height: 40))
+        //safetyRating.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        //safetyRating.text = "Safety Rating:"
+        safetyRating.numberOfLines = 1
+        safetyRating.font = UIFont.boldSystemFont(ofSize: 20)
+        safetyRating.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        safetyRating.layer.cornerRadius = 8
+        safetyRating.textAlignment = .center
+        safetyRating.layer.masksToBounds = false
+        safetyRating.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        safetyRating.layer.shadowRadius = 8.0
+        safetyRating.layer.shadowOpacity = 0.4
+        
         
         line2 = UIView(frame: CGRect(x: 10, y: line1.frame.maxY + 30 + 50, width: view.frame.width - 20, height: 0.5))
         line2.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -357,8 +439,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         scrollView.addSubview(editImage)
         scrollView.addSubview(descriptionTextfield)
         scrollView.addSubview(descriptionTextfieldHeader)
-        scrollView.addSubview(line1)
-        scrollView.addSubview(line2)
+        //scrollView.addSubview(line1)
+        scrollView.addSubview(safetyRatingHeading)
+        scrollView.addSubview(safetyRating)
+        //scrollView.addSubview(line2)
         
         
         
@@ -472,8 +556,6 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                 self.editViewButton.frame.origin.y += self.view.frame.height
                 self.canvasView.isUserInteractionEnabled = false
                 
-                let navBarHeight = CGFloat((self.navigationController?.navigationBar.frame.maxY)!)
-              
                 
                 self.image.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.layoverView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -486,13 +568,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             UIView.animate(withDuration: 1, delay: 0, animations: {
                
                 self.canvasView.isUserInteractionEnabled = true
-                
                 self.scrollView.frame.origin.y += self.view.frame.height
 
               
                 //adjust the image so its center here
-                let navBarHeight = CGFloat((self.navigationController?.navigationBar.frame.maxY)!)
-
 
                 self.image.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
                 self.layoverView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -762,6 +841,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             ref: "\(refData)",
             observationID: "\(uuid)",
             siteID:"\(siteID)",
+            riskRating: safetyRatingValue,
             status: "true")
         
          
@@ -847,7 +927,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
          if let destination3 = segue.destination as? addSiteDetails {
             destination3.delegate = self
              destination3.stringData = siteDescription
-           
+             destination3.safetRiskValue = safetyRatingValue
         }
         
     
