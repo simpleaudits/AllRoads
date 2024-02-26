@@ -243,7 +243,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         image.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         image.layer.shadowRadius = 8.0
         image.layer.shadowOpacity = 0.4
-        image.layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        image.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         image.layer.borderWidth = 4
         
         
@@ -251,7 +251,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.canvasView = PKCanvasView.init(frame: self.image.frame)
         self.canvasView .contentMode = .scaleAspectFit
         self.canvasView.isOpaque = false
-        self.canvasView.layer.borderColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        self.canvasView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         self.canvasView.layer.borderWidth = 2
 
         
@@ -379,7 +379,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         safetyRating.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         safetyRating.layer.cornerRadius = 8
         safetyRating.textAlignment = .center
-        safetyRating.layer.masksToBounds = false
+        safetyRating.layer.masksToBounds = true
         safetyRating.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         safetyRating.layer.shadowRadius = 8.0
         safetyRating.layer.shadowOpacity = 0.4

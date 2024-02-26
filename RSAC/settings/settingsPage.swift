@@ -286,8 +286,6 @@ class cellSettings: UITableViewCell{
                     cell.settingsLabel.text = "Company name"
                     cell.auditDescription.text = companyNameData
                     
- 
-              
 
 
                     cell.settingsLabel.frame = CGRect(

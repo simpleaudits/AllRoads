@@ -652,13 +652,14 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="folder.fill.badge.plus" catalog="system" style="plain" id="twp-dM-ZsJ">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
-                                <segue destination="pTG-pi-Fb5" kind="show" id="3ec-jN-h6l"/>
+                                <action selector="addProject:" destination="Zvd-yM-9xX" id="vej-al-j5m"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <segue destination="RVj-ct-PG1" kind="show" identifier="viewItemDetails" id="Ypc-0i-t4p"/>
+                        <segue destination="pTG-pi-Fb5" kind="show" identifier="addProject" id="sdr-4B-1Ef"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uRv-5W-19l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -864,13 +865,14 @@
                         <barButtonItem key="rightBarButtonItem" image="folder.fill.badge.plus" catalog="system" style="plain" id="YLj-e0-X1c">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
-                                <segue destination="NfU-JG-H9A" kind="show" id="t2V-3A-KJv"/>
+                                <action selector="addSite:" destination="RVj-ct-PG1" id="PmQ-Xh-4MY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="statusSegment" destination="DR0-Qt-oqZ" id="dtj-c2-Q2w"/>
                         <segue destination="q4L-Y8-fSb" kind="show" identifier="viewAuditList" id="2y7-dC-yeP"/>
+                        <segue destination="NfU-JG-H9A" kind="show" identifier="addSite" id="cGO-mT-12d"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXs-B5-Phi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1175,7 +1177,7 @@
                             <barButtonItem systemItem="add" id="tNj-CZ-lax">
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
-                                    <segue destination="JPK-3h-a4i" kind="show" id="evc-rb-zK1"/>
+                                    <action selector="addObservation:" destination="q4L-Y8-fSb" id="OrL-04-awA"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -1183,6 +1185,7 @@
                     <connections>
                         <outlet property="filterSearch" destination="CqK-74-fSE" id="hDa-m9-gh7"/>
                         <outlet property="statusSegment" destination="T7N-xV-EBc" id="yhW-3c-wJa"/>
+                        <segue destination="JPK-3h-a4i" kind="show" identifier="addObservation" id="amF-No-Y5L"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ot-dU-KDu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

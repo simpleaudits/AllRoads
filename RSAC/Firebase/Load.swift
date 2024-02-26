@@ -29,8 +29,6 @@ extension mainSearchView {
             .observe(.value, with: { snapshot in
                     
                 var myAudits: [newAuditDataset] = []
-              
-
              
                     for child in snapshot.children {
                         if let snapshot = child as? DataSnapshot,
@@ -61,6 +59,19 @@ extension mainSearchView {
                      
     
         }
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 //    func loadAudits(){

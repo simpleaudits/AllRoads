@@ -36,6 +36,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     
     
+        var listingData = Int()
         let mainConsole = CONSOLE()
         let extensConsole = extens()
         let firebaseConsole = saveLocal()
@@ -51,6 +52,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        //load the number of listing the user can actually make here:
+        loadUserStats()
+        
         
         loadAuditSnapshots()
         
@@ -152,6 +157,85 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             }
     
 //Load Data from Firebase---------------------------------------------------------------------------------------------------------------------[END]
+    
+//Load Data from Firebase, get max listing---------------------------------------------------------------------------------------------------------------------[START]
+    func loadUserStats(){
+
+        
+        
+                 let uid = Auth.auth().currentUser?.uid
+                 let reftest = Database.database().reference()
+                     .child("\(mainConsole.prod!)")
+                     .child("\(mainConsole.post!)")
+                     .child(uid!)
+                     .child("\(mainConsole.userDetails!)")
+                 
+                 reftest.queryOrderedByKey()
+                     .observe( .value, with: { snapshot in
+                               guard let dict = snapshot.value as? [String:Any] else {
+                               //error here
+                               return
+                               }
+
+                                let listingMax = dict["listingMax"] as? Int
+                                self.listingData = listingMax!
+                  
+                                
+  
+                   })
+        
+     
+    }
+    
+    
+    @IBAction func addSite(_ sender: Any) {
+        
+        if listOfSites.count < listingData{
+            self.performSegue(withIdentifier: "addSite", sender: self);
+        }else{
+            
+            let Alert = UIAlertController(title: "One second..", message: "You've reached your max project listing of: \(listingData)", preferredStyle: .alert)
+            
+            let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+                //save this for headerview in view item
+               
+            }
+            
+            
+            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in}
+            
+            
+            Alert.addAction(action1)
+            Alert.addAction(action3)
+        
+            self.present(Alert, animated: true, completion: nil)
+            
+            
+        }
+    }
+        
+    
+    
+//Load Data from Firebase, get max listing---------------------------------------------------------------------------------------------------------------------[END]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //Load project data from Firebase---------------------------------------------------------------------------------------------------------------------[START]
     
      func checkUserStatus(){

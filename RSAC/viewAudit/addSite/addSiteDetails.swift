@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ActionSheetPicker_3_0
+
 
 protocol saveDescription{
     func saveDescription(text:String)
@@ -190,76 +190,67 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
     
     @objc func selectRating(_ sender: UIButton) {
-        ActionSheetMultipleStringPicker.show(withTitle: "Select Rating:", rows:
-                    [[
-                   "No Risk","Low Risk", "Medium Risk", "High Risk"
-                  ]]
-                   , initialSelection: [0, 3], doneBlock: {
-                       picker, indexes, values in
-
-                       print("values = \(values!)")
-                       print("indexes = \(indexes!)")
-                       print("picker = \(picker!)")
-            
-            
-                        switch "\(indexes!)" {
-                        case "[0]":
-                            
-                            self.safetyRatingTextfield.text = "No Risk"
-                            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                
-                            //save the enum of the safety risk
-                            self.delegate?.saveRisk(text: "0")
-                            
-                            break
-                        case "[1]":
-                            
-                            self.safetyRatingTextfield.text = "Low Risk"
-                            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
-                            
-                            //save the enum of the safety risk
-                            self.delegate?.saveRisk(text: "1")
-                            
-                            break
-                        case "[2]":
-                            
-                            self.safetyRatingTextfield.text = "Medium Risk"
-                            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-                            
-                            //save the enum of the safety risk
-                            self.delegate?.saveRisk(text: "2")
-                            
-                            break
-                            
-                        case "[3]":
-                            
-                            self.safetyRatingTextfield.text = "High Risk"
-                            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-                            
-                            //save the enum of the safety risk
-                            self.delegate?.saveRisk(text: "3")
-                            
-                            break
-                            
-                            
-                            
-                            
-                        default:
-            
-                   
-                            
-                            break
-                        }
-
-                      
-            
-            
-    
-                       return
-               }, cancel: { ActionMultipleStringCancelBlock in return }, origin: sender)
+       
+        let Alert1 = UIAlertController(title: "Select Rating:", message: "", preferredStyle: .actionSheet)
+        
 
         
+        let action2 = UIAlertAction(title: "No Risk",style: .default) {  (action:UIAlertAction!) in
+                        //save this for headerview in view item
+            
+            self.safetyRatingTextfield.text = "No Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+
+            //save the enum of the safety risk
+            self.delegate?.saveRisk(text: "0")
+
+                    }
+        let action3 = UIAlertAction(title: "Low Risk",style: .default) {  (action:UIAlertAction!) in
+                        //save this for headerview in view item
+            self.safetyRatingTextfield.text = "Low Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+            
+            //save the enum of the safety risk
+            self.delegate?.saveRisk(text: "1")
+                        
+                    }
+        let action4 = UIAlertAction(title: "Medium Risk",style: .default) {  (action:UIAlertAction!) in
+                        //save this for headerview in view item
+            
+            self.safetyRatingTextfield.text = "Medium Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            
+            //save the enum of the safety risk
+            self.delegate?.saveRisk(text: "2")
+                        
+        }
         
+        
+        let action5 = UIAlertAction(title: "High Risk",style: .default) {  (action:UIAlertAction!) in
+                        //save this for headerview in view item
+            
+            self.safetyRatingTextfield.text = "High Risk"
+            self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+            
+            //save the enum of the safety risk
+            self.delegate?.saveRisk(text: "3")
+            
+                        
+        }
+
+            let action6 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
+        }
+       
+
+  
+        Alert1.addAction(action2)
+        Alert1.addAction(action3)
+        Alert1.addAction(action4)
+        Alert1.addAction(action5)
+        Alert1.addAction(action6)
+
+        self.present(Alert1, animated: true, completion: nil)
+
         
 
     }

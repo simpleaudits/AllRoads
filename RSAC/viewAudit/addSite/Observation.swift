@@ -123,9 +123,12 @@ class Observation: UITableViewController,UISearchBarDelegate {
     var refData = String()
     var ListReferenceDataAdd = String()
     
+    
+    
+    var listingData = Int()
     var auditID = String()
     var siteID = String()
-    var listOfSitesData: [auditSiteData] = []
+    var listOfObservationData: [auditSiteData] = []
     var filterData: [auditSiteData] = []
     
     @IBOutlet var filterSearch: UISearchBar!
@@ -142,12 +145,14 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
 
     override func viewDidAppear(_ animated: Bool) {
-        //filterData = listOfSitesData
+        //filterData = listOfObservationData
         tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //load the number of listing the user can actually make here:
+        loadUserStats()
         
         //load observation data:
         loadSiteAuditData()
@@ -169,7 +174,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
 //            print("Working")
 //            toggle = true
 //
-//            filterData = listOfSitesData.filter(
+//            filterData = listOfObservationData.filter(
 //                {return $0.status.description.localizedCaseInsensitiveContains("true") })
 //
 //            tableView.reloadData()
@@ -180,7 +185,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
 //            toggle = false
 //
 //
-//            filterData = listOfSitesData.filter(
+//            filterData = listOfObservationData.filter(
 //                {return $0.status.description.localizedCaseInsensitiveContains("false") })
 //
 //            tableView.reloadData()
@@ -197,7 +202,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
         // if the user does not search, the table does not update.
         if searchText == "" {
             filterData.removeAll()
-            filterData = listOfSitesData
+            filterData = listOfObservationData
 
 
             tableView.reloadData()
@@ -205,7 +210,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
         }
         //if the user decides to type, we update the table accordingly.
         else{
-            filterData = listOfSitesData.filter(
+            filterData = listOfObservationData.filter(
                 {return $0.auditTitle.localizedCaseInsensitiveContains(searchText)  ||  $0.auditDescription.localizedCaseInsensitiveContains(searchText) })
 
 
@@ -231,18 +236,18 @@ class Observation: UITableViewController,UISearchBarDelegate {
                Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
                    .observe(.value, with: { [self] snapshot in
 
-                var listOfSitesData: [auditSiteData] = []
+                var listOfObservationData: [auditSiteData] = []
                 for child in snapshot.children {
 
                 if let snapshot = child as? DataSnapshot,
                    let List = auditSiteData(snapshot: snapshot) {
-                    listOfSitesData.append(List)
+                    listOfObservationData.append(List)
 
                 }
                 }
 
-                self.listOfSitesData = listOfSitesData
-                filterData = self.listOfSitesData
+                self.listOfObservationData = listOfObservationData
+                filterData = self.listOfObservationData
                        
                 self.tableView.reloadData()
                        
@@ -263,6 +268,70 @@ class Observation: UITableViewController,UISearchBarDelegate {
        }
     
 
+//Load Data from Firebase, get max listing---------------------------------------------------------------------------------------------------------------------[START]
+    func loadUserStats(){
+
+        
+        let mainConsole = CONSOLE()
+        
+                 let uid = Auth.auth().currentUser?.uid
+                 let reftest = Database.database().reference()
+                     .child("\(mainConsole.prod!)")
+                     .child("\(mainConsole.post!)")
+                     .child(uid!)
+                     .child("\(mainConsole.userDetails!)")
+                 
+                 reftest.queryOrderedByKey()
+                     .observe( .value, with: { snapshot in
+                               guard let dict = snapshot.value as? [String:Any] else {
+                               //error here
+                               return
+                               }
+
+                                let listingMax = dict["listingMax"] as? Int
+                                self.listingData = listingMax!
+                  
+                                
+  
+                   })
+        
+     
+    }
+    
+    
+    @IBAction func addObservation(_ sender: Any) {
+        
+        if listOfObservationData.count < listingData{
+            self.performSegue(withIdentifier: "addObservation", sender: self);
+        }else{
+            
+            let Alert = UIAlertController(title: "One second..", message: "You've reached your max project listing of: \(listingData)", preferredStyle: .alert)
+            
+            let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+                //save this for headerview in view item
+               
+            }
+            
+            
+            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in}
+            
+            
+            Alert.addAction(action1)
+            Alert.addAction(action3)
+        
+            self.present(Alert, animated: true, completion: nil)
+            
+            
+        }
+    }
+        
+    
+    
+//Load Data from Firebase, get max listing---------------------------------------------------------------------------------------------------------------------[END]
+        
+        
+    
+    
 //Load project data from Firebase---------------------------------------------------------------------------------------------------------------------[START]
         
          func checkUserStatus(){

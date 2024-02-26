@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import MapKit
 import SDWebImage
+import SwiftLoader
 
  
 
@@ -25,16 +26,19 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     //    var rowsInSection5:Int = 1
     //    var rowsInSection6:Int = 1
     
+    
 
-        var auditData: [newAuditDataset] = []
-        var CompletedAuditsFilter: [newAuditDataset] = []
-        var InProgressAuditsAuditsFilter: [newAuditDataset] = []
-        var ArchievedAuditsFilter: [newAuditDataset] = []
+    var listingData = Int()
+    var auditData: [newAuditDataset] = []
+    var CompletedAuditsFilter: [newAuditDataset] = []
+    var InProgressAuditsAuditsFilter: [newAuditDataset] = []
+    var ArchievedAuditsFilter: [newAuditDataset] = []
 
 
     let mainConsole = CONSOLE()
     let extensConsole = extens()
     let firebaseConsole = saveLocal()
+
     
         var auditID = String()
         var projectName = String()
@@ -46,7 +50,43 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     
     
+    func loadUserStats(){
+
+        
+                 let uid = Auth.auth().currentUser?.uid
+                 let reftest = Database.database().reference()
+                     .child("\(mainConsole.prod!)")
+                     .child("\(mainConsole.post!)")
+                     .child(uid!)
+                     .child("\(mainConsole.userDetails!)")
+                 
+                 reftest.queryOrderedByKey()
+                     .observe( .value, with: { snapshot in
+                               guard let dict = snapshot.value as? [String:Any] else {
+                               //error here
+                               return
+                               }
+
+                                let listingMax = dict["listingMax"] as? Int
+                                self.listingData = listingMax!
+                  
+                                
+  
+                   })
+        
+     
+    }
+    
+    
+    
     override func viewDidLoad() {
+        
+        //load the number of listing the user can actually make here:
+        loadUserStats()
+        
+  
+        
+
         
         loadAudits()
         
@@ -343,8 +383,11 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
              if let viewInfoView = segue.destination as?  viewAuditList{
 
                  if auditID != ""{
+               
                      viewInfoView.auditID = auditID
                      viewInfoView.projectName  = projectName
+                 
+                     
                  }else{
                      
                  }
@@ -355,6 +398,33 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     
     
+    @IBAction func addProject(_ sender: Any) {
+        
+        if auditData.count < listingData{
+            self.performSegue(withIdentifier: "addProject", sender: self);
+        }else{
+            
+            let Alert = UIAlertController(title: "One second..", message: "You've reached your max project listing of: \(listingData)", preferredStyle: .alert)
+            
+            let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+                //save this for headerview in view item
+               
+            }
+            
+            
+            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in}
+            
+            
+            Alert.addAction(action1)
+            Alert.addAction(action3)
+        
+            self.present(Alert, animated: true, completion: nil)
+            
+            
+        }
+    }
+        
+ 
     
     
     
@@ -364,8 +434,6 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     func createLayout() -> UICollectionViewCompositionalLayout{
         //Compositional layout
         let layout = UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-           
-            
             
             if sectionNumber  == 0 {
                 
