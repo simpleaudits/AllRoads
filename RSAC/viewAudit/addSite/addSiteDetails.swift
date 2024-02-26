@@ -10,6 +10,11 @@ import UIKit
 
 protocol saveDescription{
     func saveDescription(text:String)
+  
+    
+}
+
+protocol saveDescriptionRisk{
     func saveRisk(text:String)
     
 }
@@ -17,8 +22,8 @@ protocol saveDescription{
 
 class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
-    var delegate: saveDescription?
-    
+    var delegate1: saveDescription?
+    var delegate2: saveDescriptionRisk?
 
     var scrollView = UIScrollView()
     var stringData = String()
@@ -174,14 +179,17 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
     
     @objc func saveData(_ sender: UIButton) {
+        self.delegate1?.saveDescription(text: self.descriptionTextfield.text)
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true, completion: nil)
-            
-         
-        })
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+//
+//
+//
+//        })
         
     }
     
@@ -202,7 +210,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
 
             //save the enum of the safety risk
-            self.delegate?.saveRisk(text: "0")
+            self.delegate2?.saveRisk(text: "0")
 
                     }
         let action3 = UIAlertAction(title: "Low Risk",style: .default) {  (action:UIAlertAction!) in
@@ -211,7 +219,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
             
             //save the enum of the safety risk
-            self.delegate?.saveRisk(text: "1")
+            self.delegate2?.saveRisk(text: "1")
                         
                     }
         let action4 = UIAlertAction(title: "Medium Risk",style: .default) {  (action:UIAlertAction!) in
@@ -221,7 +229,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
             
             //save the enum of the safety risk
-            self.delegate?.saveRisk(text: "2")
+            self.delegate2?.saveRisk(text: "2")
                         
         }
         
@@ -233,7 +241,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
             self.safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
             
             //save the enum of the safety risk
-            self.delegate?.saveRisk(text: "3")
+            self.delegate2?.saveRisk(text: "3")
             
                         
         }
@@ -316,7 +324,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
         {
             view.endEditing(true)
             
-            self.delegate?.saveDescription(text: self.descriptionTextfield.text)
+            self.delegate1?.saveDescription(text: self.descriptionTextfield.text)
            
 
             

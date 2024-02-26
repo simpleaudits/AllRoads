@@ -73,7 +73,7 @@ extension UIImage {
 
 
 
-class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription, UIPencilInteractionDelegate{
+class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription,saveDescriptionRisk, UIPencilInteractionDelegate{
 
  
     var line1 = UIView()
@@ -227,6 +227,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         descriptionTextfield.delegate = self
+        
         picker.delegate = self
         
 
@@ -925,7 +926,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          if let destination3 = segue.destination as? addSiteDetails {
-            destination3.delegate = self
+             destination3.delegate1 = self
+             destination3.delegate2 = self
              destination3.stringData = siteDescription
              destination3.safetRiskValue = safetyRatingValue
         }
