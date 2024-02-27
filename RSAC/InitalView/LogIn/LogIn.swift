@@ -108,9 +108,7 @@ class LogIn: UITableViewController,UITextFieldDelegate,UITextViewDelegate {
                     
                     self .nextview()
                     
-
-                    
-                    
+   
              
 //
                 }
@@ -138,6 +136,9 @@ class LogIn: UITableViewController,UITextFieldDelegate,UITextViewDelegate {
                 }
                 let action1 = UIAlertAction(title: "Sign Up", style: .cancel) { (action:UIAlertAction!) in
                     print("Cancel button tapped");
+                    
+                    self.performSegue(withIdentifier: "signUpSegue", sender: self)
+                    
                 }
                 alertController.addAction(action1)
                 alertController.addAction(action2)
@@ -203,6 +204,9 @@ class LogIn: UITableViewController,UITextFieldDelegate,UITextViewDelegate {
     //############ THIS IS THE INSTANCE WHERE WE DECLARE USER LOG IN
     
     @IBAction func singup(_ sender: Any) {
+        
+        performSegue(withIdentifier: "signUpSegue", sender: self)
+        
     }
     
     

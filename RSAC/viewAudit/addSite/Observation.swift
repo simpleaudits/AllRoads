@@ -30,7 +30,7 @@ class cellData: UITableViewCell{
         //60
         
         siteName.frame = CGRect(
-            x: siteImage.frame.maxX + 20,
+            x: siteImage.frame.maxX + 5,
             y:  5,
             width: frame.width - (siteImage.frame.maxX + 20),
             height: 30)

@@ -27,22 +27,44 @@ class InitialSignUp: UITableViewController,UITextFieldDelegate,UITextViewDelegat
         
         SwiftLoader.show(animated: true)
         
-        Auth.auth().createUser(withEmail: username.text!, password: password.text!) { user, error in
-            if error == nil {
-            Auth.auth().signIn(withEmail: self.username.text!,
-                                   password: self.password.text!)
-           
-                //---Alert to let user know they have created an account.
-                self.SuccessfulLogin()
-                self.localExtensionFile.localAlert(message: "Account Created", submessage: "")
-                
-            }else{
-                // failed to create account
-                self.localExtensionFile.localAlert(message: "\(error!)", submessage: "unable to create account at this time")
+        let decimalCharacters = CharacterSet.decimalDigits
+        let decimalRange = self.password.text!.rangeOfCharacter(from: decimalCharacters)
+        
+        if !self.username.text!.contains("@") || decimalRange == nil{
+            
+            let alertController = UIAlertController(title: "Opps", message: "Please make sure you have a valid email domain and your password contains some numbers!", preferredStyle: .alert)
+            let action1 = UIAlertAction(title: "Okay",style: .default) { (action:UIAlertAction!) in
 
             }
+
+            alertController.addAction(action1)
+            self.present(alertController, animated: true, completion: nil)
             SwiftLoader.hide()
+            
+            
+            
+        }else{
+            Auth.auth().createUser(withEmail: username.text!, password: password.text!) { user, error in
+                if error == nil {
+                Auth.auth().signIn(withEmail: self.username.text!,
+                                       password: self.password.text!)
+               
+                    //---Alert to let user know they have created an account.
+                    self.SuccessfulLogin()
+                    self.localExtensionFile.localAlert(message: "Account Created", submessage: "")
+                    
+                }else{
+                    // failed to create account
+                    self.localExtensionFile.localAlert(message: "\(error!)", submessage: "unable to create account at this time")
+
+                }
+                SwiftLoader.hide()
+            }
+            
         }
+        
+        
+
     }
     
     

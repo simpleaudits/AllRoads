@@ -7,7 +7,6 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +16,7 @@
             <objects>
                 <tableViewController id="hEx-mR-gaj" customClass="InitialSignUp" customModule="RSAC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="XpS-bv-rcG">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
@@ -211,7 +210,6 @@
                                                     </state>
                                                     <connections>
                                                         <action selector="singup:" destination="CfL-iY-Aip" eventType="touchUpInside" id="fIu-e1-cJQ"/>
-                                                        <segue destination="Rhp-ca-TyD" kind="presentation" id="mwz-FS-3x5"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -251,6 +249,7 @@
                         <outlet property="password" destination="36c-VY-hk2" id="ZZl-j8-7Od"/>
                         <outlet property="username" destination="2hu-Lm-9pC" id="xZ9-3n-oh6"/>
                         <segue destination="NT5-K2-uQK" kind="presentation" identifier="mainView" modalPresentationStyle="fullScreen" id="gwF-Vz-aNe"/>
+                        <segue destination="Rhp-ca-TyD" kind="show" identifier="signUpSegue" id="Jm9-dm-DH6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nH0-XG-gVt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -309,10 +308,10 @@
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
-                        <segue destination="hZr-GK-abL" kind="relationship" relationship="viewControllers" id="adQ-AP-Yrx"/>
                         <segue destination="zcS-W6-JkR" kind="relationship" relationship="viewControllers" id="Jk6-r0-piN"/>
-                        <segue destination="emF-WN-8cj" kind="relationship" relationship="viewControllers" id="Owo-qa-uGh"/>
-                        <segue destination="mhU-JC-UqR" kind="relationship" relationship="viewControllers" id="L95-ns-Y8H"/>
+                        <segue destination="bws-TK-3VF" kind="relationship" relationship="viewControllers" id="L95-ns-Y8H"/>
+                        <segue destination="zWe-T6-8jl" kind="relationship" relationship="viewControllers" id="Owo-qa-uGh"/>
+                        <segue destination="hZr-GK-abL" kind="relationship" relationship="viewControllers" id="adQ-AP-Yrx"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0S-cn-Uyr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -342,8 +341,9 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Rhp-ca-TyD" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="SIh-uc-HgC"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="RMl-2h-t40">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="108"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -353,7 +353,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KBg-Ln-dUP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5495.419847328244" y="1662.6760563380283"/>
+            <point key="canvasLocation" x="-5495" y="1663"/>
         </scene>
         <!--New Project-->
         <scene sceneID="eAq-TX-I2V">
@@ -532,7 +532,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Project" id="AIX-CD-ktZ">
-                        <barButtonItem key="rightBarButtonItem" image="square.and.arrow.up" catalog="system" style="plain" id="nKW-lH-R1U">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="nKW-lH-R1U">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <action selector="createAudit:" destination="pTG-pi-Fb5" id="cn0-Lz-qQ7"/>
@@ -554,25 +554,34 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eWd-li-N1J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="120" y="1963"/>
+            <point key="canvasLocation" x="1973.2824427480916" y="1962.6760563380283"/>
         </scene>
-        <!--Collaboration-->
+        <!--Collaborate -->
         <scene sceneID="wkr-LC-f9X">
             <objects>
                 <viewController id="mhU-JC-UqR" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LPL-tw-DOm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Work on the same site but with your colleagues in real time." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnW-Fm-ekW">
+                                <rect key="frame" x="16" y="220" width="361" height="217"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="0aE-Jm-ccG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Collaboration" image="shareplay" catalog="system" id="1xy-dB-mjg"/>
+                    <navigationItem key="navigationItem" title="Collaborate " prompt="(coming soon)" id="gOE-EW-U8i"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2XF-SS-P52" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3002" y="2382"/>
+            <point key="canvasLocation" x="-2306.1068702290077" y="2380.2816901408451"/>
         </scene>
-        <!--PDF's-->
+        <!--Saved PDF's-->
         <scene sceneID="IAe-lL-fRe">
             <objects>
                 <viewController id="emF-WN-8cj" sceneMemberID="viewController">
@@ -582,17 +591,17 @@
                         <viewLayoutGuide key="safeArea" id="Tqy-UO-lZm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="PDF's" image="doc.text" catalog="system" id="Onw-pb-dDR"/>
+                    <navigationItem key="navigationItem" title="Saved PDF's" prompt="(coming soon)" id="LFJ-UM-GEM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e4d-CN-Llb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2305" y="2382"/>
+            <point key="canvasLocation" x="-452.67175572519085" y="2380.9859154929577"/>
         </scene>
         <!--Audits-->
         <scene sceneID="ETd-nB-tnQ">
             <objects>
                 <navigationController id="zcS-W6-JkR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Audits" image="folder" catalog="system" id="bVe-KN-EUb">
+                    <tabBarItem key="tabBarItem" title="Audits" image="pencil.and.outline" catalog="system" id="bVe-KN-EUb">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="iOQ-eB-RhR">
@@ -606,7 +615,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GdG-dG-SDE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1587" y="1963"/>
+            <point key="canvasLocation" x="266.41221374045801" y="1962.6760563380283"/>
         </scene>
         <!--Project's-->
         <scene sceneID="uIQ-JK-z3m">
@@ -649,7 +658,7 @@
                         <centerItemGroups>
                             <barButtonItemGroup customizationDisposition="fixed" id="Y91-sj-Roc"/>
                         </centerItemGroups>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="folder.fill.badge.plus" catalog="system" style="plain" id="twp-dM-ZsJ">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="twp-dM-ZsJ">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <action selector="addProject:" destination="Zvd-yM-9xX" id="vej-al-j5m"/>
@@ -664,7 +673,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uRv-5W-19l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-657.25190839694653" y="1962.6760563380283"/>
+            <point key="canvasLocation" x="1196.1832061068701" y="1962.6760563380283"/>
         </scene>
         <!--Settings-->
         <scene sceneID="hfg-dC-ZRX">
@@ -778,7 +787,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0rR-Y1-EBf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1182" y="2299"/>
+            <point key="canvasLocation" x="3034.3511450381679" y="2298.5915492957747"/>
         </scene>
         <!--Scope of Works-->
         <scene sceneID="oYl-tp-N5S">
@@ -790,27 +799,7 @@
                         <viewLayoutGuide key="safeArea" id="Gqf-tc-oQm"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Scope of Works" largeTitleDisplayMode="never" id="FYl-bu-n8f">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="LvC-eC-Yqb">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" id="dL3-Ei-8H8">
-                                <rect key="frame" x="290" y="7" width="87" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <menu key="menu" id="Hxq-u5-nod">
-                                    <children>
-                                        <command title="Item 1" id="9oE-ln-It1"/>
-                                        <command title="Item 2" id="fhS-mE-eje"/>
-                                    </children>
-                                </menu>
-                                <state key="normal" title="Button"/>
-                            </button>
-                            <connections>
-                                <action selector="entryOptions:" destination="HLQ-Sg-LJa" id="Ozx-v1-vpO"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="buttonOps" destination="LvC-eC-Yqb" id="I5c-Z5-8j9"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Scope of Works" largeTitleDisplayMode="never" id="FYl-bu-n8f"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H07-oL-fp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -850,7 +839,7 @@
                     <navigationItem key="navigationItem" prompt="Status:" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="DR0-Qt-oqZ">
-                            <rect key="frame" x="53" y="39.666666666666671" width="275" height="33"/>
+                            <rect key="frame" x="59" y="39.666666666666671" width="275" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <segments>
@@ -862,7 +851,7 @@
                                 <action selector="indexChanged:" destination="RVj-ct-PG1" eventType="valueChanged" id="gqw-k5-cWi"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" image="folder.fill.badge.plus" catalog="system" style="plain" id="YLj-e0-X1c">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="YLj-e0-X1c">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <action selector="addSite:" destination="RVj-ct-PG1" id="PmQ-Xh-4MY"/>
@@ -877,7 +866,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXs-B5-Phi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-573" y="2735"/>
+            <point key="canvasLocation" x="1280.1526717557251" y="2734.5070422535214"/>
         </scene>
         <!--Add Audit Sites-->
         <scene sceneID="j04-Iu-YaU">
@@ -1004,7 +993,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dj5-aq-gVH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1344" y="2735"/>
+            <point key="canvasLocation" x="509.16030534351142" y="2734.5070422535214"/>
         </scene>
         <!--Create Site-->
         <scene sceneID="eGP-p0-lYM">
@@ -1122,7 +1111,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qX-9L-4AD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="155" y="2735"/>
+            <point key="canvasLocation" x="2008.3969465648854" y="2734.5070422535214"/>
         </scene>
         <!--Observations-->
         <scene sceneID="4dy-zl-y9j">
@@ -1215,22 +1204,60 @@
             </objects>
             <point key="canvasLocation" x="-1582" y="644"/>
         </scene>
+        <!--Collaboration-->
+        <scene sceneID="bfo-VJ-O5k">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bws-TK-3VF" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Collaboration" image="shareplay" catalog="system" id="1xy-dB-mjg"/>
+                    <toolbarItems/>
+                    <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="CcS-Ci-Orl">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mhU-JC-UqR" kind="relationship" relationship="rootViewController" id="kcN-ep-dnV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WSI-g6-pow" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3002.2900763358775" y="2381.6901408450703"/>
+        </scene>
+        <!--PDF's-->
+        <scene sceneID="UAh-wE-pBt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zWe-T6-8jl" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="PDF's" image="doc.text" catalog="system" id="Onw-pb-dDR"/>
+                    <toolbarItems/>
+                    <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="yxV-tC-FVk">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="emF-WN-8cj" kind="relationship" relationship="rootViewController" id="qP1-DV-pLt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SnY-rc-3oO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1379.3893129770993" y="2380.9859154929577"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2y7-dC-yeP"/>
-        <segue reference="Ypc-0i-t4p"/>
+        <segue reference="05a-tf-gx5"/>
         <segue reference="Uv5-2R-2fq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="doc.text.fill.viewfinder" catalog="system" width="128" height="115"/>
-        <image name="folder" catalog="system" width="128" height="96"/>
-        <image name="folder.fill.badge.plus" catalog="system" width="128" height="92"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="location.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="shareplay" catalog="system" width="128" height="75"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

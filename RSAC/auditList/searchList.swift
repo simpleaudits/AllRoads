@@ -80,7 +80,7 @@ class searchList: UITableViewController,UISearchBarDelegate {
             // this allows the user to search by either username or note.
 
             filterData = itemsfeed.filter(
-                {return $0.projectName.localizedCaseInsensitiveContains(searchText)  ||  $0.auditReference.localizedCaseInsensitiveContains(searchText)  })
+                {return $0.projectName.localizedCaseInsensitiveContains(searchText)  })
             print(filterData)
             
             
@@ -100,36 +100,62 @@ class searchList: UITableViewController,UISearchBarDelegate {
     
     func viewAuditData(){
         
-        //1)prod
-        //2)post
-        //3)skips UID
-        //4)audit
-        //skips AuditRef
+        let uid = Auth.auth().currentUser?.uid
+ 
         
         //--------------------------------
         //1)
         let reftest = Database.database().reference().child("\(self.ParentJSON.prod!)")
         //2)
-        let auditDataList = reftest.child("\(self.ParentJSON.post!)")
+        let auditDataList = reftest.child("\(self.ParentJSON.post!)").child("\(uid!)").child("\(self.ParentJSON.audit!)")
         
         //3)
-        auditDataList.observe(DataEventType .childAdded, with: { snapshot in
-        //4), 5)
-            for child in snapshot.childSnapshot(forPath: "\(self.ParentJSON.audit!)").children {
-                    if let snapshot = child as? DataSnapshot,
-                        let proditem = newAuditDataset(snapshot: snapshot) {
-                        self.itemsfeed.append(proditem)
-                        
-                        print(proditem.projectName)
-                        
-                      
-
+        auditDataList.queryOrderedByKey()
+            .observeSingleEvent(of: .value, with: { snapshot in
+                    var itemsfeed: [newAuditDataset] = []
+                    for child in snapshot.children {
+                        if let snapshot = child as? DataSnapshot,
+                            let listOfSites = newAuditDataset(snapshot: snapshot) {
+                            itemsfeed.append(listOfSites)
+                        }
                     }
-            }
+                
+                
+                    self.itemsfeed = itemsfeed
+                    print("obscount:\(self.itemsfeed.count)")
+                
+                self.tableView.reloadData()
+
+
+               
+                })
         
-            self.tableView.reloadData()
-     
-            })
+        
+        
+        
+//1)prod
+//2)post
+//3)skips UID
+//4)audit
+//skips AuditRef
+        
+//        auditDataList.observe(DataEventType .childAdded, with: { snapshot in
+//        //4), 5)
+//            for child in snapshot.childSnapshot(forPath: "\(self.ParentJSON.audit!)").children {
+//                    if let snapshot = child as? DataSnapshot,
+//                        let proditem = newAuditDataset(snapshot: snapshot) {
+//                        self.itemsfeed.append(proditem)
+//
+//                        print(proditem.projectName)
+//
+//
+//
+//                    }
+//            }
+//
+//            self.tableView.reloadData()
+//
+//            })
         
 
                

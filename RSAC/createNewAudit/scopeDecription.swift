@@ -58,7 +58,7 @@ class scopeDecription: UIViewController,UITextFieldDelegate,UITextViewDelegate{
          }
 
          let menu = UIMenu(title: "My Menu", options: .displayInline, children: [usersItem , addUserItem , removeUserItem])
-        buttonOps.menu = menu
+        
        
     }
     
