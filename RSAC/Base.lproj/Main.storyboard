@@ -803,7 +803,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H07-oL-fp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="948.85496183206101" y="1643.661971830986"/>
+            <point key="canvasLocation" x="1196" y="1282"/>
         </scene>
         <!--View Audit List-->
         <scene sceneID="XCq-qQ-rwc">
@@ -845,7 +845,7 @@
                             <segments>
                                 <segment title="Complete"/>
                                 <segment title="In-Progress"/>
-                                <segment title="Archieved"/>
+                                <segment title="Archived"/>
                             </segments>
                             <connections>
                                 <action selector="indexChanged:" destination="RVj-ct-PG1" eventType="valueChanged" id="gqw-k5-cWi"/>
@@ -1150,7 +1150,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="In-Progress"/>
-                                <segment title="Archieved"/>
+                                <segment title="Archived"/>
                             </segments>
                             <connections>
                                 <action selector="indexChanged:" destination="q4L-Y8-fSb" eventType="valueChanged" id="ktV-BS-dA8"/>

@@ -370,7 +370,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
      
         }else {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
-            sectionHeader.headerName.text = "Achieved"
+            sectionHeader.headerName.text = "Archived"
             return sectionHeader
      
         }
