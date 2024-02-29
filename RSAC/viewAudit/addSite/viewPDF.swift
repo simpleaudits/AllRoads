@@ -45,14 +45,14 @@ class viewPDF: UIViewController {
 //            })
 //
         
-        SwiftLoader.show(title: "Creating PDF", animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: { [self] in
-           
-            SwiftLoader.show(title: "Nearly Done", animated: true)
-            
-            perform(#selector(createPDFData), with: nil, afterDelay: TimeInterval(saveData.count))
-        })
+        SwiftLoader.show(title: "Creating PDF, one moment", animated: true)
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: { [self] in
+//
+//            SwiftLoader.show(title: "Nearly Done", animated: true)
+//
+//            perform(#selector(createPDFData), with: nil, afterDelay: TimeInterval(saveData.count))
+//        })
         
        
      }
@@ -259,9 +259,6 @@ class viewPDF: UIViewController {
 
     func loadSiteAuditData(){
 
-        
-                   
-        
                     if Auth.auth().currentUser != nil {
 
                     Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
@@ -278,36 +275,60 @@ class viewPDF: UIViewController {
                     self.listOfSitesData = listOfSitesData
                     //call it after all data is loaded to remove duplications:
                         
-            
+                    let group = DispatchGroup()
+              
+                        for x in listOfSitesData{
+                            group.enter()
+    
 
-
-
-                    for x in listOfSitesData{
-
-                    DispatchQueue.global(qos: .background).async {
-                        do
-                        {
-                        let data = try Data.init(contentsOf: URL.init(string:x.imageURL)!)
-                            DispatchQueue.main.async {
+                            asyncData( imageURL: x.imageURL, descriptionData: x.auditDescription, auditTitleData: x.auditTitle, dateData: x.date) { result in do { group.leave()}
+                            
+                            print(result)
                                 
-                                self.imageData = UIImage(data: data)!
-                                let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, imageData: self.imageData, image: "", date: x.date)
-                                self.saveData.append(pdfCreator)
-                                
+                            }
 
                         }
-                                
 
-                        }catch {
-                        // error
-                        }
-                    }
                         
+                        group.notify(queue: DispatchQueue.main){
+                            print("All tasks completed")
+                            
+                            //once all tasks are completed, and data is loaded. Create the PDF
+                            createPDFData()
+                        }
 
-                    }
+
+//                    for x in listOfSitesData{
+//
+//
+//
+//                    DispatchQueue.global(qos: .background).async {
+//                        do
+//                        {
+//                        let data = try Data.init(contentsOf: URL.init(string:x.imageURL)!)
+//                            DispatchQueue.main.async {
+//
+//                                self.imageData = UIImage(data: data)!
+//                                let pdfCreator = PDFCreatorData(title: x.auditTitle, description: x.auditDescription, imageData: self.imageData, image: "", date: x.date)
+//                                self.saveData.append(pdfCreator)
+//                                print(self.imageData)
+//
+//                        }
+//
+//
+//
+//
+//
+//                        }catch {
+//                        // error
+//                        }
+//                    }
+//
+//
+//                    }
 
            
-                    print("end")
+         
 
 
                     })
@@ -318,4 +339,37 @@ class viewPDF: UIViewController {
                     }
 
 
-                    }
+    
+    
+    
+    func asyncData(imageURL:String, descriptionData: String, auditTitleData:String, dateData:String, completion: @escaping (String) -> Void) {
+        
+   
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            
+            let url = URL(string:"\(imageURL)")
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                
+                let image: UIImage = UIImage(data: data!)!
+                self.imageData = image
+                let pdfCreator = PDFCreatorData(title: auditTitleData, description: descriptionData, imageData: self.imageData, image: "", date: dateData)
+                self.saveData.append(pdfCreator)
+                
+                print(image)
+                completion("done")
+                
+            }
+            task.resume()
+
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
