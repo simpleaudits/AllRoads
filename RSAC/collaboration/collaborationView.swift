@@ -293,9 +293,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
 
                                 let listingMax = dict["listingMax"] as? Int
                                 self.listingData = listingMax!
-
-
-                   })
+                               })
 
     }
 
