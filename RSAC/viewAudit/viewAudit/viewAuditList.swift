@@ -77,16 +77,74 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
 //sharable APO---------------------------------------------------------------------------------------------------------------------[START]
     @IBAction func createShare(_ sender: Any) {
-        
-        self.firebaseConsole.createCollaborationAPI(collaborationID: self.extensConsole.collaborationID(),
-                                                    date:self.extensConsole.timeStamp(),
-                                                    nest1: "",
-                                                    projectName: projectName,
-                                                    isEditable: true,
-                                                    auditID: auditID)
+        createSharedAlert()
+
     }
     
 
+        func createSharedAlert() {
+            
+            //PREVIEW THE CURRENT IMAGE WITHIN ALERT
+            
+            let collabID =  self.extensConsole.collaborationID()
+            let alertController = UIAlertController(title: "Share this project", message: "collabID:\n\(collabID)", preferredStyle: .alert)
+            let imageView = UIImageView(frame: CGRect(x: alertController.view.frame.maxX/2 - 160, y: 100, width: 200, height: 200))
+
+            //create UIImage here
+            
+            let dataQR = String(collabID).data(using: String.Encoding.ascii, allowLossyConversion: true)
+            
+            // Get a QR CIFilter
+            guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return }
+            // Input the data
+            qrFilter.setValue(dataQR, forKey: "inputMessage")
+            // Get the output image
+            guard let qrImage = qrFilter.outputImage else { return }
+            // Scale the image
+            let transform = CGAffineTransform(scaleX: 10, y: 10)
+            let scaledQrImage = qrImage.transformed(by: transform)
+            // Do some processing to get the UIImage
+            let context = CIContext()
+            guard let cgImage = context.createCGImage(scaledQrImage, from: scaledQrImage.extent) else { return }
+            
+            let processedImage = UIImage(cgImage: cgImage)
+      
+            imageView.image = processedImage
+            imageView.layer.cornerRadius = 20
+            imageView.layer.masksToBounds = true
+            alertController.view.addSubview(imageView)
+            let height = NSLayoutConstraint(item: alertController.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 400)
+            let width = NSLayoutConstraint(item: alertController.view!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250)
+            alertController.view.addConstraint(height)
+            alertController.view.addConstraint(width)
+
+            let action1 = UIAlertAction(title: "Create",style: .default) { (action:UIAlertAction!) in
+                
+                self.firebaseConsole.createCollaborationAPI(collaborationID:collabID,
+                                                            date:self.extensConsole.timeStamp(),
+                                                            projectName: self.projectName,
+                                                            isEditable: true,
+                                                            auditID: self.auditID)
+ 
+            }
+
+            let action3 = UIAlertAction(title: "Copy to Clipboard", style: .default) { (action:UIAlertAction!) in
+            print("Cancel button tapped");
+            }
+            
+            alertController.addAction(action1)
+            //alertController.addAction(action3)
+            alertController.view.addSubview(imageView)
+
+
+            self.present(alertController, animated: true, completion: nil)
+
+
+            }
+    
+
+
+    // Change user DP ALERT --------------------------------------------------------------------------------------------------------------------[END]
     
     
     

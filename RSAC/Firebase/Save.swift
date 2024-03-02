@@ -72,7 +72,7 @@ class saveLocal: UIViewController {
     }
     
     
-    func createCollaborationAPI(collaborationID:String, date: String, nest1: String, projectName: String, isEditable:Bool, auditID:String){
+    func createCollaborationAPI(collaborationID:String, date: String, projectName: String, isEditable:Bool, auditID:String){
         
                 //show progress view
                 SwiftLoader.show(title: "Creating Site", animated: true)
@@ -95,7 +95,7 @@ class saveLocal: UIViewController {
                     let saveData = collaborationAPI(
                         collaborationID: collaborationID,
                         date: date,
-                        nest1: nest1,
+                        auditID: auditID,
                         projectName: projectName,
                         sharedRef: collabData,
                         isEditable: isEditable)

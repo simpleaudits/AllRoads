@@ -104,6 +104,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
     var sharedRef = String()
     var projectName = String()
     var collaborationID = String()
+    var itemReference = String()
     
     var toggle = Bool()
 
@@ -130,8 +131,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         tableView.register(collabData.self, forCellReuseIdentifier: "collabData")
 
         //conform to search bar delegate
-//        filterSearch?.delegate = self
-//        filterSearch.placeholder = "Search by observation title"
+        filterSearch?.delegate = self
+        filterSearch.placeholder = "Search by project name"
 
 
 
@@ -167,8 +168,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         filterSearch.endEditing(true)
         tableView.reloadData()
     }
-
     
+  
     
     
 //Load API Data---------------------------------------------------------------------------------------------------------------------[START]
@@ -184,17 +185,28 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
                      .observe( .value, with: { snapshot in
                                guard let dict = snapshot.value as? [String:Any] else {
                                //error here
+                               print("could not load")
+                                   
+                                   let Alert = UIAlertController(title: "CollabID was not valid", message: "", preferredStyle: .alert)
+                                       let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
+                                      
+                                       }
+
+                                   Alert.addAction(action1)
+                                   self.present(Alert, animated: true, completion: nil)
+                                   
                                return
                                }
 
                                 let sharedRef = dict["sharedRef"] as? String
                                 let projectName = dict["projectName"] as? String
                                 let collaborationID = dict["collaborationID"] as? String
+                                let auditID = dict["auditID"] as? String
                          
                                     self.sharedRef = sharedRef!
                                     self.projectName = projectName!
                                     self.collaborationID = collaborationID!
-                         
+                                    self.auditID = auditID!
     
                                      let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
                                      let action2 = UIAlertAction(title: "Yes",style: .default) { (action:UIAlertAction!) in
@@ -408,24 +420,36 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
     }
 
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     if let destination4 = segue.destination as? addAuditSites {
-          destination4.siteID = siteID
-          destination4.auditID = auditID
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+   
+        let items = filterData[indexPath.row]
 
+        itemReference = items.sharedRef
+        self.auditID = items.auditID
+        self.projectName = items.projectName
 
-     }else if let destination5 = segue.destination as? viewPDF {
-         destination5.refData = refData
-
-      }
-
-
-      else {
-
-      }
-
-
+        self.performSegue(withIdentifier: "fromCollaboration", sender: indexPath.row);
+ 
 
     }
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            
+        if let viewInfoView = segue.destination as?  viewAuditList{
+
+            if auditID != ""{
+                viewInfoView.auditID = auditID
+                viewInfoView.projectName  = projectName
+            }else{
+                
+            }
+
+        }
+        
+   }
+
+    
 
 }

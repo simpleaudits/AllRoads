@@ -16,7 +16,7 @@ struct collaborationAPI{
 
     let collaborationID: String
     let date: String
-    let nest1: String
+    let auditID: String
     let projectName: String
     let sharedRef: String
     var isEditable: Bool
@@ -24,7 +24,7 @@ struct collaborationAPI{
     init(
         collaborationID: String,
         date: String,
-        nest1: String,
+        auditID: String,
         projectName: String,
         sharedRef:String,
         isEditable: Bool
@@ -33,7 +33,7 @@ struct collaborationAPI{
     {
         self.collaborationID = collaborationID
         self.date = date
-        self.nest1 = nest1
+        self.auditID = auditID
         self.projectName = projectName
         self.sharedRef = sharedRef
         self.isEditable = isEditable
@@ -44,7 +44,7 @@ struct collaborationAPI{
             let value = snapshot.value as? [String: AnyObject],
             let collaborationID = value["collaborationID"] as? String,
             let date = value["date"] as? String,
-            let nest1 = value["nest1"] as? String,
+            let auditID = value["auditID"] as? String,
             let projectName = value["projectName"] as? String,
             let sharedRef = value["sharedRef"] as? String,
             let isEditable = value["isEditable"] as? Bool else {
@@ -53,7 +53,7 @@ struct collaborationAPI{
    
         self.collaborationID = collaborationID
         self.date = date
-        self.nest1 = nest1
+        self.auditID = auditID
         self.projectName = projectName
         self.sharedRef = sharedRef
         self.isEditable = isEditable
@@ -63,7 +63,7 @@ struct collaborationAPI{
         return [
             "collaborationID": collaborationID,
             "date": date,
-            "nest1": nest1,
+            "auditID": auditID,
             "projectName": projectName,
             "sharedRef": sharedRef,
             "isEditable": isEditable
