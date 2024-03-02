@@ -38,6 +38,12 @@ class extens: UIViewController {
         let uuid = UUID().uuidString
         return String(uuid)
     }
+    
+    func collaborationID() -> String{
+        //creating a NSURL
+        let uuid = UUID().uuidString
+        return String(uuid)
+    }
  
   
     func localAlert(message:String,submessage:String){
@@ -118,6 +124,7 @@ class CONSOLE: UIViewController {
     var post:String? = "post"
     var audit:String? = "audit"
     var auditList:String? = "observationList"
+    var collaborationList:String? = "collaborationList"
     var siteList:String? = "siteList"
     var auditSiteData:String? = "auditSiteData"
     var siteData:String? = "siteData"

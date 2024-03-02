@@ -556,31 +556,6 @@
             </objects>
             <point key="canvasLocation" x="1973.2824427480916" y="1962.6760563380283"/>
         </scene>
-        <!--Collaborate -->
-        <scene sceneID="wkr-LC-f9X">
-            <objects>
-                <viewController id="mhU-JC-UqR" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="LPL-tw-DOm">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Work on the same site but with your colleagues in real time." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnW-Fm-ekW">
-                                <rect key="frame" x="16" y="220" width="361" height="217"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="0aE-Jm-ccG"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Collaborate " prompt="(coming soon)" id="gOE-EW-U8i"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2XF-SS-P52" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2306.1068702290077" y="2380.2816901408451"/>
-        </scene>
         <!--Saved PDF's-->
         <scene sceneID="IAe-lL-fRe">
             <objects>
@@ -595,7 +570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e4d-CN-Llb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-452.67175572519085" y="2380.9859154929577"/>
+            <point key="canvasLocation" x="-683" y="2380"/>
         </scene>
         <!--Audits-->
         <scene sceneID="ETd-nB-tnQ">
@@ -839,7 +814,7 @@
                     <navigationItem key="navigationItem" prompt="Status:" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="DR0-Qt-oqZ">
-                            <rect key="frame" x="59" y="39.666666666666671" width="275" height="33"/>
+                            <rect key="frame" x="49.999999999999986" y="39.666666666666671" width="232.66666666666663" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <segments>
@@ -851,12 +826,19 @@
                                 <action selector="indexChanged:" destination="RVj-ct-PG1" eventType="valueChanged" id="gqw-k5-cWi"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="YLj-e0-X1c">
-                            <color key="tintColor" systemColor="systemOrangeColor"/>
-                            <connections>
-                                <action selector="addSite:" destination="RVj-ct-PG1" id="PmQ-Xh-4MY"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" systemItem="action" id="1iK-fR-yFh">
+                                <connections>
+                                    <action selector="createShare:" destination="RVj-ct-PG1" id="Vd4-Tw-jSJ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" systemItem="add" id="YLj-e0-X1c">
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                <connections>
+                                    <action selector="addSite:" destination="RVj-ct-PG1" id="PmQ-Xh-4MY"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="statusSegment" destination="DR0-Qt-oqZ" id="dtj-c2-Q2w"/>
@@ -879,7 +861,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="never" id="6JZ-hz-s0i">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="q6w-ph-cjZ">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="q6w-ph-cjZ">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <action selector="addToAuditList:" destination="JPK-3h-a4i" id="eYN-KJ-n5T"/>
@@ -1157,16 +1139,16 @@
                             </connections>
                         </segmentedControl>
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="doc.text.fill.viewfinder" catalog="system" id="9V5-yS-yD3">
-                                <color key="tintColor" systemColor="systemOrangeColor"/>
-                                <connections>
-                                    <segue destination="fcI-nA-JTf" kind="show" id="ZKC-kP-eo3"/>
-                                </connections>
-                            </barButtonItem>
                             <barButtonItem systemItem="add" id="tNj-CZ-lax">
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
                                     <action selector="addObservation:" destination="q4L-Y8-fSb" id="OrL-04-awA"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="doc.text.fill.viewfinder" catalog="system" id="9V5-yS-yD3">
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                <connections>
+                                    <segue destination="fcI-nA-JTf" kind="show" id="ZKC-kP-eo3"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -1217,12 +1199,48 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="mhU-JC-UqR" kind="relationship" relationship="rootViewController" id="kcN-ep-dnV"/>
+                        <segue destination="c1X-wh-Owb" kind="relationship" relationship="rootViewController" id="e7S-g4-gCm"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSI-g6-pow" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3002.2900763358775" y="2381.6901408450703"/>
+        </scene>
+        <!--Collaboration-->
+        <scene sceneID="fga-bJ-eAf">
+            <objects>
+                <tableViewController id="c1X-wh-Owb" customClass="collaborationView" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="7Dw-CX-isw">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="UTe-ig-obt">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UTe-ig-obt" id="9Jd-bG-D9a">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="c1X-wh-Owb" id="hd4-XI-5Pi"/>
+                            <outlet property="delegate" destination="c1X-wh-Owb" id="abY-Rw-xk1"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Collaboration" id="msK-bx-cCx">
+                        <barButtonItem key="rightBarButtonItem" title="Join" style="plain" id="Pkg-cG-Xeb">
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
+                            <connections>
+                                <action selector="addCollabUser:" destination="c1X-wh-Owb" id="we4-uI-gNl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GfR-fa-Yoe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2254" y="2381"/>
         </scene>
         <!--PDF's-->
         <scene sceneID="UAh-wE-pBt">
@@ -1247,7 +1265,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2y7-dC-yeP"/>
-        <segue reference="05a-tf-gx5"/>
+        <segue reference="Ypc-0i-t4p"/>
         <segue reference="Uv5-2R-2fq"/>
     </inferredMetricsTieBreakers>
     <resources>

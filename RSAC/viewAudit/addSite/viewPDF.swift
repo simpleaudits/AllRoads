@@ -294,7 +294,7 @@ class viewPDF: UIViewController {
                             print("All tasks completed")
                             
                             //once all tasks are completed, and data is loaded. Create the PDF
-                            createPDFData()
+                            self.createPDFData()
                         }
 
 
@@ -345,7 +345,7 @@ class viewPDF: UIViewController {
     func asyncData(imageURL:String, descriptionData: String, auditTitleData:String, dateData:String, completion: @escaping (String) -> Void) {
         
    
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             
             let url = URL(string:"\(imageURL)")
             let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in

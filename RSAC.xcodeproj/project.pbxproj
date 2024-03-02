@@ -15,6 +15,9 @@
 		82445D0C2B0100A000319605 /* createSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D0B2B0100A000319605 /* createSite.swift */; };
 		824D559B2B8ACDC700197638 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 824D559A2B8ACDC600197638 /* GoogleService-Info.plist */; };
 		826577812B8B1D0E000FB612 /* Road-auditIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 826577802B8B1D0E000FB612 /* Road-auditIcon.jpg */; };
+		826577862B91A85C000FB612 /* collaborationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826577852B91A85C000FB612 /* collaborationView.swift */; };
+		826577892B91AB65000FB612 /* collaborationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826577882B91AB65000FB612 /* collaborationData.swift */; };
+		8265778B2B92A18B000FB612 /* collaborationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265778A2B92A18A000FB612 /* collaborationAPI.swift */; };
 		827DFF4F2B0E185600029EDE /* PDFkit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF4E2B0E185600029EDE /* PDFkit.swift */; };
 		827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827DFF502B0E1BD300029EDE /* viewPDF.swift */; };
 		8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */; };
@@ -99,6 +102,9 @@
 		82445D0B2B0100A000319605 /* createSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSite.swift; sourceTree = "<group>"; };
 		824D559A2B8ACDC600197638 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		826577802B8B1D0E000FB612 /* Road-auditIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Road-auditIcon.jpg"; sourceTree = "<group>"; };
+		826577852B91A85C000FB612 /* collaborationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collaborationView.swift; sourceTree = "<group>"; };
+		826577882B91AB65000FB612 /* collaborationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collaborationData.swift; sourceTree = "<group>"; };
+		8265778A2B92A18A000FB612 /* collaborationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collaborationAPI.swift; sourceTree = "<group>"; };
 		827DFF4E2B0E185600029EDE /* PDFkit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFkit.swift; sourceTree = "<group>"; };
 		827DFF502B0E1BD300029EDE /* viewPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPDF.swift; sourceTree = "<group>"; };
 		8293110C2B0390CA006F4694 /* viewSiteSnaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSiteSnaps.swift; sourceTree = "<group>"; };
@@ -248,6 +254,24 @@
 			path = support;
 			sourceTree = "<group>";
 		};
+		826577822B91A570000FB612 /* collaboration */ = {
+			isa = PBXGroup;
+			children = (
+				826577852B91A85C000FB612 /* collaborationView.swift */,
+				826577872B91AB54000FB612 /* dataModel */,
+			);
+			path = collaboration;
+			sourceTree = "<group>";
+		};
+		826577872B91AB54000FB612 /* dataModel */ = {
+			isa = PBXGroup;
+			children = (
+				826577882B91AB65000FB612 /* collaborationData.swift */,
+				8265778A2B92A18A000FB612 /* collaborationAPI.swift */,
+			);
+			path = dataModel;
+			sourceTree = "<group>";
+		};
 		82BC45432B67BA7300FB2650 /* settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +314,7 @@
 				82E4A8612AFCE54300BE1D8B /* auditList */,
 				82E4A8742AFCE54400BE1D8B /* createNewAudit */,
 				82E4A87C2AFCE54400BE1D8B /* viewAudit */,
+				826577822B91A570000FB612 /* collaboration */,
 				82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */,
 				82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */,
 				82E4A8302AFCE0A800BE1D8B /* ViewController.swift */,
@@ -707,7 +732,9 @@
 				82E4A8932AFCE54400BE1D8B /* newUser.swift in Sources */,
 				8293110D2B0390CA006F4694 /* viewSiteSnaps.swift in Sources */,
 				82E4A8922AFCE54400BE1D8B /* Alerts.swift in Sources */,
+				826577862B91A85C000FB612 /* collaborationView.swift in Sources */,
 				82E4A8882AFCE54400BE1D8B /* Load.swift in Sources */,
+				8265778B2B92A18B000FB612 /* collaborationAPI.swift in Sources */,
 				82E4A88F2AFCE54400BE1D8B /* InitialSignUp.swift in Sources */,
 				82E4A8A52AFCE54D00BE1D8B /* extensionFiles.swift in Sources */,
 				82E4A8A02AFCE54400BE1D8B /* addDescription.swift in Sources */,
@@ -737,6 +764,7 @@
 				82E4A8892AFCE54400BE1D8B /* auditCell.swift in Sources */,
 				82E4A89F2AFCE54400BE1D8B /* viewAuditList.swift in Sources */,
 				82E4A8A12AFCE54400BE1D8B /* detailsCell.swift in Sources */,
+				826577892B91AB65000FB612 /* collaborationData.swift in Sources */,
 				82E4A8942AFCE54400BE1D8B /* fundsAvaliable.swift in Sources */,
 				82E4A89D2AFCE54400BE1D8B /* viewAuditHeaderMap.swift in Sources */,
 				82E4A8912AFCE54400BE1D8B /* userData.swift in Sources */,

@@ -33,6 +33,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var siteID = String()
         var projectName = String()
         var refData = String()
+       
     
     
     
@@ -73,6 +74,21 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
 
     }
+    
+//sharable APO---------------------------------------------------------------------------------------------------------------------[START]
+    @IBAction func createShare(_ sender: Any) {
+        
+        self.firebaseConsole.createCollaborationAPI(collaborationID: self.extensConsole.collaborationID(),
+                                                    date:self.extensConsole.timeStamp(),
+                                                    nest1: "",
+                                                    projectName: projectName,
+                                                    isEditable: true,
+                                                    auditID: auditID)
+    }
+    
+
+    
+    
     
 //Change project Status---------------------------------------------------------------------------------------------------------------------[START]
         @IBAction func indexChanged(_ sender: Any) {

@@ -25,6 +25,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     var auditID = String()
     var siteID = String()
     var refData = String()
+  
     
     
 
