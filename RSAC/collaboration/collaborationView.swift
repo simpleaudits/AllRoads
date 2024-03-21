@@ -14,6 +14,8 @@ import Firebase
 import FirebaseDatabase
 import SDWebImage
 import SwiftLoader
+import AVFoundation
+import QRCodeReader
 
 class collabData: UITableViewCell{
 
@@ -79,9 +81,42 @@ class collabData: UITableViewCell{
 }
 
 
-class collaborationView: UITableViewController,UISearchBarDelegate {
+class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReaderViewControllerDelegate {
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+      reader.stopScanning()
+        
+        dismiss(animated: true, completion: {
+            self.joinByCollabID(textData: result.value)
+         })
+     
+        
+        
+      
+    }
+
+    //This is an optional delegate method, that allows you to be notified when the user switches the cameraName
+    //By pressing on the switch camera button
+    func reader(_ reader: QRCodeReaderViewController, didSwitchCamera newCaptureDevice: AVCaptureDeviceInput) {
+
+    }
+
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+      reader.stopScanning()
+        
+   
+
+      dismiss(animated: true, completion: nil)
+    }
+ 
+    
+    
 
 
+
+    //QR
+    let session = AVCaptureSession()
+
+    
     let mainConsole = CONSOLE()
     let mainFunction = extens()
     let firebaseConsole = saveLocal()
@@ -93,6 +128,9 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
     var listingData = Int()
     var auditID = String()
     var siteID = String()
+    var userUID = String()
+    
+    
     var listOfCollaborationData: [collaborationData] = []
     var filterData: [collaborationData] = []
 
@@ -103,11 +141,31 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
     var descriptionData = String()
     var sharedRef = String()
     var projectName = String()
-    var collaborationID = String()
     var itemReference = String()
+
     
     var toggle = Bool()
 
+    
+    
+    
+    
+    // Good practice: create the reader lazily to avoid cpu overload during the
+    // initialization and each time we need to scan a QRCode
+    lazy var readerVC: QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
+            
+            // Configure the view controller (optional)
+            $0.showTorchButton        = true
+            $0.showSwitchCameraButton = false
+            $0.showCancelButton       = false
+            $0.showOverlayView        = true
+            $0.rectOfInterest         = CGRect(x: 0.2, y: 0.2, width: 0.6, height: 0.6)
+        }
+        
+        return QRCodeReaderViewController(builder: builder)
+    }()
 
 
     override func viewDidAppear(_ animated: Bool) {
@@ -117,6 +175,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         //load joined collab list:
         self.loadCollabData()
@@ -176,11 +236,14 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
     func loadCollabAPI(collaborationID:String){
 
                  let uid = Auth.auth().currentUser?.uid
+      
                  let reftest = Database.database().reference()
                      .child("\(mainConsole.prod!)")
                      .child("\(mainConsole.collaborationList!)")
-                     .child(collaborationID)
-                 
+                     .child(collaborationID) // we user AuditID as the collabID data ref - this is reduce duplicates when the host creates a new collab API
+        
+              
+        
                  reftest.queryOrderedByKey()
                      .observe( .value, with: { snapshot in
                                guard let dict = snapshot.value as? [String:Any] else {
@@ -200,26 +263,30 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
 
                                 let sharedRef = dict["sharedRef"] as? String
                                 let projectName = dict["projectName"] as? String
-                                let collaborationID = dict["collaborationID"] as? String
                                 let auditID = dict["auditID"] as? String
+                                let userUID = dict["userUID"] as? String
                          
                                     self.sharedRef = sharedRef!
                                     self.projectName = projectName!
-                                    self.collaborationID = collaborationID!
                                     self.auditID = auditID!
-    
+                                    self.userUID = userUID!
+             
+                         
                                      let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
                                      let action2 = UIAlertAction(title: "Yes",style: .default) { (action:UIAlertAction!) in
                                          // Perform action
                     
-                                             self.firebaseConsole.addCollab(auditImageURL: "",
-                                                                            date: self.mainFunction.timeStamp(),
-                                                                            projectName: self.projectName,
-                                                                            sharedRef: self.sharedRef,
-                                                                            siteID: self.siteID,
-                                                                            auditID: self.auditID,
-                                                                            isEditable: true,
-                                                                            collaborationID: self.collaborationID)
+                                        self.firebaseConsole.addCollab(
+                                                                        userUID:self.userUID,
+                                                                        auditImageURL: "",
+                                                                        date: self.mainFunction.timeStamp(),
+                                                                        projectName: self.projectName,
+                                                                        sharedRef: self.sharedRef,
+                                                                        auditID: self.auditID,
+                                                                        isEditable: true,
+                                                                        collaborationID: self.mainFunction.collaborationID())
+                                         
+                                         self.session.stopRunning()
    
                                      }
                            
@@ -311,14 +378,41 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
 
 
     @IBAction func addCollabUser(_ sender: Any) {
+        joinOption()
+      
+    }
+    
+    
+    func joinOption(){
+        let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
+        let action2 = UIAlertAction(title: "using CollabID",style: .default) { (action:UIAlertAction!) in
+            // Perform action
+            self.joinByCollabID(textData: "")
+        }
 
+        let action1 = UIAlertAction(title: "Scan QR code", style: .default) { (action:UIAlertAction!) in
+            // Perform action
+            self.scanAction()
+      
+            
+        }
+        alertController.addAction(action1)
+        alertController.addAction(action2)
+
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    func joinByCollabID(textData:String){
         //Ask user for site name:
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Please Add The CollabID below:", message: "This is a unique ID that is shared by project sponsor.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "CollabID:", message: "This is a unique ID that is shared by project sponsor.", preferredStyle: .alert)
 
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
-            textField.text = ""
+            textField.text = textData
 
         }
 
@@ -326,7 +420,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
 
-            self.collaborationID = textField!.text!
+            self.auditID = textField!.text!
 
 
             if textField!.text! == ""{
@@ -341,14 +435,11 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
 
                 }else{
 
-                    
                     //If we get a non empty string, we want to save reference to the audit we are joining here:
-                    self.loadCollabAPI(collaborationID: self.collaborationID)
+                    self.loadCollabAPI(collaborationID:  self.auditID)
                     
-                
 
                 }
-
 
         }))
 
@@ -360,14 +451,36 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         alert.addAction(action1)
         // 4. Present the alert.
         self.present(alert, animated: true, completion: nil)
+      
     }
+    
+    
+//Load Data from QR Code---------------------------------------------------------------------------------------------------------------------[START]
+ 
+    
+    func scanAction() {
+      // Retrieve the QRCode content
+      // By using the delegate pattern
+      readerVC.delegate = self
+
+      // Or by using the closure pattern
+      readerVC.completionBlock = { (result: QRCodeReaderResult?) in
+          print(result!)
+          
+        
+      }
+
+      // Presents the readerVC as modal form sheet
+      readerVC.modalPresentationStyle = .formSheet
+     
+      present(readerVC, animated: true, completion: nil)
+    }
+    
+
+    
+//Load Data from QR Code---------------------------------------------------------------------------------------------------------------------[END]
 
 //Load Data from Firebase, get max listing---------------------------------------------------------------------------------------------------------------------[END]
-
-
-
-
-
 
 
 
@@ -376,10 +489,9 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         let items = filterData[indexPath.row]
 
         let item = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
-            //Write your code in here
-            //self.firebaseConsole.updateObservationStatus(status: "false", ref: items.ref)
 
-
+            let itemRef = Database.database().reference(withPath: "\(items.siteID)")
+            itemRef.removeValue()
 
 
 
@@ -398,6 +510,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         let items = filterData[indexPath.row]
         cell.siteName.text = items.projectName
         cell.auditDate.text = "Joined: \(items.date)"
+        
       
 //        let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 150, height: 150), scaleMode: .fill)
 //        cell.siteImage.sd_setImage(with: URL(string:items.auditImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
@@ -428,6 +541,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
         itemReference = items.sharedRef
         self.auditID = items.auditID
         self.projectName = items.projectName
+        self.userUID = items.userUID
 
         self.performSegue(withIdentifier: "fromCollaboration", sender: indexPath.row);
  
@@ -442,6 +556,9 @@ class collaborationView: UITableViewController,UISearchBarDelegate {
             if auditID != ""{
                 viewInfoView.auditID = auditID
                 viewInfoView.projectName  = projectName
+                viewInfoView.userUID  = userUID
+                
+                
             }else{
                 
             }

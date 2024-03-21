@@ -124,7 +124,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
     var ListReferenceDataAdd = String()
     
     
-    
+    var userUID = String()
     var listingData = Int()
     var auditID = String()
     var siteID = String()
@@ -275,27 +275,52 @@ class Observation: UITableViewController,UISearchBarDelegate {
         let mainConsole = CONSOLE()
         
                  let uid = Auth.auth().currentUser?.uid
-                 let reftest = Database.database().reference()
-                     .child("\(mainConsole.prod!)")
-                     .child("\(mainConsole.post!)")
-                     .child(uid!)
-                     .child("\(mainConsole.userDetails!)")
-                 
-                 reftest.queryOrderedByKey()
-                     .observe( .value, with: { snapshot in
-                               guard let dict = snapshot.value as? [String:Any] else {
-                               //error here
-                               return
-                               }
-
-                                let listingMax = dict["listingMax"] as? Int
-                                self.listingData = listingMax!
-                  
-                                
-  
-                   })
         
-     
+        
+        if userUID != uid!{
+            //This would be from a user that is collaborating
+            statusSegment.isHidden = true
+            let reftest = Database.database().reference()
+                .child("\(mainConsole.prod!)")
+                .child("\(mainConsole.post!)")
+                .child(userUID)
+                .child("\(mainConsole.userDetails!)")
+            
+            reftest.queryOrderedByKey()
+                .observe( .value, with: { snapshot in
+                    guard let dict = snapshot.value as? [String:Any] else {
+                        //error here
+                        return
+                    }
+                    
+                    let listingMax = dict["listingMax"] as? Int
+                    self.listingData = listingMax!
+
+                })
+            
+        }else{
+            //This would be user that is listing item
+            statusSegment.isHidden = false
+            let reftest = Database.database().reference()
+                .child("\(mainConsole.prod!)")
+                .child("\(mainConsole.post!)")
+                .child(uid!)
+                .child("\(mainConsole.userDetails!)")
+            
+            reftest.queryOrderedByKey()
+                .observe( .value, with: { snapshot in
+                    guard let dict = snapshot.value as? [String:Any] else {
+                        //error here
+                        return
+                    }
+                    
+                    let listingMax = dict["listingMax"] as? Int
+                    self.listingData = listingMax!
+                    
+                    
+                    
+                })
+        }
     }
     
     
@@ -311,7 +336,6 @@ class Observation: UITableViewController,UISearchBarDelegate {
                 //save this for headerview in view item
                
             }
-            
             
             let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in}
             
@@ -338,7 +362,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
                
               if Auth.auth().currentUser != nil {
                   
-                  let uid = Auth.auth().currentUser?.uid
+                  
                   
                   let reftest = Database.database().reference(withPath:"\(refData)")
 
@@ -363,9 +387,6 @@ class Observation: UITableViewController,UISearchBarDelegate {
                                   break
                                   }
 
-                            
-                                
-                            
                     })
                                      
                       
@@ -397,18 +418,6 @@ class Observation: UITableViewController,UISearchBarDelegate {
         
             }
 //Change project Status---------------------------------------------------------------------------------------------------------------------[END]
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -486,6 +495,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
      if let destination4 = segue.destination as? addAuditSites {
           destination4.siteID = siteID
           destination4.auditID = auditID
+        destination4.userUID = userUID
 
         
      }else if let destination5 = segue.destination as? viewPDF {

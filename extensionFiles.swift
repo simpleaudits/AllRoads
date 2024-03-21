@@ -67,8 +67,6 @@ class extens: UIViewController {
         
         // we want to close any activity loading
 
-
-        
         let Alert = UIAlertController(title: Message, message: subtitle, preferredStyle: .alert)
         let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
             
@@ -77,9 +75,7 @@ class extens: UIViewController {
             let controller = storyboard.instantiateViewController(withIdentifier: "mainView")
             self.present(controller, animated: true, completion: nil)
             
-     
         }
-        
         
         Alert.addAction(action1)
         self.present(Alert, animated: true, completion: nil)
@@ -90,14 +86,11 @@ class extens: UIViewController {
         
         // we want to close any activity loading
         //IHProgressHUD.dismiss()
-
-        
         let Alert = UIAlertController(title: "\(errorMessage)", message: "\(subtitle)", preferredStyle: .alert)
         let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
             
             
         }
-        
         
         Alert.addAction(action1)
         self.present(Alert, animated: true, completion: nil)

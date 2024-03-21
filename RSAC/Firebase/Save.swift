@@ -23,10 +23,10 @@ class saveLocal: UIViewController {
     
     
  
-    func addCollab(auditImageURL: String,date: String,projectName: String,sharedRef: String,siteID: String,auditID: String,isEditable: Bool, collaborationID:String){
+    func addCollab(userUID: String,auditImageURL: String,date: String,projectName: String,sharedRef: String,auditID: String,isEditable: Bool, collaborationID:String){
         
                 //show progress view
-                SwiftLoader.show(title: "Creating Site", animated: true)
+                SwiftLoader.show(title: "Loading..", animated: true)
 
                     let uid = Auth.auth().currentUser?.uid
                     
@@ -37,18 +37,19 @@ class saveLocal: UIViewController {
                         .child("\(self.mainConsole.collaborationList!)")
                         .child("\(collaborationID)")
        
+                    let siteID = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.collaborationList!)/\(collaborationID)"
                     
-                    let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)"
+                    //let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)"
         
-                    let saveData = collaborationData(auditImageURL: auditImageURL,
-                                                     date: date,
-                                                     collaborationID:collaborationID,
-                                                     projectName: projectName,
-                                                     sharedRef: sharedRef,
-                                                     siteID: siteID,
-                                                     auditID: auditID,
-                                                     isEditable: isEditable
-                                                     )
+        let saveData = collaborationData(userUID: userUID,
+                                         auditImageURL: auditImageURL,
+                                         date: date,
+                                         projectName: projectName,
+                                         sharedRef: sharedRef,
+                                         siteID: siteID,
+                                         auditID: auditID,
+                                         isEditable: isEditable
+                                         )
         
                     thisUsersGamesRef.setValue(saveData.saveCollabData()){
                         (error:Error?, ref:DatabaseReference) in
@@ -81,19 +82,17 @@ class saveLocal: UIViewController {
                     
                     let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
                     let thisUsersGamesRef = reftest
-//                        .child("\(self.mainConsole.post!)")
-//                        .child(uid!)
-//                        .child("\(self.mainConsole.audit!)")
-//                        .child("\(auditID)")
                         .child("\(self.mainConsole.collaborationList!)")
                         .child("\(collaborationID)")
        
                     
-                    let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)"
+                    //let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)"
+            
         
+                    let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.collaborationList!)/\(auditID)"
 
                     let saveData = collaborationAPI(
-                        collaborationID: collaborationID,
+                        userUID: "\(uid!)",
                         date: date,
                         auditID: auditID,
                         projectName: projectName,

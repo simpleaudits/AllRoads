@@ -379,13 +379,15 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            
+        let uid = Auth.auth().currentUser?.uid
+        
              if let viewInfoView = segue.destination as?  viewAuditList{
 
                  if auditID != ""{
                
                      viewInfoView.auditID = auditID
                      viewInfoView.projectName  = projectName
+                     viewInfoView.userUID = "\(uid!)"
                  
                      
                  }else{

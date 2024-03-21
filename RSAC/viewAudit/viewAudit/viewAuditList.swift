@@ -33,10 +33,10 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var siteID = String()
         var projectName = String()
         var refData = String()
-       
+        var userUID = String()
     
     
-    
+
         var listingData = Int()
         let mainConsole = CONSOLE()
         let extensConsole = extens()
@@ -51,6 +51,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     
     override func viewDidLoad() {
+        
 
         super.viewDidLoad()
         
@@ -69,7 +70,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
         
         self.collectionView.collectionViewLayout = createLayout()
-
         self.navigationItem.title = projectName
 
 
@@ -80,19 +80,24 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         createSharedAlert()
 
     }
-    
 
         func createSharedAlert() {
             
-            //PREVIEW THE CURRENT IMAGE WITHIN ALERT
+            // this will create everytime the user clicks this. However, if it is created once the only item that gets replaced is the date.
+            self.firebaseConsole.createCollaborationAPI(collaborationID:self.auditID,
+                                                        date:self.extensConsole.timeStamp(),
+                                                        projectName: self.projectName,
+                                                        isEditable: true,
+                                                        auditID: self.auditID)
             
-            let collabID =  self.extensConsole.collaborationID()
-            let alertController = UIAlertController(title: "Share this project", message: "collabID:\n\(collabID)", preferredStyle: .alert)
+            //PREVIEW THE CURRENT IMAGE WITHIN ALERT
+
+            let alertController = UIAlertController(title: "Share this project", message: "CollabID:\n\(self.auditID)", preferredStyle: .alert)
             let imageView = UIImageView(frame: CGRect(x: alertController.view.frame.maxX/2 - 160, y: 100, width: 200, height: 200))
 
             //create UIImage here
             
-            let dataQR = String(collabID).data(using: String.Encoding.ascii, allowLossyConversion: true)
+            let dataQR = String(self.auditID).data(using: String.Encoding.ascii, allowLossyConversion: true)
             
             // Get a QR CIFilter
             guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return }
@@ -118,22 +123,37 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             alertController.view.addConstraint(height)
             alertController.view.addConstraint(width)
 
-            let action1 = UIAlertAction(title: "Create",style: .default) { (action:UIAlertAction!) in
-                
-                self.firebaseConsole.createCollaborationAPI(collaborationID:collabID,
-                                                            date:self.extensConsole.timeStamp(),
-                                                            projectName: self.projectName,
-                                                            isEditable: true,
-                                                            auditID: self.auditID)
- 
-            }
 
             let action3 = UIAlertAction(title: "Copy to Clipboard", style: .default) { (action:UIAlertAction!) in
-            print("Cancel button tapped");
+     
+                print("copied CollabID")
+                
+                
+                // Instantiating UIAlertController
+                let alertController = UIAlertController(
+                                        title: "Copied!",
+                                        message: "",
+                                        preferredStyle: .alert)
+
+                // Handling OK action
+                let okAction = UIAlertAction(title: "Done", style: .default) { (action:UIAlertAction!) in
+                    print("Clicked OK")
+                    UIPasteboard.general.string = "\(self.auditID)"
+                }
+
+                // Adding action buttons to the alert controller
+                alertController.addAction(okAction)
+        
+                // Presenting alert controller
+                self.present(alertController, animated: true, completion:nil)
+                
+       
+            
+                
             }
             
-            alertController.addAction(action1)
-            //alertController.addAction(action3)
+          
+            alertController.addAction(action3)
             alertController.view.addSubview(imageView)
 
 
@@ -163,7 +183,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                 break
             default:
                 print("Archieved")
-                
                 self.firebaseConsole.updateAuditProgress(auditProgress: mainConsole.archived!, auditID: auditID)
                 
                 break
@@ -181,9 +200,59 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         func loadAuditSnapshots(){
             
             SwiftLoader.show(title: "Loading Data", animated: true)
-            
             let uid = Auth.auth().currentUser?.uid
+       
             
+            if userUID != uid!{
+                statusSegment.isHidden = true
+                
+                //This would be from a user that is collaborating
+                let reftest = Database.database().reference()
+                    .child("\(self.mainConsole.prod!)")
+                let auditData = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child("\(userUID)")
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                    .child("\(self.mainConsole.siteList!)")
+                
+                //we want to get the database reference
+                auditData.queryOrderedByKey()
+                    .observe(.value, with: { [self] snapshot in
+                            
+                        var NewlistOfSites: [createSiteData] = []
+                            
+                            for child in snapshot.children {
+                                if let snapshot = child as? DataSnapshot,
+                                    let listOfSites = createSiteData(snapshot: snapshot) {
+                                    NewlistOfSites.append(listOfSites)
+                                }
+                            }
+                            self.listOfSites = NewlistOfSites
+                           
+                            
+                            //all true completed
+                            self.CompletedAuditsFilter = self.listOfSites.filter(
+                                {return $0.status.localizedCaseInsensitiveContains("In-Progress Audits") })
+                            print("CompletedAuditsFilter:\(self.CompletedAuditsFilter.count)")
+
+                            //all false completed
+                            self.ArchievedAuditsFilter = self.listOfSites.filter(
+                                {return $0.status.localizedCaseInsensitiveContains("Archived") })
+                            print("ArchievedAuditsFilter:\(self.ArchievedAuditsFilter.count)")
+        
+                            self.collectionView.reloadData()
+                        
+                            // get user status:
+                            checkUserStatus()
+          
+
+                        })
+                
+                
+            }else{
+                //This would be user that is listing item
+                statusSegment.isHidden = false
                 //we want to get the database reference
                 let reftest = Database.database().reference()
                     .child("\(self.mainConsole.prod!)")
@@ -193,40 +262,43 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                     .child("\(self.mainConsole.audit!)")
                     .child("\(auditID)")
                     .child("\(self.mainConsole.siteList!)")
-            
-            auditData.queryOrderedByKey()
-                .observe(.value, with: { [self] snapshot in
-                        
-                    var NewlistOfSites: [createSiteData] = []
-                        
-                        for child in snapshot.children {
-                            if let snapshot = child as? DataSnapshot,
-                                let listOfSites = createSiteData(snapshot: snapshot) {
-                                NewlistOfSites.append(listOfSites)
+                
+                auditData.queryOrderedByKey()
+                    .observe(.value, with: { [self] snapshot in
+                            
+                        var NewlistOfSites: [createSiteData] = []
+                            
+                            for child in snapshot.children {
+                                if let snapshot = child as? DataSnapshot,
+                                    let listOfSites = createSiteData(snapshot: snapshot) {
+                                    NewlistOfSites.append(listOfSites)
+                                }
                             }
-                        }
-                        self.listOfSites = NewlistOfSites
-                       
+                            self.listOfSites = NewlistOfSites
+                           
+                            
+                            //all true completed
+                            self.CompletedAuditsFilter = self.listOfSites.filter(
+                                {return $0.status.localizedCaseInsensitiveContains("In-Progress Audits") })
+                            print("CompletedAuditsFilter:\(self.CompletedAuditsFilter.count)")
+
+                            //all false completed
+                            self.ArchievedAuditsFilter = self.listOfSites.filter(
+                                {return $0.status.localizedCaseInsensitiveContains("Archived") })
+                            print("ArchievedAuditsFilter:\(self.ArchievedAuditsFilter.count)")
+        
+                            self.collectionView.reloadData()
                         
-                        //all true completed
-                        self.CompletedAuditsFilter = self.listOfSites.filter(
-                            {return $0.status.localizedCaseInsensitiveContains("In-Progress Audits") })
-                        print("CompletedAuditsFilter:\(self.CompletedAuditsFilter.count)")
+                            // get user status:
+                            checkUserStatus()
+          
 
-                        //all false completed
-                        self.ArchievedAuditsFilter = self.listOfSites.filter(
-                            {return $0.status.localizedCaseInsensitiveContains("Archived") })
-                        print("ArchievedAuditsFilter:\(self.ArchievedAuditsFilter.count)")
-    
-                   
-                    
-                        self.collectionView.reloadData()
-                    
-                        // get user status:
-                        checkUserStatus()
+                        })
+                
+            }
+            
+            
       
-
-                    })
         
             }
     
@@ -252,6 +324,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                                }
 
                                 let listingMax = dict["listingMax"] as? Int
+                         
+      
                                 self.listingData = listingMax!
                   
                                 
@@ -316,46 +390,110 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
            
           if Auth.auth().currentUser != nil {
               
+              
+              
               let uid = Auth.auth().currentUser?.uid
               
-              let reftest = Database.database().reference()
-                  .child("\(self.mainConsole.prod!)")
-              let auditData = reftest
-                  .child("\(self.mainConsole.post!)")
-                  .child(uid!)
-                  .child("\(self.mainConsole.audit!)")
-                  .child("\(auditID)")
-        
-
-              auditData.queryOrderedByKey()
-                  .observe( .value, with: { snapshot in
-                            guard let dict = snapshot.value as? [String:Any] else {
-                            //error here
-                            return
-                            }
-
-                             let status = dict["auditProgress"] as? String
-                             print("status:\(status!)")
-                             SwiftLoader.hide()
-                      
-                       
-                              switch status{
-                              case self.mainConsole.complete!:
+              
+              if userUID != uid!{
+         
+                  let reftest = Database.database().reference()
+                      .child("\(self.mainConsole.prod!)")
+                  let auditData = reftest
+                      .child("\(self.mainConsole.post!)")
+                      .child(userUID)
+                      .child("\(self.mainConsole.audit!)")
+                      .child("\(auditID)")
+                  
+                  
+                  auditData.queryOrderedByKey()
+                      .observe( .value, with: { snapshot in
+                          guard let dict = snapshot.value as? [String:Any] else {
+                              //error here
+                              return
+                          }
+                          
+                          let status = dict["auditProgress"] as? String
+                          print("status:\(status!)")
+                          SwiftLoader.hide()
+                          
+                          
+                          switch status{
+                          case self.mainConsole.complete!:
                               self.statusSegment.selectedSegmentIndex = 0;
                               break
-                              case self.mainConsole.progress!:
+                          case self.mainConsole.progress!:
                               self.statusSegment.selectedSegmentIndex = 1;
                               break
-                              default:
+                          default:
                               self.statusSegment.selectedSegmentIndex = 2;
                               break
-                              }
-
-                        
-                            
-                        
-                })
-                                 
+                          }
+                    })
+                  
+              }else{
+                  
+                  
+                  let reftest = Database.database().reference()
+                      .child("\(self.mainConsole.prod!)")
+                  let auditData = reftest
+                      .child("\(self.mainConsole.post!)")
+                      .child(uid!)
+                      .child("\(self.mainConsole.audit!)")
+                      .child("\(auditID)")
+                  
+                  
+                  auditData.queryOrderedByKey()
+                      .observe( .value, with: { snapshot in
+                          guard let dict = snapshot.value as? [String:Any] else {
+                              //error here
+                              return
+                          }
+                          
+                          let status = dict["auditProgress"] as? String
+                          print("status:\(status!)")
+                          SwiftLoader.hide()
+                          
+                          
+                          switch status{
+                          case self.mainConsole.complete!:
+                              self.statusSegment.selectedSegmentIndex = 0;
+                              break
+                          case self.mainConsole.progress!:
+                              self.statusSegment.selectedSegmentIndex = 1;
+                              break
+                          default:
+                              self.statusSegment.selectedSegmentIndex = 2;
+                              break
+                          }
+                          
+                          
+                          
+                          
+                      })
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+              }
                   
             }
 
@@ -396,6 +534,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     }
     
     override func viewDidAppear(_ animated: Bool) {
+
 
    
         
@@ -579,14 +718,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             Alert3.addAction(action2)
             Alert3.addAction(action3)
             //Alert3.addAction(action4)
-   
-
             
             //archieved
             self.present(Alert3, animated: true, completion: nil)
             self.refData = "\(CompletedAuditsFilter[indexPath.row].ref)"
             self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
-            print(self.refData )
+            print(self.refData)
             
   
 
@@ -645,6 +782,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
                  if auditID != ""{
                      viewInfoView.auditID = auditID
+                     viewInfoView.userUID = userUID
                  }else{
                      print("Failed to load data")
                  }
@@ -666,6 +804,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                  viewInfoView.refData = refData
                  viewInfoView.siteID = siteID
                  viewInfoView.auditID = auditID
+                 viewInfoView.userUID = userUID
 
          }else{
                  

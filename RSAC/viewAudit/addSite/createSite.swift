@@ -26,7 +26,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     var siteID = String()
     var refData = String()
   
-    
+    var userUID = String()
     
 
     let extensConsole = extens()
@@ -95,67 +95,132 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     func saveData(imageURL:String){
         
                 //show progress view
-                SwiftLoader.show(title: "Creating Site", animated: true)
+        SwiftLoader.show(title: "Creating Site", animated: true)
+        let uid = Auth.auth().currentUser?.uid
 
-                if  siteName.text!.count > 0 &&
+        if userUID != uid!{
+            
+            if  siteName.text!.count > 0 &&
                     locationLabel.text!.count > 0 {
+                
+                
+                siteID = UUID().uuidString
+                
+                let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+                let thisUsersGamesRef = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child(userUID)
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                    .child("\(self.mainConsole.siteList!)")
+                    .child("\(siteID)")
+                
+                refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
+                
+                let saveData = createSiteData(
+                    locationImageURL: imageURL,
+                    siteName: siteName.text!,
+                    date: timeDate.text!,
+                    lat: self.lat,
+                    long: self.long,
+                    ref: "\(refData)",
+                    siteID: "\(siteID)",
+                    status: "In-Progress Audits",
+                    observationCount:"0",
+                    completed: true)
+                
+                thisUsersGamesRef.setValue(saveData.saveSiteData()){
+                    (error:Error?, ref:DatabaseReference) in
                     
-                    let uid = Auth.auth().currentUser?.uid
-                    siteID = UUID().uuidString
-                    
-                    let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
-                    let thisUsersGamesRef = reftest
-                        .child("\(self.mainConsole.post!)")
-                        .child(uid!)
-                        .child("\(self.mainConsole.audit!)")
-                        .child("\(auditID)")
-                        .child("\(self.mainConsole.siteList!)")
-                        .child("\(siteID)")
-                    
-                    refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
-
-                    let saveData = createSiteData(
-                        locationImageURL: imageURL,
-                        siteName: siteName.text!,
-                        date: timeDate.text!,
-                        lat: self.lat,
-                        long: self.long,
-                        ref: "\(refData)",
-                        siteID: "\(siteID)",
-                        status: "In-Progress Audits",
-                        observationCount:"0",
-                        completed: true)
-        
-                    thisUsersGamesRef.setValue(saveData.saveSiteData()){
-                        (error:Error?, ref:DatabaseReference) in
-
-                        if let error = error {
-                            print("Data could not be saved: \(error).")
-                            self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
-                            SwiftLoader.hide()
-                            
-                        } else {
-                            print("saved")
-                            SwiftLoader.hide()
-     
-                            self.successUpload(Message: "New Site Added!", subtitle: "")
-                            
-          
-                        }
-                          
+                    if let error = error {
+                        print("Data could not be saved: \(error).")
+                        self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                        SwiftLoader.hide()
+                        
+                    } else {
+                        print("saved")
+                        SwiftLoader.hide()
+                        
+                        self.successUpload(Message: "New Site Added!", subtitle: "")
+                        
+                        
                     }
                     
-                    
-                    
-                    
-        
                 }
-                else{
-                    SwiftLoader.hide()
-                    self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
+   
+            }
+            else{
+                SwiftLoader.hide()
+                self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
+            }
+            
+        }else{
+            
+            
+            if  siteName.text!.count > 0 &&
+                    locationLabel.text!.count > 0 {
+                
+                siteID = UUID().uuidString
+                
+                let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+                let thisUsersGamesRef = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child(uid!)
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                    .child("\(self.mainConsole.siteList!)")
+                    .child("\(siteID)")
+                
+                refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
+                
+                let saveData = createSiteData(
+                    locationImageURL: imageURL,
+                    siteName: siteName.text!,
+                    date: timeDate.text!,
+                    lat: self.lat,
+                    long: self.long,
+                    ref: "\(refData)",
+                    siteID: "\(siteID)",
+                    status: "In-Progress Audits",
+                    observationCount:"0",
+                    completed: true)
+                
+                thisUsersGamesRef.setValue(saveData.saveSiteData()){
+                    (error:Error?, ref:DatabaseReference) in
+                    
+                    if let error = error {
+                        print("Data could not be saved: \(error).")
+                        self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                        SwiftLoader.hide()
+                        
+                    } else {
+                        print("saved")
+                        SwiftLoader.hide()
+                        
+                        self.successUpload(Message: "New Site Added!", subtitle: "")
+                        
+                        
+                    }
+                    
                 }
- 
-        
+   
+            }
+            else{
+                SwiftLoader.hide()
+                self.errorUpload(errorMessage:"Some fields are empty.",subtitle:"Nearly there!")
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
     }
     
   
@@ -163,7 +228,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     func uploadSiteImageViaMap(imageData:Data){
 
         //activity indicator
-        SwiftLoader.show(title: "Uploading Image (1/2)", animated: true)
+        SwiftLoader.show(title: "Loading..", animated: true)
 
         // Saving the image data into Storage - not real time database.
         // This link is for the storage directory

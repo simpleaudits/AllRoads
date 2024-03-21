@@ -16,6 +16,7 @@
 		8236DD692B93704900630F76 /* image3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8236DD682B93704900630F76 /* image3.png */; };
 		8236DD6B2B93720E00630F76 /* image4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8236DD6A2B93720E00630F76 /* image4.png */; };
 		8236DD6D2B93724700630F76 /* image5.png in Resources */ = {isa = PBXBuildFile; fileRef = 8236DD6C2B93724700630F76 /* image5.png */; };
+		8236DD6F2B94684900630F76 /* QRReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8236DD6E2B94684900630F76 /* QRReader.swift */; };
 		82445D0A2B00FF7D00319605 /* createSiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D092B00FF7D00319605 /* createSiteData.swift */; };
 		82445D0C2B0100A000319605 /* createSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D0B2B0100A000319605 /* createSite.swift */; };
 		824D559B2B8ACDC700197638 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 824D559A2B8ACDC600197638 /* GoogleService-Info.plist */; };
@@ -108,6 +109,7 @@
 		8236DD682B93704900630F76 /* image3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image3.png; sourceTree = "<group>"; };
 		8236DD6A2B93720E00630F76 /* image4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image4.png; sourceTree = "<group>"; };
 		8236DD6C2B93724700630F76 /* image5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image5.png; sourceTree = "<group>"; };
+		8236DD6E2B94684900630F76 /* QRReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReader.swift; sourceTree = "<group>"; };
 		82445D092B00FF7D00319605 /* createSiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSiteData.swift; sourceTree = "<group>"; };
 		82445D0B2B0100A000319605 /* createSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSite.swift; sourceTree = "<group>"; };
 		824D559A2B8ACDC600197638 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				826577852B91A85C000FB612 /* collaborationView.swift */,
+				8236DD6E2B94684900630F76 /* QRReader.swift */,
 				826577872B91AB54000FB612 /* dataModel */,
 			);
 			path = collaboration;
@@ -785,6 +788,7 @@
 				827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */,
 				82445D0C2B0100A000319605 /* createSite.swift in Sources */,
 				82E4A8962AFCE54400BE1D8B /* locationExtension.swift in Sources */,
+				8236DD6F2B94684900630F76 /* QRReader.swift in Sources */,
 				8297D0062B74F41100450513 /* signatureViewController.swift in Sources */,
 				82E4A89A2AFCE54400BE1D8B /* CategoryTableViewController.swift in Sources */,
 				829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */,

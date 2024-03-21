@@ -111,6 +111,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     var maxScroll = 1000.00
     
+    var userUID = String()
     var auditID = String()
     var siteID = String()
     var siteName = String()
@@ -811,56 +812,56 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
 
             
-            let uid = Auth.auth().currentUser?.uid
-    
-
+        let uid = Auth.auth().currentUser?.uid
+        
+        if userUID != uid!{
+            
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
-        
-        
+            
             let thisUsersGamesRef = reftest
-            .child("\(self.mainConsole.post!)")
-            .child("\(uid!)")
-            .child("\(self.mainConsole.audit!)")
-            .child("\(auditID)")
-            .child("\(self.mainConsole.siteList!)")
-            .child("\(siteID)")
-            .child("\(self.mainConsole.auditList!)")
-            .child("\(uuid)")
-       
+                .child("\(self.mainConsole.post!)")
+                .child("\(userUID)")
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+                .child("\(self.mainConsole.auditList!)")
+                .child("\(uuid)")
+            
             let refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.auditList!)/\(uuid)"
-
-
+            
+            
             let saveData = auditSiteData(
-            auditTitle:"\(siteName)",
-            auditID: auditID,
-            imageURL: imageURL,
-            auditDescription:"\(siteDescription)",
-            date: "\(extensConsole.timeStamp())",
-            lat: self.lat,
-            long: self.long,
-            ref: "\(refData)",
-            observationID: "\(uuid)",
-            siteID:"\(siteID)",
-            riskRating: safetyRatingValue,
-            status: "true")
-        
-         
-    
+                auditTitle:"\(siteName)",
+                auditID: auditID,
+                imageURL: imageURL,
+                auditDescription:"\(siteDescription)",
+                date: "\(extensConsole.timeStamp())",
+                lat: self.lat,
+                long: self.long,
+                ref: "\(refData)",
+                observationID: "\(uuid)",
+                siteID:"\(siteID)",
+                riskRating: safetyRatingValue,
+                status: "true")
+            
+            
+            
             
             thisUsersGamesRef.setValue(saveData.saveAuditData()){
                 (error:Error?, ref:DatabaseReference) in
                 
-
+                
                 if let error = error {
                     print("Data could not be saved: \(error).")
                     self.extensConsole.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
                     SwiftLoader.hide()
                     
                 } else {
-                   
+                    
                     print("saved data entry")
-                   
+                    
                     
                     self.navigationController!.popViewController(animated: true)
                     //self.performSegue(withIdentifier: "viewAuditSnaps", sender: self)
@@ -875,12 +876,92 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                         SwiftLoader.hide()
                         
                     })
-           
+                    
                 }
-                  
+                
             }
-
-   
+            
+        }else{
+            
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            
+            let thisUsersGamesRef = reftest
+                .child("\(self.mainConsole.post!)")
+                .child("\(uid!)")
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+                .child("\(self.mainConsole.auditList!)")
+                .child("\(uuid)")
+            
+            let refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.auditList!)/\(uuid)"
+            
+            
+            let saveData = auditSiteData(
+                auditTitle:"\(siteName)",
+                auditID: auditID,
+                imageURL: imageURL,
+                auditDescription:"\(siteDescription)",
+                date: "\(extensConsole.timeStamp())",
+                lat: self.lat,
+                long: self.long,
+                ref: "\(refData)",
+                observationID: "\(uuid)",
+                siteID:"\(siteID)",
+                riskRating: safetyRatingValue,
+                status: "true")
+            
+            
+            
+            
+            thisUsersGamesRef.setValue(saveData.saveAuditData()){
+                (error:Error?, ref:DatabaseReference) in
+                
+                
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    self.extensConsole.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                    SwiftLoader.hide()
+                    
+                } else {
+                    
+                    print("saved data entry")
+                    
+                    
+                    self.navigationController!.popViewController(animated: true)
+                    //self.performSegue(withIdentifier: "viewAuditSnaps", sender: self)
+                    
+                    //1 load the obsevation count
+                    self.observationSnapshotCount(auditID: self.auditID, siteID: self.siteID)
+                    //2 save the key
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID)
+                        
+                        print("updated and saved observation")
+                        SwiftLoader.hide()
+                        
+                    })
+                    
+                }
+                
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
   
         }
     

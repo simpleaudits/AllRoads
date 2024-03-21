@@ -868,6 +868,7 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
+  - QRCodeReader.swift (10.1.0)
   - SDWebImage (5.15.0):
     - SDWebImage/Core (= 5.15.0)
   - SDWebImage/Core (5.15.0)
@@ -880,8 +881,9 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - FirebaseUI
-  - SwiftLoader
-  - TPPDF
+  - QRCodeReader.swift (= 10.1.0)
+  - SwiftLoader (= 1.0.0)
+  - TPPDF (= 2.4.1)
 
 SPEC REPOS:
   trunk:
@@ -926,6 +928,7 @@ SPEC REPOS:
     - Libuv-gRPC
     - nanopb
     - PromisesObjC
+    - QRCodeReader.swift
     - SDWebImage
     - SwiftLoader
     - TPPDF
@@ -972,10 +975,11 @@ SPEC CHECKSUMS:
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  QRCodeReader.swift: 373a389fe9a22d513c879a32a6f647c58f4ef572
   SDWebImage: 9bec4c5cdd9579e1f57104735ee0c37df274d593
   SwiftLoader: f12f3a6fb42576862a3a5eb80c7e59fc881b6982
   TPPDF: cb3d0f01fa0e24a54246d6b742d9fe2e8a3894c1
 
-PODFILE CHECKSUM: 320f960cf2e2eaef87c7e8da176b11cc103c345c
+PODFILE CHECKSUM: 9e70fdb0912d89b204ecfea7a5fa61f39f62dfe0
 
 COCOAPODS: 1.11.3

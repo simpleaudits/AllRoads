@@ -13,8 +13,7 @@ import Firebase
 struct collaborationAPI{
 
     //This is the basic Audit Settings
-
-    let collaborationID: String
+    let userUID: String
     let date: String
     let auditID: String
     let projectName: String
@@ -22,7 +21,7 @@ struct collaborationAPI{
     var isEditable: Bool
     
     init(
-        collaborationID: String,
+        userUID: String,
         date: String,
         auditID: String,
         projectName: String,
@@ -31,7 +30,7 @@ struct collaborationAPI{
     )
     
     {
-        self.collaborationID = collaborationID
+        self.userUID = userUID
         self.date = date
         self.auditID = auditID
         self.projectName = projectName
@@ -42,7 +41,7 @@ struct collaborationAPI{
     init?(snapshot: DataSnapshot) {
         guard
             let value = snapshot.value as? [String: AnyObject],
-            let collaborationID = value["collaborationID"] as? String,
+            let userUID = value["userUID"] as? String,
             let date = value["date"] as? String,
             let auditID = value["auditID"] as? String,
             let projectName = value["projectName"] as? String,
@@ -51,7 +50,7 @@ struct collaborationAPI{
                 return nil
         }
    
-        self.collaborationID = collaborationID
+        self.userUID = userUID
         self.date = date
         self.auditID = auditID
         self.projectName = projectName
@@ -61,7 +60,7 @@ struct collaborationAPI{
     
     func saveCollabData() -> [String:Any] {
         return [
-            "collaborationID": collaborationID,
+            "userUID": userUID,
             "date": date,
             "auditID": auditID,
             "projectName": projectName,

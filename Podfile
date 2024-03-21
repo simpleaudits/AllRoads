@@ -10,8 +10,9 @@ target 'RSAC' do
   pod 'Firebase/Auth'
   pod 'FirebaseUI'
   pod 'Firebase/Core'
-  pod 'SwiftLoader'
-  pod 'TPPDF'
+  pod 'SwiftLoader' , "1.0.0"
+  pod 'TPPDF' , "2.4.1"
+  pod 'QRCodeReader.swift', "10.1.0"
 
   
    
