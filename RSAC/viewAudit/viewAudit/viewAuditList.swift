@@ -16,12 +16,13 @@ import SDWebImage
 class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayout,MKMapViewDelegate  {
     
     // configure the section
-    let mapSection = 0
-    let auditListSection = 1
-    let archievedSection = 2
+    let userList = 0
+    let mapSection = 1
+    let auditListSection = 2
+    let archievedSection = 3
     
     //Rows in each section, these are subject to change.
-        var SectionCount:Int = 3
+        var SectionCount:Int = 4
 
     
 
@@ -67,6 +68,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         self.collectionView?.register(auditHeader.self, forSupplementaryViewOfKind: "auditHeader", withReuseIdentifier: "auditHeader")
         self.collectionView?.register(viewAuditCell.self, forCellWithReuseIdentifier: "viewAuditCell")
         self.collectionView?.register(viewAuditHeaderMap.self, forCellWithReuseIdentifier: "viewAuditHeaderMap")
+        collectionView?.register(collectionOfUsers.self, forCellWithReuseIdentifier: "collectionOfUsers")
         
         
         self.collectionView.collectionViewLayout = createLayout()
@@ -552,12 +554,16 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         switch section {
+            case userList:
+
+            return 1
+            
             case mapSection:
-            //family
+ 
             return 1
             
             case auditListSection:
-            //music
+   
             return CompletedAuditsFilter.count
          
             default:
@@ -569,6 +575,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if indexPath.section == userList{
+            let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
+            sectionHeader.headerName.text =  "Collaborators"
+            return sectionHeader
+     
+        }
 
         if indexPath.section == auditListSection{
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
@@ -649,6 +661,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             return cell
             
             
+        }else if indexPath.section  == userList {
+            let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionOfUsers", for: indexPath) as! collectionOfUsers
+            
+
+            
+            return cell
+            
+            
         }else {
         //Archieved section
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "viewAuditCell", for: indexPath) as! viewAuditCell
@@ -689,7 +709,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             //Map view
 
 
-        }else if indexPath.section == auditListSection{
+        }else   if indexPath.section  == userList {
+            //Map view
+
+
+        }
+        else if indexPath.section == auditListSection{
             // List of audits
             
             let auditData = CompletedAuditsFilter[indexPath.row]
@@ -858,6 +883,27 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
                         let section = NSCollectionLayoutSection(group: group)
                         section.orthogonalScrollingBehavior = .groupPaging
+                
+                        section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
+                
+                        section.contentInsets.leading = 10
+
+                
+                        return section
+
+            }else if sectionNumber  == self.userList {
+                //list of collaborators
+                
+                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
+
+                    let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(100)),
+                        subitems: [item])
+            
+
+                        let section = NSCollectionLayoutSection(group: group)
+                   section.orthogonalScrollingBehavior = .continuous
                 
                         section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
                 

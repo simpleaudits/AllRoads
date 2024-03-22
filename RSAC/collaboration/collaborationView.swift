@@ -275,7 +275,9 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
                                      let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
                                      let action2 = UIAlertAction(title: "Yes",style: .default) { (action:UIAlertAction!) in
                                          // Perform action
-                    
+                                         
+                                         
+                                        //this adds the collaboration listing data to the collaborators database
                                         self.firebaseConsole.addCollab(
                                                                         userUID:self.userUID,
                                                                         auditImageURL: "",
@@ -285,6 +287,9 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
                                                                         auditID: self.auditID,
                                                                         isEditable: true,
                                                                         collaborationID: self.mainFunction.collaborationID())
+                                         
+                                         //add the collaborators info to the sponsors audit list
+                                 
                                          
                                          self.session.stopRunning()
    
@@ -490,8 +495,10 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
 
         let item = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
 
-            let itemRef = Database.database().reference(withPath: "\(items.siteID)")
-            itemRef.removeValue()
+            let collabRefDelete = Database.database().reference(withPath: "\(items.collabRef)")
+            let AuditRefDelete = Database.database().reference(withPath: "\(items.AuditRef)")
+            collabRefDelete.removeValue()
+            AuditRefDelete.removeValue()
 
 
 

@@ -17,6 +17,8 @@
 		8236DD6B2B93720E00630F76 /* image4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8236DD6A2B93720E00630F76 /* image4.png */; };
 		8236DD6D2B93724700630F76 /* image5.png in Resources */ = {isa = PBXBuildFile; fileRef = 8236DD6C2B93724700630F76 /* image5.png */; };
 		8236DD6F2B94684900630F76 /* QRReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8236DD6E2B94684900630F76 /* QRReader.swift */; };
+		8236DD722BACED3500630F76 /* listOfUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8236DD712BACED3500630F76 /* listOfUsers.swift */; };
+		8236DD742BAD02E400630F76 /* listOfUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8236DD732BAD02E400630F76 /* listOfUsersCell.swift */; };
 		82445D0A2B00FF7D00319605 /* createSiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D092B00FF7D00319605 /* createSiteData.swift */; };
 		82445D0C2B0100A000319605 /* createSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82445D0B2B0100A000319605 /* createSite.swift */; };
 		824D559B2B8ACDC700197638 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 824D559A2B8ACDC600197638 /* GoogleService-Info.plist */; };
@@ -110,6 +112,8 @@
 		8236DD6A2B93720E00630F76 /* image4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image4.png; sourceTree = "<group>"; };
 		8236DD6C2B93724700630F76 /* image5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image5.png; sourceTree = "<group>"; };
 		8236DD6E2B94684900630F76 /* QRReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRReader.swift; sourceTree = "<group>"; };
+		8236DD712BACED3500630F76 /* listOfUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listOfUsers.swift; sourceTree = "<group>"; };
+		8236DD732BAD02E400630F76 /* listOfUsersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listOfUsersCell.swift; sourceTree = "<group>"; };
 		82445D092B00FF7D00319605 /* createSiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSiteData.swift; sourceTree = "<group>"; };
 		82445D0B2B0100A000319605 /* createSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSite.swift; sourceTree = "<group>"; };
 		824D559A2B8ACDC600197638 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -241,6 +245,14 @@
 				8236DD6C2B93724700630F76 /* image5.png */,
 			);
 			path = howToImages;
+			sourceTree = "<group>";
+		};
+		8236DD702BACED1A00630F76 /* listOfCollaborators */ = {
+			isa = PBXGroup;
+			children = (
+				8236DD712BACED3500630F76 /* listOfUsers.swift */,
+			);
+			name = listOfCollaborators;
 			sourceTree = "<group>";
 		};
 		82445D082B00FF6400319605 /* addSite */ = {
@@ -478,8 +490,10 @@
 		82E4A87E2AFCE54400BE1D8B /* viewAudit */ = {
 			isa = PBXGroup;
 			children = (
+				8236DD702BACED1A00630F76 /* listOfCollaborators */,
 				82E4A87F2AFCE54400BE1D8B /* viewAuditHeaderMap.swift */,
 				82E4A8802AFCE54400BE1D8B /* viewAuditCell.swift */,
+				8236DD732BAD02E400630F76 /* listOfUsersCell.swift */,
 				822BF9032B4C0B75003A141C /* viewSiteStage.swift */,
 				82E4A8812AFCE54400BE1D8B /* viewAuditList.swift */,
 			);
@@ -757,6 +771,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8236DD722BACED3500630F76 /* listOfUsers.swift in Sources */,
 				82E4A8982AFCE54400BE1D8B /* scopeDecription.swift in Sources */,
 				82E4A8872AFCE54400BE1D8B /* Save.swift in Sources */,
 				822BF9042B4C0B75003A141C /* viewSiteStage.swift in Sources */,
@@ -793,6 +808,7 @@
 				82E4A89A2AFCE54400BE1D8B /* CategoryTableViewController.swift in Sources */,
 				829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */,
 				82E4A89E2AFCE54400BE1D8B /* viewAuditCell.swift in Sources */,
+				8236DD742BAD02E400630F76 /* listOfUsersCell.swift in Sources */,
 				82E4A8892AFCE54400BE1D8B /* auditCell.swift in Sources */,
 				82E4A89F2AFCE54400BE1D8B /* viewAuditList.swift in Sources */,
 				82E4A8A12AFCE54400BE1D8B /* detailsCell.swift in Sources */,

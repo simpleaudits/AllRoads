@@ -18,8 +18,9 @@ struct collaborationData{
     let date: String
     let projectName: String
     let sharedRef: String
-    let siteID: String
+    let AuditRef: String
     let auditID: String
+    let collabRef:String
     var isEditable: Bool
 
     
@@ -29,8 +30,9 @@ struct collaborationData{
         date: String,
         projectName: String,
         sharedRef:String,
-        siteID:String,
+        AuditRef:String,
         auditID:String,
+        collabRef:String,
         isEditable: Bool
     )
     
@@ -40,8 +42,9 @@ struct collaborationData{
         self.date = date
         self.projectName = projectName
         self.sharedRef = sharedRef
-        self.siteID = siteID
+        self.AuditRef = AuditRef
         self.auditID = auditID
+        self.collabRef = collabRef
         self.isEditable = isEditable
 
         
@@ -55,9 +58,9 @@ struct collaborationData{
             let date = value["date"] as? String,
             let projectName = value["projectName"] as? String,
             let sharedRef = value["sharedRef"] as? String,
-            let siteID = value["siteID"] as? String,
+            let AuditRef = value["AuditRef"] as? String,
             let auditID = value["auditID"] as? String,
-
+            let collabRef = value["collabRef"] as? String,
             let isEditable = value["isEditable"] as? Bool else {
                 return nil
         }
@@ -66,8 +69,9 @@ struct collaborationData{
         self.date = date
         self.projectName = projectName
         self.sharedRef = sharedRef
-        self.siteID = siteID
+        self.AuditRef = AuditRef
         self.auditID = auditID
+        self.collabRef = collabRef
         self.isEditable = isEditable
     }
     
@@ -78,8 +82,9 @@ struct collaborationData{
             "date": date,
             "projectName": projectName,
             "sharedRef": sharedRef,
-            "siteID": siteID,
+            "AuditRef": AuditRef,
             "auditID": auditID,
+            "collabRef": collabRef,
             "isEditable": isEditable
         ]
     }

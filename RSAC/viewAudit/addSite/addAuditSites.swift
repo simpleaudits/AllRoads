@@ -816,6 +816,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         if userUID != uid!{
             
+//This would be from a user that is collaborating
+    
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
             
@@ -870,7 +872,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                     self.observationSnapshotCount(auditID: self.auditID, siteID: self.siteID)
                     //2 save the key
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID)
+                        
+                        
+                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID, userUID: self.userUID)
                         
                         print("updated and saved observation")
                         SwiftLoader.hide()
@@ -883,6 +887,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             
         }else{
             
+//This would be user that is listing item
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
             
@@ -937,7 +942,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                     self.observationSnapshotCount(auditID: self.auditID, siteID: self.siteID)
                     //2 save the key
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID)
+                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID, userUID: uuid)
                         
                         print("updated and saved observation")
                         SwiftLoader.hide()

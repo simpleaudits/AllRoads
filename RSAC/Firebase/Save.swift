@@ -20,7 +20,50 @@ class saveLocal: UIViewController {
     let storageReference = Storage.storage().reference()
     
     
-    
+    func addToUserCollabList(auditID:String, userUID:String, collabRef:String, AuditRef: String){
+        
+                //show progress view
+        
+
+                    let uid = Auth.auth().currentUser?.uid
+                    
+                    let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+                    let thisUsersGamesRef = reftest
+                        .child("\(self.mainConsole.post!)")
+                        .child(userUID)
+                        .child("\(self.mainConsole.audit!)")
+                        .child("\(auditID)")
+                        .child("\(self.mainConsole.userCollaborationList!)")
+                        .child("\(uid!)")
+        
+        
+        
+                   let userURL = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.userDetails!)"
+             
+        
+                   let saveData = listOfUsers(userURL: userURL,
+                                              collabRef: collabRef,
+                                              AuditRef: AuditRef)
+        
+                    thisUsersGamesRef.setValue(saveData.addUserToList()){
+                        (error:Error?, ref:DatabaseReference) in
+
+                        if let error = error {
+                            print("Data could not be saved: \(error).")
+                            self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                            SwiftLoader.hide()
+                            
+                        } else {
+                            print("Collaborators data saved to project sponsors list")
+                            SwiftLoader.hide()
+                            self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                            
+          
+                        }
+                          
+                    }
+        
+    }
     
  
     func addCollab(userUID: String,auditImageURL: String,date: String,projectName: String,sharedRef: String,auditID: String,isEditable: Bool, collaborationID:String){
@@ -37,19 +80,22 @@ class saveLocal: UIViewController {
                         .child("\(self.mainConsole.collaborationList!)")
                         .child("\(collaborationID)")
        
-                    let siteID = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.collaborationList!)/\(collaborationID)"
-                    
-                    //let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)"
         
-        let saveData = collaborationData(userUID: userUID,
-                                         auditImageURL: auditImageURL,
-                                         date: date,
-                                         projectName: projectName,
-                                         sharedRef: sharedRef,
-                                         siteID: siteID,
-                                         auditID: auditID,
-                                         isEditable: isEditable
-                                         )
+        //collaborators reference
+                    let collabData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.collaborationList!)/\(collaborationID)"
+        //sponsors reference
+                    let AuditRef = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(userUID)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.userCollaborationList!)/\(uid!)"
+        
+                    let saveData = collaborationData(userUID: userUID,
+                                                     auditImageURL: auditImageURL,
+                                                     date: date,
+                                                     projectName: projectName,
+                                                     sharedRef: sharedRef,
+                                                     AuditRef: AuditRef,
+                                                     auditID: auditID,
+                                                     collabRef: collabData,
+                                                     isEditable: isEditable
+                                                     )
         
                     thisUsersGamesRef.setValue(saveData.saveCollabData()){
                         (error:Error?, ref:DatabaseReference) in
@@ -60,10 +106,11 @@ class saveLocal: UIViewController {
                             SwiftLoader.hide()
                             
                         } else {
-                            print("saved")
-                            SwiftLoader.hide()
-     
-                            self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                            print("Data saved to collaborators list")
+                            //add the collab user details to the list of collaborators in the sponsor view
+                            self.addToUserCollabList(auditID: auditID, userUID: userUID, collabRef: collabData, AuditRef: AuditRef)
+                            
+
                             
           
                         }
@@ -203,18 +250,19 @@ class saveLocal: UIViewController {
         }
         
     }
-    func updateObservationCount(count:String, auditID:String,siteID:String){
+    func updateObservationCount(count:String, auditID:String,siteID:String,userUID:String ){
         //status is either: "active" or "not active"
        
         //This goes to: siteList node
         
         SwiftLoader.show(title: "Updating", animated: true)
-        let uid = Auth.auth().currentUser?.uid
+        //let uid = Auth.auth().currentUser?.uid
+        
         let reftest = Database.database().reference()
             .child("\(self.mainConsole.prod!)")
         let auditData = reftest
             .child("\(self.mainConsole.post!)")
-            .child(uid!)
+            .child(userUID)
             .child("\(self.mainConsole.audit!)")
             .child("\(auditID)")
             .child("\(self.mainConsole.siteList!)")

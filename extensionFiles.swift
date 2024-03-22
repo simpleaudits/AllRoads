@@ -117,6 +117,7 @@ class CONSOLE: UIViewController {
     var post:String? = "post"
     var audit:String? = "audit"
     var auditList:String? = "observationList"
+    var userCollaborationList:String? = "collaborationList"
     var collaborationList:String? = "collaborationList"
     var siteList:String? = "siteList"
     var auditSiteData:String? = "auditSiteData"

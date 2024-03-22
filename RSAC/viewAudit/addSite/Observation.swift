@@ -129,6 +129,8 @@ class Observation: UITableViewController,UISearchBarDelegate {
     var auditID = String()
     var siteID = String()
     var listOfObservationData: [auditSiteData] = []
+
+    
     var filterData: [auditSiteData] = []
     
     @IBOutlet var filterSearch: UISearchBar!
@@ -227,7 +229,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
     
 
-       func loadSiteAuditData(){
+   func loadSiteAuditData(){
      
            //if Auth.auth().currentUser != nil {
            
@@ -419,30 +421,91 @@ class Observation: UITableViewController,UISearchBarDelegate {
             }
 //Change project Status---------------------------------------------------------------------------------------------------------------------[END]
     
+//Count number of observations----------------------------------------------------------------------------------------------------------------[START]
+
+
     
+    func observationSnapshotCount(auditID: String, siteID : String){
     
+        let uid = Auth.auth().currentUser?.uid
+            //we want to get the database reference
+        
+        if self.userUID != uid{
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child(self.userUID)
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+                .child("\(self.mainConsole.auditList!)")
+            
+            print("obscount:\(auditData)")
+            
+            auditData.queryOrderedByKey()
+                .observeSingleEvent(of: .value, with: { snapshot in
+                    var listOfObservationData: [auditSiteData] = []
+                    for child in snapshot.children {
+                        if let snapshot = child as? DataSnapshot,
+                           let listOfSites = auditSiteData(snapshot: snapshot) {
+                            listOfObservationData.append(listOfSites)
+                        }
+                    }
+                    
+                    
+                    self.listOfObservationData = listOfObservationData
+                    print("obscount:\(self.listOfObservationData.count)")
+                    SwiftLoader.hide()
+                    
+                    
+                })
+            
+            
+          }else{
+                
+                let reftest = Database.database().reference()
+                    .child("\(self.mainConsole.prod!)")
+                let auditData = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child(uid!)
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                    .child("\(self.mainConsole.siteList!)")
+                    .child("\(siteID)")
+                    .child("\(self.mainConsole.auditList!)")
+            
+            print("obscount:\(auditData)")
+            
+            auditData.queryOrderedByKey()
+                .observeSingleEvent(of: .value, with: { snapshot in
+                        var listOfObservationData: [auditSiteData] = []
+                        for child in snapshot.children {
+                            if let snapshot = child as? DataSnapshot,
+                                let listOfSites = auditSiteData(snapshot: snapshot) {
+                                listOfObservationData.append(listOfSites)
+                            }
+                        }
+                    
+                    
+                        self.listOfObservationData = listOfObservationData
+                        print("obscount:\(self.listOfObservationData.count)")
+                        SwiftLoader.hide()
+
+                   
+                    })
+            }
+
+        }
     
-//    override func tableView(_ tableView: UITableView,
-//                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-//    {
-//        let items = filterData[indexPath.row]
-//
-//        let item = UIContextualAction(style: .destructive, title: "Undo") { [self]  (contextualAction, view, boolValue) in
-//            //Write your code in here
-//            self.firebaseConsole.updateObservationStatus(status: "true", ref: items.ref)
-//
-//            tableView.reloadData()
-//
-//        }
-//
-//        item.backgroundColor = .purple
-//        let swipeActions = UISwipeActionsConfiguration(actions: [item])
-//        return swipeActions
-//    }
+//Count number of listings----------------------------------------------------------------------------------------------------------------[END]
+
+
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let items = filterData[indexPath.row]
-        
+        let uid = Auth.auth().currentUser?.uid
         let item = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             //Write your code in here
             //self.firebaseConsole.updateObservationStatus(status: "false", ref: items.ref)
@@ -450,7 +513,32 @@ class Observation: UITableViewController,UISearchBarDelegate {
             let itemRef = Database.database().reference(withPath: "\(items.ref)")
             itemRef.removeValue()
             
+            //1 load the obsevation count
+            self.observationSnapshotCount(auditID: self.auditID, siteID: self.siteID)
+            //2 save the key
             
+            if self.userUID != uid{
+                
+//This would be from a user that is collaborating
+            
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    self.firebaseConsole.updateObservationCount(count: "\(self.listOfObservationData.count)", auditID: self.auditID, siteID: self.siteID, userUID: self.userUID)
+                    
+                    print("updated and saved observation")
+                    SwiftLoader.hide()
+                })
+                
+            }else{
+                
+//This would be user that is listing item
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    self.firebaseConsole.updateObservationCount(count: "\(self.listOfObservationData.count)", auditID: self.auditID, siteID: self.siteID, userUID: uid!)
+                    
+                    print("updated and saved observation")
+                    SwiftLoader.hide()
+                    
+                })
+            }
            
         }
      
