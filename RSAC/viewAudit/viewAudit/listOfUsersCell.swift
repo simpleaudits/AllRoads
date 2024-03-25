@@ -7,17 +7,136 @@
 
 import Foundation
 import UIKit
+import Firebase
+
+//
+//struct data123{
+//    
+//    let auditID:String
+//    let userUID:String
+//    let loadListOfUsers = collectionOfUsers()
+//    
+//    init(auditID: String, userUID: String)
+//    
+//    
+//    {
+//        self.auditID = auditID
+//        self.userUID = userUID
+//        
+//        print("TEST1\(auditID)")
+//        print("TEST2\(userUID)")
+//        
+//    
+//        loadListOfUsers.loadListOfUserData(userUID:userUID, auditID:auditID)
+//    }
+//  
+//    
+//    
+//}
+
 
 
 class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+  
+    private let cellID = "list"
+    private let joinID = "join"
+    
+    let mainConsole = CONSOLE()
+    let extensConsole = extens()
     
     
-    var listOfObservationData: [auditSiteData] = []
+    var listOfObservationData: [listOfUsers] = []
+    
+    
+
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: collectionView.frame.height)
+    }
+    
+    
+
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+        if listOfObservationData.count == 0 {
+        return 1
+            
+        }else {
+            
+        return listOfObservationData.count
+            
+        }
+     
+       
+    
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
  
+        
+        if indexPath.row  == listOfObservationData.count {
+            let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: joinID, for: indexPath) as! JoinCell
+            return cell
+            
+        }else{
+            
+            
+            let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! cellData
+            let items = listOfObservationData[indexPath.row]
+            
+            
+            cell.userImage.layer.masksToBounds = true;
+            cell.userImage.layer.cornerRadius = cell.userImage.frame.height/2
+            
+            cell.nameLabel.layer.masksToBounds = true;
+            cell.nameLabel.layer.cornerRadius = cell.nameLabel.frame.height/2
+            
+            
+            Database.database().reference(withPath:"\(items.userURL)")
+                            .queryOrderedByKey()
+                            .observe(.value, with: { snapshot in
+            
+                                guard let dict = snapshot.value as? [String:Any] else {
+                                    print("Error")
+                                    return
+                                }
+            
+            
+                                let displayURL = dict["DPimage"] as? String
+                                let username = dict["Username"] as? String
+            
+            
+            
+                                //display product owner DP
+                                cell.userImage.sd_setImage(with: URL(string:displayURL!))
+                                cell.nameLabel.text = username!
+            
+   
+            
+                               })
+            
+            
+            
+            return cell
+        }
+    }
+        
+
     override init(frame: CGRect) {
         super .init(frame: frame)
         // initialise all objects
+        loadListOfUserData(userUID:UserDefaults.standard.string(forKey: "userUID")!, auditID:UserDefaults.standard.string(forKey: "auditID")!)
         
+        //loadListOfUserData(userUID:"", auditID:"")
+        
+        
+        collectionView.register(cellData.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(JoinCell.self, forCellWithReuseIdentifier: joinID)
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
      
 
         collectionView.frame = CGRect(
@@ -26,13 +145,86 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             width: frame.width,
             height: frame.height)
        
+
         
-        contentView.addSubview(collectionView)
-        
-        collectionView.register(cellData.self, forCellWithReuseIdentifier: "cellData")
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        addSubview(collectionView)
+
     }
+    
+    func loadListOfUserData(userUID:String, auditID:String){
+        
+        let uid = Auth.auth().currentUser?.uid
+        
+        if userUID != uid!{
+            
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child("\(userUID)")
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.userCollaborationList!)")
+            
+            
+           
+            
+            auditData.queryOrderedByKey()
+                .observe(.value, with: { [self] snapshot in
+                    
+                    var listOfObservationData: [listOfUsers] = []
+                    
+                    for child in snapshot.children {
+                        if let snapshot = child as? DataSnapshot,
+                           let listOfUsers = listOfUsers(snapshot: snapshot) {
+                            listOfObservationData.append(listOfUsers)
+                            
+               
+                        }
+                    }
+                    self.listOfObservationData = listOfObservationData
+                    collectionView.reloadData()
+                    
+      
+                    
+                })
+            
+        }else{
+            
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child("\(uid!)")
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.userCollaborationList!)")
+            
+      
+          
+            
+            auditData.queryOrderedByKey()
+                .observe(.value, with: { [self] snapshot in
+                    
+                    var listOfObservationData: [listOfUsers] = []
+                    
+                    for child in snapshot.children {
+                        if let snapshot = child as? DataSnapshot,
+                           let listOfUsers = listOfUsers(snapshot: snapshot) {
+                            listOfObservationData.append(listOfUsers)
+      
+                        }
+                    }
+                    self.listOfObservationData = listOfObservationData
+                    collectionView.reloadData()
+                    
+   
+                    
+                })
+        }
+        
+    }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -45,80 +237,62 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         return collectionView
     }()
-
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: collectionView.frame.height)
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-//        if listOfObservationData.count == 0 {
-//        return 3
-//
-//        }else {
-//
-//        return listOfObservationData.count
-//
-//        }
-        return 16
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
- 
-        let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellData", for: indexPath) as! cellData
-      
-//            cell.imageView.layer.masksToBounds = true;
-//            cell.imageView.layer.cornerRadius = cell.imageView.frame.height/2
-//
-//            cell.usernameLabel.layer.masksToBounds = true;
-//            cell.usernameLabel.layer.cornerRadius = cell.usernameLabel.frame.height/2
-        
-//            let UserList = listOfObservationData[indexPath.row]
-//
-//            Database.database().reference(withPath:"\(ParentJSON.Parent!)/\(UserList.SlotUser)")
-//                .queryOrderedByKey()
-//                .observeSingleEvent(of: .value, with: { snapshot in
-//
-//                    guard let dict = snapshot.value as? [String:Any] else {
-//                        print("Error")
-//                        return
-//                    }
-//
-//
-//                    let displayURL = dict["DPimage"] as? String
-//                    let userStatusString = dict["userStatusString"] as? String
-//                    let username = dict["UsernameString"] as? String
-//
-//
-//
-//                    //display product owner DP
-//                    cell.imageView.sd_setImage(with: URL(string:displayURL!))
-//                    cell.usernameLabel.text = username!
-//
-//
-//
-//
-//
-//
-//                   })
     
 
-  
-        return cell
+    class JoinCell: UICollectionViewCell {
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            
+            JoinJaffle.frame = CGRect(x:0, y: 0, width: frame.width, height: frame.width)
+            //60
+            JoinLabel.frame = CGRect(x: 0, y: frame.width , width: frame.width, height: 20)
+            
+          
+            addSubview(JoinJaffle)
+            addSubview(JoinLabel)
         }
         
-    
-    
-    
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        
+        let JoinJaffle: UIImageView = {
+            let userStatus = UIImageView()
+            if #available(iOS 13.0, *) {
+                userStatus.image = UIImage(imageLiteralResourceName: "man")
+            } else {
+                // Fallback on earlier versions
+            }
+            userStatus.contentMode = .scaleAspectFill
+            //userStatus.layer.cornerRadius = 17/2
+            //userStatus.layer.masksToBounds = true
+            userStatus.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            return userStatus
+        }()
+        
+        let JoinLabel: UILabel = {
+             let label = UILabel()
+             label.text = "Join"
+      
+             label.numberOfLines = 2
+             label.textAlignment = .center
+        
+             label.font = UIFont(name: "HelveticaNeue-Light", size: 10)
+             return label
+         }()
+        
+        
+        
+    }
+
     
     class cellData: UICollectionViewCell {
+        
         override init(frame: CGRect) {
             super.init(frame: frame)
             
@@ -153,8 +327,7 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         let nameLabel: UILabel = {
              let label = UILabel()
              label.text = "Join"
-      
-             label.numberOfLines = 2
+             label.numberOfLines = 1
              label.textAlignment = .center
              //label.backgroundColor = .gray
              //label.font = UIFont(name: "HelveticaNeue-Light", size: 10)

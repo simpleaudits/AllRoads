@@ -22,8 +22,11 @@ class cellSettings: UITableViewCell{
             super.init(style: style, reuseIdentifier: reuseIdentifier)
 
 
-
-
+            contentView.addSubview(subscriptionLabelHeader)
+            contentView.addSubview(subscriptionLabel)
+            contentView.addSubview(numberOfUsesLeft)
+            contentView.addSubview(upgradeAccount)
+                
             contentView.addSubview(siteImage)
             contentView.addSubview(settingsLabel)
             //contentView.addSubview(auditDate)
@@ -38,15 +41,72 @@ class cellSettings: UITableViewCell{
             }
 
 
+//user status and subscriptions attributes:
+            let subscriptionLabelHeader: UILabel = {
+            let label = UILabel()
+            label.text = ""
+            label.font = UIFont.boldSystemFont(ofSize: 15)
+            label.numberOfLines = 1
+            label.textAlignment = .left
+            //label.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            return label
+            }()
+    
+            let subscriptionLabel: UILabel = {
+            let label = UILabel()
+            label.text = "Subscribed"
+            label.font = UIFont.boldSystemFont(ofSize: 15)
+            label.numberOfLines = 1
+            label.textAlignment = .center
+            label.layer.cornerRadius = 10
+            label.layer.masksToBounds = true
+            label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            return label
+            }()
+    
+            let numberOfUsesLeft: UILabel = {
+            let label = UILabel()
+            label.text = ""
+            label.font = UIFont.systemFont(ofSize: 22)
+            label.numberOfLines = 3
+            label.textAlignment = .left
+            //label.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            return label
+            }()
+    
+    
+            let upgradeAccount:UIButton = {
+               let button = UIButton()
+                button.setTitle("Upgrade", for: .normal)
+          
+                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = #colorLiteral(red: 0.1218188778, green: 0.5034164786, blue: 0.9990965724, alpha: 1)
+                button.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+
+                //button.layer.borderWidth = 1
+                button.layer.masksToBounds = true
+                button.layer.cornerRadius = 8
+                return button
+                
+            }()
+            
+    
 
 
+
+    
+    
+    
+    
             let siteImage: UIImageView = {
             let profile = UIImageView()
             profile.contentMode = .scaleAspectFit
             profile.layer.cornerRadius = 10
             profile.layer.masksToBounds = true
-            profile.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            //profile.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            //profile.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            profile.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             //profile.layer.borderWidth = 0.5
 
             return profile
@@ -86,7 +146,7 @@ class cellSettings: UITableViewCell{
             }
 
 
-            class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPickerViewDelegate {
+class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIPickerViewDelegate {
 
 
             let mainConsole = CONSOLE()
@@ -122,10 +182,18 @@ class cellSettings: UITableViewCell{
             var toggle = Bool()
 
 
+    
+    
+    
+            var listingCount = Int()
+            var userStatus = String()
 
             //section and row data:
+    
+    
+    
             var profileSection = 0
-            var profileSectionRow = 3
+            var profileSectionRow = 4
 
             var reportSection = 1
             var reportSectionRow = 1
@@ -140,7 +208,7 @@ class cellSettings: UITableViewCell{
 
             override func viewDidLoad() {
             super.viewDidLoad()
-
+      
             //load user data:
             loadUserSettingsData(ref: "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(ThecurrentUser!.uid)")
 
@@ -190,30 +258,32 @@ class cellSettings: UITableViewCell{
 
             //if Auth.auth().currentUser != nil {
 
-            Database.database().reference(withPath:ref)
-            .observe(.value, with: { [self] snapshot in
+                Database.database().reference(withPath:ref)
+                .observe(.value, with: { [self] snapshot in
 
-            var userData: [userDetails] = []
-            for child in snapshot.children {
+                var userData: [userDetails] = []
+                for child in snapshot.children {
 
-            if let snapshot = child as? DataSnapshot,
-            let List = userDetails(snapshot: snapshot) {
-                userData.append(List)
-                
-                companyNameData = List.Username
-                companyDPData = List.DPimage
-                companySigData = List.signatureURL
-                
-                
-                print(userData)
+                if let snapshot = child as? DataSnapshot,
+                let List = userDetails(snapshot: snapshot) {
+                    userData.append(List)
+                    
+                    companyNameData = List.Username
+                    companyDPData = List.DPimage
+                    companySigData = List.signatureURL
+                    listingCount = List.listingMax
+                    userStatus = List.userStatus
+                    
+                    
+                    print(userData)
 
-            }
-            }
+                }
+                }
 
-            self.userData = userData
-            self.tableView.reloadData()
+                self.userData = userData
+                self.tableView.reloadData()
 
-            })
+                })
 
             //               DispatchQueue.main.async {
             //                   self.tableView.reloadData()
@@ -279,10 +349,82 @@ class cellSettings: UITableViewCell{
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
                 cell.accessoryType = .disclosureIndicator
 
-                if indexPath.row == 0 {
+                
+                    if indexPath.row == 0 {
+                        
+                        cell.siteImage.isHidden = true
+                        cell.auditDescription.isHidden = true
+                        cell.subscriptionLabel.isHidden = false
+                        cell.numberOfUsesLeft.isHidden = false
+                        cell.upgradeAccount.isHidden = false
+                        cell.subscriptionLabelHeader.isHidden = false
+                        
+                        cell.subscriptionLabelHeader.text = "Status:"
+                    
+                        
+          
+                        
+                        cell.subscriptionLabelHeader.frame = CGRect(
+                        x: 20,
+                        y:  10,
+                        width: cell.frame.width - 80,
+                        height: 20)
+
+                        
+                        
+                        if self.userStatus != mainConsole.userStatus{
+                            cell.subscriptionLabel.text = "Not Subscribed"//"\(self.userStatus)"
+                            cell.numberOfUsesLeft.text = "Project Limit: \(self.listingCount)\nSite Limit: \(self.listingCount*2)\nObservation Limit: \(self.listingCount*3)"
+
+                            
+                            cell.subscriptionLabel.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+                            
+                            cell.subscriptionLabel.frame = CGRect(
+                            x: 20,
+                            y:  cell.subscriptionLabelHeader.frame.maxY + 5,
+                            width: cell.subscriptionLabel.intrinsicContentSize.width + 10,
+                            height: 20)
+                        }else{
+                            cell.subscriptionLabel.text = "Subscribed"//"\(self.userStatus)"
+                            cell.numberOfUsesLeft.text = "Project Limit: ∞\nSite Limit: ∞\nObservation Limit: ∞"
+
+                            
+                            cell.subscriptionLabel.backgroundColor = #colorLiteral(red: 0.2039215686, green: 0.7803921569, blue: 0.3490196078, alpha: 1)
+                            
+                            cell.subscriptionLabel.frame = CGRect(
+                            x: 20,
+                            y:  cell.subscriptionLabelHeader.frame.maxY + 5,
+                            width: cell.subscriptionLabel.intrinsicContentSize.width + 10,
+                            height: 20)
+                        }
+                        
+                
+                        //60
+                        cell.numberOfUsesLeft.frame = CGRect(
+                        x: 20,
+                        y: cell.subscriptionLabel.frame.maxY + 5,
+                        width: cell.frame.width - 80,
+                        height: 90 )
+                        
+                        cell.upgradeAccount.frame = CGRect(
+                        x: 20,
+                        y: cell.numberOfUsesLeft.frame.maxY + 10,
+                        width: cell.frame.width - 80,
+                        height: 30 )
+
+
+       
+                        
+
+                    }else if indexPath.row == 1 {
                     
                     cell.siteImage.isHidden = true
                     cell.auditDescription.isHidden = false
+                    cell.subscriptionLabel.isHidden = true
+                    cell.numberOfUsesLeft.isHidden = true
+                    cell.upgradeAccount.isHidden = true
+                    cell.subscriptionLabelHeader.isHidden = true
+                        
                     cell.settingsLabel.text = "Company name"
                     cell.auditDescription.text = companyNameData
                     
@@ -301,10 +443,15 @@ class cellSettings: UITableViewCell{
                     height: 20 )
 
 
-                }else  if indexPath.row == 1{
+                }else  if indexPath.row == 2{
                     
                     cell.auditDescription.isHidden = true
                     cell.siteImage.isHidden = false
+                    cell.subscriptionLabel.isHidden = true
+                    cell.numberOfUsesLeft.isHidden = true
+                    cell.upgradeAccount.isHidden = true
+                    cell.subscriptionLabelHeader.isHidden = true
+                    
                     cell.settingsLabel.text = "Company Logo"
 
                     //cell.siteImage.image = UIImage(data: companyImage)
@@ -330,6 +477,11 @@ class cellSettings: UITableViewCell{
                     
                     cell.siteImage.isHidden = false
                     cell.auditDescription.isHidden = true
+                    cell.subscriptionLabel.isHidden = true
+                    cell.numberOfUsesLeft.isHidden = true
+                    cell.upgradeAccount.isHidden = true
+                    cell.subscriptionLabelHeader.isHidden = true
+                    
                     cell.settingsLabel.text = "Signature"
                     
                   
@@ -359,6 +511,10 @@ class cellSettings: UITableViewCell{
                     cell.settingsLabel.text = "Report Configuration"
                     cell.siteImage.isHidden = true
                     cell.auditDescription.isHidden = true
+                    cell.subscriptionLabel.isHidden = true
+                    cell.numberOfUsesLeft.isHidden = true
+                    cell.upgradeAccount.isHidden = true
+                    cell.subscriptionLabelHeader.isHidden = true
 
                     cell.settingsLabel.frame = CGRect(
                     x: 20, //siteImage.frame.maxX + 5,
@@ -377,6 +533,10 @@ class cellSettings: UITableViewCell{
                 cell.settingsLabel.text = "Rate!"
                 cell.siteImage.isHidden = true
                 cell.auditDescription.isHidden = true
+                cell.subscriptionLabel.isHidden = true
+                cell.numberOfUsesLeft.isHidden = true
+                cell.upgradeAccount.isHidden = true
+                cell.subscriptionLabelHeader.isHidden = true
 
                 return cell
 
@@ -405,35 +565,47 @@ class cellSettings: UITableViewCell{
 
                 override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
                 if indexPath.section == profileSection{
-                if indexPath.row == 0{
+                    
+                    
+                    if indexPath.row == 0{
+                        
+                    return 210
 
-                }else if indexPath.row == 1{
+                    }else if indexPath.row == 1{
 
-                }else{
+                    }else if indexPath.row == 2{
+
+                    }else{
+                        
                     return 150
-                }
+                        
+                    }
                     
                 }
-                    return 75
+                //default all cell height sizes are 75
+                return 75
             }
 
             override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             if indexPath.section == profileSection{
-            if indexPath.row == 0{
-            //change Company name
-            uploadCompanyName()
+                if indexPath.row == 0{
+   
 
-            }else if indexPath.row == 1{
+                }else if indexPath.row == 1{
+                //change Company name
+                uploadCompanyName()
 
-            // open image picker
-            uploadImageAlert()
+                }else if indexPath.row == 2{
 
-            }else{
-                
-            //open the signatureview
-            presentModal()
+                // open image picker
+                uploadImageAlert()
 
-            }
+                }else{
+                    
+                //open the signatureview
+                presentModal()
+
+                }
             }
             }
 
@@ -462,6 +634,9 @@ class cellSettings: UITableViewCell{
 
 
 // present the signature viewcontroller  --------------------------------------------------------------------------------------------------------------------[END]
+    
+ 
+    
 
 // Change user display picture  --------------------------------------------------------------------------------------------------------------------[START]
            

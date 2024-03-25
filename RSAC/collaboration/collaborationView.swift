@@ -270,6 +270,10 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
                                     self.projectName = projectName!
                                     self.auditID = auditID!
                                     self.userUID = userUID!
+                         
+
+                         
+                         
              
                          
                                      let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
@@ -542,14 +546,25 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-   
+        
         let items = filterData[indexPath.row]
 
         itemReference = items.sharedRef
         self.auditID = items.auditID
         self.projectName = items.projectName
         self.userUID = items.userUID
-
+        
+        let uid = Auth.auth().currentUser?.uid
+        if self.userUID != uid{
+            UserDefaults.standard.set(  self.auditID, forKey: "auditID") //setObject
+            UserDefaults.standard.set(  self.userUID, forKey: "userUID") //setObject
+        }else{
+            UserDefaults.standard.set(  self.auditID, forKey: "auditID") //setObject
+            UserDefaults.standard.set(  uid, forKey: "userUID") //setObject
+            
+        }
+            
+            
         self.performSegue(withIdentifier: "fromCollaboration", sender: indexPath.row);
  
 

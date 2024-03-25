@@ -81,6 +81,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func viewDidLoad() {
         
+
         //load the number of listing the user can actually make here:
         loadUserStats()
         
@@ -108,17 +109,15 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
 
     }
 
+    
+    
     override func viewDidDisappear(_ animated: Bool) {
-        print("YES")
-//        auditData.removeAll()
 
+ 
     }
     
     override func viewDidAppear(_ animated: Bool) {
 
-     
-        
-     
 
  
         
@@ -287,8 +286,12 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
 
             self.present(Alert1, animated: true, completion: nil)
             self.auditID = auditData.auditID
-            print("AuditID:\(self.auditID)")
             self.projectName = auditData.projectName
+            
+            let uid = Auth.auth().currentUser?.uid
+            UserDefaults.standard.set(  self.auditID, forKey: "auditID") //setObject
+            UserDefaults.standard.set(  uid, forKey: "userUID") //setObject
+
     
             
         }else if indexPath.section == 1{
@@ -328,8 +331,12 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
 
             self.present(Alert2, animated: true, completion: nil)
             self.auditID = auditData.auditID
-            print("AuditID:\(self.auditID)")
             self.projectName = auditData.projectName
+            
+            let uid = Auth.auth().currentUser?.uid
+            UserDefaults.standard.set(  self.auditID, forKey: "auditID") //setObject
+            UserDefaults.standard.set(  uid, forKey: "userUID") //setObject
+
             
         }else{
             
@@ -368,8 +375,12 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
 
             self.present(Alert3, animated: true, completion: nil)
             self.auditID = auditData.auditID
-            print("AuditID:\(self.auditID)")
             self.projectName = auditData.projectName
+            
+            let uid = Auth.auth().currentUser?.uid
+            UserDefaults.standard.set(  self.auditID, forKey: "auditID") //setObject
+            UserDefaults.standard.set(  uid, forKey: "userUID") //setObject
+      
 
             
         }
@@ -380,6 +391,10 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let uid = Auth.auth().currentUser?.uid
+        // Since this is the registered user, we will apply this nsuserdeful directly
+        print("NSUSER_AuditID_enter:\(UserDefaults.standard.string(forKey: "auditID")!)")
+        print("NSUSER_userUID_enter:\(UserDefaults.standard.string(forKey: "userUID")!)")
+
         
              if let viewInfoView = segue.destination as?  viewAuditList{
 
@@ -388,6 +403,8 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
                      viewInfoView.auditID = auditID
                      viewInfoView.projectName  = projectName
                      viewInfoView.userUID = "\(uid!)"
+                     
+          
                  
                      
                  }else{

@@ -37,7 +37,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var userUID = String()
     
     
-
+        let userListData = collectionOfUsers()
+    
         var listingData = Int()
         let mainConsole = CONSOLE()
         let extensConsole = extens()
@@ -48,13 +49,21 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     @IBOutlet weak var statusSegment: UISegmentedControl!
     
+    override func viewWillDisappear(_ animated: Bool) {
+        UserDefaults.standard.removeObject(forKey: "auditID")
+        UserDefaults.standard.removeObject(forKey: "userUID")
+
   
+        
+    }
     
     
     override func viewDidLoad() {
         
 
         super.viewDidLoad()
+        //load list of users who are collaborating data:
+   
         
         //load the number of listing the user can actually make here:
         loadUserStats()
@@ -537,8 +546,12 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     override func viewDidAppear(_ animated: Bool) {
 
-
-   
+        //let a = data123(auditID: auditID, userUID: userUID)
+       
+        
+        //userListData.loadListOfUserData(userUID: userUID, auditID: auditID)
+        
+     
         
     }
  

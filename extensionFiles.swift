@@ -113,6 +113,9 @@ class extens: UIViewController {
 
 class CONSOLE: UIViewController {
     
+    var userStatus:String? = "Subscribed"
+  
+    
     var prod:String? = "prod"
     var post:String? = "post"
     var audit:String? = "audit"
