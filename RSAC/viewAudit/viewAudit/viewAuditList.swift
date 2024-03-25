@@ -103,7 +103,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             //PREVIEW THE CURRENT IMAGE WITHIN ALERT
 
-            let alertController = UIAlertController(title: "Share this project", message: "CollabID:\n\(self.auditID)", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Share this project", message: "", preferredStyle: .alert)
             let imageView = UIImageView(frame: CGRect(x: alertController.view.frame.maxX/2 - 160, y: 100, width: 200, height: 200))
 
             //create UIImage here
@@ -129,8 +129,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             imageView.layer.cornerRadius = 20
             imageView.layer.masksToBounds = true
             alertController.view.addSubview(imageView)
-            let height = NSLayoutConstraint(item: alertController.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 400)
-            let width = NSLayoutConstraint(item: alertController.view!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250)
+            let height = NSLayoutConstraint(item: alertController.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 420)
+            let width = NSLayoutConstraint(item: alertController.view!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 270)
             alertController.view.addConstraint(height)
             alertController.view.addConstraint(width)
 
@@ -157,13 +157,17 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         
                 // Presenting alert controller
                 self.present(alertController, animated: true, completion:nil)
+     
                 
-       
+            }
+            let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
+                
+              
             
                 
             }
             
-          
+            alertController.addAction(action2)
             alertController.addAction(action3)
             alertController.view.addSubview(imageView)
 
