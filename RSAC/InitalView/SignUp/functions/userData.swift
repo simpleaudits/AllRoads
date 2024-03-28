@@ -45,7 +45,7 @@ extension SignUpController {
         
         if  cell1.userName.text!.count > 0 &&
             cell1.lastName.text!.count > 0 &&
-            cell1.Name.text!.count > 0 {
+            cell1.CompanyName.text!.count > 0 {
             
             
 //############################################################################
@@ -54,11 +54,11 @@ extension SignUpController {
             
             let saveData = userDetails(
                 UserReferenceLink: "\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.userDetails!)",
-                Username: cell1.userName.text!,
+                companyName: cell1.CompanyName.text!,
                 orgType: cell1.lastName.text!,
                 contact: 0,
                 accountVerificationStatus: true,
-                userStatus: "bronze",
+                userStatus: "unsubsribed",
                 DPimage: DPDataURL,
                 listingMax: 3,
                 nestedNode: "",
@@ -66,7 +66,7 @@ extension SignUpController {
                 completed: true,
                 userRef: "",
                 signatureURL: "",
-                nest1: "",
+                nest1: cell1.userName.text!,
                 nest2: "",
                 nest3: "",
                 nest4: "",

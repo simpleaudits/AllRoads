@@ -148,11 +148,17 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         //filterData = listOfObservationData
-        tableView.reloadData()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        
+ 
+        
+
+        
         //load the number of listing the user can actually make here:
         loadUserStats()
         
@@ -197,7 +203,32 @@ class Observation: UITableViewController,UISearchBarDelegate {
 //        }
 //
 //    }
+    
+//    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.customView.frame.origin.y = self.view.frame.height - (self.tabBarController?.tabBar.frame.size.height ?? 49)
+//
+//        }, completion: nil)
+//
+//    }
+//
+//    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//                //we hide the button buttons here
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.customView.frame.origin.y = self.view.frame.height
+//
+//
+//        }, completion: nil)
+//    }
+//
+    
 
+    @objc func addItem(){
+        
+       self.performSegue(withIdentifier: "showEntries", sender: self);
+        
+    }
+    
     //Search bar function
     @objc func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
@@ -328,13 +359,13 @@ class Observation: UITableViewController,UISearchBarDelegate {
     
     @IBAction func addObservation(_ sender: Any) {
         
-        if listOfObservationData.count < listingData{
+        if listOfObservationData.count < listingData * mainConsole.observationMulti!{
             self.performSegue(withIdentifier: "addObservation", sender: self);
         }else{
             
-            let Alert = UIAlertController(title: "One second..", message: "You've reached your max project listing of: \(listingData)", preferredStyle: .alert)
+            let Alert = UIAlertController(title: "You've reached your max project listing of:", message: "\(listingData * mainConsole.observationMulti!)", preferredStyle: .alert)
             
-            let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+            let action1 = UIAlertAction(title: "Add More",style: .default) { (action:UIAlertAction!) in
                 //save this for headerview in view item
                
             }

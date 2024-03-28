@@ -27,7 +27,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     //    var rowsInSection6:Int = 1
     
     
-
+    var userStatus = String()
     var listingData = Int()
     var auditData: [newAuditDataset] = []
     var CompletedAuditsFilter: [newAuditDataset] = []
@@ -68,7 +68,10 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
                                }
 
                                 let listingMax = dict["listingMax"] as? Int
+                                let userStatus = dict["userStatus"] as? String
+                         
                                 self.listingData = listingMax!
+                                self.userStatus = userStatus!
                   
                                 
   
@@ -392,8 +395,8 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let uid = Auth.auth().currentUser?.uid
         // Since this is the registered user, we will apply this nsuserdeful directly
-        print("NSUSER_AuditID_enter:\(UserDefaults.standard.string(forKey: "auditID")!)")
-        print("NSUSER_userUID_enter:\(UserDefaults.standard.string(forKey: "userUID")!)")
+//        print("NSUSER_AuditID_enter:\(UserDefaults.standard.string(forKey: "auditID")!)")
+//        print("NSUSER_userUID_enter:\(UserDefaults.standard.string(forKey: "userUID")!)")
 
         
              if let viewInfoView = segue.destination as?  viewAuditList{
@@ -419,13 +422,16 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     @IBAction func addProject(_ sender: Any) {
         
-        if auditData.count < listingData{
+        if auditData.count < listingData {
+            
             self.performSegue(withIdentifier: "addProject", sender: self);
+            
+            
         }else{
             
-            let Alert = UIAlertController(title: "One second..", message: "You've reached your max project listing of: \(listingData)", preferredStyle: .alert)
+            let Alert = UIAlertController(title: "You've reached your max project listing of:", message: "\(listingData)", preferredStyle: .alert)
             
-            let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+            let action1 = UIAlertAction(title: "Add More",style: .default) { (action:UIAlertAction!) in
                 //save this for headerview in view item
                
             }

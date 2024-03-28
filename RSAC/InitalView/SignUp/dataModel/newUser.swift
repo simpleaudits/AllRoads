@@ -15,7 +15,7 @@ struct userDetails{
 
     
     let UserReferenceLink: String
-    let Username: String
+    let companyName: String
     let orgType: String
     let contact: Int
     let accountVerificationStatus: Bool // either yes or no
@@ -38,7 +38,7 @@ struct userDetails{
     
     
     init(UserReferenceLink:String,
-         Username:String,
+         companyName:String,
          orgType:String,
          contact:Int,
          accountVerificationStatus: Bool,
@@ -59,7 +59,7 @@ struct userDetails{
         ) {
 
         self.UserReferenceLink = UserReferenceLink
-        self.Username = Username
+        self.companyName = companyName
         self.orgType = orgType
         self.contact = contact
         self.accountVerificationStatus = accountVerificationStatus
@@ -86,7 +86,7 @@ struct userDetails{
             let value = snapshot.value as? [String: AnyObject],
             
             let UserReferenceLink = value["UserReferenceLink"] as? String,
-            let Username = value["Username"] as? String,
+            let companyName = value["companyName"] as? String,
             let orgType = value["orgType"] as? String,
             let contact = value["contact"] as? Int,
             let accountVerificationStatus = value["accountVerificationStatus"] as? Bool,
@@ -116,7 +116,7 @@ struct userDetails{
 
         
         self.UserReferenceLink = UserReferenceLink
-        self.Username = Username
+        self.companyName = companyName
         self.orgType = orgType
         self.contact = contact
         self.accountVerificationStatus = accountVerificationStatus
@@ -142,7 +142,7 @@ struct userDetails{
     func saveUserData() -> [String:Any] {
         return [
             "UserReferenceLink": UserReferenceLink,
-            "Username": Username,
+            "companyName": companyName,
             "orgType": orgType,
             "contact": contact,
             "accountVerificationStatus": accountVerificationStatus,

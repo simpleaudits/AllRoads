@@ -353,13 +353,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     @IBAction func addSite(_ sender: Any) {
         
-        if listOfSites.count < listingData{
+        if listOfSites.count < listingData * mainConsole.listingMulti!{
             self.performSegue(withIdentifier: "addSite", sender: self);
         }else{
             
-            let Alert = UIAlertController(title: "One second..", message: "You've reached your max project listing of: \(listingData)", preferredStyle: .alert)
+            let Alert = UIAlertController(title: "You've reached your max project listing of:", message: "\(listingData * mainConsole.listingMulti!)", preferredStyle: .alert)
             
-            let action1 = UIAlertAction(title: "OK",style: .default) { (action:UIAlertAction!) in
+            let action1 = UIAlertAction(title: "Add More",style: .default) { (action:UIAlertAction!) in
                 //save this for headerview in view item
                
             }

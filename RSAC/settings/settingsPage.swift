@@ -137,7 +137,7 @@ class cellSettings: UITableViewCell{
             let label = UILabel()
             label.text = ""
             label.font = UIFont.systemFont(ofSize: 12)
-            label.numberOfLines = 1
+            label.numberOfLines = 2
             label.textAlignment = .left
             label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             //label.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
@@ -200,6 +200,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
             var rateAppSection = 2
             var rateAppSectionRow = 1
+    
+            var TCsection = 3
+            var TCsectionSectionRow = 1
 
 
             override func viewDidAppear(_ animated: Bool) {
@@ -268,7 +271,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 let List = userDetails(snapshot: snapshot) {
                     userData.append(List)
                     
-                    companyNameData = List.Username
+                    companyNameData = "Company name: \(List.companyName)\nUsername: \(List.nest1)"
                     companyDPData = List.DPimage
                     companySigData = List.signatureURL
                     listingCount = List.listingMax
@@ -337,6 +340,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 }else if section == reportSection{
                     
                 return "Report Settings"
+                }else if section == TCsection{
+                    
+                return "T&C"
                 }else{
                     
                 return "Rate AllRoads"
@@ -425,8 +431,8 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.upgradeAccount.isHidden = true
                     cell.subscriptionLabelHeader.isHidden = true
                         
-                    cell.settingsLabel.text = "Company name"
-                    cell.auditDescription.text = companyNameData
+                    cell.settingsLabel.text = "About You"
+                    cell.auditDescription.text = "\(companyNameData!)"
                     
 
 
@@ -440,7 +446,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     x: 20,
                     y: cell.settingsLabel.frame.maxY + 5,
                     width: cell.frame.width - 80,
-                    height: 20 )
+                    height: 40 )
 
 
                 }else  if indexPath.row == 2{
@@ -503,6 +509,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 }
 
                 return cell
+                    
                 }else if indexPath.section == reportSection{
                     let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
                     cell.accessoryType = .disclosureIndicator
@@ -524,6 +531,36 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
                     return cell
 
+                }else if indexPath.section == TCsection{
+   
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
+                    cell.accessoryType = .disclosureIndicator
+                    cell.siteImage.isHidden = true
+                    cell.auditDescription.isHidden = false
+                    cell.subscriptionLabel.isHidden = true
+                    cell.numberOfUsesLeft.isHidden = true
+                    cell.upgradeAccount.isHidden = true
+                    cell.subscriptionLabelHeader.isHidden = true
+                        
+                    cell.settingsLabel.text = "Terms of Service"
+                    cell.auditDescription.text = "Last changed 20/4/2024"
+                    
+
+
+                    cell.settingsLabel.frame = CGRect(
+                    x: 20,
+                    y:  10,
+                    width: cell.frame.width - 80,
+                    height: 20)
+                    //60
+                    cell.auditDescription.frame = CGRect(
+                    x: 20,
+                    y: cell.settingsLabel.frame.maxY + 5,
+                    width: cell.frame.width - 80,
+                    height: 20 )
+                    
+                    return cell
+
                 }else{
 
                 //rateAppSection
@@ -541,6 +578,8 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 return cell
 
                 }
+                
+                
 
             }
 
@@ -553,6 +592,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
                 case reportSection:
                     return reportSectionRow
+                    
+                case TCsection:
+                    return TCsectionSectionRow
 
                 default: // rateAppSection
                     return 1
@@ -560,18 +602,19 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
             }
 
                 override func numberOfSections(in tableView: UITableView) -> Int {
-                    return 3
+                    return 4
                 }
 
                 override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
                 if indexPath.section == profileSection{
-                    
                     
                     if indexPath.row == 0{
                         
                     return 210
 
                     }else if indexPath.row == 1{
+                    
+                    return 95
 
                     }else if indexPath.row == 2{
 
@@ -768,7 +811,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
 
             reftest.updateChildValues([
-            "Username": companyName
+            "companyName": companyName
             ]){
                 
                 

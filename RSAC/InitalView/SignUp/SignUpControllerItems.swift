@@ -65,7 +65,7 @@ class SignUpItemsCell: UICollectionViewCell, UITextViewDelegate{
             height: 40
         )
 
-        Name.frame = CGRect(
+        CompanyName.frame = CGRect(
             x: 10,
             y: header1.frame.maxY + 10,
             width: frame.width,
@@ -74,7 +74,7 @@ class SignUpItemsCell: UICollectionViewCell, UITextViewDelegate{
 
         lineDivider2.frame = CGRect(
             x: 10,
-            y: Name.frame.maxY + 10,
+            y: CompanyName.frame.maxY + 10,
             width: frame.width,
             height: 1
         )
@@ -174,7 +174,7 @@ class SignUpItemsCell: UICollectionViewCell, UITextViewDelegate{
         contentView.addSubview(lineDivider1)
         //First Name settings
         contentView.addSubview(header1)
-        contentView.addSubview(Name)
+        contentView.addSubview(CompanyName)
         contentView.addSubview(lineDivider2)
         //Last Name settings
         contentView.addSubview(header2)
@@ -268,7 +268,7 @@ class SignUpItemsCell: UICollectionViewCell, UITextViewDelegate{
        return label
     }()
     
-    let Name:UITextField = {
+    let CompanyName:UITextField = {
        let label = UITextField()
         label.font = UIFont.systemFont(ofSize: 30)
         label.placeholder = "e.g. WSJ"

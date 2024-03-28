@@ -118,7 +118,7 @@ class SignUpController: UICollectionViewController,UITextFieldDelegate,UITextVie
         
 
         //When the user clicks return, keyboard dismisses.
-        cell.Name.delegate = self
+        cell.CompanyName.delegate = self
         cell.lastName.delegate = self
         cell.userName.delegate = self
 

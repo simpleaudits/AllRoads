@@ -113,6 +113,9 @@ class extens: UIViewController {
 
 class CONSOLE: UIViewController {
     
+    var listingMulti:Int? = 2
+    var observationMulti:Int? = 3
+    
     var userStatus:String? = "Subscribed"
   
     
