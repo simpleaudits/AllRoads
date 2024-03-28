@@ -130,6 +130,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
     var siteID = String()
     var userUID = String()
     
+    var auditIDArray = Array<String>()
+    
     
     var listOfCollaborationData: [collaborationData] = []
     var filterData: [collaborationData] = []
@@ -252,7 +254,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
                                    
                                    let Alert = UIAlertController(title: "CollabID was not valid", message: "", preferredStyle: .alert)
                                        let action1 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
-                                      
+                                            // retry
+                                           self.joinOption()
                                        }
 
                                    Alert.addAction(action1)
@@ -276,28 +279,73 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
                          
              
                          
-                                     let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
-                                     let action2 = UIAlertAction(title: "Yes",style: .default) { (action:UIAlertAction!) in
-                                         // Perform action
-                                         
-                                         
-                                        //this adds the collaboration listing data to the collaborators database
-                                        self.firebaseConsole.addCollab(
-                                                                        userUID:self.userUID,
-                                                                        auditImageURL: "",
-                                                                        date: self.mainFunction.timeStamp(),
-                                                                        projectName: self.projectName,
-                                                                        sharedRef: self.sharedRef,
-                                                                        auditID: self.auditID,
-                                                                        isEditable: true,
-                                                                        collaborationID: self.mainFunction.collaborationID())
+                        let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
+                         let action2 = UIAlertAction(title: "Yes",style: .default) { (action:UIAlertAction!) in
+     
+                             
+                             
+                             
+                             // call this condition to force a update when there is empty array, where the below logic fails.
+                             if self.auditIDArray.isEmpty{
+                                         //this adds the collaboration listing data to the collaborators database
+                                         self.firebaseConsole.addCollab(
+                                            userUID:self.userUID,
+                                            auditImageURL: "",
+                                            date: self.mainFunction.timeStamp(),
+                                            projectName: self.projectName,
+                                            sharedRef: self.sharedRef,
+                                            auditID: self.auditID,
+                                            isEditable: true,
+                                            collaborationID: self.mainFunction.collaborationID())
                                          
                                          //add the collaborators info to the sponsors audit list
-                                 
-                                         
                                          self.session.stopRunning()
-   
+                                         
+                             }else{
+                              
+                                 
+                                 for auditID in self.auditIDArray{
+                                     
+                                     
+                                     if auditID == self.auditID{
+                                         
+                                         let Alert = UIAlertController(title: "You are already in this project", message: "", preferredStyle: .alert)
+                                         let action1 = UIAlertAction(title: "Try again",style: .default) { (action:UIAlertAction!) in
+                                             
+                                             self.joinOption()
+                                         }
+                                         let action2 = UIAlertAction(title: "Okay",style: .cancel) { (action:UIAlertAction!) in
+                                             
+                                         }
+                                         
+                                         Alert.addAction(action1)
+                                         Alert.addAction(action2)
+                                         self.present(Alert, animated: true, completion: nil)
+                                         
+                                         
+                                     }else{
+                                         
+                                         //this adds the collaboration listing data to the collaborators database
+                                         self.firebaseConsole.addCollab(
+                                            userUID:self.userUID,
+                                            auditImageURL: "",
+                                            date: self.mainFunction.timeStamp(),
+                                            projectName: self.projectName,
+                                            sharedRef: self.sharedRef,
+                                            auditID: self.auditID,
+                                            isEditable: true,
+                                            collaborationID: self.mainFunction.collaborationID())
+                                         
+                                         //add the collaborators info to the sponsors audit list
+                                         self.session.stopRunning()
+                                         
                                      }
+                                     
+                                 }
+                                 
+                                 
+                             }
+                         }
                            
                                      let action1 = UIAlertAction(title: "Not now", style: .cancel) { (action:UIAlertAction!) in
                                          print("Cancel button tapped");
@@ -335,19 +383,32 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
         thisUsersGamesRef.observe(.value, with: { [self] snapshot in
 
                 var listOfCollaborationData: [collaborationData] = []
+                var auditIDArray = Array<String>()
+            
                 for child in snapshot.children {
 
                 if let snapshot = child as? DataSnapshot,
                    let List = collaborationData(snapshot: snapshot) {
                     listOfCollaborationData.append(List)
+                    
+                    auditIDArray.append("\(List.auditID)")
+                    
 
                 }
                 }
-
+            
+                self.auditIDArray = auditIDArray
                 self.listOfCollaborationData = listOfCollaborationData
+            
                 filterData = self.listOfCollaborationData
 
                 self.tableView.reloadData()
+            
+            
+            
+                 print("AuditID's: \(auditIDArray)")
+            
+              
             
                 SwiftLoader.hide()
 
@@ -393,13 +454,19 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
     
     
     func joinOption(){
-        let alertController = UIAlertController(title: "Join this Project?", message: "", preferredStyle: .alert)
-        let action2 = UIAlertAction(title: "using CollabID",style: .default) { (action:UIAlertAction!) in
+        let alertController = UIAlertController(title: "Join a Project?", message: "This is a great way to work with others on the same project! \n\nCreate sites, Take snapshots and co-view reports.", preferredStyle: .alert)
+        let action2 = UIAlertAction(title: "Collab Code",style: .default) { (action:UIAlertAction!) in
             // Perform action
             self.joinByCollabID(textData: "")
         }
 
-        let action1 = UIAlertAction(title: "Scan QR code", style: .default) { (action:UIAlertAction!) in
+        let action1 = UIAlertAction(title: "Scan QR", style: .default) { (action:UIAlertAction!) in
+            // Perform action
+            self.scanAction()
+      
+            
+        }
+        let action3 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
             // Perform action
             self.scanAction()
       
@@ -407,6 +474,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
         }
         alertController.addAction(action1)
         alertController.addAction(action2)
+        alertController.addAction(action3)
 
         self.present(alertController, animated: true, completion: nil)
         
@@ -417,7 +485,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
     func joinByCollabID(textData:String){
         //Ask user for site name:
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "CollabID:", message: "This is a unique ID that is shared by project sponsor.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Collab ID:", message: "This is a unique ID that is shared to you by the project sponsor.", preferredStyle: .alert)
 
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
