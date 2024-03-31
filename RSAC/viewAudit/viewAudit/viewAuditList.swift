@@ -13,6 +13,9 @@ import SwiftLoader
 import SDWebImage
  
 
+
+
+
 class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayout,MKMapViewDelegate  {
     
     // configure the section
@@ -23,17 +26,18 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     //Rows in each section, these are subject to change.
         var SectionCount:Int = 4
-
+    
     
 
 
         var CellHeight: CGFloat = 80
         var padding: CGFloat = 16
 
-        var auditID = String()
+    
         var siteID = String()
         var projectName = String()
         var refData = String()
+        var auditID = String()
         var userUID = String()
     
     
@@ -48,19 +52,14 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         var ArchievedAuditsFilter: [createSiteData] = []
     
     @IBOutlet weak var statusSegment: UISegmentedControl!
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        UserDefaults.standard.removeObject(forKey: "auditID")
-        UserDefaults.standard.removeObject(forKey: "userUID")
 
-  
-        
-    }
     
     
     override func viewDidLoad() {
         
 
+        
+        
         super.viewDidLoad()
         //load list of users who are collaborating data:
    
@@ -217,6 +216,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             SwiftLoader.show(title: "Loading Data", animated: true)
             let uid = Auth.auth().currentUser?.uid
        
+            print("user:\(uid!)")
             
             if userUID != uid!{
                 statusSegment.isHidden = true
@@ -765,7 +765,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             self.present(Alert3, animated: true, completion: nil)
             self.refData = "\(CompletedAuditsFilter[indexPath.row].ref)"
             self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
-            print(self.refData)
+            print("refData:\(self.refData)")
             
   
 
@@ -825,6 +825,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                  if auditID != ""{
                      viewInfoView.auditID = auditID
                      viewInfoView.userUID = userUID
+                    
                  }else{
                      print("Failed to load data")
                  }

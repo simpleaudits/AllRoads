@@ -201,6 +201,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         if let window = self.view.window, let toolPicker = PKToolPicker.shared(for: window) {
         toolPicker.setVisible(true, forFirstResponder: self.canvasView)
         toolPicker.addObserver(self.canvasView)
+            
+            print("A2:\(self.siteID)")
+            print("A2:\(self.auditID)")
+            print("A2:\(self.userUID)")
          
         }
   
@@ -814,6 +818,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
             
         let uid = Auth.auth().currentUser?.uid
         
+  
+        
         if userUID != uid!{
             
 //This would be from a user that is collaborating
@@ -831,7 +837,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                 .child("\(self.mainConsole.auditList!)")
                 .child("\(uuid)")
             
-            let refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.auditList!)/\(uuid)"
+            let refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(userUID)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.auditList!)/\(uuid)"
             
             
             let saveData = auditSiteData(
@@ -942,7 +948,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                     self.observationSnapshotCount(auditID: self.auditID, siteID: self.siteID)
                     //2 save the key
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID, userUID: uuid)
+                        self.firebaseConsole.updateObservationCount(count: "\(self.listOfSitesData.count)", auditID: self.auditID, siteID: self.siteID, userUID: uid!)
                         
                         print("updated and saved observation")
                         SwiftLoader.hide()

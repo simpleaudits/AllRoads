@@ -94,6 +94,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     
     func saveData(imageURL:String){
         
+
+        
                 //show progress view
         SwiftLoader.show(title: "Creating Site", animated: true)
         let uid = Auth.auth().currentUser?.uid
@@ -115,7 +117,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     .child("\(self.mainConsole.siteList!)")
                     .child("\(siteID)")
                 
-                refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
+                refData = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(userUID)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)"
                 
                 let saveData = createSiteData(
                     locationImageURL: imageURL,
@@ -221,6 +223,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             
             
         }
+   
     }
     
   
@@ -364,9 +367,32 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
           
         }
         else if let destination4 = segue.destination as? Observation {
-            destination4.siteID = siteID
-            destination4.auditID = auditID
-            destination4.refData = refData
+            
+            
+            let uid = Auth.auth().currentUser?.uid
+            
+            if userUID != uid!{
+                
+                //collaborator
+                destination4.siteID = siteID
+                destination4.auditID = auditID
+                destination4.refData = refData
+                destination4.userUID = userUID
+                
+               
+     
+            }else{
+                
+                //Sponsor
+                destination4.siteID = siteID
+                destination4.auditID = auditID
+                destination4.refData = refData
+                destination4.userUID = userUID
+                
+                print("B:\(userUID)")
+            }
+            
+
           
         }
         
@@ -389,11 +415,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
         let action1 = UIAlertAction(title: "Start Audit",style: .default) { (action:UIAlertAction!) in
             
             self.performSegue(withIdentifier: "startAudit", sender: self)
-            
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let controller = storyboard.instantiateViewController(withIdentifier: "mainView")
-//            self.present(controller, animated: true, completion: nil)
-            
+        
      
         }
         

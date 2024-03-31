@@ -256,41 +256,86 @@ class saveLocal: UIViewController {
         //This goes to: siteList node
         
         SwiftLoader.show(title: "Updating", animated: true)
-        //let uid = Auth.auth().currentUser?.uid
+        let uid = Auth.auth().currentUser?.uid
         
-        let reftest = Database.database().reference()
-            .child("\(self.mainConsole.prod!)")
-        let auditData = reftest
-            .child("\(self.mainConsole.post!)")
-            .child(userUID)
-            .child("\(self.mainConsole.audit!)")
-            .child("\(auditID)")
-            .child("\(self.mainConsole.siteList!)")
-            .child("\(siteID)")
-        
-        print("obscount ref:\(auditData)")
-        
-        auditData.updateChildValues([
-            "observationCount": count,
-        ]){
-            (error:Error?, ref:DatabaseReference) in
-            if let error = error {
-                print("Data could not be saved: \(error).")
-                
-                SwiftLoader.hide()
-                self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
-                
-                
-                
-            } else {
-                
-                print("Data saved successfully!")
-                
-                self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
-                SwiftLoader.hide()
-                
-                
+        if userUID != uid!{
+            //collaborator
+            
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child(userUID)
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+            
+            print("obscount ref:\(auditData)")
+            
+            auditData.updateChildValues([
+                "observationCount": count,
+            ]){
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    
+                    SwiftLoader.hide()
+                    self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                    
+                    
+                    
+                } else {
+                    
+                    print("Data saved successfully!")
+                    
+                    self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                    SwiftLoader.hide()
+                    
+                    
+                }
             }
+        }else{
+            //sponsor
+            let reftest = Database.database().reference()
+                .child("\(self.mainConsole.prod!)")
+            let auditData = reftest
+                .child("\(self.mainConsole.post!)")
+                .child(uid!)
+                .child("\(self.mainConsole.audit!)")
+                .child("\(auditID)")
+                .child("\(self.mainConsole.siteList!)")
+                .child("\(siteID)")
+            
+            print("obscount ref:\(auditData)")
+            
+            auditData.updateChildValues([
+                "observationCount": count,
+            ]){
+                (error:Error?, ref:DatabaseReference) in
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    
+                    SwiftLoader.hide()
+                    self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                    
+                    
+                    
+                } else {
+                    
+                    print("Data saved successfully!")
+                    
+                    self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                    SwiftLoader.hide()
+                    
+                    
+                }
+            }
+            
+            
+            
+            
+            
         }
     }
     

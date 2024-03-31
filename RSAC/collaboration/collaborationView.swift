@@ -17,6 +17,10 @@ import SwiftLoader
 import AVFoundation
 import QRCodeReader
 
+
+
+
+
 class collabData: UITableViewCell{
 
 
@@ -82,36 +86,9 @@ class collabData: UITableViewCell{
 
 
 class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReaderViewControllerDelegate {
-    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-      reader.stopScanning()
-        
-        dismiss(animated: true, completion: {
-            self.joinByCollabID(textData: result.value)
-         })
-     
-        
-        
-      
-    }
 
-    //This is an optional delegate method, that allows you to be notified when the user switches the cameraName
-    //By pressing on the switch camera button
-    func reader(_ reader: QRCodeReaderViewController, didSwitchCamera newCaptureDevice: AVCaptureDeviceInput) {
-
-    }
-
-    func readerDidCancel(_ reader: QRCodeReaderViewController) {
-      reader.stopScanning()
-        
-   
-
-      dismiss(animated: true, completion: nil)
-    }
+    
  
-    
-    
-
-
 
     //QR
     let session = AVCaptureSession()
@@ -148,9 +125,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
     
     var toggle = Bool()
 
-    
-    
-    
+ 
     
     // Good practice: create the reader lazily to avoid cpu overload during the
     // initialization and each time we need to scan a QRCode
@@ -168,7 +143,33 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
         
         return QRCodeReaderViewController(builder: builder)
     }()
+ 
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+      reader.stopScanning()
+        
+        dismiss(animated: true, completion: {
+            self.joinByCollabID(textData: result.value)
+         })
+     
+        
+        
+      
+    }
 
+    //This is an optional delegate method, that allows you to be notified when the user switches the cameraName
+    //By pressing on the switch camera button
+    func reader(_ reader: QRCodeReaderViewController, didSwitchCamera newCaptureDevice: AVCaptureDeviceInput) {
+
+    }
+
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+      reader.stopScanning()
+        
+   
+
+      dismiss(animated: true, completion: nil)
+    }
+ 
 
     override func viewDidAppear(_ animated: Bool) {
         //filterData = listOfObservationData
@@ -629,9 +630,10 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
         }else{
             UserDefaults.standard.set(  self.auditID, forKey: "auditID") //setObject
             UserDefaults.standard.set(  uid, forKey: "userUID") //setObject
-            
+
         }
-            
+        
+
             
         self.performSegue(withIdentifier: "fromCollaboration", sender: indexPath.row);
  
@@ -648,6 +650,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
                 viewInfoView.projectName  = projectName
                 viewInfoView.userUID  = userUID
                 
+
+            
                 
             }else{
                 
@@ -656,6 +660,8 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
         }
         
    }
+    
+  
 
     
 

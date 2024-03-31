@@ -9,35 +9,13 @@ import Foundation
 import UIKit
 import Firebase
 
-//
-//struct data123{
-//    
-//    let auditID:String
-//    let userUID:String
-//    let loadListOfUsers = collectionOfUsers()
-//    
-//    init(auditID: String, userUID: String)
-//    
-//    
-//    {
-//        self.auditID = auditID
-//        self.userUID = userUID
-//        
-//        print("TEST1\(auditID)")
-//        print("TEST2\(userUID)")
-//        
-//    
-//        loadListOfUsers.loadListOfUserData(userUID:userUID, auditID:auditID)
-//    }
-//  
-//    
-//    
-//}
-
 
 
 class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
-  
+    
+    
+    var listOfObservationData: [listOfUsers] = []
+    
     private let cellID = "list"
     private let joinID = "join"
     
@@ -45,9 +23,90 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
     let extensConsole = extens()
     
     
-    var listOfObservationData: [listOfUsers] = []
+
+
+    
+    func loadData(auditID: String, userUID: String) {
+        print("fire")
+            
+            let uid = Auth.auth().currentUser?.uid
+            
+            if userUID != uid!{
+                
+                let reftest = Database.database().reference()
+                    .child("\(self.mainConsole.prod!)")
+                let auditData = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child("\(userUID)")
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                    .child("\(self.mainConsole.userCollaborationList!)")
+                
+                
+               
+                
+                auditData.queryOrderedByKey()
+                    .observe(.value, with: { snapshot in
+                        
+                        var listOfObservationData: [listOfUsers] = []
+                        
+                        for child in snapshot.children {
+                            if let snapshot = child as? DataSnapshot,
+                               let listOfUsers = listOfUsers(snapshot: snapshot) {
+                                listOfObservationData.append(listOfUsers)
+                                
+                                print("protocolA:\(listOfObservationData)")
+                                print("protocolA:\(userUID)")
+                   
+                            }
+                        }
+                        self.listOfObservationData = listOfObservationData
+                        self.collectionView.reloadData()
+                        
+          
+                        
+                    })
+                
+            }else{
+                
+                let reftest = Database.database().reference()
+                    .child("\(self.mainConsole.prod!)")
+                let auditData = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child("\(uid!)")
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                    .child("\(self.mainConsole.userCollaborationList!)")
+                
+          
+              
+                
+                auditData.queryOrderedByKey()
+                    .observe(.value, with: { snapshot in
+                        
+                        var listOfObservationData: [listOfUsers] = []
+                        
+                        for child in snapshot.children {
+                            if let snapshot = child as? DataSnapshot,
+                               let listOfUsers = listOfUsers(snapshot: snapshot) {
+                                listOfObservationData.append(listOfUsers)
+                                
+                                print("protocolA:\(listOfObservationData)")
+                                print("protocolA:\(userUID)")
+          
+                            }
+                        }
+                        self.listOfObservationData = listOfObservationData
+                        self.collectionView.reloadData()
+       
+                        
+                    })
+            }
+        
+    }
     
     
+  
 
     
     
@@ -111,7 +170,7 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             
                                 //display product owner DP
                                 cell.userImage.sd_setImage(with: URL(string:displayURL!))
-                                cell.nameLabel.text = username!
+                                cell.nameLabel.text = username
             
    
             
@@ -129,7 +188,8 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         // initialise all objects
         loadListOfUserData(userUID:UserDefaults.standard.string(forKey: "userUID")!, auditID:UserDefaults.standard.string(forKey: "auditID")!)
         
-        //loadListOfUserData(userUID:"", auditID:"")
+       
+    
         
         
         collectionView.register(cellData.self, forCellWithReuseIdentifier: cellID)
@@ -137,7 +197,7 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         
         collectionView.dataSource = self
         collectionView.delegate = self
-     
+  
 
         collectionView.frame = CGRect(
             x: 0,

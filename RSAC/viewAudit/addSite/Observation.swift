@@ -148,15 +148,17 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         //filterData = listOfObservationData
+        
+        print("A:\(self.siteID)")
+        print("A:\(self.userUID)")
+        print("A:\(self.refData)")
+
 
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        
- 
-        
 
         
         //load the number of listing the user can actually make here:
@@ -293,11 +295,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
                   
                })
 
-//               DispatchQueue.main.async {
-//                   self.tableView.reloadData()
-//
-//               }
-           
+
        }
     
 
@@ -307,7 +305,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
         
         let mainConsole = CONSOLE()
         
-                 let uid = Auth.auth().currentUser?.uid
+        let uid = Auth.auth().currentUser?.uid
         
         
         if userUID != uid!{
@@ -393,9 +391,8 @@ class Observation: UITableViewController,UISearchBarDelegate {
         
          func checkUserStatus(){
                
-              if Auth.auth().currentUser != nil {
-                  
-                  
+             SwiftLoader.hide()
+            
                   
                   let reftest = Database.database().reference(withPath:"\(refData)")
 
@@ -408,7 +405,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
                                  let status = dict["status"] as? String
                                  print("status:\(status!)")
-                                 SwiftLoader.hide()
+                                
                           
                            
                                   switch status{
@@ -425,7 +422,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
                       
                 }
 
-          }
+          
                 
         
         
@@ -462,6 +459,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
             //we want to get the database reference
         
         if self.userUID != uid{
+            
             let reftest = Database.database().reference()
                 .child("\(self.mainConsole.prod!)")
             let auditData = reftest
@@ -554,6 +552,8 @@ class Observation: UITableViewController,UISearchBarDelegate {
             
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.firebaseConsole.updateObservationCount(count: "\(self.listOfObservationData.count)", auditID: self.auditID, siteID: self.siteID, userUID: self.userUID)
+
+                    
                     
                     print("updated and saved observation")
                     SwiftLoader.hide()
@@ -564,6 +564,9 @@ class Observation: UITableViewController,UISearchBarDelegate {
 //This would be user that is listing item
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.firebaseConsole.updateObservationCount(count: "\(self.listOfObservationData.count)", auditID: self.auditID, siteID: self.siteID, userUID: uid!)
+                    
+                    
+ 
                     
                     print("updated and saved observation")
                     SwiftLoader.hide()
@@ -612,10 +615,11 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      if let destination4 = segue.destination as? addAuditSites {
-          destination4.siteID = siteID
-          destination4.auditID = auditID
-        destination4.userUID = userUID
+            destination4.siteID = siteID
+            destination4.auditID = auditID
+            destination4.userUID = userUID
 
+ 
         
      }else if let destination5 = segue.destination as? viewPDF {
          destination5.refData = refData

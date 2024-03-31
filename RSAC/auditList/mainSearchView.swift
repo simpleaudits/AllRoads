@@ -84,6 +84,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func viewDidLoad() {
         
+        
 
         //load the number of listing the user can actually make here:
         loadUserStats()
@@ -406,9 +407,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
                      viewInfoView.auditID = auditID
                      viewInfoView.projectName  = projectName
                      viewInfoView.userUID = "\(uid!)"
-                     
-          
-                 
+             
                      
                  }else{
                      
