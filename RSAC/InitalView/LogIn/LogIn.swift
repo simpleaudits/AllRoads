@@ -99,8 +99,8 @@ class LogIn: UITableViewController,UITextFieldDelegate,UITextViewDelegate {
         Auth.auth().addStateDidChangeListener() { auth, user in
             if user != nil {
   
-                let alertController = UIAlertController(title: "Stay Signed in", message: "Continue with \(user!.email!) ?", preferredStyle: .alert)
-                let action2 = UIAlertAction(title: "Continue",style: .default) { (action:UIAlertAction!) in
+                let alertController = UIAlertController(title: "Stay Signed in with:\(user!.email!) ?", message: "Version 1.0.1(7) requires users to re-create an account to use the added functionality.\n\nPlease Sign Out and Sign Up. Thank you.\n\n*All previous data has been removed.*", preferredStyle: .alert)
+                let action2 = UIAlertAction(title: "Stay Signed In",style: .default) { (action:UIAlertAction!) in
                     // Perform action
                  
                     self.username.text = nil

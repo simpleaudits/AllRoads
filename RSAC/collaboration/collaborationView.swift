@@ -469,7 +469,7 @@ class collaborationView: UITableViewController,UISearchBarDelegate, QRCodeReader
         }
         let action3 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
             // Perform action
-            self.scanAction()
+    
       
             
         }

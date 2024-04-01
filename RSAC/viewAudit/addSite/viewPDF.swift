@@ -16,6 +16,9 @@ class viewPDF: UIViewController {
     @IBOutlet weak var webView: WKWebView!
  
     let mainConsole = CONSOLE()
+    //let mainFunction = extens()
+    
+    
     var refData = String()
     var imageData = UIImage()
     
@@ -66,7 +69,7 @@ class viewPDF: UIViewController {
         
         //add the data here:
         //header data:
-        document.add(.headerLeft, text: "AllRoadsAudit")
+        document.add(.headerLeft, text: "AllRoads Audit")
         //line seperator
         let style = PDFLineStyle(type: .full, color: .darkGray, width: 1)
         document.addLineSeparator(PDFContainer.contentLeft, style: style)
@@ -78,13 +81,13 @@ class viewPDF: UIViewController {
         // Add some spacing below title
         document.add(space: 15.0)
         // Project Name:
-        document.add(.contentLeft, text: "Corridor Extension")
+        document.add(.contentLeft, text: "Draft Document")
 
         // Add some spacing below title
         document.add(space: 15.0)
         
         // Create and add a subtitle as an attributed string for more customization possibilities
-        let title = NSMutableAttributedString(string: "28/07/1994", attributes: [
+        let title = NSMutableAttributedString(string: "Draft", attributes: [
             .font: Font.systemFont(ofSize: 15.0),
             .foregroundColor: Color(red: 0.171875, green: 0.2421875, blue: 0.3125, alpha: 1.0)
         ])
@@ -232,7 +235,7 @@ class viewPDF: UIViewController {
         
         //Export the file
         
-        let filename = "awesome.pdf"
+        let filename = "AllRoads_Doc).pdf"
         let generator = PDFGenerator(document: document)
   
         DispatchQueue.global(qos: .background).async {

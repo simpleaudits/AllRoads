@@ -734,84 +734,96 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         else if indexPath.section == auditListSection{
             // List of audits
             
-            let auditData = CompletedAuditsFilter[indexPath.row]
-            
-            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
-                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
-                            //save this for headerview in view item
-                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
 
-                        }
-            let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
-                            //save this for headerview in view item
-                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
-                
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    
-                }
-                
-                        }
-
-                            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
-                        }
-           
-            Alert3.addAction(action1)
-            Alert3.addAction(action2)
-            Alert3.addAction(action3)
-            //Alert3.addAction(action4)
             
-            //archieved
-            self.present(Alert3, animated: true, completion: nil)
             self.refData = "\(CompletedAuditsFilter[indexPath.row].ref)"
             self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
-            print("refData:\(self.refData)")
+            self.performSegue(withIdentifier: "viewAuditList", sender: self)
             
-  
-
+            
+//
+//            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
+//                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
+//                            //save this for headerview in view item
+//                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
+//
+//                        }
+//            let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
+//                            //save this for headerview in view item
+//                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
+//
+//                DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//
+//                }
+//
+//            }
+//
+//                let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
+//            }
+//
+//            Alert3.addAction(action1)
+//            Alert3.addAction(action2)
+//            Alert3.addAction(action3)
+//            //Alert3.addAction(action4)
+//
+//            //archieved
+//            self.present(Alert3, animated: true, completion: nil)
+//            self.refData = "\(CompletedAuditsFilter[indexPath.row].ref)"
+//            self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
+//            print("refData:\(self.refData)")
+//
+//
+//
         }else {
-    
-            let auditData = ArchievedAuditsFilter[indexPath.row]
-            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
-                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
-                            //save this for headerview in view item
-                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
-
-                        }
-
-            
-            let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
-                            //save this for headerview in view item
-                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
-                
-                DispatchQueue.main.async {
-                   
-                    self.collectionView.reloadData()
-                    
-                }
-                            
-                        }
-
-            
-                            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
-                        }
-           
-            Alert3.addAction(action1)
-           // Alert3.addAction(action2)
-            Alert3.addAction(action3)
-            Alert3.addAction(action4)
-   
-
-            
-            //archieved
-            self.present(Alert3, animated: true, completion: nil)
             self.refData = "\(ArchievedAuditsFilter[indexPath.row].ref)"
             self.siteID = "\(ArchievedAuditsFilter[indexPath.row].siteID)"
-            print(self.refData )
+            self.performSegue(withIdentifier: "viewAuditList", sender: self)
             
-     
-           
-
+            
+            //
+            //            let auditData = ArchievedAuditsFilter[indexPath.row]
+            //            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
+            //                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
+            //                            //save this for headerview in view item
+            //                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
+            //
+            //                        }
+            //
+            //
+            //            let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
+            //                            //save this for headerview in view item
+            //                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
+            //
+            //                DispatchQueue.main.async {
+            //
+            //                    self.collectionView.reloadData()
+            //
+            //                }
+            //
+            //                        }
+            //
+            //
+            //                            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
+            //                        }
+            //
+            //            Alert3.addAction(action1)
+            //           // Alert3.addAction(action2)
+            //            Alert3.addAction(action3)
+            //            Alert3.addAction(action4)
+            //
+            //
+            //
+            //            //archieved
+            //            self.present(Alert3, animated: true, completion: nil)
+            //            self.refData = "\(ArchievedAuditsFilter[indexPath.row].ref)"
+            //            self.siteID = "\(ArchievedAuditsFilter[indexPath.row].siteID)"
+            //            print(self.refData )
+            //
+            //
+            //
+            //
+        
         }
     }
 

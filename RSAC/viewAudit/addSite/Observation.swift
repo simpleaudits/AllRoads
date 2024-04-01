@@ -149,9 +149,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
     override func viewDidAppear(_ animated: Bool) {
         //filterData = listOfObservationData
         
-        print("A:\(self.siteID)")
-        print("A:\(self.userUID)")
-        print("A:\(self.refData)")
+
 
 
     }
@@ -332,6 +330,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
         }else{
             //This would be user that is listing item
             statusSegment.isHidden = false
+            
             let reftest = Database.database().reference()
                 .child("\(mainConsole.prod!)")
                 .child("\(mainConsole.post!)")
