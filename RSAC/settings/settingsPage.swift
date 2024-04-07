@@ -354,17 +354,25 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 if indexPath.section == profileSection{
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
                 cell.accessoryType = .disclosureIndicator
+                cell.selectionStyle = .none
+                
 
                 
                     if indexPath.row == 0 {
                         
+                       
+//                        cell.auditDescription.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//                        cell.numberOfUsesLeft.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//                        cell.subscriptionLabelHeader.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                        
+                        cell.accessoryType = .none
                         cell.siteImage.isHidden = true
+                        cell.settingsLabel.isHidden = true
                         cell.auditDescription.isHidden = true
                         cell.subscriptionLabel.isHidden = false
                         cell.numberOfUsesLeft.isHidden = false
                         cell.upgradeAccount.isHidden = false
                         cell.subscriptionLabelHeader.isHidden = false
-                        
                         cell.subscriptionLabelHeader.text = "Status:"
                     
                         
@@ -379,9 +387,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                         
                         
                         if self.userStatus != mainConsole.userStatus{
-                            cell.subscriptionLabel.text = "Not Subscribed"//"\(self.userStatus)"
+                            cell.subscriptionLabel.text = "NotSubscribed"//"\(self.userStatus)"
                             cell.numberOfUsesLeft.text = "Project Limit: \(self.listingCount)\nSite Limit: \(self.listingCount*2)\nObservation Limit: \(self.listingCount*3)"
-
+                            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                             
                             cell.subscriptionLabel.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
                             
@@ -391,6 +399,8 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                             width: cell.subscriptionLabel.intrinsicContentSize.width + 10,
                             height: 20)
                         }else{
+                            
+                            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                             cell.subscriptionLabel.text = "Subscribed"//"\(self.userStatus)"
                             cell.numberOfUsesLeft.text = "Project Limit: ∞\nSite Limit: ∞\nObservation Limit: ∞"
 
@@ -513,6 +523,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 }else if indexPath.section == reportSection{
                     let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
                     cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .none
 
 
                     cell.settingsLabel.text = "Report Configuration"
@@ -535,6 +546,8 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
    
                     let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
                     cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .none
+                    
                     cell.siteImage.isHidden = true
                     cell.auditDescription.isHidden = false
                     cell.subscriptionLabel.isHidden = true
@@ -566,14 +579,24 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 //rateAppSection
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cellSettings", for: indexPath) as! cellSettings
                 cell.accessoryType = .disclosureIndicator
+                cell.selectionStyle = .none
 
-                cell.settingsLabel.text = "Rate!"
+                cell.settingsLabel.text = "Rate App"
+                    
+                    
+                cell.settingsLabel.isHidden = false
                 cell.siteImage.isHidden = true
                 cell.auditDescription.isHidden = true
                 cell.subscriptionLabel.isHidden = true
                 cell.numberOfUsesLeft.isHidden = true
                 cell.upgradeAccount.isHidden = true
                 cell.subscriptionLabelHeader.isHidden = true
+                    
+                cell.settingsLabel.frame = CGRect(
+                x: 20, //siteImage.frame.maxX + 5,
+                y:  cell.frame.height/2 - 15,
+                width: cell.frame.width - 80,
+                height: 30)
 
                 return cell
 
@@ -630,6 +653,9 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
             }
 
             override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+                
+                
             if indexPath.section == profileSection{
                 if indexPath.row == 0{
    

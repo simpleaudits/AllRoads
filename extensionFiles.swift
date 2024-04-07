@@ -117,7 +117,7 @@ class CONSOLE: UIViewController {
     var observationMulti:Int? = 3
     
     var userStatus:String? = "Subscribed"
-  
+    var userStatusNotSubbed:String? = "Subscribed"
     
     var prod:String? = "prod"
     var post:String? = "post"

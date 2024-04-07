@@ -19,14 +19,18 @@ extension viewPDF{
         let image: String
         let imageData: UIImage
         let date: String
+        let lat: String
+        let long: String
         
         
-        init(title: String, description:String,imageData:UIImage, image:String, date:String) {
+        init(title: String, description:String,imageData:UIImage, image:String, date:String, lat:String, long: String) {
             self.title = title
             self.body = description
             self.image = image
             self.imageData = imageData
             self.date = date
+            self.lat = lat
+            self.long = long
             
         }
     }

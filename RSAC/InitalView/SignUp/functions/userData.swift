@@ -58,7 +58,7 @@ extension SignUpController {
                 orgType: cell1.lastName.text!,
                 contact: 0,
                 accountVerificationStatus: true,
-                userStatus: "unsubsribed",
+                userStatus: "\(mainConsole.userStatusNotSubbed!)",
                 DPimage: DPDataURL,
                 listingMax: 3,
                 nestedNode: "",
