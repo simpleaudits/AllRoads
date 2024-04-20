@@ -23,7 +23,15 @@ extension viewPDF{
         let long: String
         
         
-        init(title: String, description:String,imageData:UIImage, image:String, date:String, lat:String, long: String) {
+        let userUploaded: String
+        
+        
+//        let userUploadedSignature: UIImage
+//        let userUpladedImage: UIImage
+        
+        
+        
+        init(title: String, description:String,imageData:UIImage, image:String, date:String, lat:String, long: String, userUploaded:String/*, userUploadedSignature:UIImage, userUpladedImage:UIImage*/) {
             self.title = title
             self.body = description
             self.image = image
@@ -31,6 +39,10 @@ extension viewPDF{
             self.date = date
             self.lat = lat
             self.long = long
+            
+            self.userUploaded = userUploaded
+//            self.userUploadedSignature = userUploadedSignature
+//            self.userUpladedImage = userUpladedImage
             
         }
     }

@@ -176,52 +176,6 @@ class Observation: UITableViewController,UISearchBarDelegate {
   
     }
 
-//    @IBAction func indexChanged(_ sender: Any) {
-//        switch segmentControlOutlet.selectedSegmentIndex {
-//        case 0:
-//            print("Working")
-//            toggle = true
-//
-//            filterData = listOfObservationData.filter(
-//                {return $0.status.description.localizedCaseInsensitiveContains("true") })
-//
-//            tableView.reloadData()
-//
-//
-//        case 1:
-//            print("Archive")
-//            toggle = false
-//
-//
-//            filterData = listOfObservationData.filter(
-//                {return $0.status.description.localizedCaseInsensitiveContains("false") })
-//
-//            tableView.reloadData()
-//
-//        default:
-//            break
-//        }
-//
-//    }
-    
-//    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        UIView.animate(withDuration: 0.5, animations: {
-//            self.customView.frame.origin.y = self.view.frame.height - (self.tabBarController?.tabBar.frame.size.height ?? 49)
-//
-//        }, completion: nil)
-//
-//    }
-//
-//    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//                //we hide the button buttons here
-//        UIView.animate(withDuration: 0.5, animations: {
-//            self.customView.frame.origin.y = self.view.frame.height
-//
-//
-//        }, completion: nil)
-//    }
-//
-    
 
     @objc func addItem(){
         

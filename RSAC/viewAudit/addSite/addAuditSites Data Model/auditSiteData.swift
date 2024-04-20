@@ -27,6 +27,11 @@ struct auditSiteData{
     let riskRating: Int
     var status: String
     
+    let userUploaded: String
+    let userUploadedSignature: String
+    let userUpladedImage: String
+    
+    
     
     
     
@@ -42,7 +47,11 @@ struct auditSiteData{
         observationID: String,
         siteID: String,
         riskRating: Int,
-        status: String
+        status: String,
+        
+        userUploaded: String,
+        userUploadedSignature: String,
+        userUpladedImage: String
     )
     
     
@@ -59,6 +68,10 @@ struct auditSiteData{
         self.siteID = siteID
         self.riskRating = riskRating
         self.status = status
+        
+        self.userUploaded = userUploaded
+        self.userUploadedSignature = userUploadedSignature
+        self.userUpladedImage = userUpladedImage
         
     }
     
@@ -77,6 +90,9 @@ struct auditSiteData{
             let riskRating = value["riskRating"] as? Int,
             let observationID = value["observationID"] as? String,
             let siteID = value["siteID"] as? String,
+            let userUploaded = value["userUploaded"] as? String,
+            let userUploadedSignature = value["userUploadedSignature"] as? String,
+            let userUpladedImage = value["userUpladedImage"] as? String,
             let status = value["status"] as? String else {
                 return nil
         }
@@ -92,6 +108,10 @@ struct auditSiteData{
         self.riskRating = riskRating
         self.siteID = siteID
         self.status = status
+        
+        self.userUploaded = userUploaded
+        self.userUploadedSignature = userUploadedSignature
+        self.userUpladedImage = userUpladedImage
     }
     
     func saveAuditData() -> [String:Any] {
@@ -107,6 +127,9 @@ struct auditSiteData{
             "ref": ref,
             "observationID": observationID,
             "siteID": siteID,
+            "userUploaded": userUploaded,
+            "userUploadedSignature": userUploadedSignature,
+            "userUpladedImage": userUpladedImage,
             "status": status
         ]
     }

@@ -76,6 +76,12 @@ extension UIImage {
 class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription,saveDescriptionRisk, UIPencilInteractionDelegate{
 
  
+    //userdetails:
+    var username : String? = "Untitled"
+    var userSignature : String? = "No signature"
+    var userImage : String? = "No Image"
+    
+    
     var line1 = UIView()
     var line2 = UIView()
     
@@ -223,7 +229,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
        
         
         
-        
+        //get the users details
+        loadUserStats()
         
         
         findlocation()
@@ -365,7 +372,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         safetyRatingHeading = UILabel(frame:CGRect(x: 10, y: descriptionTextfield.frame.maxY + 30, width: 160, height: 40))
         //safetyRating.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
-        safetyRatingHeading.text = "Safety Rating:"
+        safetyRatingHeading.text = "Risk Rating:"
         safetyRatingHeading.numberOfLines = 1
         safetyRatingHeading.font = UIFont.boldSystemFont(ofSize: 20)
         safetyRatingHeading.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -852,7 +859,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                 observationID: "\(uuid)",
                 siteID:"\(siteID)",
                 riskRating: safetyRatingValue,
-                status: "true")
+                status: "true",
+                userUploaded: "",
+                userUploadedSignature: "",
+                userUpladedImage: "")
             
             
             
@@ -922,7 +932,10 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                 observationID: "\(uuid)",
                 siteID:"\(siteID)",
                 riskRating: safetyRatingValue,
-                status: "true")
+                status: "true",
+                userUploaded: self.username!,
+                userUploadedSignature: self.userSignature!,
+                userUpladedImage: self.userImage!)
             
             
             
@@ -1015,6 +1028,65 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
    
 
         }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//Get the creating the observation details--------------------------------------------------------[START]
+    
+  
+    func loadUserStats(){
+
+        
+                 let uid = Auth.auth().currentUser?.uid
+                 let reftest = Database.database().reference()
+                     .child("\(mainConsole.prod!)")
+                     .child("\(mainConsole.post!)")
+                     .child(uid!)
+                     .child("\(mainConsole.userDetails!)")
+                 
+                 reftest.queryOrderedByKey()
+                     .observe( .value, with: { snapshot in
+                               guard let dict = snapshot.value as? [String:Any] else {
+                               //error here
+                               return
+                               }
+
+                                let username = dict["nest1"] as? String
+                                let DPimage = dict["DPimage"] as? String
+                                let signatureURL = dict["signatureURL"] as? String
+                         
+                                 self.username = username
+                                 self.userSignature = DPimage
+                                 self.userImage = signatureURL
+                  
+                           
+                   })
+        
+     
+    }
+
+//Get the creating the observation details--------------------------------------------------------[END]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
          if let destination3 = segue.destination as? addSiteDetails {
