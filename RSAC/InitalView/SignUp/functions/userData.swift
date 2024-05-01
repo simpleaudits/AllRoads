@@ -33,6 +33,59 @@ extension SignUpController {
     }
     
     
+    
+    
+    //Generate default report configuration Settings-------------------------------------------------[START]
+    
+    func reportConfiguration(){
+        //show progress view
+        SwiftLoader.show(title: "Generataring Report Configurations", animated: true)
+
+        let uid = Auth.auth().currentUser?.uid
+            
+        let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+       
+        let thisUsersGamesRef = reftest
+            .child("\(self.mainConsole.post!)")
+            .child(uid!)
+            .child("\(self.mainConsole.reportConfig!)")
+
+
+        let saveData = reportConfigData(
+            pdfStyle: "1",
+            colourStyle: "#FFA500",
+            fontStyle: "",
+            nest1: "",
+            nest2: "",
+            nest3: "",
+            nest4: "",
+            nest5: "",
+            completed: true)
+
+            thisUsersGamesRef.setValue(saveData.saveReportConfig()){
+                (error:Error?, ref:DatabaseReference) in
+
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    self.errorUpload(errorMessage: "report presets could not be saved",subtitle: "\(error)")
+                    SwiftLoader.hide()
+                    
+                } else {
+                    print("saved")
+                    SwiftLoader.hide()
+                    self.processdata()
+                    
+      
+                    
+  
+                }
+                  
+            }
+    }
+    
+    
+    //Generate default report configuration Settings-------------------------------------------------[END]
+    
     //SAVE user data.
     
     func processdata(){
@@ -60,7 +113,7 @@ extension SignUpController {
                 accountVerificationStatus: true,
                 userStatus: "\(mainConsole.userStatusNotSubbed!)",
                 DPimage: DPDataURL,
-                listingMax: 3,
+                listingMax: mainConsole.maxListing!,
                 nestedNode: "",
                 dateJoined: timeStamp(),
                 completed: true,
@@ -90,7 +143,11 @@ extension SignUpController {
                 } else {
                     print("user info saved")
                     SwiftLoader.hide()
+                    
+                    //save the users report default data here:
                     self.successUpload(Message: "Welcome!", subtitle: "")
+                    
+                    
     
                    
                 }

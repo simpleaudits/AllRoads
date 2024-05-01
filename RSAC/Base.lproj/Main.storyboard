@@ -698,10 +698,145 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" largeTitleDisplayMode="always" id="CJ3-h0-NnJ"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <segue destination="far-Bo-v09" kind="show" identifier="reportConfig" id="mpN-Q9-YBZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R8N-pT-ZLk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-708" y="1306"/>
+        </scene>
+        <!--Report Configuration-->
+        <scene sceneID="iKz-Rq-fdk">
+            <objects>
+                <tableViewController id="far-Bo-v09" customClass="reportConfig" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="singleLineEtched" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="pHa-Wj-HO8">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <sections>
+                            <tableViewSection headerTitle="PDF Style" id="QxH-AE-BTm">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="175" id="kXK-iY-8mf">
+                                        <rect key="frame" x="20" y="38" width="353" height="175"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kXK-iY-8mf" id="8cW-sz-7Gf">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="175"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="largePDF" translatesAutoresizingMaskIntoConstraints="NO" id="cvD-GD-Wwt">
+                                                    <rect key="frame" x="15.000000000000007" y="11" width="102.66666666666669" height="144"/>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mediumPDF" translatesAutoresizingMaskIntoConstraints="NO" id="Zco-7Z-25f">
+                                                    <rect key="frame" x="126" y="11" width="102.66666666666669" height="144"/>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smallPDF" translatesAutoresizingMaskIntoConstraints="NO" id="d4i-oS-stZ">
+                                                    <rect key="frame" x="235.99999999999997" y="11" width="102.66666666666666" height="144"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Zco-7Z-25f" secondAttribute="bottom" constant="9" id="8ID-MD-GZE"/>
+                                                <constraint firstItem="cvD-GD-Wwt" firstAttribute="leading" secondItem="8cW-sz-7Gf" secondAttribute="leadingMargin" constant="-5" id="BUi-wV-oBX"/>
+                                                <constraint firstItem="cvD-GD-Wwt" firstAttribute="top" secondItem="8cW-sz-7Gf" secondAttribute="topMargin" id="Dxp-4V-emW"/>
+                                                <constraint firstItem="Zco-7Z-25f" firstAttribute="leading" secondItem="cvD-GD-Wwt" secondAttribute="trailing" constant="8.3333333333333144" id="Gmn-hF-T4W"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="d4i-oS-stZ" secondAttribute="bottom" constant="9" id="J9D-1H-3ey"/>
+                                                <constraint firstItem="d4i-oS-stZ" firstAttribute="width" secondItem="cvD-GD-Wwt" secondAttribute="width" id="KIk-Mg-MI8"/>
+                                                <constraint firstItem="d4i-oS-stZ" firstAttribute="top" secondItem="8cW-sz-7Gf" secondAttribute="topMargin" id="MvI-LT-NT9"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="d4i-oS-stZ" secondAttribute="trailing" constant="-5.6666666666666856" id="PqF-JN-bez"/>
+                                                <constraint firstItem="d4i-oS-stZ" firstAttribute="leading" secondItem="Zco-7Z-25f" secondAttribute="trailing" constant="7.3333333333333712" id="fCz-gD-J4h"/>
+                                                <constraint firstItem="Zco-7Z-25f" firstAttribute="top" secondItem="8cW-sz-7Gf" secondAttribute="topMargin" id="ivE-mS-jDf"/>
+                                                <constraint firstItem="Zco-7Z-25f" firstAttribute="width" secondItem="cvD-GD-Wwt" secondAttribute="width" id="xmo-Sn-XBV"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="cvD-GD-Wwt" secondAttribute="bottom" constant="9" id="z2L-U5-dpb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="95" id="Cs4-Dj-21f">
+                                        <rect key="frame" x="20" y="213" width="353" height="95"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cs4-Dj-21f" id="Rnb-wf-JqS">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mbd-er-xHO">
+                                                    <rect key="frame" x="29" y="22" width="295" height="52"/>
+                                                    <segments>
+                                                        <segment title="Large"/>
+                                                        <segment title="Medium"/>
+                                                        <segment title="Small"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="PDFselection:" destination="far-Bo-v09" eventType="valueChanged" id="DeY-x0-Y8C"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mbd-er-xHO" firstAttribute="leading" secondItem="Rnb-wf-JqS" secondAttribute="leadingMargin" constant="9" id="1FI-KJ-QxP"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mbd-er-xHO" secondAttribute="trailing" constant="9" id="XsP-u3-D16"/>
+                                                <constraint firstItem="mbd-er-xHO" firstAttribute="top" secondItem="Rnb-wf-JqS" secondAttribute="topMargin" constant="11" id="Ztq-Qj-kcy"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="mbd-er-xHO" secondAttribute="bottom" constant="11" id="uZr-g9-wIQ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Colour Preference" id="219-R0-vl0">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="76" id="RrZ-T4-aNb">
+                                        <rect key="frame" x="20" y="363.99999999999994" width="353" height="76"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RrZ-T4-aNb" id="Wdm-r9-Ld5">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="76"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <colorWell contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7dW-Tb-gVV">
+                                                    <rect key="frame" x="54.000000000000007" y="11" width="94.666666666666686" height="51"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="94.666666666666686" id="4ZY-ee-Jvv"/>
+                                                        <constraint firstAttribute="height" constant="51" id="Prz-UE-zdq"/>
+                                                    </constraints>
+                                                </colorWell>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="zCp-lU-xx0">
+                                                    <rect key="frame" x="194" y="11" width="104" height="51"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="104" id="7wa-Ye-iMA"/>
+                                                        <constraint firstAttribute="height" constant="51" id="8Rn-hR-2Vw"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zCp-lU-xx0" secondAttribute="trailing" constant="35" id="2DJ-Uz-Qsd"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="7dW-Tb-gVV" secondAttribute="bottom" constant="3" id="JHN-6H-emN"/>
+                                                <constraint firstItem="zCp-lU-xx0" firstAttribute="leading" secondItem="7dW-Tb-gVV" secondAttribute="trailing" constant="45.333333333333314" id="Qnu-Tw-ytM"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="zCp-lU-xx0" secondAttribute="bottom" constant="3" id="Sw8-qP-Fxn"/>
+                                                <constraint firstItem="7dW-Tb-gVV" firstAttribute="top" secondItem="Wdm-r9-Ld5" secondAttribute="topMargin" id="XnM-rt-LDH"/>
+                                                <constraint firstItem="7dW-Tb-gVV" firstAttribute="leading" secondItem="Wdm-r9-Ld5" secondAttribute="leadingMargin" constant="34" id="cMg-GB-sfM"/>
+                                                <constraint firstItem="zCp-lU-xx0" firstAttribute="top" secondItem="Wdm-r9-Ld5" secondAttribute="topMargin" id="zlK-tN-euu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="far-Bo-v09" id="idD-4V-kIF"/>
+                            <outlet property="delegate" destination="far-Bo-v09" id="T3c-DL-86b"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Report Configuration" id="eeN-TL-2AB"/>
+                    <connections>
+                        <outlet property="colorWell" destination="7dW-Tb-gVV" id="e3K-6A-Zw9"/>
+                        <outlet property="colourChoice" destination="zCp-lU-xx0" id="d5u-wO-yfB"/>
+                        <outlet property="largePDF" destination="cvD-GD-Wwt" id="31y-LF-dfg"/>
+                        <outlet property="mediumPDF" destination="Zco-7Z-25f" id="LJR-GF-fsC"/>
+                        <outlet property="segmentControllerOutlet" destination="mbd-er-xHO" id="lY9-I4-jjn"/>
+                        <outlet property="smallPDF" destination="d4i-oS-stZ" id="DMi-u3-MrK"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yCK-dt-fr1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="281.67938931297709" y="870.4225352112677"/>
         </scene>
         <!--Category-->
         <scene sceneID="QiZ-ds-fhC">
@@ -1550,10 +1685,13 @@
         <image name="image4.png" width="379" height="122"/>
         <image name="image5.png" width="379" height="191"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
+        <image name="largePDF" width="500" height="500"/>
         <image name="location.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="mediumPDF" width="500" height="500"/>
         <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="shareplay" catalog="system" width="128" height="75"/>
+        <image name="smallPDF" width="500" height="500"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

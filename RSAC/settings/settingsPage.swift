@@ -675,6 +675,11 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 presentModal()
 
                 }
+            }else  if indexPath.section == reportSection{
+                if indexPath.row == 0{
+   
+                    self.performSegue(withIdentifier: "reportConfig", sender: self)
+                }
             }
             }
 
@@ -967,6 +972,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
             }
 
+                
 
             else {
 

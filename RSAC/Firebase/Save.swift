@@ -56,7 +56,7 @@ class saveLocal: UIViewController {
                         } else {
                             print("Collaborators data saved to project sponsors list")
                             SwiftLoader.hide()
-                            self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                            self.mainFunction.successUpload(Message: "Welcome", subtitle: "")
                             
           
                         }
@@ -167,8 +167,6 @@ class saveLocal: UIViewController {
         
     }
     
-    
-   
     
     func updateAuditProgress(auditProgress:String, auditID:String){
         
@@ -332,12 +330,79 @@ class saveLocal: UIViewController {
                 }
             }
             
-            
-            
-            
+         
             
         }
     }
+    func updateColourPreference(colourStyle:String, ref:String){
+        //status is either: "active" or "not active"
+       
+        //This goes to: siteList node
+        
+        SwiftLoader.show(title: "Updating", animated: true)
+        let reftest = Database.database().reference(withPath:"\(ref)")
+        
+        
+        reftest.updateChildValues([
+            "colourStyle": colourStyle,
+        ]){
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data could not be saved: \(error).")
+                
+                SwiftLoader.hide()
+                self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                
+                
+                
+            } else {
+                
+                print("Data saved successfully!")
+                
+                self.mainFunction.successUpload(Message: "Updated", subtitle: "")
+                SwiftLoader.hide()
+                
+                
+            }
+        }
+    }
+    
+    
+    
+    func updateReportStyle(pdfStyle:String, ref:String){
+        //status is either: "active" or "not active"
+       
+        //This goes to: siteList node
+        
+        SwiftLoader.show(title: "Updating", animated: true)
+        let reftest = Database.database().reference(withPath:"\(ref)")
+        
+        
+        reftest.updateChildValues([
+            "pdfStyle": pdfStyle,
+        ]){
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data could not be saved: \(error).")
+                
+                SwiftLoader.hide()
+                self.mainFunction.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+                
+                
+                
+            } else {
+                
+                print("Data saved successfully!")
+                
+                self.mainFunction.successUpload(Message: "Updated", subtitle: "")
+                SwiftLoader.hide()
+                
+                
+            }
+        }
+    }
+    
+    
     
     
     func updateObservationStatus(status:String, ref:String){
@@ -365,7 +430,7 @@ class saveLocal: UIViewController {
                 
                 print("Data saved successfully!")
                 
-                self.mainFunction.successUpload(Message: "Uploaded", subtitle: "")
+                self.mainFunction.successUpload(Message: "Updated", subtitle: "")
                 SwiftLoader.hide()
                 
                 
@@ -431,4 +496,8 @@ class saveLocal: UIViewController {
         }
 
     }
+    
+
+    
+    
 }

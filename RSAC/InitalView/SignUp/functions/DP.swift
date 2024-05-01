@@ -101,6 +101,7 @@ extension SignUpController{
            dismiss(animated: true, completion: nil)
        }
     
+
     
     
     
@@ -159,8 +160,12 @@ extension SignUpController{
                         DPsaved = true
                         
                         
-                        //3) DP/QR STORAGE SAVED and now user data
-                        self.processdata()
+                        //3) DP/QR STORAGE SAVED and now report configuration data. Once the configuration data is saved successfully user data presets will be saved
+                        // this is under the processdata() function.
+                        self.reportConfiguration()
+                       
+                        
+                        
                         
                     }
                 }

@@ -12,10 +12,15 @@ import WebKit
 import Firebase
 import SwiftLoader
 
+
+
+
 class viewPDF: UIViewController {
     @IBOutlet weak var webView: WKWebView!
  
-    var PDFenum = 2
+    //PDF settings:
+    var PDFenum = "0"
+    var colourStyle = "#FFA500"
     
     let mainConsole = CONSOLE()
     //let mainFunction = extens()
@@ -34,11 +39,51 @@ class viewPDF: UIViewController {
     var imagez: [PDFImage] = []
     var tableContentData: [PDFTableContentable] = []
     
+    
+    
+    
+
+    
+    //MARK: - Load configurations
+    
+    func loadUserReportSettings(){
+        let uid = Auth.auth().currentUser?.uid
+        let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+        let thisUsersGamesRef = reftest
+            .child("\(self.mainConsole.post!)")
+            .child(uid!)
+            .child("\(self.mainConsole.reportConfig!)")
+                 
+        thisUsersGamesRef.queryOrderedByKey()
+                     .observe( .value, with: { snapshot in
+                               guard let dict = snapshot.value as? [String:Any] else {
+                               //error here
+                               return
+                               }
+
+                                let colourStyle = dict["colourStyle"] as? String
+                                let pdfStyle = dict["pdfStyle"] as? String
+                         
+                                self.colourStyle = colourStyle!
+                                self.PDFenum = pdfStyle!
+                         
+                                //2 once configuration loads, we want to load the content of the report
+                                self.loadSiteAuditData()
+                   })
+        
+     
+    }
+    
+    
+    //MARK: - Load configurations
+ 
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadUserReportSettings()
         
-        print("passed:\(refData)")
-        loadSiteAuditData()
         
         
         //PDF created:
@@ -66,7 +111,8 @@ class viewPDF: UIViewController {
         
     @objc func createPDFData(){
         switch PDFenum{
-        case 0:
+            
+        case "0":
             
             SwiftLoader.hide()
             
@@ -95,7 +141,6 @@ class viewPDF: UIViewController {
             // Create and add a subtitle as an attributed string for more customization possibilities
             let title = NSMutableAttributedString(string: "Draft", attributes: [
                 .font: Font.systemFont(ofSize: 15.0),
-                .foregroundColor: Color(red: 0.171875, green: 0.2421875, blue: 0.3125, alpha: 1.0)
             ])
             document.add(.contentRight, attributedText: title)
             
@@ -116,8 +161,10 @@ class viewPDF: UIViewController {
                 
             ]
             tableOfUserData.rows.allRowsAlignment = [.right, .left]
-            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
-            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
+            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white))
+            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white))
+                                                           
+                                                           
             
             // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
             
@@ -133,84 +180,90 @@ class viewPDF: UIViewController {
             //PAGE BREAK
             document.createNewPage()
             
-            //        //line seperator
-            //        document.addLineSeparator(PDFContainer.contentLeft, style: style)
-            //        //Create a colums to insert data
-            //        let table = PDFTable(rows: 5, columns: 4)
-            //        table.content = [
-            //            [nil, "Name",      "Image",                        "Description"],
-            //            [1,   "Waterfall", Image(named: "Image-1.jpg")!, "Water flowing down stones."],
-            //            [2,   "Forrest",   Image(named: "Image-2.jpg")!, "Sunlight shining through the leafs."],
-            //            [3,   "Fireworks", Image(named: "Image-3.jpg")!, "Fireworks exploding into 100.000 stars"],
-            //            [nil, nil,         nil,                            "Many beautiful places"]
-            //
-            //        ]
-            //
-            //
-            //        table.rows.allRowsAlignment = [.center, .left, .center, .left]
-            //
-            //        // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
-            //
-            //        table.widths = [
-            //            0.1, 0.25, 0.35, 0.3
-            //        ]
-            //        table.showHeadersOnEveryPage = true
-            //        document.add(table: table)
-            
-            
-            //        imagez = [
-            //            PDFImage(image: UIImage(named: "Image-1.jpg")!),
-            //            PDFImage(image: UIImage(named: "Image-1.jpg")!)
-            //        ]
-            
+         
             
             // Here we want to create a data structure to store our firebase saved content
             for x in self.saveData{
-                //               let arrayDatahere =  ["1",   "\(x.title)", x.imageData, "\(x.body)", ] as [Any]
-                //               self.contextData.append(arrayDatahere)
+       
                 
                 
                 //line seperator
                 let style1 = PDFLineStyle(type: .full, color: .darkGray, width: 1)
                 document.addLineSeparator(PDFContainer.contentLeft, style: style1)
                 
-                //add space seperator
-                document.add(space: 15.0)
-                
+            
                 //Inset obseravtion image
                 let image = PDFImage(image: x.imageData)
                 document.add(image:image)
+       
                 
-                //add space seperator
-                document.add(space: 15.0)
-                
-                //line serperater
-                let style2 = PDFLineStyle(type: .full, color: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), width: 5)
-                document.addLineSeparator(PDFContainer.contentLeft, style: style2)
-                
-                //add space seperator
-                document.add(space: 15.0)
+
                 
                 //add line
                 document.addLineSeparator(PDFContainer.contentLeft, style: style1)
                 
                 
                 //Create a colums to insert data
-                let tableOfUserData = PDFTable(rows: 4, columns: 2)
-                let cellStyle = PDFTableStyleDefaults.simple
+                let tableOfUserData = PDFTable(rows: 6, columns: 2)
+                
+                let colors = (fill: UIColor.white, text: UIColor.black)
+                let lineStyle = PDFLineStyle(type: .full, color: UIColor.white, width: 1)
+                let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
+                let font = UIFont.systemFont(ofSize: 10)
+                let font2 = UIFont.boldSystemFont(ofSize: 15)
+                let style = PDFTableCellStyle(colors: colors, font: font)
+           
                 
                 // Change standardized styles
                 
                 tableOfUserData.content = [
                     ["Item",      "Details"],
-                    ["Site name:",      "\(x.title)"],
-                    ["Date:",      "\(x.date)"],
-                    ["Obserations:",      "\(x.body)"],
+                    ["Site name:",      " \(x.title)"],
+                    ["Date:",           " \(x.date)"],
+                    ["Coordinates:",    " \(x.lat), \(x.long)"],
+                    ["Reporter:",       " \(x.userUploaded)"],
+                    ["Obserations:",    " \(x.body)"],
                     
                 ]
+                
+                
+
+                
                 tableOfUserData.rows.allRowsAlignment = [.left, .left]
-                tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
-                tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
+                
+                
+                //Middle column configuration:
+                let font3 = UIFont.boldSystemFont(ofSize: 10)
+                let lineStyle3 = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
+                let borders3 = PDFTableCellBorders(left:lineStyle3, right: lineStyle3, bottom: lineStyle3)
+                
+                
+                //Headers
+                tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                
+                //contents
+                tableOfUserData[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[2,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[3,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[4,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[5,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                
+                
+                
+                
+                tableOfUserData[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[2,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[3,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[4,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                tableOfUserData[5,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                
+                
+                
+                
+                
+                
+  
                 
                 // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
                 
@@ -266,7 +319,7 @@ class viewPDF: UIViewController {
             
             break
             
-        case 1:
+        case "1":
             
             
             SwiftLoader.hide()
@@ -294,8 +347,8 @@ class viewPDF: UIViewController {
             
             // Create and add a subtitle as an attributed string for more customization possibilities
             let title = NSMutableAttributedString(string: "Draft", attributes: [
-                .font: Font.systemFont(ofSize: 15.0),
-                .foregroundColor: Color(red: 0.171875, green: 0.2421875, blue: 0.3125, alpha: 1.0)
+                .font: Font.systemFont(ofSize: 15.0)
+            
             ])
             document.add(.contentRight, attributedText: title)
             
@@ -304,7 +357,7 @@ class viewPDF: UIViewController {
             
             //Create a colums to insert data
             let tableOfUserData = PDFTable(rows: 1, columns: 2)
-            let cellStyle = PDFTableStyleDefaults.simple
+        
             
             
             // Change standardized styles
@@ -315,9 +368,11 @@ class viewPDF: UIViewController {
                 [Image(named: "whiteBackdrop.png")!, nil],
                 
             ]
+            
+            
             tableOfUserData.rows.allRowsAlignment = [.right, .left]
-            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
-            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
+            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
+            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
             
             // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
             
@@ -371,14 +426,13 @@ class viewPDF: UIViewController {
                 let lineStyle = PDFLineStyle(type: .full, color: UIColor.white, width: 1)
                 let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
                 let font = UIFont.systemFont(ofSize: 10)
-               
                 let font2 = UIFont.boldSystemFont(ofSize: 15)
                 let style = PDFTableCellStyle(colors: colors, font: font)
                 
                 
-                tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
-                tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
-                tableOfUserData[0,2].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,2].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
            
                 
                 //Middle column configuration:
@@ -398,7 +452,8 @@ class viewPDF: UIViewController {
                 tableOfUserData[4,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
              
                 //Observation column configuration
-                tableOfUserData[4 + 1,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[5,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                
                 tableOfUserData[5 + 1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 
                
@@ -505,7 +560,7 @@ class viewPDF: UIViewController {
         break
          
     
-        case 2:
+        case "2":
             
             
             SwiftLoader.hide()
@@ -533,8 +588,8 @@ class viewPDF: UIViewController {
             
             // Create and add a subtitle as an attributed string for more customization possibilities
             let title = NSMutableAttributedString(string: "Draft", attributes: [
-                .font: Font.systemFont(ofSize: 15.0),
-                .foregroundColor: Color(red: 0.171875, green: 0.2421875, blue: 0.3125, alpha: 1.0)
+                .font: Font.systemFont(ofSize: 15.0)
+     
             ])
             document.add(.contentRight, attributedText: title)
             
@@ -555,8 +610,9 @@ class viewPDF: UIViewController {
                 
             ]
             tableOfUserData.rows.allRowsAlignment = [.right, .left]
-            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
-            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.black))
+            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
+            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
+            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle) , text: UIColor.black))
             
             // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
             
@@ -614,9 +670,9 @@ class viewPDF: UIViewController {
                 let style = PDFTableCellStyle(colors: colors, font: font)
                 
                 
-                tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
-                tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
-                tableOfUserData[0,2].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[0,2].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
            
                 
                 //Middle column configuration:
@@ -638,7 +694,7 @@ class viewPDF: UIViewController {
            
                 
                 //Observation column configuration
-                tableOfUserData[4 + 1,0].style = PDFTableCellStyle(colors: (fill: #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1), text: UIColor.white),borders: borders, font: font2)
+                tableOfUserData[5,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
                 tableOfUserData[5 + 1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 
                
@@ -726,15 +782,6 @@ class viewPDF: UIViewController {
             
             
             // Do any additional setup after loading the view.
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             
             
@@ -840,7 +887,7 @@ class viewPDF: UIViewController {
                     }
 
 
-    
+
     
     
     func asyncData(imageURL:String, descriptionData: String, auditTitleData:String, dateData:String,lat:String,long:String,userUploaded:String, completion: @escaping (String) -> Void) {

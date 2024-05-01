@@ -34,7 +34,7 @@ class SignUpController: UICollectionViewController,UITextFieldDelegate,UITextVie
  
     let mainConsole = CONSOLE()
     let mainConsole2 = extens()
-
+    
     
     
     var QRsaved = Bool()
