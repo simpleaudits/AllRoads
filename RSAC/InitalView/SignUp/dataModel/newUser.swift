@@ -22,12 +22,12 @@ struct userDetails{
     let userStatus: String // banned, bronze, silver or gold
     let DPimage: String
     let listingMax: Int
-    let nestedNode:String
+
     let dateJoined:String
     var completed: Bool
     let userRef: String
     let signatureURL: String
-    let nest1: String
+    let userName: String
     let nest2: String
     let nest3: String
     let nest4: String
@@ -45,12 +45,11 @@ struct userDetails{
          userStatus:String,
          DPimage:String,
          listingMax:Int,
-         nestedNode:String,
          dateJoined:String,
          completed:Bool,
          userRef: String,
          signatureURL: String,
-         nest1: String,
+         userName: String,
          nest2: String,
          nest3: String,
          nest4: String,
@@ -66,12 +65,11 @@ struct userDetails{
         self.userStatus = userStatus
         self.DPimage = DPimage
         self.listingMax = listingMax
-        self.nestedNode = nestedNode
         self.completed = completed
         self.dateJoined = dateJoined
         self.userRef = userRef
         self.signatureURL = signatureURL
-        self.nest1 = nest1
+        self.userName = userName
         self.nest2 = nest2
         self.nest3 = nest3
         self.nest4 = nest4
@@ -93,12 +91,11 @@ struct userDetails{
             let userStatus = value["userStatus"] as? String,
             let DPimage = value["DPimage"] as? String,
             let listingMax = value["listingMax"] as? Int,
-            let nestedNode = value["nestedNode"] as? String,
             let dateJoined = value["dateJoined"] as? String,
             
             let userRef = value["userRef"] as? String,
             let signatureURL = value["signatureURL"] as? String,
-            let nest1 = value["nest1"] as? String,
+            let userName = value["userName"] as? String,
             let nest2 = value["nest2"] as? String,
             let nest3 = value["nest3"] as? String,
             let nest4 = value["nest4"] as? String,
@@ -123,7 +120,6 @@ struct userDetails{
         self.userStatus = userStatus
         self.DPimage = DPimage
         self.listingMax = listingMax
-        self.nestedNode = nestedNode
         self.dateJoined = dateJoined
         self.completed = completed
         
@@ -131,7 +127,7 @@ struct userDetails{
         
         self.userRef = userRef
         self.signatureURL = signatureURL
-        self.nest1 = nest1
+        self.userName = userName
         self.nest2 = nest2
         self.nest3 = nest3
         self.nest4 = nest4
@@ -149,11 +145,10 @@ struct userDetails{
             "userStatus": userStatus,
             "DPimage": DPimage,
             "listingMax": listingMax,
-            "nestedNode": nestedNode,
             "dateJoined": dateJoined,
             "completed": completed,
             
-            "nest1": nest1,
+            "userName": userName,
             "nest2": nest2,
             "nest3": nest3,
             "nest4": nest4,

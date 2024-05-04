@@ -77,7 +77,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
 
  
     //userdetails:
+    
     var username : String? = "Untitled"
+    var companyName : String? = "Untitled"
     var userSignature : String? = "No signature"
     var userImage : String? = "No Image"
     
@@ -474,7 +476,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
         //Ask user for site name:
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Site Name:", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Audit Title:", message: "", preferredStyle: .alert)
 
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
@@ -860,9 +862,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                 siteID:"\(siteID)",
                 riskRating: safetyRatingValue,
                 status: "true",
-                userUploaded: "",
-                userUploadedSignature: "",
-                userUpladedImage: "")
+                userUploaded: "\(self.username!) • [\(self.companyName!)] ",
+                userUploadedSignature: self.userSignature!,
+                userUploadedImage: "")
             
             
             
@@ -933,9 +935,9 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                 siteID:"\(siteID)",
                 riskRating: safetyRatingValue,
                 status: "true",
-                userUploaded: self.username!,
+                userUploaded: "\(self.username!) • [\(self.companyName!)] ",
                 userUploadedSignature: self.userSignature!,
-                userUpladedImage: self.userImage!)
+                userUploadedImage: self.userImage!)
             
             
             
@@ -1060,11 +1062,13 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                                return
                                }
 
-                                let username = dict["nest1"] as? String
+                                let username = dict["userName"] as? String
+                                let companyName = dict["companyName"] as? String
                                 let DPimage = dict["DPimage"] as? String
                                 let signatureURL = dict["signatureURL"] as? String
                          
                                  self.username = username
+                                 self.companyName = companyName
                                  self.userSignature = DPimage
                                  self.userImage = signatureURL
                   

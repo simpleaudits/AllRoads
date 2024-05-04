@@ -27,11 +27,11 @@ extension viewPDF{
         
         
 //        let userUploadedSignature: UIImage
-//        let userUpladedImage: UIImage
+//        let userUploadedImage: UIImage
         
         
         
-        init(title: String, description:String,imageData:UIImage, image:String, date:String, lat:String, long: String, userUploaded:String/*, userUploadedSignature:UIImage, userUpladedImage:UIImage*/) {
+        init(title: String, description:String,imageData:UIImage, image:String, date:String, lat:String, long: String, userUploaded:String/*, userUploadedSignature:UIImage, userUploadedImage:UIImage*/) {
             self.title = title
             self.body = description
             self.image = image
@@ -42,7 +42,7 @@ extension viewPDF{
             
             self.userUploaded = userUploaded
 //            self.userUploadedSignature = userUploadedSignature
-//            self.userUpladedImage = userUpladedImage
+//            self.userUploadedImage = userUploadedImage
             
         }
     }

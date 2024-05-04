@@ -271,7 +271,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 let List = userDetails(snapshot: snapshot) {
                     userData.append(List)
                     
-                    companyNameData = "Company name: \(List.companyName)\nUsername: \(List.nest1)"
+                    companyNameData = "Company name: \(List.companyName)\nUsername: \(List.userName)"
                     companyDPData = List.DPimage
                     companySigData = List.signatureURL
                     listingCount = List.listingMax

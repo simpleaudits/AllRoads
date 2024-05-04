@@ -106,7 +106,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     locationLabel.text!.count > 0 {
                 
                 
-                siteID = UUID().uuidString
+                //siteID = UUID().uuidString
                 
                 let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
                 let thisUsersGamesRef = reftest
@@ -162,7 +162,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             if  siteName.text!.count > 0 &&
                     locationLabel.text!.count > 0 {
                 
-                siteID = UUID().uuidString
+                //siteID = UUID().uuidString
                 
                 let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
                 let thisUsersGamesRef = reftest
@@ -213,15 +213,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             }
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
+         
         }
    
     }
@@ -236,7 +228,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
         // Saving the image data into Storage - not real time database.
         // This link is for the storage directory
 
-        let uuid = UUID().uuidString
+        siteID = UUID().uuidString
         let uid = Auth.auth().currentUser?.uid
 
 
@@ -247,7 +239,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             .child("\(self.mainConsole.audit!)")
             .child("\(auditID)")
             .child("\(self.mainConsole.siteList!)")
-            .child("\(uuid)")
+            .child("\(siteID)")
             .child("snapshot.jpg")
 
 

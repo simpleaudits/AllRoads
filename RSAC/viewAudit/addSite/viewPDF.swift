@@ -13,7 +13,23 @@ import Firebase
 import SwiftLoader
 
 
+//MARK: - remove dup in array
 
+extension Array where Element:Equatable {
+    func removeDuplicates() -> [Element] {
+        var result = [Element]()
+
+        for value in self {
+            if result.contains(value) == false {
+                result.append(value)
+            }
+        }
+
+        return result
+    }
+}
+
+//MARK: - remove dup in array
 
 class viewPDF: UIViewController {
     @IBOutlet weak var webView: WKWebView!
@@ -40,6 +56,7 @@ class viewPDF: UIViewController {
     var tableContentData: [PDFTableContentable] = []
     
     
+    var userDataArray = [String]()
     
     
 
@@ -119,38 +136,53 @@ class viewPDF: UIViewController {
             let document = PDFDocument(format: .a4)
             
             
-            //add the data here:
+
             //header data:
-            document.add(.headerLeft, text: "AllRoads Audit")
+            document.add(.headerRight, image: PDFImage(image: UIImage(named: "AppIcon50x50.png")!, size: CGSize(width: 40, height: 40), quality: 1))
+    
+            let attributedTitle = NSMutableAttributedString(string: "AllRoads by SimpleAudits.app", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 10)
+            ])
+            let textElement = PDFAttributedText(text: attributedTitle)
+            document.add(.headerRight,attributedTextObject: textElement)
+            
             //line seperator
             let style = PDFLineStyle(type: .full, color: .darkGray, width: 1)
-            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            document.addLineSeparator(PDFContainer.headerRight, style: style)
+            
+            
+            
+            
             //Observation Title:
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 50.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
             // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "AllRoads Pty Ltd."))
-            // Add some spacing below title
-            document.add(space: 15.0)
-            // Project Name:
-            document.add(.contentLeft, text: "Draft Document")
-            
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Road Inspection Report"))
             // Add some spacing below title
             document.add(space: 15.0)
             
-            // Create and add a subtitle as an attributed string for more customization possibilities
-            let title = NSMutableAttributedString(string: "Draft", attributes: [
-                .font: Font.systemFont(ofSize: 15.0),
-            ])
-            document.add(.contentRight, attributedText: title)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 30.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Prepared by ABC"))
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "1/1/2020"))
+            // Add some spacing below title
+
+    
             
             // Add some spacing below title
             document.add(space: 15.0)
             
             //Create a colums to insert data
             let tableOfUserData = PDFTable(rows: 1, columns: 2)
-            let cellStyle = PDFTableStyleDefaults.simple
-            
+
             
             // Change standardized styles
             
@@ -176,6 +208,44 @@ class viewPDF: UIViewController {
             document.add(table: tableOfUserData)
             
             
+            document.add(space: 15.0)
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Contributors"))
+            // Add some spacing below title
+            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
+            for x in self.saveData{
+                userDataArray.append("\(x.userUploaded)")
+            }
+
+           
+            
+            let items = userDataArray.removeDuplicates()
+  
+
+            // Simple bullet point list
+            let featureList = PDFList(indentations: [
+                (pre: 10.0, past: 20.0),
+                (pre: 20.0, past: 20.0),
+                (pre: 40.0, past: 20.0)
+            ])
+
+            // By adding the item first to a list item with the dot symbol, all of them will inherit it
+            featureList
+                .addItem(PDFListItem(symbol: .dot)
+                    .addItems(items.map({ item in
+                        PDFListItem(content: item)
+                    })))
+            document.add(list: featureList)
+            
+            
+            
+            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            
+        
             
             //PAGE BREAK
             document.createNewPage()
@@ -195,10 +265,9 @@ class viewPDF: UIViewController {
                 //Inset obseravtion image
                 let image = PDFImage(image: x.imageData)
                 document.add(image:image)
-       
-                
 
-                
+                document.add(space: 15.0)
+              
                 //add line
                 document.addLineSeparator(PDFContainer.contentLeft, style: style1)
                 
@@ -207,7 +276,7 @@ class viewPDF: UIViewController {
                 let tableOfUserData = PDFTable(rows: 6, columns: 2)
                 
                 let colors = (fill: UIColor.white, text: UIColor.black)
-                let lineStyle = PDFLineStyle(type: .full, color: UIColor.white, width: 1)
+                let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
                 let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
                 let font = UIFont.systemFont(ofSize: 10)
                 let font2 = UIFont.boldSystemFont(ofSize: 15)
@@ -218,11 +287,11 @@ class viewPDF: UIViewController {
                 
                 tableOfUserData.content = [
                     ["Item",      "Details"],
-                    ["Site name:",      " \(x.title)"],
+                    ["Audit Title:",      " \(x.title)"],
                     ["Date:",           " \(x.date)"],
                     ["Coordinates:",    " \(x.lat), \(x.long)"],
                     ["Reporter:",       " \(x.userUploaded)"],
-                    ["Obserations:",    " \(x.body)"],
+                    ["Observation:",    " \(x.body)"],
                     
                 ]
                 
@@ -321,44 +390,58 @@ class viewPDF: UIViewController {
             
         case "1":
             
-            
             SwiftLoader.hide()
             
             let document = PDFDocument(format: .a4)
             
-            //add the data here:
+            
+
             //header data:
-            document.add(.headerLeft, text: "AllRoads Audit")
+            document.add(.headerRight, image: PDFImage(image: UIImage(named: "AppIcon50x50.png")!, size: CGSize(width: 40, height: 40), quality: 1))
+    
+            let attributedTitle = NSMutableAttributedString(string: "AllRoads by SimpleAudits.app", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 10)
+            ])
+            let textElement = PDFAttributedText(text: attributedTitle)
+            document.add(.headerRight,attributedTextObject: textElement)
+            
             //line seperator
             let style = PDFLineStyle(type: .full, color: .darkGray, width: 1)
-            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            document.addLineSeparator(PDFContainer.headerRight, style: style)
+            
+            
+            
+            
             //Observation Title:
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 50.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
             // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "AllRoads Pty Ltd."))
-            // Add some spacing below title
-            document.add(space: 15.0)
-            // Project Name:
-            document.add(.contentLeft, text: "Draft Document")
-            
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Road Inspection Report"))
             // Add some spacing below title
             document.add(space: 15.0)
             
-            // Create and add a subtitle as an attributed string for more customization possibilities
-            let title = NSMutableAttributedString(string: "Draft", attributes: [
-                .font: Font.systemFont(ofSize: 15.0)
             
-            ])
-            document.add(.contentRight, attributedText: title)
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 30.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Prepared by ABC"))
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "1/1/2020"))
+            // Add some spacing below title
+
+    
             
             // Add some spacing below title
             document.add(space: 15.0)
             
             //Create a colums to insert data
             let tableOfUserData = PDFTable(rows: 1, columns: 2)
-        
-            
+
             
             // Change standardized styles
             
@@ -368,11 +451,11 @@ class viewPDF: UIViewController {
                 [Image(named: "whiteBackdrop.png")!, nil],
                 
             ]
-            
-            
             tableOfUserData.rows.allRowsAlignment = [.right, .left]
-            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
-            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
+            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white))
+            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white))
+                                                           
+                                                           
             
             // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
             
@@ -382,6 +465,45 @@ class viewPDF: UIViewController {
             ]
             
             document.add(table: tableOfUserData)
+            
+            
+            document.add(space: 15.0)
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Contributors"))
+            // Add some spacing below title
+            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
+            for x in self.saveData{
+                userDataArray.append("\(x.userUploaded)")
+            }
+
+           
+            
+            let items = userDataArray.removeDuplicates()
+  
+
+            // Simple bullet point list
+            let featureList = PDFList(indentations: [
+                (pre: 10.0, past: 20.0),
+                (pre: 20.0, past: 20.0),
+                (pre: 40.0, past: 20.0)
+            ])
+
+            // By adding the item first to a list item with the dot symbol, all of them will inherit it
+            featureList
+                .addItem(PDFListItem(symbol: .dot)
+                    .addItems(items.map({ item in
+                        PDFListItem(content: item)
+                    })))
+            document.add(list: featureList)
+            
+            
+            
+            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            
             
             
             
@@ -423,7 +545,7 @@ class viewPDF: UIViewController {
                 
                 //header colour
                 let colors = (fill: UIColor.white, text: UIColor.black)
-                let lineStyle = PDFLineStyle(type: .full, color: UIColor.white, width: 1)
+                let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
                 let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
                 let font = UIFont.systemFont(ofSize: 10)
                 let font2 = UIFont.boldSystemFont(ofSize: 15)
@@ -440,12 +562,17 @@ class viewPDF: UIViewController {
                 let lineStyle3 = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
                 let borders3 = PDFTableCellBorders(left:lineStyle3, right: lineStyle3, bottom: lineStyle3)
                 
+                
+                //image cell
+                tableOfUserData[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+                
+                //item cell
                 tableOfUserData[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 tableOfUserData[2,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 tableOfUserData[3,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 tableOfUserData[4,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 
-               
+               //details cell
                 tableOfUserData[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 tableOfUserData[2,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                 tableOfUserData[3,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
@@ -469,7 +596,7 @@ class viewPDF: UIViewController {
  
                 tableOfUserData.content = [
                     ["Snapshot",  "Item"          , nil,  "Details"],
-                    [nil,         "  Site name:"  , nil, "  \(x.title)"],
+                    [nil,         "  Audit Title:"  , nil, "  \(x.title)"],
                     [nil,         "  Date:"       , nil, "  \(x.date)"],
                     [nil,         "  Coordinates:", nil, "  \(x.lat), \(x.long)"],
                     [x.imageData, "  Reporter:"   , nil, "  \(x.userUploaded)"],
@@ -567,39 +694,54 @@ class viewPDF: UIViewController {
             
             let document = PDFDocument(format: .a4)
             
-            //add the data here:
+            
+
             //header data:
-            document.add(.headerLeft, text: "AllRoads Audit")
+            document.add(.headerRight, image: PDFImage(image: UIImage(named: "AppIcon50x50.png")!, size: CGSize(width: 40, height: 40), quality: 1))
+    
+            let attributedTitle = NSMutableAttributedString(string: "AllRoads by SimpleAudits.app", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 10)
+            ])
+            let textElement = PDFAttributedText(text: attributedTitle)
+            document.add(.headerRight,attributedTextObject: textElement)
+            
             //line seperator
             let style = PDFLineStyle(type: .full, color: .darkGray, width: 1)
-            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            document.addLineSeparator(PDFContainer.headerRight, style: style)
+            
+            
+            
+            
             //Observation Title:
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 50.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
             // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "AllRoads Pty Ltd."))
-            // Add some spacing below title
-            document.add(space: 15.0)
-            // Project Name:
-            document.add(.contentLeft, text: "Draft Document")
-            
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Road Inspection Report"))
             // Add some spacing below title
             document.add(space: 15.0)
             
-            // Create and add a subtitle as an attributed string for more customization possibilities
-            let title = NSMutableAttributedString(string: "Draft", attributes: [
-                .font: Font.systemFont(ofSize: 15.0)
-     
-            ])
-            document.add(.contentRight, attributedText: title)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 30.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Prepared by ABC"))
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "1/1/2020"))
+            // Add some spacing below title
+
+    
             
             // Add some spacing below title
             document.add(space: 15.0)
             
             //Create a colums to insert data
             let tableOfUserData = PDFTable(rows: 1, columns: 2)
-            let cellStyle = PDFTableStyleDefaults.simple
-            
+
             
             // Change standardized styles
             
@@ -610,9 +752,10 @@ class viewPDF: UIViewController {
                 
             ]
             tableOfUserData.rows.allRowsAlignment = [.right, .left]
-            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
-            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.black))
-            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle) , text: UIColor.black))
+            tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white))
+            tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white))
+                                                           
+                                                           
             
             // The widths of each column is proportional to the total width, set by a value between 0.0 and 1.0, representing percentage.
             
@@ -622,6 +765,44 @@ class viewPDF: UIViewController {
             ]
             
             document.add(table: tableOfUserData)
+            
+            
+            document.add(space: 15.0)
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
+            document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
+            // Company Name:
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Contributors"))
+            // Add some spacing below title
+            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+            
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
+            for x in self.saveData{
+                userDataArray.append("\(x.userUploaded)")
+            }
+
+           
+            
+            let items = userDataArray.removeDuplicates()
+  
+
+            // Simple bullet point list
+            let featureList = PDFList(indentations: [
+                (pre: 10.0, past: 20.0),
+                (pre: 20.0, past: 20.0),
+                (pre: 40.0, past: 20.0)
+            ])
+
+            // By adding the item first to a list item with the dot symbol, all of them will inherit it
+            featureList
+                .addItem(PDFListItem(symbol: .dot)
+                    .addItems(items.map({ item in
+                        PDFListItem(content: item)
+                    })))
+            document.add(list: featureList)
+            
+            
+            
+            document.addLineSeparator(PDFContainer.contentLeft, style: style)
             
             
             
@@ -662,13 +843,14 @@ class viewPDF: UIViewController {
                 
                 //header colour
                 let colors = (fill: UIColor.white, text: UIColor.black)
-                let lineStyle = PDFLineStyle(type: .full, color: UIColor.white, width: 1)
+           
+                let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
                 let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
                 let font = UIFont.systemFont(ofSize: 10)
                
                 let font2 = UIFont.boldSystemFont(ofSize: 15)
                 let style = PDFTableCellStyle(colors: colors, font: font)
-                
+           
                 
                 tableOfUserData[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
                 tableOfUserData[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
@@ -700,7 +882,7 @@ class viewPDF: UIViewController {
                
                 
                 
-                let lineStyle_user = PDFLineStyle(type: .full, color: UIColor.white, width: 3)
+                let lineStyle_user = PDFLineStyle(type: .full, color: UIColor.white, width: 1)
                 let borders_user = PDFTableCellBorders(left: lineStyle_user, top: lineStyle_user, right: lineStyle_user, bottom: lineStyle_user)
       
        
@@ -710,7 +892,7 @@ class viewPDF: UIViewController {
  
                 tableOfUserData.content = [
                     ["Snapshot", "Item",       nil, "Details"],
-                    [nil, "  Site name:",      nil, "  \(x.title)"],
+                    [nil, "  Audit Title:",      nil, "  \(x.title)"],
                     [nil, "  Date:",           nil, "  \(x.date)"],
                     [nil, "  Coordinates:",    nil, "  \(x.lat), \(x.long)"],
                     [nil, "  Reporter:",       nil, "  \(x.userUploaded)"],

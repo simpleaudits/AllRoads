@@ -29,7 +29,7 @@ struct auditSiteData{
     
     let userUploaded: String
     let userUploadedSignature: String
-    let userUpladedImage: String
+    let userUploadedImage: String
     
     
     
@@ -51,7 +51,7 @@ struct auditSiteData{
         
         userUploaded: String,
         userUploadedSignature: String,
-        userUpladedImage: String
+        userUploadedImage: String
     )
     
     
@@ -71,7 +71,7 @@ struct auditSiteData{
         
         self.userUploaded = userUploaded
         self.userUploadedSignature = userUploadedSignature
-        self.userUpladedImage = userUpladedImage
+        self.userUploadedImage = userUploadedImage
         
     }
     
@@ -92,7 +92,7 @@ struct auditSiteData{
             let siteID = value["siteID"] as? String,
             let userUploaded = value["userUploaded"] as? String,
             let userUploadedSignature = value["userUploadedSignature"] as? String,
-            let userUpladedImage = value["userUpladedImage"] as? String,
+            let userUploadedImage = value["userUploadedImage"] as? String,
             let status = value["status"] as? String else {
                 return nil
         }
@@ -111,7 +111,7 @@ struct auditSiteData{
         
         self.userUploaded = userUploaded
         self.userUploadedSignature = userUploadedSignature
-        self.userUpladedImage = userUpladedImage
+        self.userUploadedImage = userUploadedImage
     }
     
     func saveAuditData() -> [String:Any] {
@@ -129,7 +129,7 @@ struct auditSiteData{
             "siteID": siteID,
             "userUploaded": userUploaded,
             "userUploadedSignature": userUploadedSignature,
-            "userUpladedImage": userUpladedImage,
+            "userUploadedImage": userUploadedImage,
             "status": status
         ]
     }
