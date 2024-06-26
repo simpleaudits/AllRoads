@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jix-d9-NAs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jix-d9-NAs">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -557,22 +557,6 @@
             </objects>
             <point key="canvasLocation" x="1886" y="1657"/>
         </scene>
-        <!--Saved PDF's-->
-        <scene sceneID="IAe-lL-fRe">
-            <objects>
-                <viewController id="emF-WN-8cj" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="mMI-70-3Rr">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Tqy-UO-lZm"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Saved PDF's" prompt="(coming soon)" id="LFJ-UM-GEM"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="e4d-CN-Llb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1424" y="2429"/>
-        </scene>
         <!--Audits-->
         <scene sceneID="ETd-nB-tnQ">
             <objects>
@@ -874,7 +858,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JzM-S5-2n1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2662" y="1656"/>
+            <point key="canvasLocation" x="2801" y="1656"/>
         </scene>
         <!--Site Location-->
         <scene sceneID="JO6-JU-y4I">
@@ -913,7 +897,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H07-oL-fp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1885" y="983"/>
+            <point key="canvasLocation" x="1885" y="992"/>
         </scene>
         <!--View Audit List-->
         <scene sceneID="XCq-qQ-rwc">
@@ -949,7 +933,7 @@
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ncA-eT-khA">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="DR0-Qt-oqZ">
-                            <rect key="frame" x="49.999999999999986" y="5.6666666666666679" width="232.66666666666663" height="33"/>
+                            <rect key="frame" x="59" y="5.6666666666666679" width="275" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <segments>
@@ -961,20 +945,12 @@
                                 <action selector="indexChanged:" destination="RVj-ct-PG1" eventType="valueChanged" id="gqw-k5-cWi"/>
                             </connections>
                         </segmentedControl>
-                        <rightBarButtonItems>
-                            <barButtonItem style="plain" systemItem="action" id="1iK-fR-yFh">
-                                <color key="tintColor" systemColor="systemOrangeColor"/>
-                                <connections>
-                                    <action selector="createShare:" destination="RVj-ct-PG1" id="Vd4-Tw-jSJ"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem style="plain" systemItem="add" id="YLj-e0-X1c">
-                                <color key="tintColor" systemColor="systemOrangeColor"/>
-                                <connections>
-                                    <action selector="addSite:" destination="RVj-ct-PG1" id="PmQ-Xh-4MY"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="YLj-e0-X1c">
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
+                            <connections>
+                                <action selector="addSite:" destination="RVj-ct-PG1" id="PmQ-Xh-4MY"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="statusSegment" destination="DR0-Qt-oqZ" id="dtj-c2-Q2w"/>
@@ -1057,7 +1033,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="My4-HV-CNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1155" y="3814"/>
+            <point key="canvasLocation" x="1193" y="3868"/>
         </scene>
         <!--Search List-->
         <scene sceneID="0oL-Dw-6cq">
@@ -1231,6 +1207,54 @@
             </objects>
             <point key="canvasLocation" x="1885" y="2384"/>
         </scene>
+        <!--Report Builder-->
+        <scene sceneID="wdb-fn-k20">
+            <objects>
+                <tableViewController id="87h-lJ-qkh" customClass="buildReport" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="J4A-iy-e50">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" textLabel="Qbt-TT-Gqi" detailTextLabel="LXq-2f-iug" rowHeight="71" style="IBUITableViewCellStyleValue1" id="27q-0L-BbV">
+                                <rect key="frame" x="20" y="38" width="353" height="71"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="27q-0L-BbV" id="nGo-db-fOO">
+                                    <rect key="frame" x="0.0" y="0.0" width="322.66666666666669" height="71"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qbt-TT-Gqi">
+                                            <rect key="frame" x="20" y="28.999999999999996" width="25" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LXq-2f-iug">
+                                            <rect key="frame" x="282" y="28.999999999999996" width="32.666666666666664" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="87h-lJ-qkh" id="DmS-RF-Iwy"/>
+                            <outlet property="delegate" destination="87h-lJ-qkh" id="kyy-0d-cJy"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Report Builder" largeTitleDisplayMode="always" style="browser" id="qTS-rO-aTq"/>
+                    <connections>
+                        <segue destination="TnG-oL-TVY" kind="show" identifier="reportContent" id="f67-OO-dDr"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hk7-vT-ch4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1396" y="3104"/>
+        </scene>
         <!--Observations-->
         <scene sceneID="4dy-zl-y9j">
             <objects>
@@ -1264,7 +1288,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Observations" id="5Z3-TP-5TA">
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="T7N-xV-EBc">
-                            <rect key="frame" x="98" y="5.6666666666666679" width="183" height="33"/>
+                            <rect key="frame" x="49.999999999999986" y="5.6666666666666679" width="173.66666666666663" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="In-Progress"/>
@@ -1275,6 +1299,11 @@
                             </connections>
                         </segmentedControl>
                         <rightBarButtonItems>
+                            <barButtonItem title="Build" id="nUc-Y1-bKn">
+                                <connections>
+                                    <segue destination="87h-lJ-qkh" kind="show" id="xFN-Ie-vt2"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="add" id="tNj-CZ-lax">
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
@@ -1662,23 +1691,98 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="emF-WN-8cj" kind="relationship" relationship="rootViewController" id="qP1-DV-pLt"/>
+                        <segue destination="LMc-9e-aPL" kind="relationship" relationship="rootViewController" id="PK9-Ou-57B"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SnY-rc-3oO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2120" y="2429"/>
         </scene>
+        <!--Austroad Guidelines-->
+        <scene sceneID="DYf-6S-TIK">
+            <objects>
+                <collectionViewController id="LMc-9e-aPL" customClass="ausroadGuidelineCollection" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="9gY-Zu-XDC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1TC-nx-j7B">
+                            <size key="itemSize" width="227" height="167"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="2nr-DN-7G3">
+                                <rect key="frame" x="83" y="0.0" width="227" height="167"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eon-BY-Dyu">
+                                    <rect key="frame" x="0.0" y="0.0" width="227" height="167"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="227" height="167"/>
+                                <connections>
+                                    <segue destination="qB2-de-ZAO" kind="show" identifier="viewPDF" id="fHW-1r-uW1"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="LMc-9e-aPL" id="GEJ-3v-8jg"/>
+                            <outlet property="delegate" destination="LMc-9e-aPL" id="HQr-P9-FoW"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Austroad Guidelines" id="TXS-Lv-TT3"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Vv-We-b2P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1396.1832061068701" y="2428.8732394366198"/>
+        </scene>
+        <!--View GuidelinesPDF-->
+        <scene sceneID="3GC-IA-t7b">
+            <objects>
+                <viewController id="qB2-de-ZAO" customClass="viewGuidelinesPDF" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cgT-88-eJv">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="2Ch-Rk-H8T"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="xWy-8J-opb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Axu-JD-sTo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-644" y="2429"/>
+        </scene>
+        <!--Build Report Content Page-->
+        <scene sceneID="gd9-JD-tho">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="TnG-oL-TVY" customClass="buildReportContentPage" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="huL-6C-ade">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="tZw-ko-MJQ"/>
+                        <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" style="browser" id="WgT-T2-SUL"/>
+                    <connections>
+                        <segue destination="sPK-wX-MSA" kind="show" identifier="showStage" id="zVi-eH-eXm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gjR-Rf-3O2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-421" y="3104"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="FoG-pS-Knc"/>
-        <segue reference="Ypc-0i-t4p"/>
-        <segue reference="n7w-SH-YOG"/>
+        <segue reference="05a-tf-gx5"/>
+        <segue reference="Uv5-2R-2fq"/>
+        <segue reference="zVi-eH-eXm"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="doc.text.fill.viewfinder" catalog="system" width="128" height="115"/>
-        <image name="gearshape" catalog="system" width="128" height="123"/>
+        <image name="gearshape" catalog="system" width="32" height="32"/>
         <image name="image1.png" width="484" height="252"/>
         <image name="image2.png" width="373" height="246"/>
         <image name="image3.png" width="386" height="125"/>
@@ -1686,9 +1790,9 @@
         <image name="image5.png" width="379" height="191"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="largePDF" width="500" height="500"/>
-        <image name="location.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="location.viewfinder" catalog="system" width="32" height="32"/>
         <image name="mediumPDF" width="500" height="500"/>
-        <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
+        <image name="pencil.and.outline" catalog="system" width="32" height="32"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="shareplay" catalog="system" width="128" height="75"/>
         <image name="smallPDF" width="500" height="500"/>
@@ -1696,7 +1800,7 @@
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

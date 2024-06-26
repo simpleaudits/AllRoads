@@ -20,12 +20,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     // configure the section
     let userList = 0
-    let mapSection = 1
-    let auditListSection = 2
-    let archievedSection = 3
+    let shareButton = 1
+    let mapSection = 2
+    let auditListSection = 3
+    let archievedSection = 4
     
     //Rows in each section, these are subject to change.
-        var SectionCount:Int = 4
+        var SectionCount:Int = 5
     
     
 
@@ -75,6 +76,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
  
         self.collectionView?.register(auditHeader.self, forSupplementaryViewOfKind: "auditHeader", withReuseIdentifier: "auditHeader")
         self.collectionView?.register(viewAuditCell.self, forCellWithReuseIdentifier: "viewAuditCell")
+        self.collectionView?.register(shareButtonCell.self, forCellWithReuseIdentifier: "shareButtonCell")
         self.collectionView?.register(viewAuditHeaderMap.self, forCellWithReuseIdentifier: "viewAuditHeaderMap")
         collectionView?.register(collectionOfUsers.self, forCellWithReuseIdentifier: "collectionOfUsers")
         
@@ -523,24 +525,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     override func viewDidDisappear(_ animated: Bool) {
         print("YES")
@@ -562,6 +546,9 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
 
     
+    
+    
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return SectionCount
@@ -572,17 +559,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         // #warning Incomplete implementation, return the number of items
         switch section {
             case userList:
-
             return 1
-            
+            case shareButton:
+            return 1
             case mapSection:
- 
             return 1
-            
             case auditListSection:
-   
             return CompletedAuditsFilter.count
-         
             default:
             return ArchievedAuditsFilter.count
 
@@ -604,7 +587,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             sectionHeader.headerName.text =  "Site Locations"
             return sectionHeader
      
-        }else if indexPath.section == mapSection {
+        }else if indexPath.section == shareButton{
+            let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
+            sectionHeader.headerName.text =  "Share Project"
+            return sectionHeader
+     
+        }
+        else if indexPath.section == mapSection {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "auditHeader", for: indexPath) as! auditHeader
 
             sectionHeader.headerName.text =  "Map"
@@ -639,16 +628,31 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 100, height: 100), scaleMode: .fill)
             cell.imageUI.sd_setImage(with: URL(string:siteItems.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
             
+            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             
-            
-            cell.layer.masksToBounds = true
+            cell.layer.masksToBounds = false
             cell.layer.cornerRadius = 15
-            cell.layer.borderWidth = 1
-            cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//            cell.layer.borderWidth = 1
+//            cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             
+            cell.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            cell.layer.shadowOpacity = 0.3
+            cell.layer.shadowOffset = .zero
+            cell.layer.shadowRadius = 5
 
             
         return cell
+
+            
+        }else if indexPath.section  == shareButton {
+            //Working Audits
+            let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "shareButtonCell", for: indexPath) as! shareButtonCell
+            cell.shareButton.text = "Add Collaborators"
+            cell.shareButton.backgroundColor = .orange
+            cell.shareButton.layer.cornerRadius = 8
+            cell.shareButton.layer.masksToBounds = true
+            
+            return cell
 
             
         }else if indexPath.section  == mapSection {
@@ -679,6 +683,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             
         }else if indexPath.section  == userList {
+            
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionOfUsers", for: indexPath) as! collectionOfUsers
             
 
@@ -726,8 +731,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             //Map view
 
 
+        }else   if indexPath.section  == shareButton {
+            //action to share here
+            createSharedAlert()
+
+
         }else   if indexPath.section  == userList {
-            //Map view
+  
 
 
         }
@@ -740,90 +750,13 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
             self.performSegue(withIdentifier: "viewAuditList", sender: self)
             
-            
-//
-//            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
-//                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
-//                            //save this for headerview in view item
-//                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
-//
-//                        }
-//            let action2 = UIAlertAction(title: "Mark As Archived",style: .default) { [self] (action:UIAlertAction!) in
-//                            //save this for headerview in view item
-//                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.archived!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
-//
-//                DispatchQueue.main.async {
-//                    self.collectionView.reloadData()
-//
-//                }
-//
-//            }
-//
-//                let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
-//            }
-//
-//            Alert3.addAction(action1)
-//            Alert3.addAction(action2)
-//            Alert3.addAction(action3)
-//            //Alert3.addAction(action4)
-//
-//            //archieved
-//            self.present(Alert3, animated: true, completion: nil)
-//            self.refData = "\(CompletedAuditsFilter[indexPath.row].ref)"
-//            self.siteID = "\(CompletedAuditsFilter[indexPath.row].siteID)"
-//            print("refData:\(self.refData)")
-//
-//
-//
+
         }else {
             self.refData = "\(ArchievedAuditsFilter[indexPath.row].ref)"
             self.siteID = "\(ArchievedAuditsFilter[indexPath.row].siteID)"
             self.performSegue(withIdentifier: "viewAuditList", sender: self)
             
-            
-            //
-            //            let auditData = ArchievedAuditsFilter[indexPath.row]
-            //            let Alert3 = UIAlertController(title: "Site Name:", message: "\(auditData.siteName)", preferredStyle: .actionSheet)
-            //                        let action1 = UIAlertAction(title: "View audit",style: .default) { (action:UIAlertAction!) in
-            //                            //save this for headerview in view item
-            //                            self.performSegue(withIdentifier: "viewAuditList", sender: self)
-            //
-            //                        }
-            //
-            //
-            //            let action4 = UIAlertAction(title: "Mark As In-Progress",style: .default) { [self] (action:UIAlertAction!) in
-            //                            //save this for headerview in view item
-            //                self.firebaseConsole.updateSiteProgress(siteStatus: mainConsole.progress!, auditID: "\(auditID)/\(mainConsole.siteList!)/\(auditData.siteID)")
-            //
-            //                DispatchQueue.main.async {
-            //
-            //                    self.collectionView.reloadData()
-            //
-            //                }
-            //
-            //                        }
-            //
-            //
-            //                            let action3 = UIAlertAction(title: "Cancel",style: .cancel) { (action:UIAlertAction!) in
-            //                        }
-            //
-            //            Alert3.addAction(action1)
-            //           // Alert3.addAction(action2)
-            //            Alert3.addAction(action3)
-            //            Alert3.addAction(action4)
-            //
-            //
-            //
-            //            //archieved
-            //            self.present(Alert3, animated: true, completion: nil)
-            //            self.refData = "\(ArchievedAuditsFilter[indexPath.row].ref)"
-            //            self.siteID = "\(ArchievedAuditsFilter[indexPath.row].siteID)"
-            //            print(self.refData )
-            //
-            //
-            //
-            //
-        
+       
         }
     }
 
@@ -898,17 +831,46 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
                          return section
 
-            }else if sectionNumber  == self.auditListSection {
+            }else if sectionNumber  == self.shareButton {
+                //shareButton
+
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30)))
+                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                         heightDimension: .absolute(30)),
+                         subitems: [item])
+
+                         let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .none
+
+                
+//                        section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
+                
+                section.contentInsets.leading = 20
+                section.contentInsets.trailing = 20
+                
+                
+                         return section
+
+            }
+            else if sectionNumber  == self.auditListSection {
                 //AUDITVIEW
                 
                     let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
                         item.contentInsets.trailing = 20
                         item.contentInsets.leading = 20
                         item.contentInsets.top = 5
+                
+                
+
+                
+                
                     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
                         heightDimension: .absolute(CGFloat(self.CompletedAuditsFilter.count) * 100)),
                         subitems: [item])
+                
+
             
 
                         let section = NSCollectionLayoutSection(group: group)
@@ -923,17 +885,18 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
             }else if sectionNumber  == self.userList {
                 //list of collaborators
-                
-                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
+
+                    let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(3/4), heightDimension: .absolute(80)))
 
                     let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(100)),
+                        heightDimension: .absolute(80)),
                         subitems: [item])
+                
             
 
                         let section = NSCollectionLayoutSection(group: group)
-                   section.orthogonalScrollingBehavior = .continuous
+                        section.orthogonalScrollingBehavior = .continuous
                 
                         section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension:.absolute(50) ), elementKind: "auditHeader", alignment: .topLeading)]
                 

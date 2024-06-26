@@ -36,7 +36,27 @@
 		8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */; };
 		8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */; };
 		8297D0062B74F41100450513 /* signatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8297D0052B74F41100450513 /* signatureViewController.swift */; };
+		829EBB442BF8464B00783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB3D2BF8464900783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf */; };
+		829EBB452BF8464B00783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB3E2BF8464900783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf */; };
+		829EBB462BF8464B00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB3F2BF8464A00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf */; };
+		829EBB472BF8464B00783BB9 /* AGRS07-21_Guide_to_Road_Safety_Part_7_Road_Safety_Strategy_and_Management.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB402BF8464A00783BB9 /* AGRS07-21_Guide_to_Road_Safety_Part_7_Road_Safety_Strategy_and_Management.pdf */; };
+		829EBB482BF8464B00783BB9 /* AGRS01-21_Guide_to_Road_Safety_Part_1_Introduction_Safe_System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB412BF8464B00783BB9 /* AGRS01-21_Guide_to_Road_Safety_Part_1_Introduction_Safe_System.pdf */; };
+		829EBB492BF8464B00783BB9 /* AGRS04-21_Guide_to_Road_Safety_Part_4_Safe_People.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB422BF8464B00783BB9 /* AGRS04-21_Guide_to_Road_Safety_Part_4_Safe_People.pdf */; };
+		829EBB4A2BF8464B00783BB9 /* AGRS06-22_Guide_to_Road_Safety_Part-6_Road_Safety_Audit.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB432BF8464B00783BB9 /* AGRS06-22_Guide_to_Road_Safety_Part-6_Road_Safety_Audit.pdf */; };
 		82B023212B612AAE00DA87A3 /* addSiteDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B023202B612AAE00DA87A3 /* addSiteDetails.swift */; };
+		82B95F5E2BF8471A00EA706A /* ausroadGuidelineCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B95F5D2BF8471A00EA706A /* ausroadGuidelineCollection.swift */; };
+		82B95F662BF8482400EA706A /* 6.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F5F2BF8482200EA706A /* 6.jpeg */; };
+		82B95F672BF8482400EA706A /* 5.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F602BF8482200EA706A /* 5.jpeg */; };
+		82B95F682BF8482400EA706A /* 3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F612BF8482300EA706A /* 3.jpeg */; };
+		82B95F692BF8482400EA706A /* 7.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F622BF8482300EA706A /* 7.jpeg */; };
+		82B95F6A2BF8482400EA706A /* 2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F632BF8482300EA706A /* 2.jpeg */; };
+		82B95F6B2BF8482400EA706A /* 4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F642BF8482300EA706A /* 4.jpeg */; };
+		82B95F6C2BF8482400EA706A /* 1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82B95F652BF8482300EA706A /* 1.jpeg */; };
+		82B95F6E2BF8BF0800EA706A /* headerFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B95F6D2BF8BF0800EA706A /* headerFiles.swift */; };
+		82B95F702BF8E4A000EA706A /* viewGuidelinesPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B95F6F2BF8E49F00EA706A /* viewGuidelinesPDF.swift */; };
+		82B95F722C0AD5BD00EA706A /* buildReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B95F712C0AD5BD00EA706A /* buildReport.swift */; };
+		82B95F742C0DDCE300EA706A /* buildReportContentPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B95F732C0DDCE300EA706A /* buildReportContentPage.swift */; };
+		82B95F762C0F278600EA706A /* reportContentsdataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B95F752C0F278600EA706A /* reportContentsdataModel.swift */; };
 		82BC45452B67BAA600FB2650 /* settingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BC45442B67BAA600FB2650 /* settingsPage.swift */; };
 		82D527F32B7654D000A9655D /* whiteBackdrop.png in Resources */ = {isa = PBXBuildFile; fileRef = 82D527F22B7654D000A9655D /* whiteBackdrop.png */; };
 		82D527F52B8ABB5C00A9655D /* versionControl.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 82D527F42B8ABB5C00A9655D /* versionControl.rtf */; };
@@ -133,7 +153,27 @@
 		8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 14 _ 15 Pro Max - 1 (19).png"; sourceTree = "<group>"; };
 		8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iPhone-14-_-15-Pro-Max---1-(19).jpg"; sourceTree = "<group>"; };
 		8297D0052B74F41100450513 /* signatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signatureViewController.swift; sourceTree = "<group>"; };
+		829EBB3D2BF8464900783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf"; sourceTree = "<group>"; };
+		829EBB3E2BF8464900783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf"; sourceTree = "<group>"; };
+		829EBB3F2BF8464A00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf"; sourceTree = "<group>"; };
+		829EBB402BF8464A00783BB9 /* AGRS07-21_Guide_to_Road_Safety_Part_7_Road_Safety_Strategy_and_Management.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS07-21_Guide_to_Road_Safety_Part_7_Road_Safety_Strategy_and_Management.pdf"; sourceTree = "<group>"; };
+		829EBB412BF8464B00783BB9 /* AGRS01-21_Guide_to_Road_Safety_Part_1_Introduction_Safe_System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS01-21_Guide_to_Road_Safety_Part_1_Introduction_Safe_System.pdf"; sourceTree = "<group>"; };
+		829EBB422BF8464B00783BB9 /* AGRS04-21_Guide_to_Road_Safety_Part_4_Safe_People.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS04-21_Guide_to_Road_Safety_Part_4_Safe_People.pdf"; sourceTree = "<group>"; };
+		829EBB432BF8464B00783BB9 /* AGRS06-22_Guide_to_Road_Safety_Part-6_Road_Safety_Audit.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS06-22_Guide_to_Road_Safety_Part-6_Road_Safety_Audit.pdf"; sourceTree = "<group>"; };
 		82B023202B612AAE00DA87A3 /* addSiteDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSiteDetails.swift; sourceTree = "<group>"; };
+		82B95F5D2BF8471A00EA706A /* ausroadGuidelineCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ausroadGuidelineCollection.swift; sourceTree = "<group>"; };
+		82B95F5F2BF8482200EA706A /* 6.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 6.jpeg; sourceTree = "<group>"; };
+		82B95F602BF8482200EA706A /* 5.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpeg; sourceTree = "<group>"; };
+		82B95F612BF8482300EA706A /* 3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpeg; sourceTree = "<group>"; };
+		82B95F622BF8482300EA706A /* 7.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpeg; sourceTree = "<group>"; };
+		82B95F632BF8482300EA706A /* 2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpeg; sourceTree = "<group>"; };
+		82B95F642BF8482300EA706A /* 4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpeg; sourceTree = "<group>"; };
+		82B95F652BF8482300EA706A /* 1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpeg; sourceTree = "<group>"; };
+		82B95F6D2BF8BF0800EA706A /* headerFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerFiles.swift; sourceTree = "<group>"; };
+		82B95F6F2BF8E49F00EA706A /* viewGuidelinesPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewGuidelinesPDF.swift; sourceTree = "<group>"; };
+		82B95F712C0AD5BD00EA706A /* buildReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buildReport.swift; sourceTree = "<group>"; };
+		82B95F732C0DDCE300EA706A /* buildReportContentPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buildReportContentPage.swift; sourceTree = "<group>"; };
+		82B95F752C0F278600EA706A /* reportContentsdataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reportContentsdataModel.swift; sourceTree = "<group>"; };
 		82BC45442B67BAA600FB2650 /* settingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsPage.swift; sourceTree = "<group>"; };
 		82D527F22B7654D000A9655D /* whiteBackdrop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteBackdrop.png; sourceTree = "<group>"; };
 		82D527F42B8ABB5C00A9655D /* versionControl.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = versionControl.rtf; sourceTree = "<group>"; };
@@ -278,6 +318,9 @@
 				82194AE52B5E8D68009FEF7D /* Observation.swift */,
 				827DFF4E2B0E185600029EDE /* PDFkit.swift */,
 				827DFF502B0E1BD300029EDE /* viewPDF.swift */,
+				82B95F712C0AD5BD00EA706A /* buildReport.swift */,
+				82B95F732C0DDCE300EA706A /* buildReportContentPage.swift */,
+				82B95F772C0F282D00EA706A /* dataModel */,
 				82194AE72B5FA606009FEF7D /* ss - Observation as a Collection */,
 				82445D0E2B0242E000319605 /* support */,
 			);
@@ -321,9 +364,49 @@
 			path = dataModel;
 			sourceTree = "<group>";
 		};
+		829EBB3C2BF8463200783BB9 /* Ausroad guidelines */ = {
+			isa = PBXGroup;
+			children = (
+				829EBB412BF8464B00783BB9 /* AGRS01-21_Guide_to_Road_Safety_Part_1_Introduction_Safe_System.pdf */,
+				829EBB3F2BF8464A00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf */,
+				829EBB3D2BF8464900783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf */,
+				829EBB422BF8464B00783BB9 /* AGRS04-21_Guide_to_Road_Safety_Part_4_Safe_People.pdf */,
+				829EBB3E2BF8464900783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf */,
+				829EBB432BF8464B00783BB9 /* AGRS06-22_Guide_to_Road_Safety_Part-6_Road_Safety_Audit.pdf */,
+				829EBB402BF8464A00783BB9 /* AGRS07-21_Guide_to_Road_Safety_Part_7_Road_Safety_Strategy_and_Management.pdf */,
+				82B95F652BF8482300EA706A /* 1.jpeg */,
+				82B95F632BF8482300EA706A /* 2.jpeg */,
+				82B95F612BF8482300EA706A /* 3.jpeg */,
+				82B95F642BF8482300EA706A /* 4.jpeg */,
+				82B95F602BF8482200EA706A /* 5.jpeg */,
+				82B95F5F2BF8482200EA706A /* 6.jpeg */,
+				82B95F622BF8482300EA706A /* 7.jpeg */,
+			);
+			path = "Ausroad guidelines";
+			sourceTree = "<group>";
+		};
+		82B95F5C2BF846E900EA706A /* Ausroad Files */ = {
+			isa = PBXGroup;
+			children = (
+				82B95F5D2BF8471A00EA706A /* ausroadGuidelineCollection.swift */,
+				82B95F6F2BF8E49F00EA706A /* viewGuidelinesPDF.swift */,
+				82B95F6D2BF8BF0800EA706A /* headerFiles.swift */,
+			);
+			path = "Ausroad Files";
+			sourceTree = "<group>";
+		};
+		82B95F772C0F282D00EA706A /* dataModel */ = {
+			isa = PBXGroup;
+			children = (
+				82B95F752C0F278600EA706A /* reportContentsdataModel.swift */,
+			);
+			name = dataModel;
+			sourceTree = "<group>";
+		};
 		82BC45432B67BA7300FB2650 /* settings */ = {
 			isa = PBXGroup;
 			children = (
+				82B95F5C2BF846E900EA706A /* Ausroad Files */,
 				82BC45442B67BAA600FB2650 /* settingsPage.swift */,
 				82369D492BD4A90300B98749 /* reportConfig.swift */,
 				8297D0052B74F41100450513 /* signatureViewController.swift */,
@@ -335,6 +418,7 @@
 		82E4A8202AFCE0A800BE1D8B = {
 			isa = PBXGroup;
 			children = (
+				829EBB3C2BF8463200783BB9 /* Ausroad guidelines */,
 				82D527F42B8ABB5C00A9655D /* versionControl.rtf */,
 				82E4A8A42AFCE54D00BE1D8B /* extensionFiles.swift */,
 				82E4A82B2AFCE0A800BE1D8B /* RSAC */,
@@ -641,18 +725,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B95F662BF8482400EA706A /* 6.jpeg in Resources */,
+				82B95F692BF8482400EA706A /* 7.jpeg in Resources */,
 				8236DD6D2B93724700630F76 /* image5.png in Resources */,
+				82B95F6C2BF8482400EA706A /* 1.jpeg in Resources */,
 				8236DD632B935EFA00630F76 /* image1.png in Resources */,
+				829EBB452BF8464B00783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf in Resources */,
 				82D527F52B8ABB5C00A9655D /* versionControl.rtf in Resources */,
+				829EBB482BF8464B00783BB9 /* AGRS01-21_Guide_to_Road_Safety_Part_1_Introduction_Safe_System.pdf in Resources */,
+				829EBB4A2BF8464B00783BB9 /* AGRS06-22_Guide_to_Road_Safety_Part-6_Road_Safety_Audit.pdf in Resources */,
 				8236DD6B2B93720E00630F76 /* image4.png in Resources */,
 				82E4A8A92AFCE55500BE1D8B /* man.png in Resources */,
+				82B95F6B2BF8482400EA706A /* 4.jpeg in Resources */,
+				829EBB442BF8464B00783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf in Resources */,
+				829EBB462BF8464B00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf in Resources */,
 				824D559B2B8ACDC700197638 /* GoogleService-Info.plist in Resources */,
+				82B95F682BF8482400EA706A /* 3.jpeg in Resources */,
 				82D527F32B7654D000A9655D /* whiteBackdrop.png in Resources */,
+				82B95F672BF8482400EA706A /* 5.jpeg in Resources */,
 				8236DD672B936F7300630F76 /* image2.png in Resources */,
 				8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */,
+				82B95F6A2BF8482400EA706A /* 2.jpeg in Resources */,
+				829EBB472BF8464B00783BB9 /* AGRS07-21_Guide_to_Road_Safety_Part_7_Road_Safety_Strategy_and_Management.pdf in Resources */,
 				8297CFFD2B6F594100450513 /* Road-audit.png in Resources */,
 				82E4A8392AFCE0AA00BE1D8B /* LaunchScreen.storyboard in Resources */,
 				82E4A8362AFCE0AA00BE1D8B /* Assets.xcassets in Resources */,
+				829EBB492BF8464B00783BB9 /* AGRS04-21_Guide_to_Road_Safety_Part_4_Safe_People.pdf in Resources */,
 				826577812B8B1D0E000FB612 /* Road-auditIcon.jpg in Resources */,
 				8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */,
 				82E4A8342AFCE0A800BE1D8B /* Main.storyboard in Resources */,
@@ -785,6 +883,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B95F722C0AD5BD00EA706A /* buildReport.swift in Sources */,
 				8236DD722BACED3500630F76 /* listOfUsers.swift in Sources */,
 				82E4A8982AFCE54400BE1D8B /* scopeDecription.swift in Sources */,
 				82E4A8872AFCE54400BE1D8B /* Save.swift in Sources */,
@@ -796,6 +895,7 @@
 				82E4A8882AFCE54400BE1D8B /* Load.swift in Sources */,
 				8265778B2B92A18B000FB612 /* collaborationAPI.swift in Sources */,
 				82E4A88F2AFCE54400BE1D8B /* InitialSignUp.swift in Sources */,
+				82B95F5E2BF8471A00EA706A /* ausroadGuidelineCollection.swift in Sources */,
 				82E4A8A52AFCE54D00BE1D8B /* extensionFiles.swift in Sources */,
 				82E4A8A02AFCE54400BE1D8B /* addDescription.swift in Sources */,
 				827DFF4F2B0E185600029EDE /* PDFkit.swift in Sources */,
@@ -815,6 +915,7 @@
 				82E4A82F2AFCE0A800BE1D8B /* SceneDelegate.swift in Sources */,
 				82B023212B612AAE00DA87A3 /* addSiteDetails.swift in Sources */,
 				82E4A8992AFCE54400BE1D8B /* createAudit.swift in Sources */,
+				82B95F742C0DDCE300EA706A /* buildReportContentPage.swift in Sources */,
 				827DFF512B0E1BD300029EDE /* viewPDF.swift in Sources */,
 				82445D0C2B0100A000319605 /* createSite.swift in Sources */,
 				82E4A8962AFCE54400BE1D8B /* locationExtension.swift in Sources */,
@@ -827,13 +928,16 @@
 				8236DD742BAD02E400630F76 /* listOfUsersCell.swift in Sources */,
 				82E4A8892AFCE54400BE1D8B /* auditCell.swift in Sources */,
 				82E4A89F2AFCE54400BE1D8B /* viewAuditList.swift in Sources */,
+				82B95F702BF8E4A000EA706A /* viewGuidelinesPDF.swift in Sources */,
 				82E4A8A12AFCE54400BE1D8B /* detailsCell.swift in Sources */,
 				826577892B91AB65000FB612 /* collaborationData.swift in Sources */,
 				82E4A8942AFCE54400BE1D8B /* fundsAvaliable.swift in Sources */,
 				82E4A89D2AFCE54400BE1D8B /* viewAuditHeaderMap.swift in Sources */,
 				82E4A8912AFCE54400BE1D8B /* userData.swift in Sources */,
+				82B95F762C0F278600EA706A /* reportContentsdataModel.swift in Sources */,
 				82E4A8A32AFCE54400BE1D8B /* auditSiteData.swift in Sources */,
 				82E4A88D2AFCE54400BE1D8B /* SignUpControllerItems.swift in Sources */,
+				82B95F6E2BF8BF0800EA706A /* headerFiles.swift in Sources */,
 				82E4A8972AFCE54400BE1D8B /* locationView.swift in Sources */,
 				82E4A88E2AFCE54400BE1D8B /* SignUpController.swift in Sources */,
 				82E4A88C2AFCE54400BE1D8B /* auditHeader.swift in Sources */,

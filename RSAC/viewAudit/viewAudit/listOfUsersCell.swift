@@ -10,6 +10,48 @@ import UIKit
 import Firebase
 
 
+class shareButtonCell: UICollectionViewCell{
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame)
+        
+
+    
+        shareButton.frame = CGRect(
+            x:0,
+            y:0,
+            width: frame.width ,
+            height: frame.height
+        )
+        
+     
+  
+        
+        addSubview(shareButton)
+
+       
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    let shareButton: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = .white
+        return label
+     }()
+    
+    
+    
+}
+
+
+
 
 class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
@@ -27,7 +69,7 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
 
     
     func loadData(auditID: String, userUID: String) {
-        print("fire")
+   
             
             let uid = Auth.auth().currentUser?.uid
             
@@ -111,7 +153,7 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: collectionView.frame.height)
+        return CGSize(width: 60, height: collectionView.frame.height)
     }
     
     
@@ -145,12 +187,7 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! cellData
             let items = listOfObservationData[indexPath.row]
             
-            
-            cell.userImage.layer.masksToBounds = true;
-            cell.userImage.layer.cornerRadius = cell.userImage.frame.height/2
-            
-            cell.nameLabel.layer.masksToBounds = true;
-            cell.nameLabel.layer.cornerRadius = cell.nameLabel.frame.height/2
+
             
             
             Database.database().reference(withPath:"\(items.userURL)")
@@ -164,13 +201,13 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             
             
                                 let displayURL = dict["DPimage"] as? String
-                                let username = dict["Username"] as? String
+                                let userName = dict["userName"] as? String
             
             
             
                                 //display product owner DP
                                 cell.userImage.sd_setImage(with: URL(string:displayURL!))
-                                cell.nameLabel.text = username
+                                cell.nameLabel.text = userName
             
    
             
@@ -182,6 +219,10 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         }
     }
         
+    
+
+//MARK: - Cell with cell
+    
 
     override init(frame: CGRect) {
         super .init(frame: frame)
@@ -204,12 +245,19 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             y: 0,
             width: frame.width,
             height: frame.height)
-       
-
+        
+   
+        
+        // total height of the cell should be 80, have 10 for padding if need be so 90pt.
         
         addSubview(collectionView)
+   
 
     }
+    
+    
+    
+    
     
     func loadListOfUserData(userUID:String, auditID:String){
         
@@ -295,11 +343,27 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.clear
+ 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
     
         return collectionView
     }()
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+//MARK: - Call this when no users join
+    
     
 
     class JoinCell: UICollectionViewCell {
@@ -307,9 +371,15 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             super.init(frame: frame)
             
             
-            JoinJaffle.frame = CGRect(x:0, y: 0, width: frame.width, height: frame.width)
+            JoinJaffle.frame = CGRect(x:0, 
+                                      y: 0,
+                                      width: frame.width,
+                                      height: frame.width)
             //60
-            JoinLabel.frame = CGRect(x: 0, y: frame.width , width: frame.width, height: 20)
+            JoinLabel.frame = CGRect(x: 0, 
+                                     y: frame.width ,
+                                     width: frame.width,
+                                     height: 20)
             
           
             addSubview(JoinJaffle)
@@ -341,8 +411,9 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
       
              label.numberOfLines = 2
              label.textAlignment = .center
-        
-             label.font = UIFont(name: "HelveticaNeue-Light", size: 10)
+            //label.backgroundColor = .gray
+             label.font = UIFont.systemFont(ofSize: 10)
+            //label.font = UIFont(name: "HelveticaNeue-Light", size: 10)
              return label
          }()
         
@@ -357,9 +428,15 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             super.init(frame: frame)
             
             
-            userImage.frame = CGRect(x:0, y: 0, width: frame.width, height: frame.width)
+            userImage.frame = CGRect(x:0, 
+                                     y: 0,
+                                     width: frame.width,
+                                     height: frame.width)
             //60
-            nameLabel.frame = CGRect(x: 0, y: frame.width , width: frame.width, height: 20)
+            nameLabel.frame = CGRect(x: 0, 
+                                     y: userImage.frame.maxY ,
+                                     width: frame.width,
+                                     height: 20)
    
             addSubview(userImage)
             addSubview(nameLabel)
@@ -377,9 +454,9 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             } else {
                 // Fallback on earlier versions
             }
-            userStatus.contentMode = .scaleAspectFit
-            //userStatus.layer.cornerRadius = 17/2
-            //userStatus.layer.masksToBounds = true
+            userStatus.contentMode = .scaleToFill
+            userStatus.layer.cornerRadius = 20
+            userStatus.layer.masksToBounds = true
             userStatus.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             return userStatus
         }()
@@ -388,8 +465,10 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
              let label = UILabel()
              label.text = "Join"
              label.numberOfLines = 1
+             label.adjustsFontSizeToFitWidth = false
              label.textAlignment = .center
              //label.backgroundColor = .gray
+             label.font = UIFont.systemFont(ofSize: 10)
              //label.font = UIFont(name: "HelveticaNeue-Light", size: 10)
              return label
          }()

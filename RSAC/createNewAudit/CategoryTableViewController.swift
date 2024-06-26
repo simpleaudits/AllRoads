@@ -58,7 +58,7 @@ class CategoryTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             self.navigationController?.popViewController(animated: true)
             
-            self.dismiss(animated: true, completion: nil)
+            //self.dismiss(animated: true, completion: nil)
         
             
         })

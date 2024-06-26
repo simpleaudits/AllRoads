@@ -137,7 +137,7 @@ class CONSOLE: UIViewController {
     var maxListing:Int? = 3
     
     var reportConfig:String? = "reportConfig"
-    
+    var reportContent:String? = "reportContent"
     var userStatus:String? = "Subscribed"
     var userStatusNotSubbed:String? = "NotSubscribed"
     

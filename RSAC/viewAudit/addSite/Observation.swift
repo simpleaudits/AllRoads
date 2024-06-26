@@ -97,7 +97,7 @@ class cellData: UITableViewCell{
         label.text = "Loading.."
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textAlignment = .right
+        label.textAlignment = .left
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return label
     }()
@@ -577,7 +577,12 @@ class Observation: UITableViewController,UISearchBarDelegate {
      }else if let destination5 = segue.destination as? viewPDF {
          destination5.refData = refData
 
-      }
+      }else if let destination6 = segue.destination as? buildReport {
+          destination6.siteID = siteID
+          destination6.auditID = auditID
+          destination6.userUID = userUID
+
+       }
       
 
       else {

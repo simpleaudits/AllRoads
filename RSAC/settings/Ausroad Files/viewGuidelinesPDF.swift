@@ -6,24 +6,38 @@
 //
 
 import UIKit
+import WebKit
+import PDFKit
 
 class viewGuidelinesPDF: UIViewController {
+    
+    var PDFfilename = String()
+    var headingName = String()
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+        
+        print(PDFfilename)
     
+        navigationItem.title = headingName
+        
+        
+        let pdfView = PDFView(frame: self.view.bounds)
+     
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        pdfView.autoScales = true
+        view.addSubview(pdfView)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let path = Bundle.main.url(forResource: "\(PDFfilename.dropLast(4))", withExtension: "pdf") else { return }
+        if let document = PDFDocument(url: path) {
+            pdfView.document = document
+        }
     }
-    */
+        
+ 
+
+      
 
 }

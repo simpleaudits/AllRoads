@@ -181,15 +181,10 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     @objc func saveData(_ sender: UIButton) {
         self.delegate1?.saveDescription(text: self.descriptionTextfield.text)
         self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
         
         
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-//
-//
-//
-//        })
+
         
     }
     

@@ -28,6 +28,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
   
     var userUID = String()
     
+    var projectStage = String()
+    var companyName = String()
 
     let extensConsole = extens()
     let firebaseConsole = saveLocal()
@@ -85,6 +87,9 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
          
            } else if let error = error {
               print("Something went wrong \(error.localizedDescription)")
+             self.errorUpload(errorMessage: "Data could not be saved",subtitle: "\(error)")
+               
+               
            }
         }
         
@@ -142,8 +147,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     } else {
                         print("saved")
                         SwiftLoader.hide()
-                        
-                        self.successUpload(Message: "New Site Added!", subtitle: "")
+                        self.reportContentConfiguration(auditID: self.auditID, siteID: self.siteID)
+               
                         
                         
                     }
@@ -198,8 +203,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                     } else {
                         print("saved")
                         SwiftLoader.hide()
+                        self.reportContentConfiguration(auditID: self.auditID, siteID: self.siteID)
                         
-                        self.successUpload(Message: "New Site Added!", subtitle: "")
                         
                         
                     }
@@ -217,6 +222,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
         }
    
     }
+    
     
   
     
@@ -278,6 +284,163 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     }
     
     
+    // MARK: - Create report template
+    func reportContentConfiguration(auditID:String, siteID:String){
+        //show progress view
+        SwiftLoader.show(title: "Generataring Report Configurations", animated: true)
+
+        let uid = Auth.auth().currentUser?.uid
+            
+        let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+        
+        let reportConfigRef = reftest
+            .child("\(self.mainConsole.post!)")
+            .child(uid!)
+            .child("\(self.mainConsole.audit!)")
+            .child("\(auditID)")
+            .child("\(self.mainConsole.siteList!)")
+            .child("\(siteID)")
+            .child("\(self.mainConsole.reportContent!)")
+        
+        var reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
+
+
+        let saveReportConfig = reportContentsdataModel(
+         reportConfig: reportConfigRefString,
+         q1: "⚠️",
+         q2: "⚠️",
+         q3: "⚠️",
+         q4: "⚠️",
+         q5: companyName,
+         q6: projectStage,
+         q7: "\(self.locationLabel.text!)",
+         q8: "⚠️",
+         q9: "⚠️",
+         q10: "⚠️",
+         q11: "⚠️",
+         q12: "⚠️",
+         q13: "⚠️",
+         q14: "⚠️",
+         q15: "⚠️",
+         q16: "⚠️",
+         q17: "⚠️",
+         q18: "⚠️",
+         q19: "⚠️",
+         q20: "⚠️",
+         q21: "⚠️",
+         q22: "⚠️",
+         q23: "⚠️",
+         q24: "⚠️",
+         q25: "⚠️",
+         q26: "⚠️",
+         q27: "⚠️",
+         q28: "⚠️",
+         q29: "⚠️",
+         q30: "⚠️",
+         q31: "⚠️",
+         q32: "⚠️",
+         q33: "⚠️",
+         q34: "⚠️",
+         q35: "⚠️")
+
+        reportConfigRef.setValue(saveReportConfig.saveReportConfig()){
+                (error:Error?, ref:DatabaseReference) in
+
+                if let error = error {
+                    print("Data could not be saved: \(error).")
+                    //self.errorUpload(errorMessage: "report presets could not be saved",subtitle: "\(error)")
+                    SwiftLoader.hide()
+                    
+                } else {
+                    print("saved")
+                    SwiftLoader.hide()
+                    self.successUpload(Message: "New Site Added!", subtitle: "")
+      
+                    
+  
+                }
+                  
+            }
+    }
+    
+    
+    // MARK: - Pull the audit stage data into the list
+    func loadProjectStatus(){
+                let uid = Auth.auth().currentUser?.uid
+                let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+                let reportDetails = reftest
+                    .child("\(self.mainConsole.post!)")
+                    .child(uid!)
+                    .child("\(self.mainConsole.audit!)")
+                    .child("\(auditID)")
+                 
+                    reportDetails.queryOrderedByKey()
+                         .observe( .value, with: { snapshot in
+                                   guard let dict = snapshot.value as? [String:Any] else {
+                                   //error here
+                                   return
+                                   }
+
+                                    let projectStage = dict["projectStage"] as? String
+                                    self.projectStage = projectStage!
+  
+                   })
+        
+  
+    }
+    // MARK: - Pull the company name data into the list
+    func loadCompanyName() {
+        let uid = Auth.auth().currentUser?.uid
+        let reftest = Database.database().reference().child("\(self.mainConsole.prod!)")
+        let reportDetails = reftest
+            .child("\(self.mainConsole.post!)")
+            .child(uid!)
+            .child("\(self.mainConsole.userDetails!)")
+
+         
+            reportDetails.queryOrderedByKey()
+                 .observe( .value, with: { snapshot in
+                           guard let dict = snapshot.value as? [String:Any] else {
+                           //error here
+                           return
+                           }
+
+                            let companyName = dict["companyName"] as? String
+                            self.companyName = companyName!
+
+           })
+        
+        
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Create report template
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 3{
@@ -327,6 +490,10 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
         super.viewDidLoad()
 
         siteName.delegate? = self
+        
+        
+        loadProjectStatus()
+        loadCompanyName()
 
         
         

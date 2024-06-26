@@ -363,7 +363,7 @@ class viewPDF: UIViewController {
             
             //Export the file
             
-            let filename = "AllRoads_Doc).pdf"
+            let filename = "AllRoads_Doc.pdf"
             let generator = PDFGenerator(document: document)
             
             DispatchQueue.global(qos: .background).async {
@@ -374,6 +374,8 @@ class viewPDF: UIViewController {
                     DispatchQueue.main.async {
                         // Load PDF into a webview from the temporary file
                         self.webView.load(URLRequest(url: url))
+            
+           
                         
                         
                     }
@@ -661,6 +663,9 @@ class viewPDF: UIViewController {
                     DispatchQueue.main.async {
                         // Load PDF into a webview from the temporary file
                         self.webView.load(URLRequest(url: url))
+                        
+                        
+                        //Save the document to local drive:
                         
                         
                     }

@@ -131,7 +131,7 @@ class viewAuditCell: UICollectionViewCell {
         label.text = "Loading.."
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textAlignment = .right
+        label.textAlignment = .left
         label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         //label.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         return label
