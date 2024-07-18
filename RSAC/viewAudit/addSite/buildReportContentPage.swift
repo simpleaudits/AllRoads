@@ -74,7 +74,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         
         
         switch questionIndex_key {
-        case "Audit Team Contact Name":
+        case "📝 Audit Team Contact Name":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -104,7 +104,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             textCount.text = "count:\(item_value_reportData.count)"
             self.view.addSubview(textCount)
             
-        case "Audit Team Organisation":
+        case "🏢 Audit Team Organisation":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -134,7 +134,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             textCount.text = "count:\(item_value_reportData.count)"
             self.view.addSubview(textCount)
             
-        case "Audit Team Organisation Contact Details":
+        case "📞 Audit Team Organisation Contact Details":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -164,7 +164,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             self.view.addSubview(textCount)
             
             
-        case "Your company name":
+        case "📝 Your company name":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -194,7 +194,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             self.view.addSubview(textCount)
             
             
-        case "Road Safety Audit Stage":
+        case "🚧 Road Safety Audit Stage":
             
             //Open List
     
@@ -219,16 +219,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.returnKeyType = .done
     
             self.view.addSubview(DetailsField)
-            
-            textCount = UILabel(frame: CGRect(x: 10, y: Int(DetailsField.frame.maxY), width: Int(view.frame.width) - 20, height: 20 ))
-            textCount.font = UIFont.systemFont(ofSize: 12)
-            textCount.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            textCount.textAlignment = .right
-            textCount.text = "count:\(item_value_reportData.count)"
-            self.view.addSubview(textCount)
+
 
             
-        case "Project Location":
+        case "📍 Project Location":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -251,7 +245,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             self.view.addSubview(DetailsField)
           
             
-        case "Project Description":
+        case "📝 Project Description":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -279,7 +273,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             //textCount.text = "count:\(item_value_reportData.count)"
             self.view.addSubview(textCount)
         
-        case "Project Number / Task Number":
+        case "#️⃣ Project Number / Task Number":
             
 
             
@@ -313,7 +307,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             
 
         
-        case "Organisation / Department":
+        case "🏢 Organisation / Department":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -335,7 +329,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
      
             self.view.addSubview(DetailsField)
         
-        case "Contact Name":
+        case "📝 Contact Name":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -358,7 +352,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             self.view.addSubview(DetailsField)
       
             
-        case "Contact Tel. No.":
+        case "📞 Contact Tel. No.":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -391,7 +385,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
   
             
             
-        case "Email Address":
+        case "📩 Email Address":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -414,7 +408,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     
             self.view.addSubview(DetailsField)
             
-        case "Date the Final Audit is Required":
+        case "📅 Date the Final Audit is Required":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -441,16 +435,24 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             //Formate Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-            let date = dateFormatter.date(from: item_value_reportData)
             
-            datePicker.setDate(date!, animated: true)
-            datePicker.datePickerMode = .date
-            datePicker.layer.masksToBounds = true
-            datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            if item_value_reportData.isEmpty{
+                datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }else{
+                let date = dateFormatter.date(from: item_value_reportData)
+                datePicker.setDate(date!, animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }
+
             self.view.addSubview(datePicker)
 
 
-        case "Previous Road Safety Audit":
+        case "🚧 Previous Road Safety Audit":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -472,7 +474,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
  
             self.view.addSubview(DetailsField)
             
-        case "Previous Road Safety Audit Stage":
+        case "🚧 Previous Road Safety Audit Stage":
             
             //Open List
     
@@ -497,15 +499,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.returnKeyType = .done
             self.view.addSubview(DetailsField)
             
-            textCount = UILabel(frame: CGRect(x: 10, y: Int(DetailsField.frame.maxY), width: Int(view.frame.width) - 20, height: 20 ))
-            textCount.font = UIFont.systemFont(ofSize: 12)
-            textCount.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            textCount.textAlignment = .right
-            textCount.text = "count:\(item_value_reportData.count)"
-            self.view.addSubview(textCount)
+       
        
         
-        case "Previous Audit Date":
+        case "📅 Previous Audit Date":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -532,15 +529,23 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             //Formate Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-            let date = dateFormatter.date(from: item_value_reportData)
             
-            datePicker.setDate(date!, animated: true)
-            datePicker.datePickerMode = .date
-            datePicker.layer.masksToBounds = true
-            datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            if item_value_reportData.isEmpty{
+                datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }else{
+                let date = dateFormatter.date(from: item_value_reportData)
+                datePicker.setDate(date!, animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }
+
             self.view.addSubview(datePicker)
 
-        case "Previous Audit Organisation":
+        case "🏢 Previous Audit Organisation":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -562,7 +567,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
      
             self.view.addSubview(DetailsField)
          
-        case "Previous Audit Team Leader":
+        case "👷 Previous Audit Team Leader":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -581,11 +586,11 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.textAlignment = .center
             DetailsField.returnKeyType = .done
             DetailsField.becomeFirstResponder()
-            DetailsField.isEnabled = false
+            //DetailsField.isEnabled = false
             self.view.addSubview(DetailsField)
             
             
-        case "Copy of Audit and CAR Provided":
+        case "📄 Copy of Audit and CAR Provided":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -604,11 +609,11 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.textAlignment = .center
             DetailsField.returnKeyType = .done
             DetailsField.becomeFirstResponder()
-            DetailsField.isEnabled = false
+            //DetailsField.isEnabled = false
             self.view.addSubview(DetailsField)
             
             
-        case "Safe System Assessments":
+        case "🚦 Safe System Assessments":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -627,10 +632,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.textAlignment = .center
             DetailsField.returnKeyType = .done
             DetailsField.becomeFirstResponder()
-            DetailsField.isEnabled = false
+            //DetailsField.isEnabled = false
             self.view.addSubview(DetailsField)
             
-        case "Assessment Date":
+        case "📅 Assessment Date":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -647,7 +652,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.layer.backgroundColor = .none
             DetailsField.layer.masksToBounds = true
             DetailsField.textAlignment = .right
-            DetailsField.isEnabled = false
+            //DetailsField.isEnabled = false
             self.view.addSubview(DetailsField)
       
       
@@ -655,17 +660,26 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
    
             //Formate Date
+            //Formate Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-            let date = dateFormatter.date(from: item_value_reportData)
             
-            datePicker.setDate(date!, animated: true)
-            datePicker.datePickerMode = .date
-            datePicker.layer.masksToBounds = true
-            datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            if item_value_reportData.isEmpty{
+                datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }else{
+                let date = dateFormatter.date(from: item_value_reportData)
+                datePicker.setDate(date!, animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }
+
             self.view.addSubview(datePicker)
             
-        case "Assessment Organisation":
+        case "🏢 Assessment Organisation":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -684,11 +698,11 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.textAlignment = .center
             DetailsField.returnKeyType = .done
             DetailsField.becomeFirstResponder()
-            DetailsField.isEnabled = false
+            //DetailsField.isEnabled = false
             self.view.addSubview(DetailsField)
             
             
-        case "Copy of Assessment Provided":
+        case "📄 Copy of Assessment Provided":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -706,7 +720,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             DetailsField.layer.masksToBounds = true
             DetailsField.textAlignment = .center
             DetailsField.returnKeyType = .done
-            DetailsField.isEnabled = false
+            //DetailsField.isEnabled = false
             DetailsField.becomeFirstResponder()
             self.view.addSubview(DetailsField)
             
@@ -729,7 +743,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             
             view.addSubview(segmentControl)
       
-        case "Project Objective":
+        case "📝 Project Objective":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -751,7 +765,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             self.view.addSubview(DetailsField)
             
             
-        case "Speed Limit / Design Speed":
+        case "🚦 Speed Limit / Design Speed":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -772,7 +786,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             numberDetailsTextfield.textAlignment = .center
             numberDetailsTextfield.returnKeyType = .done
             numberDetailsTextfield.keyboardType = .phonePad
-            numberDetailsTextfield.isEnabled = false
+            //numberDetailsTextfield.isEnabled = false
             numberDetailsTextfield.becomeFirstResponder()
             
             let bar = UIToolbar()
@@ -783,14 +797,286 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             
             self.view.addSubview(numberDetailsTextfield)
             
-           
+        case "📄 Standards, Departures from Standards and Mitigation":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = item_value_reportData
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .center
+            DetailsField.returnKeyType = .done
+            DetailsField.becomeFirstResponder()
+            //DetailsField.isEnabled = false
+            self.view.addSubview(DetailsField)
+            
+        case "🚘 Existing Traffic Flows":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
+            numberDetailsTextfield.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            numberDetailsTextfield.text = item_value_reportData
+            numberDetailsTextfield.layer.cornerRadius = 15
+            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            numberDetailsTextfield.layer.masksToBounds = true
+            numberDetailsTextfield.textAlignment = .center
+            numberDetailsTextfield.returnKeyType = .done
+            numberDetailsTextfield.keyboardType = .phonePad
+         
+            numberDetailsTextfield.becomeFirstResponder()
+            
+            let bar = UIToolbar()
+            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
+            bar.items = [reset]
+            bar.sizeToFit()
+            numberDetailsTextfield.inputAccessoryView = bar
+            
+            self.view.addSubview(numberDetailsTextfield)
+            
+        case "🚘 Forecast Traffic Flows":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
+            numberDetailsTextfield.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            numberDetailsTextfield.text = item_value_reportData
+            numberDetailsTextfield.layer.cornerRadius = 15
+            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            numberDetailsTextfield.layer.masksToBounds = true
+            numberDetailsTextfield.textAlignment = .center
+            numberDetailsTextfield.returnKeyType = .done
+            numberDetailsTextfield.keyboardType = .phonePad
+         
+            numberDetailsTextfield.becomeFirstResponder()
+            
+            let bar = UIToolbar()
+            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
+            bar.items = [reset]
+            bar.sizeToFit()
+            numberDetailsTextfield.inputAccessoryView = bar
+            
+            self.view.addSubview(numberDetailsTextfield)        
+        
+        case "💥 Crash Data (5 Years)":
+            
+//            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+//            headerContent.text = questionIndex_key.uppercased()
+//            headerContent.font = UIFont.systemFont(ofSize: 12)
+//            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+//            view.addSubview(headerContent)
+//
+//            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+//            DetailsField.font = UIFont.systemFont(ofSize: 12)
+//            DetailsField.delegate = self
+//            //DetailsField.layer.borderWidth = 2
+//            DetailsField.text = item_value_reportData
+//            DetailsField.layer.cornerRadius = 15
+//            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//            DetailsField.layer.masksToBounds = true
+//            DetailsField.textAlignment = .center
+//            DetailsField.returnKeyType = .done
+//            DetailsField.becomeFirstResponder()
+//            DetailsField.isEnabled = false
+//            self.view.addSubview(DetailsField)
+            print("fill")
+            
+        case "🚘 Speed Survey Data":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = item_value_reportData
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .center
+            DetailsField.returnKeyType = .done
+            //DetailsField.isEnabled = false
+            DetailsField.becomeFirstResponder()
+            self.view.addSubview(DetailsField)
+            
+            let items = ["Yes", "No", "Unknown"]
+            segmentControl = UISegmentedControl(items: items)
+            segmentControl.frame = CGRect(x: 10, y: Int(DetailsField.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
+            segmentControl.addTarget(self, action: #selector(segmentAction(_:)), for: .valueChanged)
+            
+            switch item_value_reportData{
+            case "Yes":
+                segmentControl.selectedSegmentIndex = 0
+                break
+            case "No":
+                segmentControl.selectedSegmentIndex = 1
+                break
+            default:
+                segmentControl.selectedSegmentIndex = 2
+                break
+            }
+            
+            view.addSubview(segmentControl)
+            
+        case "📝 Audit Requested By":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = item_value_reportData
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .center
+            DetailsField.returnKeyType = .done
+            DetailsField.becomeFirstResponder()
+            //DetailsField.isEnabled = false
+            self.view.addSubview(DetailsField)
+       
+        case "📅 Date Request Received":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = "  \(item_value_reportData)"
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = .none
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .right
+          //DetailsField.isEnabled = false
+            self.view.addSubview(DetailsField)
+      
+      
+            // DatePicker
+            datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
+   
+            //Formate Date
+            //Formate Date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+            
+            if item_value_reportData.isEmpty{
+                datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }else{
+                let date = dateFormatter.date(from: item_value_reportData)
+                datePicker.setDate(date!, animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }
+
+            self.view.addSubview(datePicker)
+            
+            
+        case "📝 Audit Reference Number":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
+            numberDetailsTextfield.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            numberDetailsTextfield.text = item_value_reportData
+            numberDetailsTextfield.layer.cornerRadius = 15
+            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            numberDetailsTextfield.layer.masksToBounds = true
+            numberDetailsTextfield.textAlignment = .center
+            numberDetailsTextfield.returnKeyType = .done
+            numberDetailsTextfield.keyboardType = .phonePad
+         
+            numberDetailsTextfield.becomeFirstResponder()
+            
+            let bar = UIToolbar()
+            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
+            bar.items = [reset]
+            bar.sizeToFit()
+            numberDetailsTextfield.inputAccessoryView = bar
+            
+            self.view.addSubview(numberDetailsTextfield)
+            
+        
+            
+        case "👷 Audit Team Leader":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = item_value_reportData
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .center
+            DetailsField.returnKeyType = .done
+            DetailsField.becomeFirstResponder()
+            //DetailsField.isEnabled = false
+            self.view.addSubview(DetailsField)
+            
+            
+            
+            
+            
             
             
         default:
             
             break
            
-       
+            
+
+            
         }
         
     }

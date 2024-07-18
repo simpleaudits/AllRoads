@@ -198,49 +198,47 @@ class buildReport: UITableViewController {
                                "To be Completed by Road Safety Audit Team"]
     
     
-    
-    
     var questionsListSection1 =
-                        ["Audit Team Contact Name":"q1", //added
-                         "Audit Team Organisation":"q2", //added
-                         "Audit Team Organisation Contact Details":"q3", //added
-                         "Your company name":"q5"] //added
+                        ["📝 Audit Team Contact Name":"q1", //added
+                         "🏢 Audit Team Organisation":"q2", //added
+                         "📞 Audit Team Organisation Contact Details":"q3", //added
+                         "📝 Your company name":"q5"] //added
     var questionsListSection2 =
-                         ["Road Safety Audit Stage":"q6", //added
-                         "Project Location":"q7", //added
-                         "Project Description":"q8", //added
-                         "Project Number / Task Number":"q9"] //added
+                         ["🚧 Road Safety Audit Stage":"q6", //added
+                         "📍 Project Location":"q7", //added
+                         "📝 Project Description":"q8", //added
+                         "#️⃣ Project Number / Task Number":"q9"] //added
     var questionsListSection3 =
-                         ["Organisation / Department":"q10", //added
-                         "Contact Name":"q11", //added
-                         "Contact Tel. No.":"q12", //added
-                         "Email Address":"q13", //added
-                         "Date the Final Audit is Required":"q14"] //added
+                         ["🏢 Organisation / Department":"q10", //added
+                         "📝 Contact Name":"q11", //added
+                         "📞 Contact Tel. No.":"q12", //added
+                         "📩 Email Address":"q13", //added
+                         "📅 Date the Final Audit is Required":"q14"] //added
     var questionsListSection4 =
-                         ["Previous Road Safety Audit":"q15", //added
-                         "Previous Road Safety Audit Stage":"q16", //added
-                         "Previous Audit Date":"q17", //added
-                         "Previous Audit Organisation":"q18",//added
-                         "Previous Audit Team Leader":"q19", //added
-                         "Copy of Audit and CAR Provided":"q20"] //added
+                         ["🚧 Previous Road Safety Audit":"q15", //added
+                         "🚧 Previous Road Safety Audit Stage":"q16", //added
+                         "📅 Previous Audit Date":"q17", //added
+                         "🏢 Previous Audit Organisation":"q18",//added
+                         "👷 Previous Audit Team Leader":"q19", //added
+                         "📄 Copy of Audit and CAR Provided":"q20"] //added
     var questionsListSection5 =
-                         ["Safe System Assessments":"q21", //added
-                         "Assessment Date":"q22", //added
-                         "Assessment Organisation":"q23", //added
-                         "Copy of Assessment Provided":"q24"] //added
+                         ["🚦 Safe System Assessments":"q21", //added
+                         "📅 Assessment Date":"q22", //added
+                         "🏢 Assessment Organisation":"q23", //added
+                         "📄 Copy of Assessment Provided":"q24"] //added
     var questionsListSection6 =
-                         ["Project Objective":"q25", //added
-                         "Speed Limit / Design Speed":"q26",
-                         "Standards, Departures from Standards and Mitigation":"q27",
-                         "Existing Traffic Flows":"q28",
-                         "Forecast Traffic Flows":"q29",
-                         "Crash Data (5 Years)":"q30",
-                         "Speed Survey Data":"q31",
-                         "Audit Requested By":"q32",]
+                         ["📝 Project Objective":"q25", //added
+                         "🚦 Speed Limit / Design Speed":"q26", //added
+                         "📄 Standards, Departures from Standards and Mitigation":"q27", //added
+                         "🚘 Existing Traffic Flows":"q28", //added
+                         "🚘 Forecast Traffic Flows":"q29", //added
+                         "💥 Crash Data (5 Years)":"q30", //added - not complete
+                         "🚘 Speed Survey Data":"q31", //added
+                         "📝 Audit Requested By":"q32",] //added
     var questionsListSection7 =
-                         ["Date Request Received":"q33",
-                         "Audit Reference Number":"q34",
-                         "Audit Team Leader":"q35"]
+                         ["📅 Date Request Received":"q33", //added
+                         "📝 Audit Reference Number":"q34", //added
+                         "👷 Audit Team Leader":"q35"]  //added
   
     //test
     
@@ -319,31 +317,63 @@ class buildReport: UITableViewController {
             let item_k = Array(questionsListSection1.keys)
             let item_v = Array(questionsListSection1.values)
             cell.textLabel?.text = item_k[indexPath.row]
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "⚠️")"
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            
+      
+            
         case 1:
-            let item = Array(questionsListSection2.keys)
-            cell.textLabel?.text = item[indexPath.row]
-            cell.detailTextLabel?.text = "☑️"
+            let item_k = Array(questionsListSection2.keys)
+            let item_v = Array(questionsListSection2.values)
+            cell.textLabel?.text = item_k[indexPath.row]
+            
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            
+            
         case 2:
-            let item = Array(questionsListSection3.keys)
-            cell.textLabel?.text = item[indexPath.row]
-            cell.detailTextLabel?.text = "✅"
+            let item_k = Array(questionsListSection3.keys)
+            let item_v = Array(questionsListSection3.values)
+            cell.textLabel?.text = item_k[indexPath.row]
+            
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
         case 3:
-            let item = Array(questionsListSection4.keys)
-            cell.textLabel?.text = item[indexPath.row]
-            cell.detailTextLabel?.text = "❌"
+            let item_k = Array(questionsListSection4.keys)
+            let item_v = Array(questionsListSection4.values)
+            cell.textLabel?.text = item_k[indexPath.row]
+            
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
         case 4:
-            let item = Array(questionsListSection5.keys)
-            cell.textLabel?.text = item[indexPath.row]
-            cell.detailTextLabel?.text = "☑️"
+            let item_k = Array(questionsListSection5.keys)
+            let item_v = Array(questionsListSection5.values)
+            cell.textLabel?.text = item_k[indexPath.row]
+            
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
         case 5:
-            let item = Array(questionsListSection6.keys)
-            cell.textLabel?.text = item[indexPath.row]
-            cell.detailTextLabel?.text = "☑️"
+            let item_k = Array(questionsListSection6.keys)
+            let item_v = Array(questionsListSection6.values)
+            cell.textLabel?.text = item_k[indexPath.row]
+            
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            
         default:
-            let item = Array(questionsListSection7.keys)
-            cell.textLabel?.text = item[indexPath.row]
-            cell.detailTextLabel?.text = "☑️"
+            let item_k = Array(questionsListSection7.keys)
+            let item_v = Array(questionsListSection7.values)
+            cell.textLabel?.text = item_k[indexPath.row]
+            
+            
+            
+            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
        
         }
         return cell
@@ -352,15 +382,10 @@ class buildReport: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let indexQuestionsList = questionsList[indexPath.row]
-//     
-//        
-//        questionIndex = (indexQuestionsList as? String)!
-        //self.delegate?.finishPassing_category(saveCategory: indexCategory)
-    
-        
+
         
         switch indexPath.section{
+            
         case 0:
             
             
@@ -369,7 +394,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -391,7 +416,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -415,7 +440,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -431,11 +456,7 @@ class buildReport: UITableViewController {
  
             })
             
-            
-            
-            
-            
-            
+       
            
         case 3:
             let item_key = Array(questionsListSection4.keys)[indexPath.row]
@@ -443,7 +464,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -458,7 +479,6 @@ class buildReport: UITableViewController {
             self.performSegue(withIdentifier: "reportContent", sender: nil)
  
             })
-            
             
             
 
@@ -469,7 +489,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -491,7 +511,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -515,7 +535,7 @@ class buildReport: UITableViewController {
             
             
             //pass data
-            let item_value_reportData = (reportData[item_value] ?? "⚠️")
+            let item_value_reportData = (reportData[item_value] ?? "")
 
             
 
@@ -558,7 +578,7 @@ class buildReport: UITableViewController {
             .observe( .value, with: { snapshot in
 
                 let data = reportContentsdataModel(snapshot: snapshot)
-                var reportDataLoad = reportDataLoad(reportConfig: data!.reportConfig,
+                let reportDataLoad = reportDataLoad(reportConfig: data!.reportConfig,
                                q1: data!.q1,
                                q2: data!.q2,
                                q3: data!.q3,
@@ -576,7 +596,7 @@ class buildReport: UITableViewController {
                                q15: data!.q15,
                                q16: data!.q16,
                                q17: data!.q17,
-                               q18: data!.q8,
+                               q18: data!.q18,
                                q19: data!.q19,
                                q20: data!.q20,
                                q21: data!.q21,
@@ -586,12 +606,12 @@ class buildReport: UITableViewController {
                                q25: data!.q25,
                                q26: data!.q26,
                                q27: data!.q27,
-                               q28: data!.q29,
-                               q29: data!.q30,
-                               q30: data!.q31,
-                               q31: data!.q32,
-                               q32: data!.q33,
-                               q33: data!.q34,
+                               q28: data!.q28,
+                               q29: data!.q29,
+                               q30: data!.q30,
+                               q31: data!.q31,
+                               q32: data!.q32,
+                               q33: data!.q33,
                                q34: data!.q34,
                                q35: data!.q35).saveReportDataConfig()
                 
