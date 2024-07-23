@@ -80,7 +80,7 @@ class viewAuditCell: UICollectionViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 10
-        image.layer.borderWidth = 0.5
+        //image.layer.borderWidth = 0.5
         image.layer.masksToBounds = true
         
     return image

@@ -44,6 +44,7 @@ class viewPDF: UIViewController {
     
     var refData = String()
     var imageData = UIImage()
+    var reportData = [String: Any]()
 
     
     // arary based on TPPDF
@@ -60,6 +61,52 @@ class viewPDF: UIViewController {
     
     
 
+ 
+    
+    
+    //MARK: -Predocument Content:
+    func loadPreDocumentContent(){
+        let document = PDFDocument(format: .a4)
+        
+        //Introduction (header):
+        let Header_1 = NSMutableAttributedString(string: "1.0 Introduction", attributes: [
+            .font: UIFont.boldSystemFont(ofSize: 12)
+        ])
+        let Header1_element = PDFAttributedText(text: Header_1)
+        document.add(.headerLeft,attributedTextObject: Header1_element)
+        
+        //Scope of audit (sub header):
+        let Subheader_1 = NSMutableAttributedString(string: "1.1 Scope of Audit", attributes: [
+            .font: UIFont.italicSystemFont(ofSize: 10)
+        ])
+        let Subheader1_element = PDFAttributedText(text: Subheader_1)
+        document.add(.headerLeft,attributedTextObject: Subheader1_element)
+        
+        
+        document.add(.contentLeft, textObject: PDFSimpleText(text: "\(reportData["q1"] ?? "")"))
+        
+        
+        
+        //Add document contents:
+        document.createNewPage()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //MARK: - Load configurations
     
@@ -84,7 +131,11 @@ class viewPDF: UIViewController {
                                 self.colourStyle = colourStyle!
                                 self.PDFenum = pdfStyle!
                          
-                                //2 once configuration loads, we want to load the content of the report
+                                //1 Load report content
+                                
+                                
+                         
+                                //2)Load report contents next
                                 self.loadSiteAuditData()
                    })
         
@@ -127,6 +178,11 @@ class viewPDF: UIViewController {
         
         
     @objc func createPDFData(){
+
+        
+        
+        
+        
         switch PDFenum{
             
         case "0":
@@ -134,7 +190,7 @@ class viewPDF: UIViewController {
             SwiftLoader.hide()
             
             let document = PDFDocument(format: .a4)
-            
+                
             
 
             //header data:
@@ -211,15 +267,8 @@ class viewPDF: UIViewController {
             document.add(space: 15.0)
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
-            // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "Contributors"))
-            // Add some spacing below title
-            document.addLineSeparator(PDFContainer.contentLeft, style: style)
-            
-            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
-            for x in self.saveData{
-                userDataArray.append("\(x.userUploaded)")
-            }
+    
+
 
            
             
@@ -249,6 +298,77 @@ class viewPDF: UIViewController {
             
             //PAGE BREAK
             document.createNewPage()
+            
+            
+            //MARK: - document introduction section
+            
+            
+            
+            //Introduction (header):
+            let Header_1_0 = NSMutableAttributedString(string: "1.0 Introduction", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_1_0 = PDFAttributedText(text: Header_1_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_1_0)
+            
+            //Scope of audit (sub header):
+            let Subheader_1_0 = NSMutableAttributedString(string: "1.1 Scope of Audit", attributes: [
+                .font: UIFont.italicSystemFont(ofSize: 10)
+            ])
+            let Subheader_element_1_0 = PDFAttributedText(text: Subheader_1_0)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_1_0)
+            
+            let data_1_0 = NSMutableAttributedString(string: "\nA road safety audit is a formal, systematic, assessment of the potential road safety risks associated with a new road project or road improvement project conducted by an independent qualified audit team. The assessment considers all road users and sugests measures to eliminate or mtage an risks identified by the audit team.\n\nThis Road Safety Audit has been conducted following the general principals detailed in Austroads Guide to Road Safety Part 6: Road Safety Audit and in accordance with the reqirements contained in the  \(reportData["q1"] ?? "ERROR")Policy and Guidelines for Road Safety Audit.\n\nThis report results from a \(reportData["q6"] ?? "ERROR") Road Safety Audit carried out at \(reportData["q7"] ?? "ERROR")\n\nThe audit was undertaken by \(reportData["q35"] ?? "ERROR") of \(reportData["q2"] ?? "ERROR") with reference to the details provided in the Audit Breif.\n\nThe audit comprised an examination of drawings and other information supplied by \(reportData["q10"] ?? "ERROR").\n\nAll the findings described in the section below of this report are considered by the audit team to require action in order to improve the safety of the proposed project and to minimise the risk of crash occurance and reduce potential crash severity.\n\nThe Audti team has examined and reported only the road safety implications of the project as presented and has not examined or verified the compliance of the design to any other criteria.", attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_1_0 = PDFAttributedText(text: data_1_0)
+            document.add(.contentLeft,attributedTextObject: data_element_1_0)
+            
+//            //Contributors (header):
+//            let Header_1_1 = NSMutableAttributedString(string: "1.2 Audit Team", attributes: [
+//                .font: UIFont.boldSystemFont(ofSize: 12)
+//            ])
+//            let Header_element_1_1 = PDFAttributedText(text: Header_1_1)
+//            document.add(.contentLeft,attributedTextObject: Header_element_1_1)
+//            
+//            //Scope of audit (sub header):
+//            let Subheader_1_1 = NSMutableAttributedString(string: "1.1 Contributors", attributes: [
+//                .font: UIFont.italicSystemFont(ofSize: 10)
+//            ])
+//            let Subheader_element_1_1 = PDFAttributedText(text: Subheader_1_1)
+//            document.add(.contentLeft,attributedTextObject: Subheader_element_1_1)
+//            
+//   
+//            document.addLineSeparator(PDFContainer.contentLeft, style: style)
+//            
+//            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
+//            for x in self.saveData{
+//                userDataArray.append("\(x.userUploaded)")
+//            }
+            
+            //Add document contents:
+            document.createNewPage()
+            
+            
+            
+            
+            //MARK: - document introduction section
+   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
          
             
@@ -1014,8 +1134,7 @@ class viewPDF: UIViewController {
               
                         for x in listOfSitesData{
                             group.enter()
-    
-
+                            
                             asyncData(imageURL: x.imageURL, descriptionData: x.auditDescription, auditTitleData: x.auditTitle, dateData: x.date, lat: "\(x.lat)",long: "\(x.long)",userUploaded:x.userUploaded) { result in do { group.leave()}
                             
                             print(result)

@@ -574,13 +574,11 @@ class Observation: UITableViewController,UISearchBarDelegate {
 
  
         
-     }else if let destination5 = segue.destination as? viewPDF {
-         destination5.refData = refData
-
-      }else if let destination6 = segue.destination as? buildReport {
+     }else if let destination6 = segue.destination as? buildReport {
           destination6.siteID = siteID
           destination6.auditID = auditID
           destination6.userUID = userUID
+          destination6.refData = refData
 
        }
       

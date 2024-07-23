@@ -177,6 +177,9 @@ struct reportDataLoad{
 }
 
 class buildReport: UITableViewController {
+    var refData = String()
+    
+    
     var reportData = [String: Any]()
     //Reference to site and audit ID
     var auditID = String()
@@ -578,7 +581,10 @@ class buildReport: UITableViewController {
             .observe( .value, with: { snapshot in
 
                 let data = reportContentsdataModel(snapshot: snapshot)
-                let reportDataLoad = reportDataLoad(reportConfig: data!.reportConfig,
+                
+                //we are saving all the contents to our data structure and returning a dictionary with all teh contents here.
+                let reportDataLoad = reportDataLoad(
+                    reportConfig: data!.reportConfig,
                                q1: data!.q1,
                                q2: data!.q2,
                                q3: data!.q3,
@@ -614,7 +620,7 @@ class buildReport: UITableViewController {
                                q33: data!.q33,
                                q34: data!.q34,
                                q35: data!.q35).saveReportDataConfig()
-                
+                //return the data into an array
                 self.reportData = reportDataLoad
                 self.tableView.reloadData()
                               
@@ -641,7 +647,15 @@ class buildReport: UITableViewController {
                  viewInfoView.auditID = auditID
                  //viewInfoView.userUID = userUID
                  
-             }else{
+             }else if let destination5 = segue.destination as? viewPDF {
+                 destination5.refData = refData
+                 destination5.reportData = reportData
+              
+             }
+        
+        
+        
+             else{
                  
              }
          }

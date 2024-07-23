@@ -665,6 +665,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="PRS-dz-KGh">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Vnu-Ia-x5P">
                                 <rect key="frame" x="20" y="38" width="353" height="43.666667938232422"/>
@@ -697,6 +698,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="singleLineEtched" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="pHa-Wj-HO8">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                         <sections>
                             <tableViewSection headerTitle="PDF Style" id="QxH-AE-BTm">
                                 <cells>
@@ -973,7 +975,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="never" id="6JZ-hz-s0i">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="q6w-ph-cjZ">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="q6w-ph-cjZ">
                             <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <action selector="addToAuditList:" destination="JPK-3h-a4i" id="eYN-KJ-n5T"/>
@@ -1033,7 +1035,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="My4-HV-CNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1193" y="3868"/>
+            <point key="canvasLocation" x="1418" y="3861"/>
         </scene>
         <!--Search List-->
         <scene sceneID="0oL-Dw-6cq">
@@ -1246,14 +1248,20 @@
                             <outlet property="delegate" destination="87h-lJ-qkh" id="kyy-0d-cJy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Report Builder" largeTitleDisplayMode="always" style="browser" id="qTS-rO-aTq"/>
+                    <navigationItem key="navigationItem" title="Report Builder" largeTitleDisplayMode="always" style="browser" id="qTS-rO-aTq">
+                        <barButtonItem key="rightBarButtonItem" image="doc.text.fill.viewfinder" catalog="system" id="uJB-Ds-yIc">
+                            <connections>
+                                <segue destination="fcI-nA-JTf" kind="show" id="hRr-uq-Nyx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="TnG-oL-TVY" kind="show" identifier="reportContent" id="f67-OO-dDr"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hk7-vT-ch4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1396" y="3104"/>
+            <point key="canvasLocation" x="381" y="3104"/>
         </scene>
         <!--Observations-->
         <scene sceneID="4dy-zl-y9j">
@@ -1299,7 +1307,8 @@
                             </connections>
                         </segmentedControl>
                         <rightBarButtonItems>
-                            <barButtonItem title="Build" id="nUc-Y1-bKn">
+                            <barButtonItem title="Build" image="doc.fill.badge.plus" catalog="system" id="nUc-Y1-bKn">
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
                                     <segue destination="87h-lJ-qkh" kind="show" id="xFN-Ie-vt2"/>
                                 </connections>
@@ -1308,12 +1317,6 @@
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
                                     <action selector="addObservation:" destination="q4L-Y8-fSb" id="OrL-04-awA"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" image="doc.text.fill.viewfinder" catalog="system" id="9V5-yS-yD3">
-                                <color key="tintColor" systemColor="systemOrangeColor"/>
-                                <connections>
-                                    <segue destination="fcI-nA-JTf" kind="show" id="ZKC-kP-eo3"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -1433,6 +1436,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Hd2-L3-QCD">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="3000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                         <sections>
                             <tableViewSection id="9DT-dd-6QZ">
                                 <cells>
@@ -1770,19 +1774,20 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gjR-Rf-3O2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-421" y="3104"/>
+            <point key="canvasLocation" x="381" y="3811"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="FoG-pS-Knc"/>
+        <segue reference="2y7-dC-yeP"/>
         <segue reference="05a-tf-gx5"/>
         <segue reference="Uv5-2R-2fq"/>
         <segue reference="zVi-eH-eXm"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="doc.fill.badge.plus" catalog="system" width="120" height="128"/>
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="doc.text.fill.viewfinder" catalog="system" width="128" height="115"/>
-        <image name="gearshape" catalog="system" width="32" height="32"/>
+        <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="image1.png" width="484" height="252"/>
         <image name="image2.png" width="373" height="246"/>
         <image name="image3.png" width="386" height="125"/>
@@ -1790,9 +1795,9 @@
         <image name="image5.png" width="379" height="191"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="largePDF" width="500" height="500"/>
-        <image name="location.viewfinder" catalog="system" width="32" height="32"/>
+        <image name="location.viewfinder" catalog="system" width="128" height="115"/>
         <image name="mediumPDF" width="500" height="500"/>
-        <image name="pencil.and.outline" catalog="system" width="32" height="32"/>
+        <image name="pencil.and.outline" catalog="system" width="123" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="shareplay" catalog="system" width="128" height="75"/>
         <image name="smallPDF" width="500" height="500"/>
