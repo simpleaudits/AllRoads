@@ -341,7 +341,9 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
          q32: " ",
          q33: " ",
          q34: " ",
-         q35: " ")
+         q35: " ",
+         q36: " ",
+         q37: " ")
 
         reportConfigRef.setValue(saveReportConfig.saveReportConfig()){
                 (error:Error?, ref:DatabaseReference) in

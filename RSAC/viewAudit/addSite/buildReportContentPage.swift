@@ -14,8 +14,72 @@ protocol reportContentField{
     func finishPassing_decription(saveDescription: String)
 }
 
+class crashTypeCell: UICollectionViewCell {
+    let label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
-class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDelegate,auditStage{
+
+
+
+class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDelegate,auditStage,crashTypesFunc, UINavigationControllerDelegate, UISheetPresentationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return item_value_reportDataArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "crashTypeCell", for: indexPath) as! crashTypeCell
+        let indexcrashType = item_value_reportDataArray[indexPath.row]
+        cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        cell.layer.cornerRadius = 15
+        cell.layer.masksToBounds = true
+        cell.label.text = "\(indexcrashType)"
+        
+        return cell
+    }
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let string = item_value_reportDataArray[indexPath.item]
+        
+        // Create a temporary label to measure the text size
+        let tempLabel = UILabel()
+        tempLabel.text = (string as! String)
+        tempLabel.font = UIFont.systemFont(ofSize: 17) // Match the font used in the cell
+        tempLabel.numberOfLines = 0
+        
+        // Calculate the size of the label
+        let width = tempLabel.intrinsicContentSize.width + 16 // 16 is padding
+        let height = tempLabel.intrinsicContentSize.height + 16 // 16 is padding
+         
+
+        
+        return CGSize(width: width, height: height)
+    
+}
+    
+    
+
     var activityIndicator = UIActivityIndicatorView()
     
     //Reference to site and audit ID
@@ -32,12 +96,14 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     var datePicker = UIDatePicker()
     var segmentControl = UISegmentedControl()
     
-    
-    
+    var segmentControlCrashType = UISegmentedControl()
 
     var DetailsField: UITextField!
     var DetailsView: UITextView!
     var numberDetailsTextfield: UITextField!
+    
+    var crashTypeSelected: UICollectionView!
+    
     var headerContent: UILabel!
     var textCount: UILabel!
     
@@ -48,6 +114,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     var questionIndex_key  = String()
     var questionIndex_value  = String()
     var item_value_reportData = String()
+    var item_value_reportDataArray = Array<Any>()
 
     
     
@@ -61,6 +128,9 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         activityIndicator.bringSubviewToFront(self.view)
         activityIndicator.startAnimating()
        
+
+      
+
 
 
 
@@ -889,21 +959,82 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
 
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
+            
+            DetailsView = UITextView(frame: CGRect(x: 10, y: 100 + 20  + 30 + 10 + 30, width: Int(view.frame.width) - 20, height: 100 ))
+            DetailsView.font = UIFont.systemFont(ofSize: 12)
+            DetailsView.delegate = self
             //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            DetailsField.isEnabled = false
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            DetailsView.isHidden = true
+            self.view.addSubview(DetailsView)
+        
+            // Create a UICollectionViewFlowLayout
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            //layout.itemSize = CGSize(width: 40, height: 10) // Adjust size as needed
+            layout.minimumInteritemSpacing = 2
+            layout.minimumLineSpacing = 2
+           
+            // Initialize the UICollectionView with the layout
+            crashTypeSelected = UICollectionView(frame: CGRect(x: 10, y: 100 + 20  + 30 + 10 + 30, width: Int(view.frame.width) - 20, height: 200 ), collectionViewLayout: layout)
+            crashTypeSelected.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            crashTypeSelected.isHidden = false
+            self.crashTypeSelected?.dataSource = self
+            self.crashTypeSelected?.delegate = self
+            crashTypeSelected.register(crashTypeCell.self, forCellWithReuseIdentifier: "crashTypeCell")
+            crashTypeSelected.isHidden = true
+            
+            self.view.addSubview(crashTypeSelected)
+        
+            
+            
+            //Let user set if crash data was avaliable in the last 5 years, if yes we can let them choose the data type, if no the text will be "0".
+            
+            let items = ["Yes", "No", "Unknown"]
+            segmentControlCrashType = UISegmentedControl(items: items)
+            segmentControlCrashType.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
+            segmentControlCrashType.addTarget(self, action: #selector(segmentControlCrashTypesegmentAction(_:)), for: .valueChanged)
+            
+            
 
-            self.view.addSubview(DetailsField)
-
+            
+            
+            
+            switch item_value_reportData{
+            case "Yes":
+                segmentControlCrashType.selectedSegmentIndex = 0
+                //show nav bar button here,
+             
+               
+                
+                break
+            case "No":
+                segmentControlCrashType.selectedSegmentIndex = 1
+                //don't show nav bar button,
+        
+                
+                
+                break
+            default:
+                segmentControlCrashType.selectedSegmentIndex = 2
+                //don't show nav bar button,
+                
+                
+                
+                break
+            }
+            
+            view.addSubview(segmentControlCrashType)
+            
+      
+            
+            
             
         case "🚘 Speed Survey Data":
             
@@ -1070,10 +1201,96 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             self.view.addSubview(DetailsField)
             
             
+        case "📅 Audit Assessment Date":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = "  \(item_value_reportData)"
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = .none
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .right
+            DetailsField.isEnabled = false
+            DetailsField.isHidden = true
+            self.view.addSubview(DetailsField)
+      
+      
+            // DatePicker
+            datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
+   
+            //Formate Date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+            
+            if item_value_reportData.isEmpty{
+                datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }else{
+                let date = dateFormatter.date(from: item_value_reportData)
+                datePicker.setDate(date!, animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+            }
+
+            self.view.addSubview(datePicker)
             
             
+        case "📝 Weather Condition":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+
+            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsField.font = UIFont.systemFont(ofSize: 12)
+            DetailsField.delegate = self
+            //DetailsField.layer.borderWidth = 2
+            DetailsField.text = item_value_reportData
+            DetailsField.layer.cornerRadius = 15
+            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsField.layer.masksToBounds = true
+            DetailsField.textAlignment = .center
+            DetailsField.returnKeyType = .done
+            DetailsField.becomeFirstResponder()
+            DetailsField.isHidden = true
+            //DetailsField.isEnabled = false
+            self.view.addSubview(DetailsField)
             
             
+            let items = ["Rain", "Good", "Cloudy", "Dark"]
+            segmentControl = UISegmentedControl(items: items)
+            segmentControl.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
+            segmentControl.addTarget(self, action: #selector(segmentAction(_:)), for: .valueChanged)
+            
+            switch item_value_reportData{
+            case "Rain":
+                segmentControl.selectedSegmentIndex = 0
+                break
+            case "Good":
+                segmentControl.selectedSegmentIndex = 1
+                break
+            case "Cloudy":
+                segmentControl.selectedSegmentIndex = 2
+                break
+            default:
+                segmentControl.selectedSegmentIndex = 3
+                break
+            }
+            
+            view.addSubview(segmentControl)
             
         default:
             
@@ -1111,6 +1328,24 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             print ("not empty")
             print (saveCategory)
             item_value_reportData = saveCategory
+   
+            
+        }else{
+            print ("empty")
+         
+        }
+    }
+    
+  
+    
+    func finishPassing_crashType(savecrashType: Array<Any>) {
+        if (self.item_value_reportData != ""){
+            print ("not empty")
+            print (savecrashType)
+            item_value_reportDataArray = savecrashType
+            DetailsView.text = "\(item_value_reportDataArray)"
+            
+            crashTypeSelected.reloadData()
             
         }else{
             print ("empty")
@@ -1160,7 +1395,84 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         
     }
 
+    
+    
+    
+    
+    
+//MARK: - crashType button pressed
+    
+    
+    @objc func addCrashTypeBtn(){
+        
+ 
+        let crashTypesView = crashTypes()
+        let nav = UINavigationController(rootViewController: crashTypesView)
+        nav.navigationBar.prefersLargeTitles = true
+
+        nav.navigationBar.topItem!.title = "Crash types"
+        nav.navigationBar.tintColor = .black
+        nav.modalPresentationStyle = .pageSheet
+        nav.isModalInPresentation = true
+        crashTypesView.delegate = self
+        
+            
+            if let presentationController = nav.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                presentationController.prefersGrabberVisible = true
+                presentationController.preferredCornerRadius = 45
+                
+   
+                
+       
+ 
+                presentationController.largestUndimmedDetentIdentifier = .medium
+                //presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+            
+            
+            
+            self.present(nav, animated: true)
+        
+
+     
+    
+    }
+    
+    
 //MARK: - textfield protocols
+    @objc func segmentControlCrashTypesegmentAction(_ segmentedControl: UISegmentedControl) {
+         switch (segmentedControl.selectedSegmentIndex) {
+         case 0:
+          
+             addCrashTypeBtn()
+             
+             crashTypeSelected.isHidden = false
+             
+             break // Uno
+         case 1:
+
+             self.navigationController?.popViewController(animated: true)
+
+             crashTypeSelected.isHidden = true
+
+             break // Dos
+         case 2:
+            
+             self.navigationController?.popViewController(animated: true)
+          
+             crashTypeSelected.isHidden = true
+             
+           
+             break // Tres
+         default:
+             break
+         }
+     }
+    
+    
+    
+    
     @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
          switch (segmentedControl.selectedSegmentIndex) {
          case 0:

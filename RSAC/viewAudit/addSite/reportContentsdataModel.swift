@@ -49,6 +49,8 @@ struct reportContentsdataModel{
     let q34:String
     let q35:String
     
+    let q36:String
+    let q37:String
 
     
     
@@ -89,7 +91,10 @@ struct reportContentsdataModel{
         q32:String,
         q33:String,
         q34:String,
-        q35:String
+        q35:String,
+        
+        q36:String,
+        q37:String
     )
     
     
@@ -130,6 +135,9 @@ struct reportContentsdataModel{
         self.q33=q33
         self.q34=q34
         self.q35=q35
+        
+        self.q36=q36
+        self.q37=q37
 
         
     }
@@ -172,7 +180,10 @@ struct reportContentsdataModel{
                 let q32 = value["q32"]as?String,
                 let q33 = value["q33"]as?String,
                 let q34 = value["q34"]as?String,
-                let q35 = value["q35"]as?String
+                let q35 = value["q35"]as?String,
+            
+                let q36 = value["q36"]as?String,
+                let q37 = value["q37"]as?String
            
         else {
                 return nil
@@ -213,6 +224,9 @@ struct reportContentsdataModel{
         self.q33=q33
         self.q34=q34
         self.q35=q35
+        
+        self.q36=q36
+        self.q37=q37
       
     }
     
@@ -254,6 +268,9 @@ struct reportContentsdataModel{
             "q33":q33,
             "q34":q34,
             "q35":q35,
+            
+            "q36":q36,
+            "q37":q37,
            
         ]
     }

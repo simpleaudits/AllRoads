@@ -269,6 +269,77 @@ class viewPDF: UIViewController {
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
     
 
+        
+            
+            //PAGE BREAK
+            document.createNewPage()
+            
+            
+            //MARK: - document introduction section
+
+            
+            //Introduction section
+            let Header_1_0 = NSMutableAttributedString(string: "1.0 Introduction", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_1_0 = PDFAttributedText(text: Header_1_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_1_0)
+            
+            //Scope of audit (sub header):
+            let Subheader_1_0 = NSMutableAttributedString(string: "1.1 Scope of Audit", attributes: [
+                .font: UIFont.italicSystemFont(ofSize: 10)
+            ])
+            let Subheader_element_1_0 = PDFAttributedText(text: Subheader_1_0)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_1_0)
+            
+            let introductionString = """
+            A road safety audit is a formal, systematic assessment of potential road safety risks associated with new or improved road projects. It is conducted by an independent, qualified audit team and considers all road users. The audit suggests measures to eliminate or mitigate identified risks.
+
+            This Road Safety Audit follows the principles outlined in Austroads Guide to Road Safety Part 6: Road Safety Audit and meets the requirements of the Policy and Guidelines for Road Safety Audit.
+
+            This report presents findings from a \(reportData["q6"] ?? "ERROR") Road Safety Audit conducted at \(reportData["q7"] ?? "ERROR").
+
+            The audit was conducted by \(reportData["q35"] ?? "ERROR") from \(reportData["q2"] ?? "ERROR"), with reference to details provided in the Audit Brief.
+
+            The audit included a review of drawings and information provided by \(reportData["q10"] ?? "ERROR").
+
+            All findings in this report indicate the need for actions to improve project safety and reduce crash risks and severity. The audit specifically focuses on road safety implications of the project presented, without verifying compliance with other criteria.
+            """
+
+            
+            let data_1_0 = NSMutableAttributedString(string: introductionString, attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_1_0 = PDFAttributedText(text: data_1_0)
+            document.add(.contentLeft,attributedTextObject: data_element_1_0)
+            
+            
+            
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+// MARK: Audit team  ------------------------------------------
+            
+            //Audti team section
+            //Contributors (header):
+            let Header_1_1 = NSMutableAttributedString(string: "2.0 Audit Team", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_1_1 = PDFAttributedText(text: Header_1_1)
+            document.add(.contentLeft,attributedTextObject: Header_element_1_1)
+            
+            //Scope of audit (sub header):
+            let Subheader_1_1 = NSMutableAttributedString(string: "2.1 Contributors", attributes: [
+                .font: UIFont.italicSystemFont(ofSize: 10)
+            ])
+            let Subheader_element_1_1 = PDFAttributedText(text: Subheader_1_1)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_1_1)
+            
+   
+            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
+            for x in self.saveData{
+                userDataArray.append("\(x.userUploaded)")
+            }
 
            
             
@@ -291,63 +362,134 @@ class viewPDF: UIViewController {
             document.add(list: featureList)
             
             
+            // Add some spacing below title
+            document.add(space: 15.0)
+
             
-            document.addLineSeparator(PDFContainer.contentLeft, style: style)
-            
-        
-            
-            //PAGE BREAK
-            document.createNewPage()
-            
-            
-            //MARK: - document introduction section
+            let auditTeamText = """
+            The audit team visit the site on \(reportData["q36"] ?? "ERROR"). At the time of the site visit the weather was \(reportData["q37"] ?? "ERROR") and the existing road surface was [Road condition].
+            """
             
             
-            
-            //Introduction (header):
-            let Header_1_0 = NSMutableAttributedString(string: "1.0 Introduction", attributes: [
-                .font: UIFont.boldSystemFont(ofSize: 12)
-            ])
-            let Header_element_1_0 = PDFAttributedText(text: Header_1_0)
-            document.add(.contentLeft,attributedTextObject: Header_element_1_0)
-            
-            //Scope of audit (sub header):
-            let Subheader_1_0 = NSMutableAttributedString(string: "1.1 Scope of Audit", attributes: [
-                .font: UIFont.italicSystemFont(ofSize: 10)
-            ])
-            let Subheader_element_1_0 = PDFAttributedText(text: Subheader_1_0)
-            document.add(.contentLeft,attributedTextObject: Subheader_element_1_0)
-            
-            let data_1_0 = NSMutableAttributedString(string: "\nA road safety audit is a formal, systematic, assessment of the potential road safety risks associated with a new road project or road improvement project conducted by an independent qualified audit team. The assessment considers all road users and sugests measures to eliminate or mtage an risks identified by the audit team.\n\nThis Road Safety Audit has been conducted following the general principals detailed in Austroads Guide to Road Safety Part 6: Road Safety Audit and in accordance with the reqirements contained in the  \(reportData["q1"] ?? "ERROR")Policy and Guidelines for Road Safety Audit.\n\nThis report results from a \(reportData["q6"] ?? "ERROR") Road Safety Audit carried out at \(reportData["q7"] ?? "ERROR")\n\nThe audit was undertaken by \(reportData["q35"] ?? "ERROR") of \(reportData["q2"] ?? "ERROR") with reference to the details provided in the Audit Breif.\n\nThe audit comprised an examination of drawings and other information supplied by \(reportData["q10"] ?? "ERROR").\n\nAll the findings described in the section below of this report are considered by the audit team to require action in order to improve the safety of the proposed project and to minimise the risk of crash occurance and reduce potential crash severity.\n\nThe Audti team has examined and reported only the road safety implications of the project as presented and has not examined or verified the compliance of the design to any other criteria.", attributes: [
+            let data_2_0 = NSMutableAttributedString(string: auditTeamText, attributes: [
                 .font: UIFont.systemFont(ofSize: 10)
             ])
-            let data_element_1_0 = PDFAttributedText(text: data_1_0)
-            document.add(.contentLeft,attributedTextObject: data_element_1_0)
+            let data_element_2_0 = PDFAttributedText(text: data_2_0)
+            document.add(.contentLeft,attributedTextObject: data_element_2_0)
             
-//            //Contributors (header):
-//            let Header_1_1 = NSMutableAttributedString(string: "1.2 Audit Team", attributes: [
-//                .font: UIFont.boldSystemFont(ofSize: 12)
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+// MARK: Audit team  ------------------------------------------
+            
+            
+// MARK: Safe systems  ------------------------------------------
+            
+            // (header):
+            let Header_3_0 = NSMutableAttributedString(string: "3.0 Safe Systems", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_3_0 = PDFAttributedText(text: Header_3_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_3_0)
+        
+            
+            
+            
+            let safeSystemFindings = """
+            The aim of Safe System Findings is to focus the Road Safety Audit process on considering safe speeds and by providing forgiving roads and roadsides. This is to be delivered through the Road Safety Audit process by accepting that people will always make mistakes and by considering the known limits to crash forces the human body can tolerate. This is to achieved by focusing the Road Safety Audit on particular crash types that are known to result in higher severity outcomes at relatively lower speed environments to reduce the risk of fatal and serious injury crashes.
+            
+            The additional annotaiton *IMPORTANT* shall be used to provide emphasis to any road safety audit finding that has the potential to result in fatal or serious injury or findings that are likely to result in the following crash types above the related speed environment:
+            - Head on, >70kmh
+            - Right angle, >50kmh
+            - Run off road, > 40kmh
+            - Vulnerable road users, > 30kmh
+            
+            The exposure and likelihood of crash occurence shall then be considered for all findings deemed *IMPORTANT* and evaluated based on an audtiors professional judgement. Auditors should consider factors such as, traffic volumes and movements, speed environment, crash history and the road environment, and apply road safety engineering and crash investigation experience to determine the likelihood of crash occurence. The likelihood of crash occurence shall be consiered either:
+            - Very high
+            - High
+            - Moderate
+            - Low
+            This additional annotation shall be displayed following the IMPORTANT annotation on applicable findings.
+            
+            """
+            
+            
+            let data_3_0 = NSMutableAttributedString(string: safeSystemFindings, attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_3_0 = PDFAttributedText(text: data_3_0)
+            document.add(.contentLeft,attributedTextObject: data_element_3_0)
+            
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+// MARK: Safe systems  ------------------------------------------
+            
+// MARK: Previous safety audits ----------------------------------------
+            
+            // (header):
+            let Header_4_0 = NSMutableAttributedString(string: "4.0 Previous Safety Audits", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_4_0 = PDFAttributedText(text: Header_4_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_4_0)
+ 
+            
+            let previousAudits = """
+            A \(reportData["q15"] ?? "ERROR") was undertaken by \(reportData["q18"] ?? "ERROR") in \(reportData["q17"] ?? "ERROR").
+            
+            The items raised in the (audit stage) safety audit have been addressed with the exception of the items listed as NOT ADDRESSED.
+            
+            These items are discussed again in this road safety audit.
+            
+            """
+
+            
+            let data_4_0 = NSMutableAttributedString(string: previousAudits, attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_4_0 = PDFAttributedText(text: data_4_0)
+            document.add(.contentLeft,attributedTextObject: data_element_4_0)
+            
+            
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+            
+            
+// MARK: Previous safety audits ----------------------------------------
+            
+            
+            
+            
+//            let data_4_0 = NSMutableAttributedString(string: safeSystemFindings, attributes: [
+//                .font: UIFont.systemFont(ofSize: 10)
 //            ])
-//            let Header_element_1_1 = PDFAttributedText(text: Header_1_1)
-//            document.add(.contentLeft,attributedTextObject: Header_element_1_1)
+//            let data_element_4_0 = PDFAttributedText(text: data_4_0)
+//            document.add(.contentLeft,attributedTextObject: data_element_4_0)
 //            
-//            //Scope of audit (sub header):
-//            let Subheader_1_1 = NSMutableAttributedString(string: "1.1 Contributors", attributes: [
-//                .font: UIFont.italicSystemFont(ofSize: 10)
+//            
+//            let previousAudits = """
+//            A \(reportData["q15"] ?? "ERROR") was undertaken by \(reportData["q18"] ?? "ERROR") in \(reportData["q17"] ?? "ERROR").
+//            
+//            The items raised in the (audit stage) safety audit have been addressed with the exception of the items listed as NOT ADDRESSED.
+//            
+//            These items are discussed again in this road safety audit.
+//            
+//            """
+//
+//            
+//            let data_4_0 = NSMutableAttributedString(string: previousAudits, attributes: [
+//                .font: UIFont.systemFont(ofSize: 10)
 //            ])
-//            let Subheader_element_1_1 = PDFAttributedText(text: Subheader_1_1)
-//            document.add(.contentLeft,attributedTextObject: Subheader_element_1_1)
-//            
-//   
-//            document.addLineSeparator(PDFContainer.contentLeft, style: style)
-//            
-//            document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
-//            for x in self.saveData{
-//                userDataArray.append("\(x.userUploaded)")
-//            }
+//            let data_element_4_0 = PDFAttributedText(text: data_4_0)
+//            document.add(.contentLeft,attributedTextObject: data_element_4_0)
+            
             
             //Add document contents:
             document.createNewPage()
+            
+            
             
             
             

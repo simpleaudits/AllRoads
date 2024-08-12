@@ -50,7 +50,8 @@ struct reportDataLoad{
     let q34:String
     let q35:String
     
-
+    let q36:String
+    let q37:String
     
     
     
@@ -90,7 +91,10 @@ struct reportDataLoad{
         q32:String,
         q33:String,
         q34:String,
-        q35:String
+        q35:String,
+        
+        q36:String,
+        q37:String
     )
     
     
@@ -132,6 +136,9 @@ struct reportDataLoad{
         self.q34=q34
         self.q35=q35
         
+        self.q36=q36
+        self.q37=q37
+        
     }
     func saveReportDataConfig() -> [String:Any] {
         return [
@@ -170,7 +177,9 @@ struct reportDataLoad{
             "q32":q32,
             "q33":q33,
             "q34":q34,
-            "q35":q35
+            "q35":q35,
+            "q36":q36,
+            "q37":q37
            
         ]
     }
@@ -205,7 +214,12 @@ class buildReport: UITableViewController {
                         ["📝 Audit Team Contact Name":"q1", //added
                          "🏢 Audit Team Organisation":"q2", //added
                          "📞 Audit Team Organisation Contact Details":"q3", //added
-                         "📝 Your company name":"q5"] //added
+                         "📝 Your company name":"q5", //added
+                         "📅 Audit Assessment Date":"q36",
+                         "📝 Weather Condition":"q37"
+                        
+                        
+                        ] //added
     var questionsListSection2 =
                          ["🚧 Road Safety Audit Stage":"q6", //added
                          "📍 Project Location":"q7", //added
@@ -619,7 +633,11 @@ class buildReport: UITableViewController {
                                q32: data!.q32,
                                q33: data!.q33,
                                q34: data!.q34,
-                               q35: data!.q35).saveReportDataConfig()
+                               q35: data!.q35,
+                                q36: data!.q36,
+                                q37: data!.q37
+                
+                ).saveReportDataConfig()
                 //return the data into an array
                 self.reportData = reportDataLoad
                 self.tableView.reloadData()
