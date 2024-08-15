@@ -647,8 +647,8 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
         }else if indexPath.section  == shareButton {
             //Working Audits
             let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "shareButtonCell", for: indexPath) as! shareButtonCell
-            cell.shareButton.text = "Add Collaborators"
-            cell.shareButton.backgroundColor = .orange
+            cell.shareButton.text = "Invite"
+            cell.shareButton.backgroundColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
             cell.shareButton.layer.cornerRadius = 8
             cell.shareButton.layer.masksToBounds = true
             

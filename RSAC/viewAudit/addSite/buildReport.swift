@@ -8,6 +8,7 @@
 import UIKit
 import SwiftLoader
 import Firebase
+import Foundation
 
 struct reportDataLoad{
     
@@ -331,12 +332,21 @@ class buildReport: UITableViewController {
 
         switch indexPath.section{
         case 0:
+            
+      
             let item_k = Array(questionsListSection1.keys)
             let item_v = Array(questionsListSection1.values)
             cell.textLabel?.text = item_k[indexPath.row]
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
+            
             
       
             
@@ -347,7 +357,13 @@ class buildReport: UITableViewController {
             
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
             
             
         case 2:
@@ -357,7 +373,14 @@ class buildReport: UITableViewController {
             
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
+            
         case 3:
             let item_k = Array(questionsListSection4.keys)
             let item_v = Array(questionsListSection4.values)
@@ -365,7 +388,13 @@ class buildReport: UITableViewController {
             
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
         case 4:
             let item_k = Array(questionsListSection5.keys)
             let item_v = Array(questionsListSection5.values)
@@ -373,7 +402,13 @@ class buildReport: UITableViewController {
             
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
         case 5:
             let item_k = Array(questionsListSection6.keys)
             let item_v = Array(questionsListSection6.values)
@@ -381,7 +416,13 @@ class buildReport: UITableViewController {
             
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
             
         default:
             let item_k = Array(questionsListSection7.keys)
@@ -390,7 +431,13 @@ class buildReport: UITableViewController {
             
             
             
-            cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            if "\(reportData[item_v[indexPath.row]] ?? "")" == "" {
+                cell.detailTextLabel?.text = "❗"
+                
+            }else{
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "")"
+            }
+            
        
         }
         return cell
@@ -660,6 +707,9 @@ class buildReport: UITableViewController {
                  viewInfoView.questionIndex_key = questionIndex_key
                  viewInfoView.questionIndex_value = questionIndex_value
                  viewInfoView.item_value_reportData = item_value_reportData
+                 
+                
+                 
                  
                  viewInfoView.siteID = siteID
                  viewInfoView.auditID = auditID

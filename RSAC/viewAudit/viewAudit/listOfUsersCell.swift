@@ -41,7 +41,7 @@ class shareButtonCell: UICollectionViewCell{
         let label = UILabel()
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = .white
         return label
      }()
@@ -189,7 +189,6 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
             
 
             
-            
             Database.database().reference(withPath:"\(items.userURL)")
                             .queryOrderedByKey()
                             .observe(.value, with: { snapshot in
@@ -231,8 +230,6 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         
        
     
-        
-        
         collectionView.register(cellData.self, forCellWithReuseIdentifier: cellID)
         collectionView.register(JoinCell.self, forCellWithReuseIdentifier: joinID)
         
@@ -394,14 +391,15 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         let JoinJaffle: UIImageView = {
             let userStatus = UIImageView()
             if #available(iOS 13.0, *) {
-                userStatus.image = UIImage(imageLiteralResourceName: "man")
+                userStatus.image = UIImage(systemName: "person.crop.circle.fill.badge.plus")
             } else {
                 // Fallback on earlier versions
             }
             userStatus.contentMode = .scaleAspectFill
+            userStatus.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             //userStatus.layer.cornerRadius = 17/2
             //userStatus.layer.masksToBounds = true
-            userStatus.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+   
             return userStatus
         }()
         
@@ -450,14 +448,15 @@ class collectionOfUsers: UICollectionViewCell ,UICollectionViewDataSource,UIColl
         let userImage: UIImageView = {
             let userStatus = UIImageView()
             if #available(iOS 13.0, *) {
-                userStatus.image = UIImage(imageLiteralResourceName: "man")
+                userStatus.image = UIImage(systemName: "person.crop.circle.fill.badge.plus")
             } else {
                 // Fallback on earlier versions
             }
             userStatus.contentMode = .scaleToFill
+            userStatus.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             userStatus.layer.cornerRadius = 20
             userStatus.layer.masksToBounds = true
-            userStatus.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    
             return userStatus
         }()
         

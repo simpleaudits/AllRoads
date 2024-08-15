@@ -11,14 +11,15 @@ import UIKit
 
 
 protocol crashTypesFunc {
-    func finishPassing_crashType(savecrashType: Array<Any>)
+    func finishPassing_crashType(savecrashType: [String])
 }
+
 
 
 
 class crashTypes: UITableViewController {
     
-    var crashDataArray = Array<Any>()
+    var crashDataArray = Array<String>()
     
     var delegate: crashTypesFunc?
     
@@ -37,6 +38,24 @@ class crashTypes: UITableViewController {
                           
     ]
     
+    var commonElements: Set<String> {
+          return Set(Array(crashType.keys)).intersection(crashDataArray)
+      }
+    
+    func removeAllDuplicates<T: Hashable>(from array: [T]) -> [T] {
+        // Step 1: Count occurrences
+        var counts = [T: Int]()
+        for element in array {
+            counts[element, default: 0] += 1
+        }
+        
+        // Step 2: Filter elements to keep only those that appear exactly once
+        let uniqueElements = array.filter { counts[$0] == 1 }
+        
+        return uniqueElements
+    }
+    
+ 
     
     override func viewDidLoad() {
         
@@ -45,7 +64,7 @@ class crashTypes: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         //create nav bar button:
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(clearAll))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneBtn))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearAll))
         
         
@@ -68,8 +87,16 @@ class crashTypes: UITableViewController {
     
     @objc func clearAll(){
         crashDataArray.removeAll()
+        
         self.delegate?.finishPassing_crashType(savecrashType: crashDataArray)
+        
+        tableView.reloadData()
     }
+    
+    @objc func doneBtn(){
+        dismiss(animated: true)
+    }
+    
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -78,19 +105,23 @@ class crashTypes: UITableViewController {
        
         //append each new did selected item
         crashDataArray.append(indexcrashType)
+        
+        //this allows us to select and deselect
+        crashDataArray = removeAllDuplicates(from: crashDataArray)
 
+        //based on single tap
         self.delegate?.finishPassing_crashType(savecrashType: crashDataArray)
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-//
-//        
-//    
-//        })
         
+  
+        
+        tableView.reloadData()
+        
+
  
         
     }
-    
+
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,6 +136,17 @@ class crashTypes: UITableViewController {
         cell.textLabel?.text = Array(crashType.keys)[indexPath.row]
         cell.detailTextLabel?.text = Array(crashType.values)[indexPath.row]
         
+        // Highlight cell if item is in commonElements
+            if commonElements.contains(Array(crashType.keys)[indexPath.row]) {
+                cell.backgroundColor = #colorLiteral(red: 1, green: 0.6645795107, blue: 0.2553189099, alpha: 1)
+//                cell.layer.cornerRadius = 15
+//                cell.layer.masksToBounds = true
+                
+        // Highlight color
+            } else {
+                cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        // Default color
+            }
         
 
         // Configure the cell...

@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SwiftLoader
+import Foundation
 
 protocol reportContentField{
     func finishPassing_decription(saveDescription: String)
@@ -18,6 +19,8 @@ class crashTypeCell: UICollectionViewCell {
     let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
@@ -41,7 +44,7 @@ class crashTypeCell: UICollectionViewCell {
 
 
 
-class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDelegate,auditStage,crashTypesFunc, UINavigationControllerDelegate, UISheetPresentationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,crashTypesFunc, UINavigationControllerDelegate, UISheetPresentationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -51,8 +54,12 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "crashTypeCell", for: indexPath) as! crashTypeCell
+        
+     
+       
+        
         let indexcrashType = item_value_reportDataArray[indexPath.row]
-        cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        cell.backgroundColor = #colorLiteral(red: 1, green: 0.6645795107, blue: 0.2553189099, alpha: 1)
         cell.layer.cornerRadius = 15
         cell.layer.masksToBounds = true
         cell.label.text = "\(indexcrashType)"
@@ -65,7 +72,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         // Create a temporary label to measure the text size
         let tempLabel = UILabel()
         tempLabel.text = (string as! String)
-        tempLabel.font = UIFont.systemFont(ofSize: 17) // Match the font used in the cell
+        tempLabel.font = UIFont.systemFont(ofSize: 12) // Match the font used in the cell
         tempLabel.numberOfLines = 0
         
         // Calculate the size of the label
@@ -98,13 +105,14 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     
     var segmentControlCrashType = UISegmentedControl()
 
-    var DetailsField: UITextField!
+    //var DetailsView: UITextView!
     var DetailsView: UITextView!
-    var numberDetailsTextfield: UITextField!
+    var numberDetailsTextfield: UITextView!
     
     var crashTypeSelected: UICollectionView!
     
     var headerContent: UILabel!
+    var SubheaderContent: UILabel!
     var textCount: UILabel!
     
     var descriptionFromParent = String()
@@ -114,13 +122,51 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     var questionIndex_key  = String()
     var questionIndex_value  = String()
     var item_value_reportData = String()
-    var item_value_reportDataArray = Array<Any>()
-
+    var item_value_reportDataArray : [String] = []
     
+//MARK: - check date if true function
+    func isValidDate(_ dateString: String, withFormat format: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent date parsing
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0) // Optionally set to GMT
+        
+        // Attempt to convert the string to a Date object
+        return dateFormatter.date(from: dateString) != nil
+    }
+//MARK: - check date if true function
+ 
     
     
     override func viewDidLoad() {
+        
+        //add a nav bar button:
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(doneSaveBtn))
+  
+        
+        // Convert string to Data
+        guard let jsonData = "\(item_value_reportData)".data(using: .utf8) else {
+            print("Error: Unable to convert string to Data")
+            return
+        }
+
+        // Decode JSON data to array of strings
+        do {
+            let stringArray = try JSONDecoder().decode([String].self, from: jsonData)
+            print(stringArray) // Output: ["Hit Train", "Adjacent approach"]
+            
+            item_value_reportDataArray = stringArray
+        } catch {
+            print("Error decoding JSON: \(error)")
+        }
+  
+        
+
+     
+        
         super.viewDidLoad()
+        
+
    
         activityIndicator.frame =  CGRectMake(0.0, 0.0, 40.0,40.0)
         activityIndicator.center = self.view.center
@@ -152,19 +198,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
          
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
             
 
             
@@ -176,19 +222,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
 
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
             
             
 
@@ -200,19 +246,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.keyboardType = .numberPad
+            DetailsView.becomeFirstResponder()
 
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
             
 
             
@@ -225,19 +271,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
 
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
  
             
             
@@ -253,19 +299,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.isEnabled = false
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
     
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
 
 
             
@@ -277,19 +323,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
     
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
           
             
         case "📝 Project Description":
@@ -301,12 +347,12 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             view.addSubview(headerContent)
             
             DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 200 ))
-            DetailsView.font = UIFont.systemFont(ofSize: 12)
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
             DetailsView.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             DetailsView.text = item_value_reportData
             DetailsView.layer.cornerRadius = 15
-            DetailsView.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
             DetailsView.layer.masksToBounds = true
             DetailsView.textAlignment = .left
             DetailsView.returnKeyType = .done
@@ -330,10 +376,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
             numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
             numberDetailsTextfield.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             numberDetailsTextfield.text = item_value_reportData
             numberDetailsTextfield.layer.cornerRadius = 15
             numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -362,19 +408,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
      
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
         
         case "📝 Contact Name":
             
@@ -384,19 +430,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
      
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
       
             
         case "📞 Contact Tel. No.":
@@ -407,10 +453,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
             numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
             numberDetailsTextfield.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             numberDetailsTextfield.text = item_value_reportData
             numberDetailsTextfield.layer.cornerRadius = 15
             numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -440,20 +486,20 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.keyboardType = .emailAddress
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.keyboardType = .emailAddress
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
     
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
             
         case "📅 Date the Final Audit is Required":
             
@@ -463,28 +509,28 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = "  \(item_value_reportData)"
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = .none
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .right
-            DetailsField.isHidden = true
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = "  \(item_value_reportData)"
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = .none
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .right
+            DetailsView.isHidden = true
    
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
       
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
    
-            //Formate Date
+            //Format Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             
-            if item_value_reportData.isEmpty{
+            if isValidDate(item_value_reportData, withFormat: dateFormatter.dateFormat) == false {
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
@@ -508,19 +554,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
  
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
             
         case "🚧 Previous Road Safety Audit Stage":
             
@@ -534,18 +580,18 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.isEnabled = false
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            self.view.addSubview(DetailsView)
             
        
        
@@ -558,18 +604,18 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = "  \(item_value_reportData)"
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = .none
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .right
-            DetailsField.isEnabled = false
-            DetailsField.isHidden = true
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = "  \(item_value_reportData)"
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = .none
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .right
+            
+            DetailsView.isHidden = true
+            self.view.addSubview(DetailsView)
       
       
             // DatePicker
@@ -579,7 +625,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             
-            if item_value_reportData.isEmpty{
+            if isValidDate(item_value_reportData, withFormat: dateFormatter.dateFormat) == false {
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
@@ -602,19 +648,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
      
-            self.view.addSubview(DetailsField)
+            self.view.addSubview(DetailsView)
          
         case "👷 Previous Audit Team Leader":
             
@@ -624,19 +670,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            //
+            self.view.addSubview(DetailsView)
             
             
         case "📄 Copy of Audit and CAR Provided":
@@ -648,20 +694,20 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             view.addSubview(headerContent)
         
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            DetailsField.isHidden = true
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            DetailsView.isHidden = true
+            //
+            self.view.addSubview(DetailsView)
             
             let items = ["Yes", "No", "Unknown"]
             segmentControl = UISegmentedControl(items: items)
@@ -691,19 +737,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            //
+            self.view.addSubview(DetailsView)
             
         case "📅 Assessment Date":
             
@@ -713,29 +759,29 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = "  \(item_value_reportData)"
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = .none
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .right
-            //DetailsField.isEnabled = false
-            DetailsField.isHidden = true
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = "  \(item_value_reportData)"
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = .none
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .right
+            //
+            DetailsView.isHidden = true
+            self.view.addSubview(DetailsView)
       
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
    
-            //Formate Date
-            //Formate Date
+         
+            //Format Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             
-            if item_value_reportData.isEmpty{
+            if isValidDate(item_value_reportData, withFormat: dateFormatter.dateFormat) == false {
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
@@ -758,19 +804,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            //
+            self.view.addSubview(DetailsView)
             
             
         case "📄 Copy of Assessment Provided":
@@ -781,20 +827,20 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            //DetailsField.isEnabled = false
-            DetailsField.isHidden = true
-            DetailsField.becomeFirstResponder()
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            //
+            DetailsView.isHidden = true
+            DetailsView.becomeFirstResponder()
+            self.view.addSubview(DetailsView)
             
             let items = ["Yes", "No", "Unknown"]
             segmentControl = UISegmentedControl(items: items)
@@ -823,18 +869,18 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            self.view.addSubview(DetailsView)
             
             
         case "🚦 Speed Limit / Design Speed":
@@ -845,7 +891,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextField(frame: CGRect(x: Int(view.frame.width)/2 - 50, y: Int(self.headerContent.frame.maxY) + 10, width: 100, height: 100 ))
+            numberDetailsTextfield = UITextView(frame: CGRect(x: Int(view.frame.width)/2 - 50, y: Int(self.headerContent.frame.maxY) + 10, width: 100, height: 100 ))
             numberDetailsTextfield.font = UIFont.boldSystemFont(ofSize: 30)
             //numberDetailsTextfield.sizeToFit()
             numberDetailsTextfield.delegate = self
@@ -877,19 +923,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            //
+            self.view.addSubview(DetailsView)
             
         case "🚘 Existing Traffic Flows":
             
@@ -899,10 +945,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
             numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
             numberDetailsTextfield.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             numberDetailsTextfield.text = item_value_reportData
             numberDetailsTextfield.layer.cornerRadius = 15
             numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -929,10 +975,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
             numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
             numberDetailsTextfield.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             numberDetailsTextfield.text = item_value_reportData
             numberDetailsTextfield.layer.cornerRadius = 15
             numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -958,19 +1004,21 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.font = UIFont.systemFont(ofSize: 12)
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
+            
+
 
             
-            DetailsView = UITextView(frame: CGRect(x: 10, y: 100 + 20  + 30 + 10 + 30, width: Int(view.frame.width) - 20, height: 100 ))
-            DetailsView.font = UIFont.systemFont(ofSize: 12)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: 50, width: Int(view.frame.width) - 20, height: 100 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
             DetailsView.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             DetailsView.text = item_value_reportData
             DetailsView.layer.cornerRadius = 15
-            DetailsView.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
             DetailsView.layer.masksToBounds = true
             DetailsView.textAlignment = .left
             DetailsView.returnKeyType = .done
-            DetailsView.becomeFirstResponder()
+            //DetailsView.becomeFirstResponder()
             DetailsView.isHidden = true
             self.view.addSubview(DetailsView)
         
@@ -981,60 +1029,50 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             layout.minimumInteritemSpacing = 2
             layout.minimumLineSpacing = 2
            
-            // Initialize the UICollectionView with the layout
-            crashTypeSelected = UICollectionView(frame: CGRect(x: 10, y: 100 + 20  + 30 + 10 + 30, width: Int(view.frame.width) - 20, height: 200 ), collectionViewLayout: layout)
-            crashTypeSelected.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
-            crashTypeSelected.isHidden = false
-            self.crashTypeSelected?.dataSource = self
-            self.crashTypeSelected?.delegate = self
-            crashTypeSelected.register(crashTypeCell.self, forCellWithReuseIdentifier: "crashTypeCell")
-            crashTypeSelected.isHidden = true
-            
-            self.view.addSubview(crashTypeSelected)
         
             
             
             //Let user set if crash data was avaliable in the last 5 years, if yes we can let them choose the data type, if no the text will be "0".
             
-            let items = ["Yes", "No", "Unknown"]
+            let items = ["Yes", "No"]
             segmentControlCrashType = UISegmentedControl(items: items)
             segmentControlCrashType.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
             segmentControlCrashType.addTarget(self, action: #selector(segmentControlCrashTypesegmentAction(_:)), for: .valueChanged)
             
+
+       
             
 
             
-            
-            
-            switch item_value_reportData{
-            case "Yes":
-                segmentControlCrashType.selectedSegmentIndex = 0
-                //show nav bar button here,
-             
-               
-                
-                break
-            case "No":
-                segmentControlCrashType.selectedSegmentIndex = 1
-                //don't show nav bar button,
-        
-                
-                
-                break
-            default:
-                segmentControlCrashType.selectedSegmentIndex = 2
-                //don't show nav bar button,
-                
-                
-                
-                break
-            }
-            
             view.addSubview(segmentControlCrashType)
             
-      
+            SubheaderContent = UILabel(frame: CGRect(x: 10, y: Int(segmentControlCrashType.frame.maxY) + 20, width: Int(view.frame.width) - 20, height:  40))
+           
+            SubheaderContent.font = UIFont.systemFont(ofSize: 12)
+            SubheaderContent.numberOfLines = 5
+            SubheaderContent.adjustsFontSizeToFitWidth = true
+            SubheaderContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(SubheaderContent)
+            
+            // Initialize the UICollectionView with the layout
+            crashTypeSelected = UICollectionView(frame: CGRect(x: 10, y: Int(SubheaderContent.frame.maxY) + 20, width: Int(view.frame.width) - 20, height: 200 ), collectionViewLayout: layout)
+            crashTypeSelected.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            crashTypeSelected.isHidden = false
+            self.crashTypeSelected?.dataSource = self
+            self.crashTypeSelected?.delegate = self
+            crashTypeSelected.register(crashTypeCell.self, forCellWithReuseIdentifier: "crashTypeCell")
+     
+            self.view.addSubview(crashTypeSelected)
             
             
+            if item_value_reportDataArray[0] == "no" {
+                SubheaderContent.text = "In the last 5 years, there has been no or unknown crashes recorded at this location."
+                segmentControlCrashType.selectedSegmentIndex = 1
+            }else{
+                SubheaderContent.text = "In the last 5 years, what were the common crash types experienced at this location?"
+                segmentControlCrashType.selectedSegmentIndex = 0
+                addCrashTypeBtn()
+            }
             
         case "🚘 Speed Survey Data":
             
@@ -1044,20 +1082,20 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            //DetailsField.isEnabled = false
-            DetailsField.becomeFirstResponder()
-            DetailsField.isHidden = true
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            //
+            DetailsView.becomeFirstResponder()
+            DetailsView.isHidden = true
+            self.view.addSubview(DetailsView)
             
             let items = ["Yes", "No", "Unknown"]
             segmentControl = UISegmentedControl(items: items)
@@ -1086,19 +1124,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
 
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            //
+            self.view.addSubview(DetailsView)
        
         case "📅 Date Request Received":
             
@@ -1108,29 +1146,29 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = "  \(item_value_reportData)"
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = .none
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .right
-          //DetailsField.isEnabled = false
-            DetailsField.isHidden = true
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = "  \(item_value_reportData)"
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = .none
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .right
+          //
+            DetailsView.isHidden = true
+            self.view.addSubview(DetailsView)
       
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
    
-            //Formate Date
-            //Formate Date
+     
+            //Format Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             
-            if item_value_reportData.isEmpty{
+            if isValidDate(item_value_reportData, withFormat: dateFormatter.dateFormat) == false {
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
@@ -1154,10 +1192,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
             numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
             numberDetailsTextfield.delegate = self
-            //DetailsField.layer.borderWidth = 2
+            //DetailsView.layer.borderWidth = 2
             numberDetailsTextfield.text = item_value_reportData
             numberDetailsTextfield.layer.cornerRadius = 15
             numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -1186,19 +1224,19 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
 
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            //
+            self.view.addSubview(DetailsView)
             
             
         case "📅 Audit Assessment Date":
@@ -1209,28 +1247,28 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = "  \(item_value_reportData)"
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = .none
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .right
-            DetailsField.isEnabled = false
-            DetailsField.isHidden = true
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = "  \(item_value_reportData)"
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = .none
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .right
+            
+            DetailsView.isHidden = true
+            self.view.addSubview(DetailsView)
       
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
    
-            //Formate Date
+            //Format Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             
-            if item_value_reportData.isEmpty{
+            if isValidDate(item_value_reportData, withFormat: dateFormatter.dateFormat) == false {
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
@@ -1254,20 +1292,20 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
 
-            DetailsField = UITextField(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsField.font = UIFont.systemFont(ofSize: 12)
-            DetailsField.delegate = self
-            //DetailsField.layer.borderWidth = 2
-            DetailsField.text = item_value_reportData
-            DetailsField.layer.cornerRadius = 15
-            DetailsField.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            DetailsField.layer.masksToBounds = true
-            DetailsField.textAlignment = .center
-            DetailsField.returnKeyType = .done
-            DetailsField.becomeFirstResponder()
-            DetailsField.isHidden = true
-            //DetailsField.isEnabled = false
-            self.view.addSubview(DetailsField)
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+            DetailsView.becomeFirstResponder()
+            DetailsView.isHidden = true
+            //
+            self.view.addSubview(DetailsView)
             
             
             let items = ["Rain", "Good", "Cloudy", "Dark"]
@@ -1325,23 +1363,20 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     func finishPassing_category(saveCategory: String) {
         //Display audit stage cell when the string is not empty.
         if (self.item_value_reportData != ""){
-            print ("not empty")
-            print (saveCategory)
+
             item_value_reportData = saveCategory
    
             
         }else{
-            print ("empty")
+  
          
         }
     }
     
-  
     
-    func finishPassing_crashType(savecrashType: Array<Any>) {
+    func finishPassing_crashType(savecrashType: [String]) {
         if (self.item_value_reportData != ""){
-            print ("not empty")
-            print (savecrashType)
+  
             item_value_reportDataArray = savecrashType
             DetailsView.text = "\(item_value_reportDataArray)"
             
@@ -1405,7 +1440,8 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     
     @objc func addCrashTypeBtn(){
         
- 
+
+        
         let crashTypesView = crashTypes()
         let nav = UINavigationController(rootViewController: crashTypesView)
         nav.navigationBar.prefersLargeTitles = true
@@ -1415,10 +1451,11 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         nav.modalPresentationStyle = .pageSheet
         nav.isModalInPresentation = true
         crashTypesView.delegate = self
+        crashTypesView.crashDataArray = item_value_reportDataArray // send data to this view based on the loaded data, this will always populate the crash type view with highlighted data.
         
             
             if let presentationController = nav.presentationController as? UISheetPresentationController {
-                presentationController.detents = [.medium()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                presentationController.detents = [.medium(),.large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
                 presentationController.prefersGrabberVisible = true
                 presentationController.preferredCornerRadius = 45
                 
@@ -1426,7 +1463,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
                 
        
  
-                presentationController.largestUndimmedDetentIdentifier = .medium
+                presentationController.largestUndimmedDetentIdentifier = .large
                 //presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
             }
             
@@ -1445,26 +1482,36 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
          switch (segmentedControl.selectedSegmentIndex) {
          case 0:
           
-             addCrashTypeBtn()
+             //item_value_reportDataArray = []
+             
+             perform(#selector(addCrashTypeBtn), with: item_value_reportDataArray = [], afterDelay: 0.5)
+             
+             SubheaderContent.text = "In the last 5 years, what were the common crash types experienced at this location?"
+             
+             DetailsView.text = "\(item_value_reportDataArray)"
              
              crashTypeSelected.isHidden = false
+             
+             crashTypeSelected.reloadData()
              
              break // Uno
          case 1:
 
-             self.navigationController?.popViewController(animated: true)
-
-             crashTypeSelected.isHidden = true
-
-             break // Dos
-         case 2:
-            
-             self.navigationController?.popViewController(animated: true)
-          
-             crashTypeSelected.isHidden = true
+             //self.navigationController?.popViewController(animated: true)
+             dismiss(animated: true)
              
-           
-             break // Tres
+             SubheaderContent.text = "In the last 5 years, there has been no or unknown crashes recorded at this location."
+             
+             item_value_reportDataArray = ["no"]
+
+             DetailsView.text = "\(item_value_reportDataArray)"
+             
+             crashTypeSelected.isHidden = false
+
+             crashTypeSelected.reloadData()
+             
+             break
+         
          default:
              break
          }
@@ -1476,7 +1523,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
     @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
          switch (segmentedControl.selectedSegmentIndex) {
          case 0:
-             DetailsField.text = "Yes"
+             DetailsView.text = "Yes"
              
              //save contents in the textfield specfic to the question
              let uid = Auth.auth().currentUser?.uid
@@ -1484,10 +1531,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
              
              
              //save the data
-             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsField.text ?? "")
+             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
              break // Uno
          case 1:
-             DetailsField.text = "No"
+             DetailsView.text = "No"
              
              //save contents in the textfield specfic to the question
              let uid = Auth.auth().currentUser?.uid
@@ -1495,10 +1542,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
              
              
              //save the data
-             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsField.text ?? "")
+             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
              break // Dos
          case 2:
-             DetailsField.text = "Unknown"
+             DetailsView.text = "Unknown"
              
              
              //save contents in the textfield specfic to the question
@@ -1507,7 +1554,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
              
              
              //save the data
-             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsField.text ?? "")
+             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
              break // Tres
          default:
              break
@@ -1533,7 +1580,7 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         let todaysDate = dateFormatter.string(from: datePicker.date)
-        DetailsField.text = todaysDate
+        DetailsView.text = todaysDate
         
         //save contents in the textfield specfic to the question
         let uid = Auth.auth().currentUser?.uid
@@ -1541,43 +1588,32 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
         
         
         //save the data
-        saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsField.text ?? "")
+        saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
         
     }
     
-    
-    func textViewDidChange(_ textView: UITextField) {
-        // This method is called whenever the text changes
-        if let text = textView.text {
-            let characterCount = text.count
-           // print("Character count: \(characterCount)")
-           
-            textCount.text = "count:\(DetailsView.text?.count ?? 0)"
-            
-      
 
-        }
+    
+    @objc func doneSaveBtn(){
+        //crash data
+        
+ 
+        
+        //save contents in the textfield specfic to the question
+        let uid = Auth.auth().currentUser?.uid
+        let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
+        
+        
+        //save the data
+        saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
+        
     }
-    
-
-    func textViewDidChange(_ textView: UITextView) {
-        // This method is called whenever the text changes
-        if let text = textView.text {
-            let characterCount = text.count
-            textCount.text = "count:\(DetailsView.text?.count ?? 0)"
-            
-
-        }
-    }
-    
     
  
     @objc func doneButtonTappedForMyNumericTextField() {
         print("Done");
         numberDetailsTextfield.resignFirstResponder()
-        
-
-        
+      
         //save contents in the textfield specfic to the question
         let uid = Auth.auth().currentUser?.uid
         let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
@@ -1590,57 +1626,10 @@ class buildReportContentPage: UIViewController,UITextFieldDelegate,UITextViewDel
 
     
     
-    
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        
-        //Project Creator
-        let uid = Auth.auth().currentUser?.uid
-        let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-        
-        
-        //save contents in the textfield specfic to the question
-        saveData(question: questionIndex_value, ref: reportConfigRefString, textData: textField.text ?? "")
-
-        return true
-    }
-    
-    
 
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
-    {
-        if(text == "\n")
-        {
-            view.endEditing(true)
-            
-            
-            //save contents in the textfield specfic to the question
-            let uid = Auth.auth().currentUser?.uid
-            let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-            
-            
-            //save the data
-            saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                self.navigationController?.popViewController(animated: true)
-                
-                //self.dismiss(animated: true, completion: nil)
-             
-            })
-            
-       
-            
-            return false
-        }
-        else
-        {
-            return true
-        }
-    }
-    
+
+
 
 
 

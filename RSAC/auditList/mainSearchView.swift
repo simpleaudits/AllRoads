@@ -208,7 +208,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             cell.imageUI.sd_setImage(with: URL(string:auditData.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
     
             
-            cell.layer.cornerRadius = 8
+            cell.layer.cornerRadius = 12
             cell.layer.masksToBounds = true
             return cell
             
@@ -224,7 +224,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             cell.imageUI.sd_setImage(with: URL(string:auditData.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
           
             
-            cell.layer.cornerRadius = 8
+            cell.layer.cornerRadius = 12
             cell.layer.masksToBounds = true
             
             return cell
@@ -241,7 +241,7 @@ class mainSearchView: UICollectionViewController,UICollectionViewDelegateFlowLay
             let transforImageSize = SDImageResizingTransformer(size: CGSize(width: 150, height: 150), scaleMode: .fill)
             cell.imageUI.sd_setImage(with: URL(string:auditData.locationImageURL), placeholderImage: nil, context: [.imageTransformer:transforImageSize])
             
-            cell.layer.cornerRadius = 8
+            cell.layer.cornerRadius = 12
             cell.layer.masksToBounds = true
             
             return cell
