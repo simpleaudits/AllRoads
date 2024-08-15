@@ -105,6 +105,8 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     
     var segmentControlCrashType = UISegmentedControl()
 
+    var segmentActionWeather = UISegmentedControl()
+  
     //var DetailsView: UITextView!
     var DetailsView: UITextView!
     var numberDetailsTextfield: UITextView!
@@ -390,13 +392,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
           
             numberDetailsTextfield.becomeFirstResponder()
             
-            let bar = UIToolbar()
-            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
-            bar.items = [reset]
-            bar.sizeToFit()
-            numberDetailsTextfield.inputAccessoryView = bar
-            
-            self.view.addSubview(numberDetailsTextfield)
+
             
 
         
@@ -467,13 +463,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
          
             numberDetailsTextfield.becomeFirstResponder()
             
-            let bar = UIToolbar()
-            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
-            bar.items = [reset]
-            bar.sizeToFit()
-            numberDetailsTextfield.inputAccessoryView = bar
-            
-            self.view.addSubview(numberDetailsTextfield)
+
             
   
             
@@ -525,7 +515,8 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
-   
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+            
             //Format Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
@@ -534,18 +525,19 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }else{
                 let date = dateFormatter.date(from: item_value_reportData)
                 datePicker.setDate(date!, animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }
 
             self.view.addSubview(datePicker)
 
 
+            
         case "🚧 Previous Road Safety Audit":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
@@ -620,6 +612,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
    
             //Formate Date
             let dateFormatter = DateFormatter()
@@ -629,13 +622,13 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }else{
                 let date = dateFormatter.date(from: item_value_reportData)
                 datePicker.setDate(date!, animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }
 
             self.view.addSubview(datePicker)
@@ -775,6 +768,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
    
          
             //Format Date
@@ -785,13 +779,13 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }else{
                 let date = dateFormatter.date(from: item_value_reportData)
                 datePicker.setDate(date!, animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }
 
             self.view.addSubview(datePicker)
@@ -907,13 +901,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             //numberDetailsTextfield.isEnabled = false
             numberDetailsTextfield.becomeFirstResponder()
             
-            let bar = UIToolbar()
-            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
-            bar.items = [reset]
-            bar.sizeToFit()
-            numberDetailsTextfield.inputAccessoryView = bar
-            
-            self.view.addSubview(numberDetailsTextfield)
+
             
         case "📄 Standards, Departures from Standards and Mitigation":
             
@@ -959,13 +947,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
          
             numberDetailsTextfield.becomeFirstResponder()
             
-            let bar = UIToolbar()
-            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
-            bar.items = [reset]
-            bar.sizeToFit()
-            numberDetailsTextfield.inputAccessoryView = bar
-            
-            self.view.addSubview(numberDetailsTextfield)
+
             
         case "🚘 Forecast Traffic Flows":
             
@@ -989,13 +971,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
          
             numberDetailsTextfield.becomeFirstResponder()
             
-            let bar = UIToolbar()
-            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
-            bar.items = [reset]
-            bar.sizeToFit()
-            numberDetailsTextfield.inputAccessoryView = bar
-            
-            self.view.addSubview(numberDetailsTextfield)        
+        
         
         case "💥 Crash Data (5 Years)":
             
@@ -1162,6 +1138,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
    
      
             //Format Date
@@ -1172,13 +1149,13 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }else{
                 let date = dateFormatter.date(from: item_value_reportData)
                 datePicker.setDate(date!, animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }
 
             self.view.addSubview(datePicker)
@@ -1206,13 +1183,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
          
             numberDetailsTextfield.becomeFirstResponder()
             
-            let bar = UIToolbar()
-            let reset = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTappedForMyNumericTextField))
-            bar.items = [reset]
-            bar.sizeToFit()
-            numberDetailsTextfield.inputAccessoryView = bar
-            
-            self.view.addSubview(numberDetailsTextfield)
+
             
         
             
@@ -1263,7 +1234,8 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
       
             // DatePicker
             datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
-   
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+            
             //Format Date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
@@ -1272,19 +1244,19 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }else{
                 let date = dateFormatter.date(from: item_value_reportData)
                 datePicker.setDate(date!, animated: true)
                 datePicker.datePickerMode = .date
                 datePicker.layer.masksToBounds = true
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControl.Event.valueChanged)
+                
             }
 
             self.view.addSubview(datePicker)
             
             
-        case "📝 Weather Condition":
+        case "☀️ Weather Condition":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -1309,26 +1281,25 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             
             
             let items = ["Rain", "Good", "Cloudy", "Dark"]
-            segmentControl = UISegmentedControl(items: items)
-            segmentControl.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
-            segmentControl.addTarget(self, action: #selector(segmentAction(_:)), for: .valueChanged)
+            segmentActionWeather = UISegmentedControl(items: items)
+            segmentActionWeather.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
+            segmentActionWeather.addTarget(self, action: #selector(segmentActionWeather(_:)), for: .valueChanged)
             
             switch item_value_reportData{
             case "Rain":
-                segmentControl.selectedSegmentIndex = 0
+                segmentActionWeather.selectedSegmentIndex = 0
                 break
             case "Good":
-                segmentControl.selectedSegmentIndex = 1
+                segmentActionWeather.selectedSegmentIndex = 1
                 break
             case "Cloudy":
-                segmentControl.selectedSegmentIndex = 2
+                segmentActionWeather.selectedSegmentIndex = 2
                 break
             default:
-                segmentControl.selectedSegmentIndex = 3
+                segmentActionWeather.selectedSegmentIndex = 3
                 break
             }
-            
-            view.addSubview(segmentControl)
+            view.addSubview(segmentActionWeather)
             
         default:
             
@@ -1519,50 +1490,43 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     
     
     
-    
     @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
          switch (segmentedControl.selectedSegmentIndex) {
          case 0:
              DetailsView.text = "Yes"
-             
-             //save contents in the textfield specfic to the question
-             let uid = Auth.auth().currentUser?.uid
-             let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-             
-             
-             //save the data
-             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
-             break // Uno
+
          case 1:
              DetailsView.text = "No"
-             
-             //save contents in the textfield specfic to the question
-             let uid = Auth.auth().currentUser?.uid
-             let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-             
-             
-             //save the data
-             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
+
              break // Dos
          case 2:
              DetailsView.text = "Unknown"
-             
-             
-             //save contents in the textfield specfic to the question
-             let uid = Auth.auth().currentUser?.uid
-             let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-             
-             
-             //save the data
-             saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
-             break // Tres
+
+             break
          default:
              break
          }
      }
     
     
-    
+    @objc func segmentActionWeather(_ segmentedControl: UISegmentedControl) {
+         switch (segmentedControl.selectedSegmentIndex) {
+         case 0:
+             DetailsView.text = "Rain"
+         case 1:
+             DetailsView.text = "Good"
+             break // Dos
+         case 2:
+             DetailsView.text = "Cloudy"
+             break // Dos
+         case 3:
+             DetailsView.text = "Dark"
+             break
+         default:
+             break
+         }
+     }
+   
     
     @objc func handleDatePicker(sender: UIDatePicker) {
         //        Wednesday, Sep 12, 2018           --> EEEE, MMM d, yyyy
@@ -1582,14 +1546,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         let todaysDate = dateFormatter.string(from: datePicker.date)
         DetailsView.text = todaysDate
         
-        //save contents in the textfield specfic to the question
-        let uid = Auth.auth().currentUser?.uid
-        let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-        
-        
-        //save the data
-        saveData(question: questionIndex_value, ref: reportConfigRefString, textData: DetailsView.text ?? "")
-        
+
     }
     
 
