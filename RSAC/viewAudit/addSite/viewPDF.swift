@@ -297,11 +297,11 @@ class viewPDF: UIViewController {
 
             This Road Safety Audit follows the principles outlined in Austroads Guide to Road Safety Part 6: Road Safety Audit and meets the requirements of the Policy and Guidelines for Road Safety Audit.
 
-            This report presents findings from a \(reportData["q6"] ?? "ERROR") Road Safety Audit conducted at \(reportData["q7"] ?? "ERROR").
+            This report presents findings from a \(reportData["q6"] ?? "ERROR REFERENCE") Road Safety Audit conducted at \(reportData["q7"] ?? "ERROR REFERENCE").
 
-            The audit was conducted by \(reportData["q35"] ?? "ERROR") from \(reportData["q2"] ?? "ERROR"), with reference to details provided in the Audit Brief.
+            The audit was conducted by \(reportData["q35"] ?? "ERROR REFERENCE") from \(reportData["q2"] ?? "ERROR REFERENCE"), with reference to details provided in the Audit Brief.
 
-            The audit included a review of drawings and information provided by \(reportData["q10"] ?? "ERROR").
+            The audit included a review of drawings and information provided by \(reportData["q10"] ?? "ERROR REFERENCE").
 
             All findings in this report indicate the need for actions to improve project safety and reduce crash risks and severity. The audit specifically focuses on road safety implications of the project presented, without verifying compliance with other criteria.
             """
@@ -321,19 +321,19 @@ class viewPDF: UIViewController {
 // MARK: Audit team  ------------------------------------------
             
             //Audti team section
-            //Contributors (header):
-            let Header_1_1 = NSMutableAttributedString(string: "2.0 Audit Team", attributes: [
+        
+            let Header_2_0 = NSMutableAttributedString(string: "2.0 Audit Team", attributes: [
                 .font: UIFont.boldSystemFont(ofSize: 12)
             ])
-            let Header_element_1_1 = PDFAttributedText(text: Header_1_1)
-            document.add(.contentLeft,attributedTextObject: Header_element_1_1)
+            let Header_element_2_0 = PDFAttributedText(text: Header_2_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_2_0)
             
             //Scope of audit (sub header):
-            let Subheader_1_1 = NSMutableAttributedString(string: "2.1 Contributors", attributes: [
+            let Subheader_2_0 = NSMutableAttributedString(string: "2.1 Contributors", attributes: [
                 .font: UIFont.italicSystemFont(ofSize: 10)
             ])
-            let Subheader_element_1_1 = PDFAttributedText(text: Subheader_1_1)
-            document.add(.contentLeft,attributedTextObject: Subheader_element_1_1)
+            let Subheader_element_2_0 = PDFAttributedText(text: Subheader_2_0)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_2_0)
             
    
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 10.0))
@@ -344,7 +344,6 @@ class viewPDF: UIViewController {
            
             
             let items = userDataArray.removeDuplicates()
-  
 
             // Simple bullet point list
             let featureList = PDFList(indentations: [
@@ -367,7 +366,7 @@ class viewPDF: UIViewController {
 
             
             let auditTeamText = """
-            The audit team visit the site on \(reportData["q36"] ?? "ERROR"). At the time of the site visit the weather was \(reportData["q37"] ?? "ERROR") and the existing road surface was [Road condition].
+            The audit team visit the site on \(reportData["q36"] ?? "ERROR REFERENCE"). At the time of the site visit the weather was \(reportData["q37"] ?? "ERROR REFERENCE") and the existing road surface was [Road condition].
             """
             
             
@@ -392,8 +391,6 @@ class viewPDF: UIViewController {
             let Header_element_3_0 = PDFAttributedText(text: Header_3_0)
             document.add(.contentLeft,attributedTextObject: Header_element_3_0)
         
-            
-            
             
             let safeSystemFindings = """
             The aim of Safe System Findings is to focus the Road Safety Audit process on considering safe speeds and by providing forgiving roads and roadsides. This is to be delivered through the Road Safety Audit process by accepting that people will always make mistakes and by considering the known limits to crash forces the human body can tolerate. This is to achieved by focusing the Road Safety Audit on particular crash types that are known to result in higher severity outcomes at relatively lower speed environments to reduce the risk of fatal and serious injury crashes.
@@ -436,9 +433,11 @@ class viewPDF: UIViewController {
  
             
             let previousAudits = """
-            A \(reportData["q15"] ?? "ERROR") was undertaken by \(reportData["q18"] ?? "ERROR") in \(reportData["q17"] ?? "ERROR").
+            A previous audit was undertaken by \(reportData["q18"] ?? "ERROR REFERENCE") on \(reportData["q17"] ?? "ERROR REFERENCE").
             
-            The items raised in the (audit stage) safety audit have been addressed with the exception of the items listed as NOT ADDRESSED.
+            The items raised from \(reportData["q15"] ?? "ERROR REFERENCE") audit (previous audit) have been addressed with the exception of the items listed as NOT ADDRESSED.
+            
+            NOT ADDRESSED - refers to any historical audit findings that have not been addressed in the current stage of work.
             
             These items are discussed again in this road safety audit.
             
@@ -459,65 +458,239 @@ class viewPDF: UIViewController {
             
 // MARK: Previous safety audits ----------------------------------------
             
+// MARK: Background Data ----------------------------------------
+            
+            //Introduction section
+            let Header_5_0 = NSMutableAttributedString(string: "5.0 Background Data", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_5_0 = PDFAttributedText(text: Header_5_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_5_0)
+            
+            //Scope of audit (sub header):
+            let Subheader_5_0 = NSMutableAttributedString(string: "5.1 Crash History", attributes: [
+                .font: UIFont.italicSystemFont(ofSize: 10)
+            ])
+            let Subheader_element_5_0 = PDFAttributedText(text: Subheader_5_0)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_5_0)
+            
+            let backgroundData = """
+            A study was undertaken for previous crashes in this area over a 5 year period from the date of this audit. Historically, it is shown that the following crash types have been observed this in this area. See below:
+            """
+
+            
+            let data_5_0 = NSMutableAttributedString(string: backgroundData, attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_5_0 = PDFAttributedText(text: data_5_0)
+            document.add(.contentLeft,attributedTextObject: data_element_5_0)
+            
+            //Add list of user selected crash types here:
+            // Convert string to Data
+            guard let jsonData = "\(reportData["q30"] ?? "ERROR REFERENCE")".data(using: .utf8) else {
+                print("Error: Unable to convert string to Data")
+                return
+            }
+            // Decode JSON data to array of strings
+            do {
+                let stringArray = try JSONDecoder().decode([String].self, from: jsonData)
+                print(stringArray) // Output: ["Hit Train", "Adjacent approach"]
+                
+                // Simple bullet point list
+                let crashList = PDFList(indentations: [
+                    (pre: 10.0, past: 20.0),
+                    (pre: 20.0, past: 20.0),
+                    (pre: 40.0, past: 20.0)
+                ])
+
+                // By adding the item first to a list item with the dot symbol, all of them will inherit it
+                crashList
+                    .addItem(PDFListItem(symbol: .dot)
+                        .addItems(stringArray.map({ stringArray in
+                            PDFListItem(content: stringArray)
+                        })))
+                document.add(list: crashList)
+                
+            } catch {
+                print("Error decoding JSON: \(error)")
+            }
+      
+            
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+// MARK: Background Data ----------------------------------------
+           
+// MARK: Traffic Data -------------------------------------------
+            
+            let Header_6_0 = NSMutableAttributedString(string: "6.0 Traffic Data and Speed Data", attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+            let Header_element_6_0 = PDFAttributedText(text: Header_6_0)
+            document.add(.contentLeft,attributedTextObject: Header_element_6_0)
+            
+            //Scope of audit (sub header):
+            let Subheader_6_0 = NSMutableAttributedString(string: "6.1 Flows", attributes: [
+                .font: UIFont.italicSystemFont(ofSize: 10)
+            ])
+            let Subheader_element_6_0 = PDFAttributedText(text: Subheader_6_0)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_6_0)
+       
+            
+            
+            let flowText = """
+            A summary of the most recent traffic data is provided below:
+            """
+
+            
+            let data_6_0 = NSMutableAttributedString(string: flowText, attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_6_0 = PDFAttributedText(text: data_6_0)
+            document.add(.contentLeft,attributedTextObject: data_element_6_0)
             
             
             
-//            let data_4_0 = NSMutableAttributedString(string: safeSystemFindings, attributes: [
-//                .font: UIFont.systemFont(ofSize: 10)
-//            ])
-//            let data_element_4_0 = PDFAttributedText(text: data_4_0)
-//            document.add(.contentLeft,attributedTextObject: data_element_4_0)
-//            
-//            
-//            let previousAudits = """
-//            A \(reportData["q15"] ?? "ERROR") was undertaken by \(reportData["q18"] ?? "ERROR") in \(reportData["q17"] ?? "ERROR").
-//            
-//            The items raised in the (audit stage) safety audit have been addressed with the exception of the items listed as NOT ADDRESSED.
-//            
-//            These items are discussed again in this road safety audit.
-//            
-//            """
-//
-//            
-//            let data_4_0 = NSMutableAttributedString(string: previousAudits, attributes: [
-//                .font: UIFont.systemFont(ofSize: 10)
-//            ])
-//            let data_element_4_0 = PDFAttributedText(text: data_4_0)
-//            document.add(.contentLeft,attributedTextObject: data_element_4_0)
+                    
+            //Table of speed and traffic flow:
+            //Create a colums to insert data
+            let tableOfFlows = PDFTable(rows: 2, columns: 3)
+            
+            //Header Cell Configuration:
+            let colors = (fill: UIColor.white, text: UIColor.black)
+            let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
+            let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
+            let font = UIFont.systemFont(ofSize: 10)
+            let font2 = UIFont.boldSystemFont(ofSize: 15)
+            
+            //Data Cell Configuration:
+            let font3 = UIFont.boldSystemFont(ofSize: 10)
+            let lineStyle3 = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
+            let borders3 = PDFTableCellBorders(left:lineStyle3, right: lineStyle3, bottom: lineStyle3)
+       
+            // Change standardized styles
+            tableOfFlows.content = [
+                ["Location", "Vehicles Per day", "Date"],
+                ["\(reportData["q7"] ?? "ERROR REFERENCE")","\(reportData["q28"] ?? "ERROR REFERENCE")","\(reportData["q36"] ?? "ERROR REFERENCE")"]
+                
+            ]
+            
+            //Headers
+            tableOfFlows[0,2].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+            tableOfFlows[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+            tableOfFlows[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+            
+            //contents
+            tableOfFlows[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+            tableOfFlows[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+            tableOfFlows[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+
             
             
-            //Add document contents:
+            
+            
+            tableOfFlows.rows.allRowsAlignment = [.center,.center,.center]
+            
+            tableOfFlows.widths = [
+                0.33, 0.33,0.33
+            ]
+            
+            document.add(table: tableOfFlows)
+
+            
+            //Scope of audit (sub header):
+            let Subheader_6_2 = NSMutableAttributedString(string: "6.2 Speed", attributes: [
+                .font: UIFont.italicSystemFont(ofSize: 10)
+            ])
+            let Subheader_element_6_2 = PDFAttributedText(text: Subheader_6_2)
+            document.add(.contentLeft,attributedTextObject: Subheader_element_6_2)
+       
+            
+            
+            // Add some spacing below title
+            document.add(space: 15.0)
+            
+            
+            let speedText = """
+            A summary of the most recent traffic speed data is provided below:
+            """
+
+            
+            let data_6_2 = NSMutableAttributedString(string: speedText, attributes: [
+                .font: UIFont.systemFont(ofSize: 10)
+            ])
+            let data_element_6_2 = PDFAttributedText(text: data_6_2)
+            document.add(.contentLeft,attributedTextObject: data_element_6_2)
+            
+            
+            
+                    
+            //Table of speed and traffic flow:
+            //Create a colums to insert data
+            let tableOfSpeeds = PDFTable(rows: 2, columns: 3)
+       
+         
+       
+            // Change standardized styles
+            tableOfSpeeds.content = [
+                ["Location", "Average Speed", "Date"],
+                ["\(reportData["q7"] ?? "ERROR REFERENCE")","\(reportData["q28"] ?? "ERROR REFERENCE")","\(reportData["q36"] ?? "ERROR REFERENCE")"]
+                
+            ]
+            
+            //Headers
+            tableOfSpeeds[0,2].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+            tableOfSpeeds[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+            tableOfSpeeds[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
+            
+            //contents
+            tableOfSpeeds[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+            tableOfSpeeds[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+            tableOfSpeeds[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+
+                    
+            
+            tableOfSpeeds.rows.allRowsAlignment = [.center,.center,.center]
+            
+            tableOfSpeeds.widths = [
+                0.33, 0.33,0.33
+            ]
+            
+            document.add(table: tableOfSpeeds)
+
+            
+            
+            
+
+            
+            
+            
+            
+
+// MARK: Traffic Data -------------------------------------------
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+//MARK: - Observations load here///////////////////////////////////////////////////:
+ 
+            //fresh page for observations:
             document.createNewPage()
             
-            
-            
-            
-            
-            
-            //MARK: - document introduction section
-   
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-         
-            
+        
             // Here we want to create a data structure to store our firebase saved content
             for x in self.saveData{
        
-                
                 
                 //line seperator
                 let style1 = PDFLineStyle(type: .full, color: .darkGray, width: 1)

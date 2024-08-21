@@ -38,10 +38,12 @@ class crashTypes: UITableViewController {
                           
     ]
     
+    // Highlights crash type the user has selected vs all selected crash types
     var commonElements: Set<String> {
           return Set(Array(crashType.keys)).intersection(crashDataArray)
       }
     
+    //if multiple selection, i.e if they double table rear-end, it wil only show 1.
     func removeAllDuplicates<T: Hashable>(from array: [T]) -> [T] {
         // Step 1: Count occurrences
         var counts = [T: Int]()

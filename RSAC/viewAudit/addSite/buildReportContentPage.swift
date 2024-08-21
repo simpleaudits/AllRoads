@@ -55,10 +55,9 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "crashTypeCell", for: indexPath) as! crashTypeCell
         
-     
-       
         
         let indexcrashType = item_value_reportDataArray[indexPath.row]
+        
         cell.backgroundColor = #colorLiteral(red: 1, green: 0.6645795107, blue: 0.2553189099, alpha: 1)
         cell.layer.cornerRadius = 15
         cell.layer.masksToBounds = true
@@ -109,7 +108,6 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
   
     //var DetailsView: UITextView!
     var DetailsView: UITextView!
-    var numberDetailsTextfield: UITextView!
     
     var crashTypeSelected: UICollectionView!
     
@@ -146,7 +144,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(doneSaveBtn))
   
         
-        // Convert string to Data
+        //Convert JSON string to Data, this is required due to the following reasons. We need to
         guard let jsonData = "\(item_value_reportData)".data(using: .utf8) else {
             print("Error: Unable to convert string to Data")
             return
@@ -240,7 +238,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             
             
 
-        case "📞 Audit Team Organisation Contact Details":
+        case "📞 Audit Team Contact Details":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -293,7 +291,9 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             
             //Open List
     
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Stage", style: .plain, target: self, action: #selector(addStage))
+            //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Stage", style: .plain, target: self, action: #selector(addStage))
+            
+            perform(#selector(addDesigStageBtn), with: nil, afterDelay: 0.5)
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -378,20 +378,20 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
-            numberDetailsTextfield.delegate = self
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
             //DetailsView.layer.borderWidth = 2
-            numberDetailsTextfield.text = item_value_reportData
-            numberDetailsTextfield.layer.cornerRadius = 15
-            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            numberDetailsTextfield.layer.masksToBounds = true
-            numberDetailsTextfield.textAlignment = .center
-            numberDetailsTextfield.returnKeyType = .done
-            numberDetailsTextfield.keyboardType = .phonePad
-          
-            numberDetailsTextfield.becomeFirstResponder()
-            
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+
+            DetailsView.keyboardType = .phonePad
+            DetailsView.becomeFirstResponder()
+            view.addSubview(DetailsView)
+      
 
             
 
@@ -449,19 +449,21 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
-            numberDetailsTextfield.delegate = self
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
             //DetailsView.layer.borderWidth = 2
-            numberDetailsTextfield.text = item_value_reportData
-            numberDetailsTextfield.layer.cornerRadius = 15
-            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            numberDetailsTextfield.layer.masksToBounds = true
-            numberDetailsTextfield.textAlignment = .center
-            numberDetailsTextfield.returnKeyType = .done
-            numberDetailsTextfield.keyboardType = .phonePad
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+            DetailsView.returnKeyType = .done
+            DetailsView.keyboardType = .phonePad
+            DetailsView.becomeFirstResponder()
+            view.addSubview(DetailsView)
          
-            numberDetailsTextfield.becomeFirstResponder()
+        
             
 
             
@@ -885,21 +887,22 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextView(frame: CGRect(x: Int(view.frame.width)/2 - 50, y: Int(self.headerContent.frame.maxY) + 10, width: 100, height: 100 ))
-            numberDetailsTextfield.font = UIFont.boldSystemFont(ofSize: 30)
-            //numberDetailsTextfield.sizeToFit()
-            numberDetailsTextfield.delegate = self
-            numberDetailsTextfield.layer.borderWidth = 5
-            numberDetailsTextfield.layer.borderColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
-            numberDetailsTextfield.text = item_value_reportData
-            numberDetailsTextfield.layer.cornerRadius = 50
-            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            numberDetailsTextfield.layer.masksToBounds = true
-            numberDetailsTextfield.textAlignment = .center
-            numberDetailsTextfield.returnKeyType = .done
-            numberDetailsTextfield.keyboardType = .phonePad
-            //numberDetailsTextfield.isEnabled = false
-            numberDetailsTextfield.becomeFirstResponder()
+            DetailsView = UITextView(frame: CGRect(x: Int(view.frame.width)/2 - 50, y: Int(self.headerContent.frame.maxY) + 10, width: 100, height: 100 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 30)
+            //DetailsView.sizeToFit()
+            DetailsView.delegate = self
+            DetailsView.layer.borderWidth = 5
+            DetailsView.layer.borderColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 50
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+            DetailsView.returnKeyType = .done
+            DetailsView.keyboardType = .phonePad
+            DetailsView.becomeFirstResponder()
+            view.addSubview(DetailsView)
+         
             
 
             
@@ -933,19 +936,21 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
-            numberDetailsTextfield.delegate = self
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
             //DetailsView.layer.borderWidth = 2
-            numberDetailsTextfield.text = item_value_reportData
-            numberDetailsTextfield.layer.cornerRadius = 15
-            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            numberDetailsTextfield.layer.masksToBounds = true
-            numberDetailsTextfield.textAlignment = .center
-            numberDetailsTextfield.returnKeyType = .done
-            numberDetailsTextfield.keyboardType = .phonePad
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+            DetailsView.returnKeyType = .done
+            DetailsView.keyboardType = .phonePad
+            DetailsView.becomeFirstResponder()
+            view.addSubview(DetailsView)
          
-            numberDetailsTextfield.becomeFirstResponder()
+
             
 
             
@@ -957,21 +962,21 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
-            numberDetailsTextfield.delegate = self
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
             //DetailsView.layer.borderWidth = 2
-            numberDetailsTextfield.text = item_value_reportData
-            numberDetailsTextfield.layer.cornerRadius = 15
-            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            numberDetailsTextfield.layer.masksToBounds = true
-            numberDetailsTextfield.textAlignment = .center
-            numberDetailsTextfield.returnKeyType = .done
-            numberDetailsTextfield.keyboardType = .phonePad
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+            DetailsView.returnKeyType = .done
+            DetailsView.keyboardType = .phonePad
+            DetailsView.becomeFirstResponder()
+            view.addSubview(DetailsView)
          
-            numberDetailsTextfield.becomeFirstResponder()
-            
-        
+         
         
         case "💥 Crash Data (5 Years)":
             
@@ -1050,47 +1055,47 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 addCrashTypeBtn()
             }
             
-        case "🚘 Speed Survey Data":
-            
-            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
-            headerContent.text = questionIndex_key.uppercased()
-            headerContent.font = UIFont.systemFont(ofSize: 12)
-            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-            view.addSubview(headerContent)
-            
-            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
-            DetailsView.delegate = self
-            //DetailsView.layer.borderWidth = 2
-            DetailsView.text = item_value_reportData
-            DetailsView.layer.cornerRadius = 15
-            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
-            DetailsView.layer.masksToBounds = true
-            DetailsView.textAlignment = .left
-            DetailsView.returnKeyType = .done
-            //
-            DetailsView.becomeFirstResponder()
-            DetailsView.isHidden = true
-            self.view.addSubview(DetailsView)
-            
-            let items = ["Yes", "No", "Unknown"]
-            segmentControl = UISegmentedControl(items: items)
-            segmentControl.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
-            segmentControl.addTarget(self, action: #selector(segmentAction(_:)), for: .valueChanged)
-            
-            switch item_value_reportData{
-            case "Yes":
-                segmentControl.selectedSegmentIndex = 0
-                break
-            case "No":
-                segmentControl.selectedSegmentIndex = 1
-                break
-            default:
-                segmentControl.selectedSegmentIndex = 2
-                break
-            }
-            
-            view.addSubview(segmentControl)
+//        case "🚘 Speed Survey Data":
+//            
+//            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+//            headerContent.text = questionIndex_key.uppercased()
+//            headerContent.font = UIFont.systemFont(ofSize: 12)
+//            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+//            view.addSubview(headerContent)
+//            
+//            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+//            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+//            DetailsView.delegate = self
+//            //DetailsView.layer.borderWidth = 2
+//            DetailsView.text = item_value_reportData
+//            DetailsView.layer.cornerRadius = 15
+//            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+//            DetailsView.layer.masksToBounds = true
+//            DetailsView.textAlignment = .left
+//            DetailsView.returnKeyType = .done
+//            //
+//            DetailsView.becomeFirstResponder()
+//            DetailsView.isHidden = true
+//            self.view.addSubview(DetailsView)
+//            
+//            let items = ["Yes", "No", "Unknown"]
+//            segmentControl = UISegmentedControl(items: items)
+//            segmentControl.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
+//            segmentControl.addTarget(self, action: #selector(segmentAction(_:)), for: .valueChanged)
+//            
+//            switch item_value_reportData{
+//            case "Yes":
+//                segmentControl.selectedSegmentIndex = 0
+//                break
+//            case "No":
+//                segmentControl.selectedSegmentIndex = 1
+//                break
+//            default:
+//                segmentControl.selectedSegmentIndex = 2
+//                break
+//            }
+//            
+//            view.addSubview(segmentControl)
             
         case "📝 Audit Requested By":
             
@@ -1169,22 +1174,21 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
-            numberDetailsTextfield = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
-            numberDetailsTextfield.font = UIFont.systemFont(ofSize: 12)
-            numberDetailsTextfield.delegate = self
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
             //DetailsView.layer.borderWidth = 2
-            numberDetailsTextfield.text = item_value_reportData
-            numberDetailsTextfield.layer.cornerRadius = 15
-            numberDetailsTextfield.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            numberDetailsTextfield.layer.masksToBounds = true
-            numberDetailsTextfield.textAlignment = .center
-            numberDetailsTextfield.returnKeyType = .done
-            numberDetailsTextfield.keyboardType = .phonePad
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+            DetailsView.returnKeyType = .done
+            DetailsView.keyboardType = .phonePad
+            DetailsView.becomeFirstResponder()
+            view.addSubview(DetailsView)
          
-            numberDetailsTextfield.becomeFirstResponder()
-            
 
-            
         
             
         case "👷 Audit Team Leader":
@@ -1313,21 +1317,21 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     }
     
     //MARK: - segue to select category page
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? CategoryTableViewController {
-            
-            destination.delegate = self
-            
-        }
-    
-        else {
-            
-        }
-   
-            
-            
-        }
+//    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let destination = segue.destination as? CategoryTableViewController {
+//            
+//            destination.delegate = self
+//            
+//        }
+//    
+//        else {
+//            
+//        }
+//   
+//            
+//            
+//        }
 
 // MARK: - category protocol
     
@@ -1336,7 +1340,8 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         if (self.item_value_reportData != ""){
 
             item_value_reportData = saveCategory
-   
+            DetailsView.text = "\(item_value_reportData)"
+         
             
         }else{
   
@@ -1448,6 +1453,43 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     }
     
     
+    @objc func addDesigStageBtn(){
+        
+
+        
+        let designCategory = CategoryTableViewController()
+        let nav = UINavigationController(rootViewController: designCategory)
+        nav.navigationBar.prefersLargeTitles = true
+
+        nav.navigationBar.topItem!.title = "Design Stage"
+        nav.navigationBar.tintColor = .black
+        nav.modalPresentationStyle = .pageSheet
+        nav.isModalInPresentation = true
+        designCategory.delegate = self
+        //designCategory.crashDataArray = item_value_reportDataArray // send data to this view based on the loaded data, this will always populate the crash type view with highlighted data.
+        
+            
+            if let presentationController = nav.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium(),.large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                presentationController.prefersGrabberVisible = true
+                presentationController.preferredCornerRadius = 45
+       
+ 
+                presentationController.largestUndimmedDetentIdentifier = .large
+                //presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+            
+            
+            
+            self.present(nav, animated: true)
+        
+
+     
+    
+    }
+    
+    
+    
 //MARK: - textfield protocols
     @objc func segmentControlCrashTypesegmentAction(_ segmentedControl: UISegmentedControl) {
          switch (segmentedControl.selectedSegmentIndex) {
@@ -1553,7 +1595,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     
     @objc func doneSaveBtn(){
         //crash data
-        
+        DetailsView.resignFirstResponder()
  
         
         //save contents in the textfield specfic to the question
@@ -1566,27 +1608,6 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         
     }
     
- 
-    @objc func doneButtonTappedForMyNumericTextField() {
-        print("Done");
-        numberDetailsTextfield.resignFirstResponder()
-      
-        //save contents in the textfield specfic to the question
-        let uid = Auth.auth().currentUser?.uid
-        let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
-        
-        
-        //save the data
-        saveData(question: questionIndex_value, ref: reportConfigRefString, textData: numberDetailsTextfield.text ?? "")
-        
-    }
-
-    
-    
-
-    
-
-
 
 
 

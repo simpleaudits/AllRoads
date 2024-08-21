@@ -211,16 +211,22 @@ class buildReport: UITableViewController {
                                "To be Completed by Road Safety Audit Team"]
     
     
+    
+    
     var questionsListSection1 =
                         ["📝 Audit Team Contact Name":"q1", //added
                          "🏢 Audit Team Organisation":"q2", //added
-                         "📞 Audit Team Organisation Contact Details":"q3", //added
+                         "📞 Audit Team Contact Details":"q3", //added
                          "📝 Your company name":"q5", //added
                          "📅 Audit Assessment Date":"q36",
                          "☀️ Weather Condition":"q37"
                         
                         
                         ] //added
+    
+    var questionsListSection1_ordered: [String: String] = [:]
+    
+    
     var questionsListSection2 =
                          ["🚧 Road Safety Audit Stage":"q6", //added
                          "📍 Project Location":"q7", //added
@@ -237,21 +243,21 @@ class buildReport: UITableViewController {
                          "🚧 Previous Road Safety Audit Stage":"q16", //added
                          "📅 Previous Audit Date":"q17", //added
                          "🏢 Previous Audit Organisation":"q18",//added
-                         "👷 Previous Audit Team Leader":"q19", //added
-                         "📄 Copy of Audit and CAR Provided":"q20"] //added
+                         "👷 Previous Audit Team Leader":"q19"] //added
+                         //"📄 Copy of Audit and CAR Provided":"q20"] //added
     var questionsListSection5 =
                          ["🚦 Safe System Assessments":"q21", //added
                          "📅 Assessment Date":"q22", //added
-                         "🏢 Assessment Organisation":"q23", //added
-                         "📄 Copy of Assessment Provided":"q24"] //added
+                         "🏢 Assessment Organisation":"q23"] //added
+                         //"📄 Copy of Assessment Provided":"q24"] //added
     var questionsListSection6 =
                          ["📝 Project Objective":"q25", //added
                          "🚦 Speed Limit / Design Speed":"q26", //added
-                         "📄 Standards, Departures from Standards and Mitigation":"q27", //added
+                         //"📄 Standards, Departures from Standards and Mitigation":"q27", //added
                          "🚘 Existing Traffic Flows":"q28", //added
-                         "🚘 Forecast Traffic Flows":"q29", //added
+                         //"🚘 Forecast Traffic Flows":"q29", //added
                          "💥 Crash Data (5 Years)":"q30", //added - not complete
-                         "🚘 Speed Survey Data":"q31", //added
+                         //"🚘 Speed Survey Data":"q31", //added
                          "📝 Audit Requested By":"q32",] //added
     var questionsListSection7 =
                          ["📅 Date Request Received":"q33", //added
@@ -271,33 +277,120 @@ class buildReport: UITableViewController {
         //create report
         //1) initiate
         
+        
+     
 
         
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        // order the dictionaries here:
+        
+//        //BELOW RETAINS ORDER OF DICTIONARY ALPHABETICALLY - swift xcode does not do this.
+//        // Convert dictionary to array of tuples and sort by value, then by key
+//        let sortedByValueThenKey = questionsListSection1.sorted {
+//            if $0.value == $1.value {
+//                return $0.key < $1.key
+//            }
+//            return $0.value < $1.value
+//        }
+//
+////        // interate through to create a new array
+////        for (key, value) in sortedByValueThenKey {
+////            print("\(key): \(value)")
+////
+////        }
+//
+//        //turn the tuple into a dictionary
+//        questionsListSection1_ordered = Dictionary(uniqueKeysWithValues: sortedByValueThenKey)
+//        tableView.reloadData()
     
+    }
     
 
     // MARK: - section heading title
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        //headerView.backgroundColor = .lightGray // Set background color if needed
+        
+        let headerLabel = UILabel()
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 20) // Customize font here
+        headerLabel.textColor = .black // Customize text color if needed
+        headerLabel.numberOfLines = 3
+        
         switch section{
         case 0:
-            return "General Details"
+            headerLabel.text =  "General Details"
         case 1:
-            return  "To be completed by the Client / Design Team"
+            headerLabel.text =   "To be completed by the Client / Design Team"
         case 2:
-            return "Client / Design Team Contact Details"
+            headerLabel.text =  "Client / Design Team Contact Details"
         case 3:
-            return "Previous Road Safety Audits Undertaken"
+            headerLabel.text =  "Previous Road Safety Audits Undertaken"
         case 4:
-            return "Safe System Assessments Undertaken"
+            headerLabel.text =  "Safe System Assessments Undertaken"
         case 5:
-            return  "Project Information"
+            headerLabel.text =   "Project Information"
         default:
-            return "To be Completed by Road Safety Audit Team"
+            headerLabel.text =  "To be Completed by Road Safety Audit Team"
        
         }
+        
+        headerView.addSubview(headerLabel)
+        
+        // Set constraints for headerLabel
+        NSLayoutConstraint.activate([
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 0),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0)
+        ])
+        
+        return headerView
     }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+           // Return different heights based on section index, or a fixed height
+           switch section {
+           case 0:
+               return 50
+           case 1:
+               return 50
+           case 2:
+               return 50
+           case 3:
+               return 50
+           case 4:
+               return 50
+           case 5:
+               return 50
+           default:
+               return 50 // Default height
+           }
+       }
+    
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        switch section{
+//        case 0:
+//            return "General Details"
+//        case 1:
+//            return  "To be completed by the Client / Design Team"
+//        case 2:
+//            return "Client / Design Team Contact Details"
+//        case 3:
+//            return "Previous Road Safety Audits Undertaken"
+//        case 4:
+//            return "Safe System Assessments Undertaken"
+//        case 5:
+//            return  "Project Information"
+//        default:
+//            return "To be Completed by Road Safety Audit Team"
+//       
+//        }
+//    }
     
 
 
@@ -332,10 +425,10 @@ class buildReport: UITableViewController {
 
         switch indexPath.section{
         case 0:
-            
-      
+               
             let item_k = Array(questionsListSection1.keys)
             let item_v = Array(questionsListSection1.values)
+            
             cell.textLabel?.text = item_k[indexPath.row]
             
             
