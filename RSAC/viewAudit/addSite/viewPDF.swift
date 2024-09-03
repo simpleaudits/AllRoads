@@ -297,7 +297,7 @@ class viewPDF: UIViewController {
 
             This Road Safety Audit follows the principles outlined in Austroads Guide to Road Safety Part 6: Road Safety Audit and meets the requirements of the Policy and Guidelines for Road Safety Audit.
 
-            This report presents findings from a \(reportData["q6"] ?? "ERROR REFERENCE") Road Safety Audit conducted at \(reportData["q7"] ?? "ERROR REFERENCE").
+            This report presents findings undertaken during the \(reportData["q6"] ?? "ERROR REFERENCE") stage, conducted at \(reportData["q7"] ?? "ERROR REFERENCE").
 
             The audit was conducted by \(reportData["q35"] ?? "ERROR REFERENCE") from \(reportData["q2"] ?? "ERROR REFERENCE"), with reference to details provided in the Audit Brief.
 
@@ -366,7 +366,7 @@ class viewPDF: UIViewController {
 
             
             let auditTeamText = """
-            The audit team visit the site on \(reportData["q36"] ?? "ERROR REFERENCE"). At the time of the site visit the weather was \(reportData["q37"] ?? "ERROR REFERENCE") and the existing road surface was [Road condition].
+            The audit team visited the site on \(reportData["q36"] ?? "ERROR REFERENCE"). At the time of the visit, the weather condition was \(reportData["q37"] ?? "ERROR REFERENCE") and the existing road surface was \(reportData["q38"] ?? "ERROR REFERENCE").
             """
             
             
@@ -549,12 +549,9 @@ class viewPDF: UIViewController {
             let data_element_6_0 = PDFAttributedText(text: data_6_0)
             document.add(.contentLeft,attributedTextObject: data_element_6_0)
             
-            
-            
                     
             //Table of speed and traffic flow:
-            //Create a colums to insert data
-            let tableOfFlows = PDFTable(rows: 2, columns: 3)
+            let tableOfFlows = PDFTable(rows: 2, columns: 4)
             
             //Header Cell Configuration:
             let colors = (fill: UIColor.white, text: UIColor.black)
@@ -570,12 +567,13 @@ class viewPDF: UIViewController {
        
             // Change standardized styles
             tableOfFlows.content = [
-                ["Location", "Vehicles Per day", "Date"],
-                ["\(reportData["q7"] ?? "ERROR REFERENCE")","\(reportData["q28"] ?? "ERROR REFERENCE")","\(reportData["q36"] ?? "ERROR REFERENCE")"]
+                ["Location", "Vehicles Per day","HV%", "Date"],
+                ["\(reportData["q7"] ?? "ERROR REFERENCE")","\(reportData["q28"] ?? "ERROR REFERENCE")","\(reportData["q40"] ?? "ERROR REFERENCE")","\(reportData["q36"] ?? "ERROR REFERENCE")"]
                 
             ]
             
             //Headers
+            tableOfFlows[0,3].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
             tableOfFlows[0,2].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
             tableOfFlows[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
             tableOfFlows[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
@@ -584,19 +582,19 @@ class viewPDF: UIViewController {
             tableOfFlows[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             tableOfFlows[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             tableOfFlows[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
-
+            tableOfFlows[1,3].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             
             
-            
-            
-            tableOfFlows.rows.allRowsAlignment = [.center,.center,.center]
+            tableOfFlows.rows.allRowsAlignment = [.center,.center,.center, .center]
             
             tableOfFlows.widths = [
-                0.33, 0.33,0.33
+                0.25,0.25,0.25,0.25
             ]
             
             document.add(table: tableOfFlows)
 
+            // Add some spacing below title
+            document.add(space: 15.0)
             
             //Scope of audit (sub header):
             let Subheader_6_2 = NSMutableAttributedString(string: "6.2 Speed", attributes: [
@@ -606,9 +604,6 @@ class viewPDF: UIViewController {
             document.add(.contentLeft,attributedTextObject: Subheader_element_6_2)
        
             
-            
-            // Add some spacing below title
-            document.add(space: 15.0)
             
             
             let speedText = """
@@ -627,18 +622,19 @@ class viewPDF: UIViewController {
                     
             //Table of speed and traffic flow:
             //Create a colums to insert data
-            let tableOfSpeeds = PDFTable(rows: 2, columns: 3)
+            let tableOfSpeeds = PDFTable(rows: 2, columns: 4)
        
          
        
             // Change standardized styles
             tableOfSpeeds.content = [
-                ["Location", "Average Speed", "Date"],
-                ["\(reportData["q7"] ?? "ERROR REFERENCE")","\(reportData["q28"] ?? "ERROR REFERENCE")","\(reportData["q36"] ?? "ERROR REFERENCE")"]
+                ["Location", "Average Speed","85th Percentile Speed", "Date"],
+                ["\(reportData["q7"] ?? "ERROR REFERENCE")","\(reportData["q26"] ?? "ERROR REFERENCE")","\(reportData["q39"] ?? "ERROR REFERENCE")","\(reportData["q36"] ?? "ERROR REFERENCE")"]
                 
             ]
             
             //Headers
+            tableOfSpeeds[0,3].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
             tableOfSpeeds[0,2].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
             tableOfSpeeds[0,1].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
             tableOfSpeeds[0,0].style = PDFTableCellStyle(colors: (fill: UIColor(hexString: colourStyle), text: UIColor.white),borders: borders, font: font2)
@@ -647,13 +643,13 @@ class viewPDF: UIViewController {
             tableOfSpeeds[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             tableOfSpeeds[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             tableOfSpeeds[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
-
+            tableOfSpeeds[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                     
             
-            tableOfSpeeds.rows.allRowsAlignment = [.center,.center,.center]
+            tableOfSpeeds.rows.allRowsAlignment = [.center,.center,.center, .center]
             
             tableOfSpeeds.widths = [
-                0.33, 0.33,0.33
+                0.25, 0.25,0.25,0.25
             ]
             
             document.add(table: tableOfSpeeds)

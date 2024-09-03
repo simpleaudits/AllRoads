@@ -561,7 +561,18 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             case userList:
             return 1
             case shareButton:
-            return 1
+            
+            let uid = Auth.auth().currentUser?.uid
+            
+            if userUID != uid!{ // this hides Invite as this is not the project sponsor
+                return 0
+                
+            }else{ // since this is the project sponsor, we show the invite button
+                return 1
+            }
+      
+            
+            
             case mapSection:
             return 1
             case auditListSection:
@@ -646,13 +657,16 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
         }else if indexPath.section  == shareButton {
             //Working Audits
-            let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "shareButtonCell", for: indexPath) as! shareButtonCell
-            cell.shareButton.text = "Invite"
-            cell.shareButton.backgroundColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
-            cell.shareButton.layer.cornerRadius = 8
-            cell.shareButton.layer.masksToBounds = true
-            
-            return cell
+     
+                let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: "shareButtonCell", for: indexPath) as! shareButtonCell
+                cell.shareButton.text = "Invite"
+                cell.shareButton.backgroundColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
+                cell.shareButton.layer.cornerRadius = 8
+                cell.shareButton.layer.masksToBounds = true
+                
+                return cell
+                
+    
 
             
         }else if indexPath.section  == mapSection {

@@ -44,7 +44,7 @@ class crashTypeCell: UICollectionViewCell {
 
 
 
-class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,crashTypesFunc, UINavigationControllerDelegate, UISheetPresentationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, crashTypesFunc, UINavigationControllerDelegate, UISheetPresentationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -70,7 +70,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         
         // Create a temporary label to measure the text size
         let tempLabel = UILabel()
-        tempLabel.text = (string as! String)
+        tempLabel.text = (string as String)
         tempLabel.font = UIFont.systemFont(ofSize: 12) // Match the font used in the cell
         tempLabel.numberOfLines = 0
         
@@ -91,11 +91,16 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     //Reference to site and audit ID
     var auditID = String()
     var siteID = String()
+    
+    var config = Int()
+   
+    
+    
     //var userUID = String()
     
     let mainFunction = extens()
     let mainConsole = CONSOLE()
-    
+ 
     
  
    
@@ -114,6 +119,8 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     var headerContent: UILabel!
     var SubheaderContent: UILabel!
     var textCount: UILabel!
+    
+    
     
     var descriptionFromParent = String()
     var delegate: reportContentField?
@@ -190,6 +197,109 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
         
         
         switch questionIndex_key {
+            
+        case "Report title":
+            
+            perform(#selector(showSelectionList), with: config = 1, afterDelay: 0.5)
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+           
+            //
+            self.view.addSubview(DetailsView)
+            
+            
+        case "Compelte date":
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = "  \(item_value_reportData)"
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = .none
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .right
+            DetailsView.isHidden = true
+   
+            self.view.addSubview(DetailsView)
+      
+      
+            // DatePicker
+            datePicker.center = CGPoint(x: Int(headerContent.frame.minX) + 20, y: Int(self.headerContent.frame.maxY) + 35)
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+            
+            //Format Date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+            
+            if isValidDate(item_value_reportData, withFormat: dateFormatter.dateFormat) == false {
+                datePicker.setDate(Date(timeIntervalSinceNow: 0), animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                
+            }else{
+                let date = dateFormatter.date(from: item_value_reportData)
+                datePicker.setDate(date!, animated: true)
+                datePicker.datePickerMode = .date
+                datePicker.layer.masksToBounds = true
+                
+            }
+
+            self.view.addSubview(datePicker)
+
+    
+            
+        case "🛣️ Road Condition":
+            
+            perform(#selector(showSelectionList), with: config = 1, afterDelay: 0.5)
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+
+            DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
+            DetailsView.delegate = self
+            //DetailsView.layer.borderWidth = 2
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 15
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .left
+            DetailsView.returnKeyType = .done
+           
+            //
+            self.view.addSubview(DetailsView)
+            
+            
+           
+            
+            
+            
+            
         case "📝 Audit Team Contact Name":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
@@ -291,9 +401,9 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             
             //Open List
     
-            //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Stage", style: .plain, target: self, action: #selector(addStage))
+            //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(previewFeedback))
             
-            perform(#selector(addDesigStageBtn), with: nil, afterDelay: 0.5)
+            perform(#selector(showSelectionList), with: nil, afterDelay: 0.5)
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -314,7 +424,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             DetailsView.returnKeyType = .done
     
             self.view.addSubview(DetailsView)
-
+                      
 
             
         case "📍 Project Location":
@@ -464,10 +574,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             view.addSubview(DetailsView)
          
         
-            
 
-            
-  
             
             
         case "📩 Email Address":
@@ -1284,7 +1391,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
             self.view.addSubview(DetailsView)
             
             
-            let items = ["Rain", "Good", "Cloudy", "Dark"]
+            let items = ["rainy", "good", "cloudy", "dark"]
             segmentActionWeather = UISegmentedControl(items: items)
             segmentActionWeather.frame = CGRect(x: 10, y: Int(headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 30)
             segmentActionWeather.addTarget(self, action: #selector(segmentActionWeather(_:)), for: .valueChanged)
@@ -1333,16 +1440,18 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
 //            
 //        }
 
+
+    
 // MARK: - category protocol
     
     func finishPassing_category(saveCategory: String) {
         //Display audit stage cell when the string is not empty.
-        if (self.item_value_reportData != ""){
+        if (self.item_value_reportData != " "){
 
             item_value_reportData = saveCategory
             DetailsView.text = "\(item_value_reportData)"
-         
             
+                   
         }else{
   
          
@@ -1351,7 +1460,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     
     
     func finishPassing_crashType(savecrashType: [String]) {
-        if (self.item_value_reportData != ""){
+        if (self.item_value_reportData != " "){
   
             item_value_reportDataArray = savecrashType
             DetailsView.text = "\(item_value_reportDataArray)"
@@ -1434,10 +1543,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
                 presentationController.detents = [.medium(),.large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
                 presentationController.prefersGrabberVisible = true
                 presentationController.preferredCornerRadius = 45
-                
-   
-                
-       
+
  
                 presentationController.largestUndimmedDetentIdentifier = .large
                 //presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
@@ -1453,19 +1559,18 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     }
     
     
-    @objc func addDesigStageBtn(){
-        
-
+    @objc func showSelectionList(){
         
         let designCategory = CategoryTableViewController()
         let nav = UINavigationController(rootViewController: designCategory)
         nav.navigationBar.prefersLargeTitles = true
 
-        nav.navigationBar.topItem!.title = "Design Stage"
+
         nav.navigationBar.tintColor = .black
         nav.modalPresentationStyle = .pageSheet
         nav.isModalInPresentation = true
         designCategory.delegate = self
+        designCategory.config = config
         //designCategory.crashDataArray = item_value_reportDataArray // send data to this view based on the loaded data, this will always populate the crash type view with highlighted data.
         
             
@@ -1487,6 +1592,40 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
      
     
     }
+    
+//MARK: - preview feedback
+    @objc func previewFeedback(){
+            
+//        let preview = previewDetailsViewController()
+//        let nav = UINavigationController(rootViewController: preview)
+//        nav.navigationBar.prefersLargeTitles = true
+//
+//        nav.navigationBar.topItem!.title = "Report Snippet"
+//        nav.navigationBar.tintColor = .black
+//        nav.modalPresentationStyle = .pageSheet
+//        nav.isModalInPresentation = true
+// 
+//
+//            
+//            if let presentationController = nav.presentationController as? UISheetPresentationController {
+//                presentationController.detents = [.large()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+//                presentationController.prefersGrabberVisible = true
+//                presentationController.preferredCornerRadius = 45
+//                presentationController.largestUndimmedDetentIdentifier = .large
+//                //presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
+//            }
+//            
+//            
+//            
+//            self.present(nav, animated: true)
+//        
+
+        self.performSegue(withIdentifier: "view", sender: self)
+     
+    
+    }
+    
+    
     
     
     
@@ -1610,5 +1749,6 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage,cra
     
 
 
+       
 
 }

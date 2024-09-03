@@ -137,7 +137,7 @@ class cellSettings: UITableViewCell{
             let label = UILabel()
             label.text = ""
             label.font = UIFont.systemFont(ofSize: 12)
-            label.numberOfLines = 2
+            label.numberOfLines = 3
             label.textAlignment = .left
             label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             //label.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
@@ -271,7 +271,8 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                 let List = userDetails(snapshot: snapshot) {
                     userData.append(List)
                     
-                    companyNameData = "Company name: \(List.companyName)\nUsername: \(List.userName)"
+                    
+                    companyNameData = "Company name: \(List.companyName)\nUsername: \(List.userName)\nUID:\(ThecurrentUser!.uid)"
                     companyDPData = List.DPimage
                     companySigData = List.signatureURL
                     listingCount = List.listingMax
@@ -333,21 +334,56 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
             //        return swipeActions
             //    }
             //
-            override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-                if section == profileSection {
-                return "Profile Settings"
-                    
-                }else if section == reportSection{
-                    
-                return "Report Settings"
-                }else if section == TCsection{
-                    
-                return "T&C"
-                }else{
-                    
-                return "Rate AllRoads"
-                }
-            }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+           // Return different heights based on section index, or a fixed height
+           switch section {
+           case profileSection:
+               return 50
+           case reportSection:
+               return 50
+           case TCsection:
+               return 50
+           default:
+               return 50 // Default height
+           }
+       }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        //headerView.backgroundColor = .lightGray // Set background color if needed
+        
+        let headerLabel = UILabel()
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 20) // Customize font here
+        headerLabel.textColor = .black // Customize text color if needed
+        headerLabel.numberOfLines = 3
+        
+        switch section{
+        case profileSection:
+            headerLabel.text =  "Profile Settings"
+        case reportSection:
+            headerLabel.text =  "Report Settings"
+        case TCsection:
+            headerLabel.text =  "T&C"
+        default:
+            headerLabel.text =  "Rate AllRoads"
+       
+        }
+        
+        headerView.addSubview(headerLabel)
+        
+        // Set constraints for headerLabel
+        NSLayoutConstraint.activate([
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 0),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0)
+        ])
+        
+        return headerView
+    }
+    
 
             override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -440,6 +476,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.numberOfUsesLeft.isHidden = true
                     cell.upgradeAccount.isHidden = true
                     cell.subscriptionLabelHeader.isHidden = true
+                    cell.settingsLabel.isHidden = false
                         
                     cell.settingsLabel.text = "About You"
                     cell.auditDescription.text = "\(companyNameData!)"
@@ -456,7 +493,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     x: 20,
                     y: cell.settingsLabel.frame.maxY + 5,
                     width: cell.frame.width - 80,
-                    height: 40 )
+                    height: 80 )
 
 
                 }else  if indexPath.row == 2{
@@ -467,6 +504,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.numberOfUsesLeft.isHidden = true
                     cell.upgradeAccount.isHidden = true
                     cell.subscriptionLabelHeader.isHidden = true
+                    cell.settingsLabel.isHidden = false
                     
                     cell.settingsLabel.text = "Company Logo"
 
@@ -497,7 +535,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.numberOfUsesLeft.isHidden = true
                     cell.upgradeAccount.isHidden = true
                     cell.subscriptionLabelHeader.isHidden = true
-                    
+                    cell.settingsLabel.isHidden = false
                     cell.settingsLabel.text = "Signature"
                     
                   
@@ -525,7 +563,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.accessoryType = .disclosureIndicator
                     cell.selectionStyle = .none
 
-
+                    cell.settingsLabel.isHidden = false
                     cell.settingsLabel.text = "Report Configuration"
                     cell.siteImage.isHidden = true
                     cell.auditDescription.isHidden = true
@@ -533,6 +571,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.numberOfUsesLeft.isHidden = true
                     cell.upgradeAccount.isHidden = true
                     cell.subscriptionLabelHeader.isHidden = true
+                    
 
                     cell.settingsLabel.frame = CGRect(
                     x: 20, //siteImage.frame.maxX + 5,
@@ -554,6 +593,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
                     cell.numberOfUsesLeft.isHidden = true
                     cell.upgradeAccount.isHidden = true
                     cell.subscriptionLabelHeader.isHidden = true
+                    cell.settingsLabel.isHidden = false
                         
                     cell.settingsLabel.text = "Terms of Service"
                     cell.auditDescription.text = "Last changed 20/4/2024"
@@ -637,7 +677,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
                     }else if indexPath.row == 1{
                     
-                    return 95
+                    return 120
 
                     }else if indexPath.row == 2{
 

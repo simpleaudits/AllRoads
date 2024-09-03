@@ -61,6 +61,7 @@
 		82CC3A6E2C65AF1C00E346D2 /* crashTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CC3A6D2C65AF1C00E346D2 /* crashTypes.swift */; };
 		82D527F32B7654D000A9655D /* whiteBackdrop.png in Resources */ = {isa = PBXBuildFile; fileRef = 82D527F22B7654D000A9655D /* whiteBackdrop.png */; };
 		82D527F52B8ABB5C00A9655D /* versionControl.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 82D527F42B8ABB5C00A9655D /* versionControl.rtf */; };
+		82D9FB6F2C85650100A6513B /* previewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9FB6E2C85650100A6513B /* previewDetailsViewController.swift */; };
 		82E4A82D2AFCE0A800BE1D8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */; };
 		82E4A82F2AFCE0A800BE1D8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */; };
 		82E4A8312AFCE0A800BE1D8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4A8302AFCE0A800BE1D8B /* ViewController.swift */; };
@@ -179,6 +180,7 @@
 		82CC3A6D2C65AF1C00E346D2 /* crashTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crashTypes.swift; sourceTree = "<group>"; };
 		82D527F22B7654D000A9655D /* whiteBackdrop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteBackdrop.png; sourceTree = "<group>"; };
 		82D527F42B8ABB5C00A9655D /* versionControl.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = versionControl.rtf; sourceTree = "<group>"; };
+		82D9FB6E2C85650100A6513B /* previewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = previewDetailsViewController.swift; sourceTree = "<group>"; };
 		82E4A8292AFCE0A800BE1D8B /* RSAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E4A82C2AFCE0A800BE1D8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82E4A82E2AFCE0A800BE1D8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -323,7 +325,8 @@
 				827DFF502B0E1BD300029EDE /* viewPDF.swift */,
 				82B95F712C0AD5BD00EA706A /* buildReport.swift */,
 				82B95F732C0DDCE300EA706A /* buildReportContentPage.swift */,
-				82B95F772C0F282D00EA706A /* dataModel */,
+				82D9FB6E2C85650100A6513B /* previewDetailsViewController.swift */,
+				82B95F772C0F282D00EA706A /* reportContentsDataModel */,
 				82194AE72B5FA606009FEF7D /* ss - Observation as a Collection */,
 				82445D0E2B0242E000319605 /* support */,
 			);
@@ -398,12 +401,12 @@
 			path = "Ausroad Files";
 			sourceTree = "<group>";
 		};
-		82B95F772C0F282D00EA706A /* dataModel */ = {
+		82B95F772C0F282D00EA706A /* reportContentsDataModel */ = {
 			isa = PBXGroup;
 			children = (
 				82B95F752C0F278600EA706A /* reportContentsdataModel.swift */,
 			);
-			name = dataModel;
+			name = reportContentsDataModel;
 			sourceTree = "<group>";
 		};
 		82BC45432B67BA7300FB2650 /* settings */ = {
@@ -561,10 +564,10 @@
 		82E4A8742AFCE54400BE1D8B /* createNewAudit */ = {
 			isa = PBXGroup;
 			children = (
+				82E4A8782AFCE54400BE1D8B /* createAudit.swift */,
 				82E4A8752AFCE54400BE1D8B /* locationExtension.swift */,
 				82E4A8762AFCE54400BE1D8B /* locationView.swift */,
 				82E4A8772AFCE54400BE1D8B /* scopeDecription.swift */,
-				82E4A8782AFCE54400BE1D8B /* createAudit.swift */,
 				82E4A8792AFCE54400BE1D8B /* CategoryTableViewController.swift */,
 				82E4A87A2AFCE54400BE1D8B /* data model */,
 			);
@@ -910,6 +913,7 @@
 				82E4A89C2AFCE54400BE1D8B /* addAuditSites.swift in Sources */,
 				82E4A88A2AFCE54400BE1D8B /* mainSearchView.swift in Sources */,
 				82E4A89B2AFCE54400BE1D8B /* newAuditData.swift in Sources */,
+				82D9FB6F2C85650100A6513B /* previewDetailsViewController.swift in Sources */,
 				82E4A8952AFCE54400BE1D8B /* LogIn.swift in Sources */,
 				82E4A82D2AFCE0A800BE1D8B /* AppDelegate.swift in Sources */,
 				82E4A8902AFCE54400BE1D8B /* DP.swift in Sources */,

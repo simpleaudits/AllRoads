@@ -19,23 +19,58 @@ protocol auditStage {
 class CategoryTableViewController: UITableViewController {
     
     var delegate: auditStage?
-    let category:Array = ["Strategic design",
-                          "Concept design ",
-                          "Detailed design",
-                          "Roadworks",
-                          "Pre-opening",
-                          "Finalisation",
-                          "Existing road",
-
+    
+    //this needs to be initialized before this view is loaded:
+    var config = 0 // 0 - design stage, this will be default
+                   // 1 - road condition
+    
+    let category:Array = ["strategic design",
+                          "concept design ",
+                          "detailed design",
+                          "roadworks",
+                          "pre-opening",
+                          "finalisation",
+                          "existing road"
     ]
     
-    
+    let roadConditionTypes:Array = [
+        "clear",                // Road surface is dry, clean, and free of obstructions or weather-related issues. Ideal driving conditions.
+        "wet",                  // Road surface is covered with water due to rain, snowmelt, or other sources. Can lead to hydroplaning.
+        "icy",                  // Road surface is covered with ice. Extremely slippery and dangerous.
+        "snowy",                // Road surface is covered with snow. Visibility may be reduced, and traction can be compromised.
+        "slushy",               // A mixture of snow and water on the road surface, creating a slippery and uneven driving condition.
+        "muddy",                // Road surface is covered with mud, often due to rain or construction activities. Slippery and reduces traction.
+        "gravel",              // Road surface is covered with loose gravel. Affects vehicle control and increases stopping distances.
+        "potholes",             // Presence of depressions or holes in the road surface caused by wear and tear or weather conditions.
+        "construction Zone",    // Road area undergoing construction or maintenance. Includes lane closures and uneven surfaces.
+        "uneven",              // Road surface is uneven due to wear, damage, or maintenance work. Can cause discomfort or handling issues.
+        "frost",               // A thin layer of ice or frost on the road surface, usually in the early morning or late evening. Slippery.
+        "flooded",             // Road surface is partially or completely covered with water due to heavy rainfall or flooding.
+        "debris",              // Presence of objects or materials on the road surface, such as fallen branches, rocks, or litter.
+        "oil Slick",           // Road surface is covered with a layer of oil, making it slippery and hazardous.
+        "rough",               // Road surface is coarse or damaged, leading to a bumpy ride and potential vehicle wear.
+        "closed",              // Road or section of road is closed to traffic due to accidents, roadwork, or other reasons.
+        "under Repair",        // Road surface is being repaired or resurfaced. Temporary conditions include uneven surfaces and barriers.
+        "compacted Snow",      // Snow that has been packed down by vehicle tires or weather conditions, leading to icy conditions.
+        "loose Sand",          // Road surface is covered with loose sand, which can be challenging for vehicle traction.
+        "black Ice"            // A thin, nearly invisible layer of ice on the road. Extremely dangerous due to low visibility and high slipperiness.
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        switch config {
+            
+        case 1:
+            navigationItem.title = "Road Condition"
+
+        default:
+            navigationItem.title = "Design Stage"
+          
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -51,18 +86,36 @@ class CategoryTableViewController: UITableViewController {
 //        return 0
 //    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let indexCategory = category[indexPath.row]
-     
-        self.delegate?.finishPassing_category(saveCategory: indexCategory)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.navigationController?.popViewController(animated: true)
+        switch config {
             
-            //self.dismiss(animated: true, completion: nil)
-        
+        case 1:
             
-        })
-        
+            let indexCategory = roadConditionTypes[indexPath.row]
+            
+            self.delegate?.finishPassing_category(saveCategory: indexCategory)
+            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+//                self.navigationController?.popViewController(animated: true)
+//                
+//                //self.dismiss(animated: true, completion: nil)
+//                
+//                
+//            })
+            
+        default:
+            
+            let indexCategory = category[indexPath.row]
+            
+            self.delegate?.finishPassing_category(saveCategory: indexCategory)
+            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+//                self.navigationController?.popViewController(animated: true)
+//                
+//                //self.dismiss(animated: true, completion: nil)
+//                
+//                
+//            })
+        }
  
         
     }
@@ -71,19 +124,44 @@ class CategoryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return category.count
+    
+        switch config {
+            
+        case 1:
+            
+            return roadConditionTypes.count
+        
+            
+        default:
+            
+            return category.count
+        }
     }
 
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = category[indexPath.row]
         
-        
+        switch config {
+            
+        case 1:
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = roadConditionTypes[indexPath.row]
+            
+            // Configure the cell...
 
-        // Configure the cell...
+            return cell
+            
+        default:
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = category[indexPath.row]
 
-        return cell
+
+            // Configure the cell...
+
+            return cell
+        }
     }
 
 

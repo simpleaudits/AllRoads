@@ -58,7 +58,7 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
 
  
         
-        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+        let topBarHeight = UIApplication.shared.statusBarFrame.height +
                                   (self.navigationController?.navigationBar.frame.height ?? 0.0)
         
         //----------------------

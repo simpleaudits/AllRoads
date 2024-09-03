@@ -148,9 +148,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                         print("saved")
                         SwiftLoader.hide()
                         self.reportContentConfiguration(auditID: self.auditID, siteID: self.siteID)
-               
-                        
-                        
+  
                     }
                     
                 }
@@ -204,9 +202,7 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
                         print("saved")
                         SwiftLoader.hide()
                         self.reportContentConfiguration(auditID: self.auditID, siteID: self.siteID)
-                        
-                        
-                        
+              
                     }
                     
                 }
@@ -249,8 +245,6 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             .child("snapshot.jpg")
 
 
-
-
         let uploadMetaData = StorageMetadata()
         uploadMetaData.contentType = "image/jpeg"
 
@@ -286,6 +280,8 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
     
     // MARK: - Create report template
     func reportContentConfiguration(auditID:String, siteID:String){
+        
+     
         //show progress view
         SwiftLoader.show(title: "Generataring Report Configurations", animated: true)
 
@@ -302,20 +298,20 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
             .child("\(siteID)")
             .child("\(self.mainConsole.reportContent!)")
         
-        var reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
+        let reportConfigRefString = "\(self.mainConsole.prod!)/\(self.mainConsole.post!)/\(uid!)/\(self.mainConsole.audit!)/\(auditID)/\(self.mainConsole.siteList!)/\(siteID)/\(self.mainConsole.reportContent!)"
 
 
         let saveReportConfig = reportContentsdataModel(
          reportConfig: reportConfigRefString,
-         q1: " ",
-         q2: " ",
-         q3: " ",
-         q4: " ",
-         q5: companyName,
-         q6: projectStage,
-         q7: "\(self.locationLabel.text!)",
-         q8: " ",
-         q9: " ",
+         q1:  " ",
+         q2:  " ",
+         q3:  " ",
+         q4:  " ",
+         q5:  companyName,
+         q6:  projectStage,
+         q7:  "\(self.locationLabel.text!)",
+         q8:  " ",
+         q9:  " ",
          q10: " ",
          q11: " ",
          q12: " ",
@@ -343,23 +339,30 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
          q34: " ",
          q35: " ",
          q36: " ",
-         q37: " ")
+         q37: " ",
+         q38: " ",
+         q39: " ",
+         q40: " ",
+         q1000: " ",
+         q1001: " "
+        
+        
+        )
 
         reportConfigRef.setValue(saveReportConfig.saveReportConfig()){
-                (error:Error?, ref:DatabaseReference) in
-
-                if let error = error {
-                    print("Data could not be saved: \(error).")
-                    //self.errorUpload(errorMessage: "report presets could not be saved",subtitle: "\(error)")
-                    SwiftLoader.hide()
-                    
-                } else {
+            (error:Error?, ref:DatabaseReference) in
+            
+            if let error = error  {
+                print("Data could not be saved: \(error).")
+                SwiftLoader.hide()
+                self.errorUpload(errorMessage: "Failed to create site, please try again in a moment",subtitle: "\(error)")
+                
+                
+            }else {
                     print("saved")
                     SwiftLoader.hide()
-                    self.successUpload(Message: "New Site Added!", subtitle: "")
+                    self.successUpload(Message: "Site Added!", subtitle: "")
       
-                    
-  
                 }
                   
             }

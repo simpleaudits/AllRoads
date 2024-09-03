@@ -20,8 +20,9 @@ import Foundation
 import UIKit
 
 
+
 class viewAuditHeaderMap: UICollectionViewCell{
-    
+
     
     override init(frame: CGRect) {
         super .init(frame:frame)
