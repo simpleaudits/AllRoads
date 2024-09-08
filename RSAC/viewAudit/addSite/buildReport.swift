@@ -97,6 +97,7 @@ struct reportDataLoad{
         q35:String,
         q36:String,
         q37:String,
+        
         q38:String,
         q39:String,
         q40:String,
@@ -194,6 +195,7 @@ struct reportDataLoad{
             "q35":q35,
             "q36":q36,
             "q37":q37,
+            
             "q38":q38,
             "q39":q39,
             "q40":q40,
@@ -213,7 +215,8 @@ class buildReport: UITableViewController {
     var auditID = String()
     var siteID = String()
     var userUID = String()
-  
+    
+    var companyImage = UIImage()
   
 
     var questionIndex_key  = String()
@@ -224,7 +227,8 @@ class buildReport: UITableViewController {
     
     var questionListSection = ["",
                                "General Details",
-                               "To be completed by the Client / Design Team","Client / Design Team Contact Details",
+                               "To be completed",
+                               "Client Contact Details",
                                "Previous Road Safety Audits Undertaken",
                                "Safe System Assessments Undertaken",
                                "Project Information",
@@ -232,13 +236,14 @@ class buildReport: UITableViewController {
     
     
     var questionsListSection0 = ["Report title":"q1000",
-                                 "Compelte date":"q1001"
+                                 "Completed date":"q1001"
     ]
     
     var questionsListSection1 =
-                        ["📝 Audit Team Contact Name":"q1", //added
-                         "🏢 Audit Team Organisation":"q2", //added
-                         "📞 Audit Team Contact Details":"q3", //added
+                        [
+                         //"📝 Audit Team Contact Name":"q1", //added
+                         //"🏢 Audit Team Organisation":"q2", //added
+                         //"📞 Audit Team Contact Details":"q3", //added
                          "📝 Your company name":"q5", //added
                          "📅 Audit Assessment Date":"q36", //added
                          "☀️ Weather Condition":"q37", // added
@@ -257,33 +262,35 @@ class buildReport: UITableViewController {
                          ["🏢 Organisation / Department":"q10", //added
                          "📝 Contact Name":"q11", //added
                          "📞 Contact Tel. No.":"q12", //added
-                         "📩 Email Address":"q13", //added
-                         "📅 Date the Final Audit is Required":"q14"] //added
+                         "📩 Email Address":"q13"]//, //added
+                         //"📅 Date the Final Audit is Required":"q14"] //added
     var questionsListSection4 =
-                         ["🚧 Previous Road Safety Audit":"q15", //added
+                         ["🚧 Previous Road Safety Audit Project Name":"q15", //added
                          "🚧 Previous Road Safety Audit Stage":"q16", //added
                          "📅 Previous Audit Date":"q17", //added
-                         "🏢 Previous Audit Organisation":"q18",//added
-                         "👷 Previous Audit Team Leader":"q19"] //added
+                         "🏢 Previous Audit Organisation":"q18"]//added
+                         //"👷 Previous Audit Team Leader":"q19"] //added
                          //"📄 Copy of Audit and CAR Provided":"q20"] //added
+   // this has been removed
     var questionsListSection5 =
                          ["🚦 Safe System Assessments":"q21", //added
                          "📅 Assessment Date":"q22", //added
                          "🏢 Assessment Organisation":"q23"] //added
                          //"📄 Copy of Assessment Provided":"q24"] //added
     var questionsListSection6 =
-                         ["📝 Project Objective":"q25", //added
-                         "🚦 Speed Limit / Design Speed":"q26", //added
+                         [//"📝 Project Objective":"q25", //added
+                         "🚦 Posted Speed Limit":"q26", //added
                          "🚦 85th Percentile Speed":"q39",
                          //"📄 Standards, Departures from Standards and Mitigation":"q27", //added
                          "🚘 Existing Traffic Flows":"q28", //added
                          "🚘 Heavy Vehicle Percent":"q40",
                          //"🚘 Forecast Traffic Flows":"q29", //added
-                         "💥 Crash Data (5 Years)":"q30", //added - not complete
+                         "💥 Crash Data (5 Years)":"q30", //added
                          //"🚘 Speed Survey Data":"q31", //added
-                         "📝 Audit Requested By":"q32",] //added
+                         //"📝 Audit Requested By":"q32"
+                         ] //added
     var questionsListSection7 =
-                         ["📅 Date Request Received":"q33", //added
+                         [//"📅 Date Request Received":"q33", //added
                          "📝 Audit Reference Number":"q34", //added
                          "👷 Audit Team Leader":"q35"]  //added
   
@@ -298,10 +305,13 @@ class buildReport: UITableViewController {
         super.viewDidLoad()
         loadData()
         //create report
-        //1) initiate
         
         
-     
+        //load company logo to pass to next view:
+        loadUserStats()
+        
+        
+        
 
         
     }
@@ -322,7 +332,8 @@ class buildReport: UITableViewController {
         let headerLabel = UILabel()
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         headerLabel.font = UIFont.boldSystemFont(ofSize: 20) // Customize font here
-        headerLabel.textColor = .black // Customize text color if needed
+        headerLabel.textColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1) // Customize text color if needed
+        
         headerLabel.numberOfLines = 3
         
         switch section{
@@ -337,7 +348,7 @@ class buildReport: UITableViewController {
         case 4:
             headerLabel.text =  "Previous Road Safety Audits Undertaken"
         case 5:
-            headerLabel.text =  "Safe System Assessments Undertaken"
+            headerLabel.text =  ""//"Safe System Assessments Undertaken"
         case 6:
             headerLabel.text =   "Project Information"
         default:
@@ -425,11 +436,11 @@ class buildReport: UITableViewController {
             cell.textLabel?.text = item_k[indexPath.row]
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
         case 1:
@@ -440,11 +451,11 @@ class buildReport: UITableViewController {
             cell.textLabel?.text = item_k[indexPath.row]
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
             
@@ -458,11 +469,11 @@ class buildReport: UITableViewController {
             
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
             
@@ -474,11 +485,11 @@ class buildReport: UITableViewController {
             
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
             
@@ -489,11 +500,11 @@ class buildReport: UITableViewController {
             
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
         case 5:
@@ -503,11 +514,11 @@ class buildReport: UITableViewController {
             
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
         case 6:
@@ -517,11 +528,11 @@ class buildReport: UITableViewController {
             
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
             
@@ -532,11 +543,11 @@ class buildReport: UITableViewController {
             
             
             
-            if "\(reportData[item_v[indexPath.row]] ?? " ")" == " " {
+            if "\(reportData[item_v[indexPath.row]] ?? "ERROR")" == "" {
                 cell.detailTextLabel?.text = "❗"
                 
             }else{
-                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? " ")"
+                cell.detailTextLabel?.text = "\(reportData[item_v[indexPath.row]] ?? "ERROR")"
             }
             
        
@@ -826,7 +837,70 @@ class buildReport: UITableViewController {
         
         
     }
-    
+    func loadUserStats(){
+        
+                 let uid = Auth.auth().currentUser?.uid
+                 let reftest = Database.database().reference()
+                     .child("\(mainConsole.prod!)")
+                     .child("\(mainConsole.post!)")
+                     .child(uid!)
+                     .child("\(mainConsole.userDetails!)")
+                 
+                 reftest.queryOrderedByKey()
+                     .observe( .value, with: { snapshot in
+                               guard let dict = snapshot.value as? [String:Any] else {
+                               //error here
+                               return
+                               }
+
+                                let username = dict["userName"] as? String
+                                let companyName = dict["companyName"] as? String
+                                let DPimage = dict["DPimage"] as? String
+                                let signatureURL = dict["signatureURL"] as? String
+                                print("hello:\(DPimage!)")
+                         
+                                 
+                                // Example URL (replace with your image URL)
+   
+                                if let url = URL(string: DPimage!) {
+                                    self.loadImage(from: url) { [weak self] image in
+                                        self!.companyImage = image!
+                                        
+                                        
+                                    }
+                                }
+
+                           
+                   })
+        
+     
+    }
+  
+    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+        // Create a URLSession data task to fetch image data
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            // Check for errors and valid data
+            if let error = error {
+                print("Error fetching image: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                print("Failed to convert data to UIImage")
+                completion(nil)
+                return
+            }
+            
+            // Return the image on the main thread
+            DispatchQueue.main.async {
+                completion(image)
+            }
+        }
+        
+        // Start the data task
+        task.resume()
+    }
 
     
 
@@ -845,6 +919,7 @@ class buildReport: UITableViewController {
              }else if let destination5 = segue.destination as? viewPDF {
                  destination5.refData = refData
                  destination5.reportData = reportData
+                 destination5.companyImage = companyImage
               
              }
         

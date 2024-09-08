@@ -1069,8 +1069,8 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
                          
                                  self.username = username
                                  self.companyName = companyName
-                                 self.userSignature = DPimage
-                                 self.userImage = signatureURL
+                                 self.userSignature = signatureURL
+                                 self.userImage = DPimage
                   
                            
                    })

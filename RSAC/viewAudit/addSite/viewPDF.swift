@@ -13,6 +13,27 @@ import Firebase
 import SwiftLoader
 
 
+extension UIImageView {
+    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
+            }
+        }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
+    }
+}
+
 //MARK: - remove dup in array
 
 extension Array where Element:Equatable {
@@ -52,6 +73,15 @@ class viewPDF: UIViewController {
     
     var listOfSitesData: [auditSiteData] = []
     var saveData: [PDFCreatorData] = []
+
+    var companyImage = UIImage()
+    
+    
+    //company image and signature declare:
+    var companyDPData: String? = "AppIcon50x50"
+    var companySigData: String? = "Loading.."
+    
+    
     
     var imagez: [PDFImage] = []
     var tableContentData: [PDFTableContentable] = []
@@ -61,51 +91,7 @@ class viewPDF: UIViewController {
     
     
 
- 
-    
-    
-    //MARK: -Predocument Content:
-    func loadPreDocumentContent(){
-        let document = PDFDocument(format: .a4)
-        
-        //Introduction (header):
-        let Header_1 = NSMutableAttributedString(string: "1.0 Introduction", attributes: [
-            .font: UIFont.boldSystemFont(ofSize: 12)
-        ])
-        let Header1_element = PDFAttributedText(text: Header_1)
-        document.add(.headerLeft,attributedTextObject: Header1_element)
-        
-        //Scope of audit (sub header):
-        let Subheader_1 = NSMutableAttributedString(string: "1.1 Scope of Audit", attributes: [
-            .font: UIFont.italicSystemFont(ofSize: 10)
-        ])
-        let Subheader1_element = PDFAttributedText(text: Subheader_1)
-        document.add(.headerLeft,attributedTextObject: Subheader1_element)
-        
-        
-        document.add(.contentLeft, textObject: PDFSimpleText(text: "\(reportData["q1"] ?? "")"))
-        
-        
-        
-        //Add document contents:
-        document.createNewPage()
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     //MARK: - Load configurations
@@ -138,18 +124,19 @@ class viewPDF: UIViewController {
                                 //2)Load report contents next
                                 self.loadSiteAuditData()
                    })
-        
      
     }
+    
+    
     
     
     //MARK: - Load configurations
  
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+                // if this load successfully, load all other related data:
         loadUserReportSettings()
         
         
@@ -180,8 +167,7 @@ class viewPDF: UIViewController {
     @objc func createPDFData(){
 
         
-        
-        
+    
         
         switch PDFenum{
             
@@ -190,45 +176,45 @@ class viewPDF: UIViewController {
             SwiftLoader.hide()
             
             let document = PDFDocument(format: .a4)
-                
             
-
             //header data:
-            document.add(.headerRight, image: PDFImage(image: UIImage(named: "AppIcon50x50.png")!, size: CGSize(width: 40, height: 40), quality: 1))
-    
-            let attributedTitle = NSMutableAttributedString(string: "AllRoads by SimpleAudits.app", attributes: [
+            document.add(.headerLeft, image: PDFImage(image: companyImage, size: CGSize(width: 80, height: 40),sizeFit: PDFImageSizeFit.height, quality: 1))
+            
+            let attributedTitle = NSMutableAttributedString(string: "\(reportData["q5"] ?? "ERROR REFERENCE") | \(reportData["q9"] ?? "ERROR REFERENCE")", attributes: [
                 .font: UIFont.boldSystemFont(ofSize: 10)
             ])
+            
             let textElement = PDFAttributedText(text: attributedTitle)
             document.add(.headerRight,attributedTextObject: textElement)
             
+            document.add(PDFContainer.headerLeft,space: 15.0)
             //line seperator
             let style = PDFLineStyle(type: .full, color: .darkGray, width: 1)
-            document.addLineSeparator(PDFContainer.headerRight, style: style)
+            document.addLineSeparator(PDFContainer.headerLeft, style: style)
+              
             
-            
-            
-            
-            //Observation Title:
+            // REPORT TITLE:
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 50.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
-            // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "Road Inspection Report"))
+          
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "\(reportData["q1000"] ?? "ERROR REFERENCE")"))
             // Add some spacing below title
             document.add(space: 15.0)
             
-            
+            // AUDIT PREPARED BY and FOR:
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 30.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
-            // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "Prepared by ABC"))
+           
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "Prepared by \(reportData["q5"] ?? "ERROR REFERENCE") for \(reportData["q10"] ?? "ERROR REFERENCE")"))
             // Add some spacing below title
             document.add(space: 15.0)
             
+            
+            // AUDIT COMPLETED DATE:
             document.set(.contentLeft, font: Font.boldSystemFont(ofSize: 15.0))
             document.set(.contentLeft, textColor: Color(red: 0, green: 0, blue: 0, alpha: 1))
-            // Company Name:
-            document.add(.contentLeft, textObject: PDFSimpleText(text: "1/1/2020"))
+            
+            document.add(.contentLeft, textObject: PDFSimpleText(text: "\(reportData["q1001"] ?? "ERROR REFERENCE")"))
             // Add some spacing below title
 
     
@@ -299,7 +285,7 @@ class viewPDF: UIViewController {
 
             This report presents findings undertaken during the \(reportData["q6"] ?? "ERROR REFERENCE") stage, conducted at \(reportData["q7"] ?? "ERROR REFERENCE").
 
-            The audit was conducted by \(reportData["q35"] ?? "ERROR REFERENCE") from \(reportData["q2"] ?? "ERROR REFERENCE"), with reference to details provided in the Audit Brief.
+            The audit was conducted by \(reportData["q35"] ?? "ERROR REFERENCE") from \(reportData["q5"] ?? "ERROR REFERENCE"), with reference to details provided in the Audit Brief.
 
             The audit included a review of drawings and information provided by \(reportData["q10"] ?? "ERROR REFERENCE").
 
@@ -558,7 +544,7 @@ class viewPDF: UIViewController {
             let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
             let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
             let font = UIFont.systemFont(ofSize: 10)
-            let font2 = UIFont.boldSystemFont(ofSize: 15)
+            let font2 = UIFont.boldSystemFont(ofSize: 10)
             
             //Data Cell Configuration:
             let font3 = UIFont.boldSystemFont(ofSize: 10)
@@ -643,7 +629,7 @@ class viewPDF: UIViewController {
             tableOfSpeeds[1,0].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             tableOfSpeeds[1,1].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
             tableOfSpeeds[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
-            tableOfSpeeds[1,2].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
+            tableOfSpeeds[1,3].style = PDFTableCellStyle(colors: (fill: UIColor.white, text: UIColor.black), borders: borders3, font: font3)
                     
             
             tableOfSpeeds.rows.allRowsAlignment = [.center,.center,.center, .center]
@@ -1458,8 +1444,11 @@ class viewPDF: UIViewController {
                         group.notify(queue: DispatchQueue.main){
                             print("All tasks completed")
                             
-                            //once all tasks are completed, and data is loaded. Create the PDF
+                            //once all tasks are completed, and data is loaded. Create the PDF. Once all observation images are downloaded, we need to download the company logo. When this is done, we can then create the PDF.
+                        
                             self.createPDFData()
+                            
+                            
                         }
 
 
@@ -1509,7 +1498,9 @@ class viewPDF: UIViewController {
     
     func asyncData(imageURL:String, descriptionData: String, auditTitleData:String, dateData:String,lat:String,long:String,userUploaded:String, completion: @escaping (String) -> Void) {
           
-     
+ 
+        
+        
           DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
               
               let url = URL(string:"\(imageURL)")
@@ -1518,6 +1509,7 @@ class viewPDF: UIViewController {
                   let image: UIImage = UIImage(data: data!)!
                   self.imageData = image
                   let pdfCreator = PDFCreatorData(title: auditTitleData, description: descriptionData, imageData: self.imageData, image: "", date: dateData, lat: lat, long: long, userUploaded: userUploaded)
+                  
                   self.saveData.append(pdfCreator)
                   
                   print(image)
@@ -1528,11 +1520,6 @@ class viewPDF: UIViewController {
 
           }
       }
-    
-    
-    
-    
-    
     
     
     

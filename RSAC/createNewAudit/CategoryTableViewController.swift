@@ -23,6 +23,7 @@ class CategoryTableViewController: UITableViewController {
     //this needs to be initialized before this view is loaded:
     var config = 0 // 0 - design stage, this will be default
                    // 1 - road condition
+                   // 2 - speed
     
     let category:Array = ["strategic design",
                           "concept design ",
@@ -55,6 +56,32 @@ class CategoryTableViewController: UITableViewController {
         "loose Sand",          // Road surface is covered with loose sand, which can be challenging for vehicle traction.
         "black Ice"            // A thin, nearly invisible layer of ice on the road. Extremely dangerous due to low visibility and high slipperiness.
     ]
+    
+    
+    let speedLimit:Array = [
+                            "10",
+                            "15",
+                            "20",
+                            "25",
+                            "30",
+                            "35",
+                            "40",
+                            "45",
+                            "50",
+                            "55",
+                            "60",
+                            "65",
+                            "70",
+                            "75",
+                            "80",
+                            "85",
+                            "90",
+                            "95",
+                            "100",
+                            "110",
+                            "115",
+                            "120",
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +93,8 @@ class CategoryTableViewController: UITableViewController {
             
         case 1:
             navigationItem.title = "Road Condition"
+        case 2:
+            navigationItem.title = "Speed"
 
         default:
             navigationItem.title = "Design Stage"
@@ -101,6 +130,19 @@ class CategoryTableViewController: UITableViewController {
 //                
 //                
 //            })
+        case 2:
+            
+            let indexCategory = speedLimit[indexPath.row]
+            
+            self.delegate?.finishPassing_category(saveCategory: indexCategory)
+            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+//                self.navigationController?.popViewController(animated: true)
+//
+//                //self.dismiss(animated: true, completion: nil)
+//
+//
+//            })
             
         default:
             
@@ -130,6 +172,9 @@ class CategoryTableViewController: UITableViewController {
         case 1:
             
             return roadConditionTypes.count
+        case 2:
+            
+            return roadConditionTypes.count
         
             
         default:
@@ -147,6 +192,15 @@ class CategoryTableViewController: UITableViewController {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = roadConditionTypes[indexPath.row]
+            
+            // Configure the cell...
+
+            return cell
+            
+        case 2:
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = speedLimit[indexPath.row]
             
             // Configure the cell...
 

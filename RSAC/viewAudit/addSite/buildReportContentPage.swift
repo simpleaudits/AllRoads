@@ -200,14 +200,12 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
             
         case "Report title":
             
-            perform(#selector(showSelectionList), with: config = 1, afterDelay: 0.5)
-            
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
             headerContent.font = UIFont.systemFont(ofSize: 12)
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
-
+            
             DetailsView = UITextView(frame: CGRect(x: 10, y: Int(self.headerContent.frame.maxY) + 10, width: Int(view.frame.width) - 20, height: 50 ))
             DetailsView.font = UIFont.boldSystemFont(ofSize: 25)
             DetailsView.delegate = self
@@ -218,12 +216,12 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
             DetailsView.layer.masksToBounds = true
             DetailsView.textAlignment = .left
             DetailsView.returnKeyType = .done
-           
-            //
+            DetailsView.becomeFirstResponder()
+         
             self.view.addSubview(DetailsView)
             
             
-        case "Compelte date":
+        case "Completed date":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -647,7 +645,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
 
 
             
-        case "🚧 Previous Road Safety Audit":
+        case "🚧 Previous Road Safety Audit Project Name":
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -986,7 +984,9 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
             self.view.addSubview(DetailsView)
             
             
-        case "🚦 Speed Limit / Design Speed":
+        case "🚦 Posted Speed Limit":
+            
+            perform(#selector(showSelectionList), with: config = 2, afterDelay: 0.5)
             
             headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
             headerContent.text = questionIndex_key.uppercased()
@@ -994,8 +994,10 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
             headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             view.addSubview(headerContent)
             
+            
             DetailsView = UITextView(frame: CGRect(x: Int(view.frame.width)/2 - 50, y: Int(self.headerContent.frame.maxY) + 10, width: 100, height: 100 ))
             DetailsView.font = UIFont.boldSystemFont(ofSize: 30)
+            DetailsView.textContainerInset = UIEdgeInsets(top: 30, left: 0, bottom: 30, right: 0)
             //DetailsView.sizeToFit()
             DetailsView.delegate = self
             DetailsView.layer.borderWidth = 5
@@ -1005,9 +1007,35 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
             DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
             DetailsView.layer.masksToBounds = true
             DetailsView.textAlignment = .center
-            DetailsView.returnKeyType = .done
-            DetailsView.keyboardType = .phonePad
-            DetailsView.becomeFirstResponder()
+            DetailsView.isEditable = false
+            view.addSubview(DetailsView)
+         
+            
+            
+        case "🚦 85th Percentile Speed":
+            
+            perform(#selector(showSelectionList), with: config = 2, afterDelay: 0.5)
+            
+            headerContent = UILabel(frame: CGRect(x: 10, y: 100 + 20, width: Int(view.frame.width) - 20, height:  20))
+            headerContent.text = questionIndex_key.uppercased()
+            headerContent.font = UIFont.systemFont(ofSize: 12)
+            headerContent.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+            view.addSubview(headerContent)
+            
+            
+            DetailsView = UITextView(frame: CGRect(x: Int(view.frame.width)/2 - 50, y: Int(self.headerContent.frame.maxY) + 10, width: 100, height: 100 ))
+            DetailsView.font = UIFont.boldSystemFont(ofSize: 30)
+            DetailsView.textContainerInset = UIEdgeInsets(top: 30, left: 0, bottom: 30, right: 0)
+            //DetailsView.sizeToFit()
+            DetailsView.delegate = self
+            DetailsView.layer.borderWidth = 5
+            DetailsView.layer.borderColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
+            DetailsView.text = item_value_reportData
+            DetailsView.layer.cornerRadius = 50
+            DetailsView.layer.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            DetailsView.layer.masksToBounds = true
+            DetailsView.textAlignment = .center
+            DetailsView.isEditable = false
             view.addSubview(DetailsView)
          
             
