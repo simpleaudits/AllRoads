@@ -6,6 +6,10 @@
 	<string></string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>AllRoadsAudit</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -36,6 +36,8 @@
 		8297D0022B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */; };
 		8297D0042B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */; };
 		8297D0062B74F41100450513 /* signatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8297D0052B74F41100450513 /* signatureViewController.swift */; };
+		829B945D2C8D70DF008207E5 /* addObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829B945C2C8D70DF008207E5 /* addObservation.swift */; };
+		829B945F2C985712008207E5 /* editImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829B945E2C985712008207E5 /* editImage.swift */; };
 		829EBB442BF8464B00783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB3D2BF8464900783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf */; };
 		829EBB452BF8464B00783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB3E2BF8464900783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf */; };
 		829EBB462BF8464B00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 829EBB3F2BF8464A00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf */; };
@@ -155,6 +157,8 @@
 		8297D0012B70F99700450513 /* iPhone 14 _ 15 Pro Max - 1 (19).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 14 _ 15 Pro Max - 1 (19).png"; sourceTree = "<group>"; };
 		8297D0032B70F9B500450513 /* iPhone-14-_-15-Pro-Max---1-(19).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iPhone-14-_-15-Pro-Max---1-(19).jpg"; sourceTree = "<group>"; };
 		8297D0052B74F41100450513 /* signatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signatureViewController.swift; sourceTree = "<group>"; };
+		829B945C2C8D70DF008207E5 /* addObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addObservation.swift; sourceTree = "<group>"; };
+		829B945E2C985712008207E5 /* editImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editImage.swift; sourceTree = "<group>"; };
 		829EBB3D2BF8464900783BB9 /* AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS03-21_Guide_to_Road_Safety_Part_3_Safe_Speed.pdf"; sourceTree = "<group>"; };
 		829EBB3E2BF8464900783BB9 /* AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS05-21_Guide_to_Road_Safety_Part_5_Safe_Vehicles.pdf"; sourceTree = "<group>"; };
 		829EBB3F2BF8464A00783BB9 /* AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "AGRS02-21_Guide_to_Road_Safety_Part_2_Safe_Roads.pdf"; sourceTree = "<group>"; };
@@ -314,9 +318,11 @@
 		82445D082B00FF6400319605 /* addSite */ = {
 			isa = PBXGroup;
 			children = (
-				82445D0B2B0100A000319605 /* createSite.swift */,
 				82445D0D2B0242D000319605 /* createSite Data Model */,
+				829B945C2C8D70DF008207E5 /* addObservation.swift */,
+				829B945E2C985712008207E5 /* editImage.swift */,
 				82E4A87D2AFCE54400BE1D8B /* addAuditSites.swift */,
+				82445D0B2B0100A000319605 /* createSite.swift */,
 				82B023202B612AAE00DA87A3 /* addSiteDetails.swift */,
 				82E4A8852AFCE54400BE1D8B /* addAuditSites Data Model */,
 				82194AE52B5E8D68009FEF7D /* Observation.swift */,
@@ -912,6 +918,7 @@
 				82194AE62B5E8D68009FEF7D /* Observation.swift in Sources */,
 				82E4A89C2AFCE54400BE1D8B /* addAuditSites.swift in Sources */,
 				82E4A88A2AFCE54400BE1D8B /* mainSearchView.swift in Sources */,
+				829B945F2C985712008207E5 /* editImage.swift in Sources */,
 				82E4A89B2AFCE54400BE1D8B /* newAuditData.swift in Sources */,
 				82D9FB6F2C85650100A6513B /* previewDetailsViewController.swift in Sources */,
 				82E4A8952AFCE54400BE1D8B /* LogIn.swift in Sources */,
@@ -933,6 +940,7 @@
 				82E4A89A2AFCE54400BE1D8B /* CategoryTableViewController.swift in Sources */,
 				829311102B039128006F4694 /* viewSiteSnapsCell.swift in Sources */,
 				82E4A89E2AFCE54400BE1D8B /* viewAuditCell.swift in Sources */,
+				829B945D2C8D70DF008207E5 /* addObservation.swift in Sources */,
 				8236DD742BAD02E400630F76 /* listOfUsersCell.swift in Sources */,
 				82E4A8892AFCE54400BE1D8B /* auditCell.swift in Sources */,
 				82E4A89F2AFCE54400BE1D8B /* viewAuditList.swift in Sources */,

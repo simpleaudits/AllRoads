@@ -38,36 +38,6 @@ extension UITextView {
 }
 
 
-//EXTENSION FOR UIIMAGE------------------------------------------
-extension UIImage {
-    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
-        // Determine the scale factor that preserves aspect ratio
-        let widthRatio = targetSize.width / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        let scaleFactor = min(widthRatio, heightRatio)
-        
-        // Compute the new image size that preserves aspect ratio
-        let scaledImageSize = CGSize(
-            width: size.width * scaleFactor,
-            height: size.height * scaleFactor
-        )
-
-        // Draw and return the resized UIImage
-        let renderer = UIGraphicsImageRenderer(
-            size: scaledImageSize
-        )
-
-        let scaledImage = renderer.image { _ in
-            self.draw(in: CGRect(
-                origin: .zero,
-                size: scaledImageSize
-            ))
-        }
-        
-        return scaledImage
-    }
-}
 
 //EXTENSION FOR UIIMAGE------------------------------------------
 
@@ -534,7 +504,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         
      func  saveData() {
  
-         var drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
+         let drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
          if let markedupImage = self.saveImage(drawing: drawing){
              // Save the image or do whatever with the Marked up Image
              
@@ -724,7 +694,7 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
         if let jpegData = editedImage.jpegData(compressionQuality: 0.5){
             try? jpegData.write(to: imagePath)
  
-      
+        
             //We want to save the image URL string and then loop later to save in firebase.
             let imageURLtoNSData = NSURL(string: "\(imagePath)")
             let imageData = NSData (contentsOf: imageURLtoNSData! as URL)
