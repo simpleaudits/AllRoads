@@ -57,18 +57,17 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
  
-        
-        let topBarHeight = UIApplication.shared.statusBarFrame.height +
-                                  (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveData))
+ 
         
         //----------------------
       
         
-        descriptionTextfield = UITextView(frame: CGRect(x: 10, y: 20, width: Int(view.frame.width) - 20, height: 200 ))
-        descriptionTextfield.font = UIFont.systemFont(ofSize: 12)
+        descriptionTextfield = UITextView(frame: CGRect(x: 10, y: 20, width: Int(view.frame.width) - 20, height: 300 ))
+        descriptionTextfield.font = UIFont.systemFont(ofSize: 20)
         descriptionTextfield.delegate = self
         descriptionTextfield.layer.borderWidth = 2
-        descriptionTextfield.layer.cornerRadius = 20
+        descriptionTextfield.layer.cornerRadius = 10
         descriptionTextfield.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         descriptionTextfield.layer.masksToBounds = true
         descriptionTextfield.text = stringData
@@ -129,48 +128,22 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate {
         saveChanges.addTarget(self, action: #selector(saveData(_:)), for: .touchUpInside)
 //
         
-        //----------------------
-//
-//        riskFactorHeader = UILabel(frame:CGRect(x: 20, y: safetyRatingButton.frame.maxY + 30, width: safetyRatingButton.frame.width - 20, height: 30))
-//        //safetyRating.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
-//        riskFactorHeader.text = "Risk Level:"
-//        riskFactorHeader.font = UIFont.boldSystemFont(ofSize: 20)
-//
-//
-//        riskFactorHeaderTextfield = UITextField(frame:CGRect(x: 20, y: riskFactorHeader.frame.maxY + 10, width: descriptionTextfield.frame.width - 20, height: 30))
-//        //safetyRatingTextfield.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
-//        riskFactorHeaderTextfield.placeholder = "John Bean"
-//        riskFactorHeaderTextfield.font = UIFont.systemFont(ofSize: 15)
-//
-//        //300
-//
-//        //Buttons:
-//        riskFactorButton = UIButton(frame:CGRect(x: descriptionTextfield.frame.maxX - 20 - 60, y: riskFactorHeader.frame.maxY + 10, width: 60, height: 30))
-//        riskFactorButton.setTitleColor(UIColor.white, for: .normal)
-//        riskFactorButton.setTitle("Add", for: .normal)
-//
-//        //editImage.setImage(UIImage(systemName: "pencil"), for: .normal)
-//        riskFactorButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-//        riskFactorButton.layer.cornerRadius = 15
-//        riskFactorButton.layer.masksToBounds = true
-//        riskFactorButton.addTarget(self, action: #selector(editDescriptionButton(_:)), for: .touchUpInside)
-//
-//
-        
+ 
      
         
-        scrollView = UIScrollView(frame: CGRect(x: 0, y: topBarHeight, width: view.frame.width, height: view.frame.height ))
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 150, width: view.frame.width, height: view.frame.height ))
         scrollView.contentSize.height = maxScroll
+        scrollView.isScrollEnabled = true
 
         
         view.addSubview(scrollView)
         scrollView.addSubview(descriptionTextfield)
-        scrollView.addSubview(safetyRating)
-        scrollView.addSubview(safetyRatingButton)
-        scrollView.addSubview(saveChanges)
+        //scrollView.addSubview(safetyRating)
+        //scrollView.addSubview(safetyRatingButton)
+        //scrollView.addSubview(saveChanges)
         
         
-        scrollView.addSubview(safetyRatingTextfield)
+        //scrollView.addSubview(safetyRatingTextfield)
 
     }
     

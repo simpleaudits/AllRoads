@@ -967,32 +967,6 @@
             </objects>
             <point key="canvasLocation" x="1155" y="2384"/>
         </scene>
-        <!--Add Audit Sites-->
-        <scene sceneID="j04-Iu-YaU">
-            <objects>
-                <viewController storyboardIdentifier="Main" modalPresentationStyle="fullScreen" id="JPK-3h-a4i" customClass="addAuditSites" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ieK-EQ-7Hs">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="LUT-VY-bla"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="never" id="6JZ-hz-s0i">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="q6w-ph-cjZ">
-                            <color key="tintColor" systemColor="systemOrangeColor"/>
-                            <connections>
-                                <action selector="addToAuditList:" destination="JPK-3h-a4i" id="eYN-KJ-n5T"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <segue destination="lL7-90-5Jt" kind="show" identifier="addDescription" id="TpG-2R-Fwl"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Cu-EW-6EH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2662" y="3104"/>
-        </scene>
         <!--Edit Image-->
         <scene sceneID="KjI-FB-i3A">
             <objects>
@@ -1013,7 +987,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9w-g4-ccS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2662" y="3787"/>
+            <point key="canvasLocation" x="2914" y="3716"/>
         </scene>
         <!--Comments:-->
         <scene sceneID="BEi-4A-2j9">
@@ -1030,7 +1004,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFW-bG-bVJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3439" y="3104"/>
+            <point key="canvasLocation" x="2914" y="3053"/>
         </scene>
         <!--Add-->
         <scene sceneID="Jve-Qf-f2h">
@@ -1058,6 +1032,7 @@
                     <navigationItem key="navigationItem" title="Add" id="0Tr-Cs-naG"/>
                     <connections>
                         <segue destination="BbQ-Pz-e4I" kind="show" identifier="editImage" id="DQ6-hI-ONi"/>
+                        <segue destination="lL7-90-5Jt" kind="show" identifier="addDescription" id="lid-Kg-zm3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PHZ-Rp-NCu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1371,11 +1346,7 @@
                                     <segue destination="87h-lJ-qkh" kind="show" id="xFN-Ie-vt2"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="X" id="tSj-Pe-FqG">
-                                <connections>
-                                    <segue destination="JPK-3h-a4i" kind="show" id="m4V-2K-GSd"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem title="X" id="tSj-Pe-FqG"/>
                             <barButtonItem systemItem="add" id="tNj-CZ-lax">
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>

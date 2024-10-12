@@ -17,6 +17,8 @@ class viewAuditCell: UICollectionViewCell {
     let mainConsole = CONSOLE()
     let mainFunction = extens()
     
+    private let gradientLayer = CAGradientLayer()
+    
     override init(frame: CGRect) {
         super.init(frame:frame)
         
@@ -26,6 +28,8 @@ class viewAuditCell: UICollectionViewCell {
             width: 70 ,
             height: frame.height - 20
         )
+        
+
      
         
         auditLabel.frame = CGRect(
@@ -61,6 +65,7 @@ class viewAuditCell: UICollectionViewCell {
         )
 
         //
+        setupGradient()
         
         contentView.addSubview(imageUI)
         contentView.addSubview(observationIcon)
@@ -70,6 +75,21 @@ class viewAuditCell: UICollectionViewCell {
         //contentView.addSubview(lineDivider1)
 
         
+    }
+    
+    private func setupGradient() {
+        gradientLayer.colors = [
+            UIColor.orange.cgColor,
+            UIColor.systemOrange.cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +119,7 @@ class viewAuditCell: UICollectionViewCell {
         let image = UIImageView()
         image.image = UIImage(systemName: "camera.on.rectangle.fill")
         image.contentMode = .scaleAspectFill
-        image.tintColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
+        image.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
    
         return image
@@ -112,7 +132,7 @@ class viewAuditCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        label.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         return label
     }()
     let observationCountLabel: UILabel = {
@@ -122,7 +142,7 @@ class viewAuditCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         //label.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        label.textColor = #colorLiteral(red: 1, green: 0.5843137255, blue: 0, alpha: 1)
+        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         return label
     }()
     
@@ -132,7 +152,7 @@ class viewAuditCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
         label.textAlignment = .left
-        label.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         //label.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         return label
     }()

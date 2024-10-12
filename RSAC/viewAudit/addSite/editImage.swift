@@ -189,22 +189,22 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
         // Do any additional setup after loading the view.
            // Get the navigation bar height
           
-        imageView = UIImageView(frame: CGRect(x: 0, y: 100, width: view.frame.width, height:400))
+        imageView = UIImageView(frame: CGRect(x: 0, y: 150, width: view.frame.width, height:400))
     
            
        
         //image.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         //image.layer.borderWidth = 2
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        imageView.layer.cornerRadius = 20
+        //imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
         imageView.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         imageView.layer.shadowRadius = 8.0
         imageView.layer.shadowOpacity = 0.4
         //image.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-        //image.layer.borderWidth = 1
+        imageView.layer.borderWidth = 2
         //image.image = UIImage(named: "man.png")
         
         //initiliaze the canvas:
@@ -230,7 +230,6 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
     
 
 
-    
 
     
     //###############-UPLOAD IMAGE-###############U
@@ -282,7 +281,7 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
             //We want to save the image URL string and then loop later to save in firebase.
             let imageURLtoNSData = NSURL(string: "\(imagePath)")
          
-            let imageData = NSData (contentsOf: imageURLtoNSData! as URL)
+            //let imageData = NSData (contentsOf: imageURLtoNSData! as URL)
            
       
             imageView.image = UIImage(data: jpegData)
@@ -325,7 +324,7 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
          
        // if let window = self.view.window, let toolPicker = PKToolPicker.shared(for: window) {
         
-        if let window = self.view.window {
+        if self.view.window != nil {
             
             toolPicker.setVisible(true, forFirstResponder: self.canvasView)
             toolPicker.addObserver(self.canvasView)

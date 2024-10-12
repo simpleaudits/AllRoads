@@ -641,7 +641,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
             
             cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             
-            cell.layer.masksToBounds = false
+            cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 15
 //            cell.layer.borderWidth = 1
 //            cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
