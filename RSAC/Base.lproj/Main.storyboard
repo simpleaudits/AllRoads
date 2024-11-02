@@ -197,7 +197,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng2-iW-I31">
                                                     <rect key="frame" x="34" y="36" width="325" height="63"/>
-                                                    <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Log In">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -253,7 +253,7 @@
                             <outlet property="delegate" destination="CfL-iY-Aip" id="u2G-S9-9QB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" prompt="Version 1.0" leftItemsSupplementBackButton="YES" id="IEP-BF-Baw"/>
+                    <navigationItem key="navigationItem" prompt="Version 1.0" id="IEP-BF-Baw"/>
                     <connections>
                         <outlet property="LoginButtonImage" destination="ng2-iW-I31" id="fpP-fQ-nTG"/>
                         <outlet property="SignupButtonImage" destination="pfT-Hw-X2G" id="2GN-X1-HGH"/>
@@ -334,8 +334,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jix-d9-NAs" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="HdV-gf-5Ov">
-                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HdV-gf-5Ov">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -987,9 +987,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9w-g4-ccS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2914" y="3716"/>
+            <point key="canvasLocation" x="2662" y="3821"/>
         </scene>
-        <!--Comments:-->
+        <!--Add Site Details-->
         <scene sceneID="BEi-4A-2j9">
             <objects>
                 <viewController modalPresentationStyle="formSheet" id="lL7-90-5Jt" customClass="addSiteDetails" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
@@ -1000,11 +1000,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Comments:" largeTitleDisplayMode="always" id="cYS-gd-FoT"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="cYS-gd-FoT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFW-bG-bVJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2914" y="3053"/>
+            <point key="canvasLocation" x="2662" y="3104"/>
         </scene>
         <!--Add-->
         <scene sceneID="Jve-Qf-f2h">
@@ -1329,7 +1329,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Observations" id="5Z3-TP-5TA">
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="T7N-xV-EBc">
-                            <rect key="frame" x="72.666666666666686" y="5.6666666666666679" width="183" height="33"/>
+                            <rect key="frame" x="95" y="5.6666666666666679" width="183" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="In-Progress"/>
@@ -1346,7 +1346,6 @@
                                     <segue destination="87h-lJ-qkh" kind="show" id="xFN-Ie-vt2"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="X" id="tSj-Pe-FqG"/>
                             <barButtonItem systemItem="add" id="tNj-CZ-lax">
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <connections>
@@ -1805,7 +1804,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gjR-Rf-3O2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="555" y="3861"/>
+            <point key="canvasLocation" x="421" y="3882"/>
         </scene>
         <!--Crash Types-->
         <scene sceneID="zUw-12-7rq">
@@ -1870,9 +1869,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

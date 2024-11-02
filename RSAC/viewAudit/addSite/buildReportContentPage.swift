@@ -1564,6 +1564,7 @@ class buildReportContentPage: UIViewController,UITextViewDelegate,auditStage, cr
         nav.modalPresentationStyle = .pageSheet
         nav.isModalInPresentation = true
         crashTypesView.delegate = self
+        crashTypesView.selectionOption = 0
         crashTypesView.crashDataArray = item_value_reportDataArray // send data to this view based on the loaded data, this will always populate the crash type view with highlighted data.
         
             

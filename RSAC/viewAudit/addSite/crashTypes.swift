@@ -21,27 +21,18 @@ class crashTypes: UITableViewController {
     
     var crashDataArray = Array<String>()
     
+    var selectionOption = 0 //default
+    
     var delegate: crashTypesFunc?
     
-    let crashType = [     "Rear end":"301-303",
-                          "Opposing approach":"202-206",
-                          "Adjacent approach":"100-109",
-                          "Head on":"201,501",
-                          "Pedestrian invovled":"001-009",
-                          "Parallel turning involved":"308,309",
-                          "Lane Change":"305-307,504",
-                          "U-Turn":"207,304",
-                          "Entering Road Way":"401,406-408",
-                          "Hit Parked Vehicle":"402,404,601,602,604,608",
-                          "Hit Train":"903",
-                          
-                          
-    ]
+    var count = 0
     
-    // Highlights crash type the user has selected vs all selected crash types
+    var crashType = [String: String]()
+    
     var commonElements: Set<String> {
           return Set(Array(crashType.keys)).intersection(crashDataArray)
       }
+
     
     //if multiple selection, i.e if they double table rear-end, it wil only show 1.
     func removeAllDuplicates<T: Hashable>(from array: [T]) -> [T] {
@@ -60,6 +51,53 @@ class crashTypes: UITableViewController {
  
     
     override func viewDidLoad() {
+        // Re-use collectionview object but with different data - this is for crashType, ignore variable name.
+        if selectionOption == 0 {
+            crashType = [     "Rear end":"301-303",
+                                  "Opposing approach":"202-206",
+                                  "Adjacent approach":"100-109",
+                                  "Head on":"201,501",
+                                  "Pedestrian invovled":"001-009",
+                                  "Parallel turning involved":"308,309",
+                                  "Lane Change":"305-307,504",
+                                  "U-Turn":"207,304",
+                                  "Entering Road Way":"401,406-408",
+                                  "Hit Parked Vehicle":"402,404,601,602,604,608",
+                                  "Hit Train":"903",
+                                  
+            ]
+            
+        
+        // Re-use collectionview object but with different data - this is for risk, ignore variable name.
+        }else if selectionOption == 1{
+
+            
+             crashType = [     "Low Risk":"1",
+                                  "Medium Risk":"2",
+                                  "High Risk":"3"
+            ]
+            
+      
+        }else{
+        
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addTag))
+            
+            if crashDataArray.isEmpty {
+                crashType = [:]
+            }else{
+                for x in crashDataArray{
+                    count += 1
+                    crashType.updateValue("\(count)", forKey: "\(x)")
+                }
+            }
+            
+            
+        }
+        
+        
+        
+        
         
         super.viewDidLoad()
         
@@ -85,9 +123,56 @@ class crashTypes: UITableViewController {
     //        // #warning Incomplete implementation, return the number of sections
     //        return 0
     //    }
-    
+    @objc func addTag(){
+        let alert = UIAlertController(title: "Add a tag", message: "", preferredStyle: .alert)
+
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+        textField.text = ""
+        }
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { [self, weak alert] (_) in
+        let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+   
+            if textField!.text! == ""{
+                let Alert = UIAlertController(title: "Whoops!⚠️", message: "Textfield was empty", preferredStyle: .alert)
+                let action1 = UIAlertAction(title: "Try Again",style: .cancel)
+                { (action:UIAlertAction!) in
+                    
+                    self.addTag()
+            
+                }
+                
+            Alert.addAction(action1)
+            self.present(Alert, animated: true, completion: nil)
+
+            }else{
+                //Action here
+                count += 1
+                crashType.updateValue("\(count)", forKey: textField!.text!)
+                tableView.reloadData()
+                
+            }
+
+        }))
+
+        let action1 = UIAlertAction(title: "Done",style: .cancel)
+        { (action:UIAlertAction!) in
+            
+            //self.crashDataArray = Array(self.crashType.keys)
+            //self.delegate?.finishPassing_crashType(savecrashType: self.crashDataArray)
+            
+            
+        }
+
+        alert.addAction(action1)
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
+        
+    }
     
     @objc func clearAll(){
+        
         crashDataArray.removeAll()
         
         self.delegate?.finishPassing_crashType(savecrashType: crashDataArray)

@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Foundation
 import PhotosUI
 import PencilKit
+
 
 extension UITextView {
     func setTextWithTypeAnimation(typedText: String, characterDelay: TimeInterval = 5.0) {
@@ -31,12 +33,62 @@ extension UITextView {
 }
 
 
-class dataCell: UITableViewCell {
+
+
+
+extension dataCell {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return cellItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "crashTypeCell", for: indexPath) as! crashTypeCell
+        let data = cellItems[indexPath.row]
+        
+        cell.backgroundColor = #colorLiteral(red: 1, green: 0.6645795107, blue: 0.2553189099, alpha: 1)
+        cell.layer.cornerRadius = 15
+        cell.layer.masksToBounds = true
+        cell.label.text = data
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+       let string = cellItems[indexPath.item]
+       
+       // Create a temporary label to measure the text size
+       let tempLabel = UILabel()
+       tempLabel.text = (string as String)
+       tempLabel.font = UIFont.systemFont(ofSize: 12) // Match the font used in the cell
+       tempLabel.numberOfLines = 0
+       
+       // Calculate the size of the label
+       let width = tempLabel.intrinsicContentSize.width + 16 // 16 is padding
+       let height = tempLabel.intrinsicContentSize.height + 16 // 16 is padding
+        
+
+       
+       return CGSize(width: width, height: height)
+   
+}
+    
+    
+}
+
+class dataCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
+
+    
     weak var textfieldViewLabel: UITextView!
     weak var siteImage: UIImageView!
-    
+ 
+    var collectionView: UICollectionView!
+    var cellItems: [String] = [] // Replace with your model
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-            super.init(style: style, reuseIdentifier: "dataCell")
+          super.init(style: style, reuseIdentifier: "dataCell")
+          setupCollectionView()
         
         
         let siteImage = UIImageView(frame: .zero)
@@ -50,7 +102,6 @@ class dataCell: UITableViewCell {
             ])
         self.siteImage = siteImage
         self.siteImage.contentMode = .scaleToFill
-        
         self.siteImage.layer.borderWidth = 2
         
         let textfieldViewLabel = UITextView(frame: .zero)
@@ -67,29 +118,54 @@ class dataCell: UITableViewCell {
         //self.textLabel.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         //self.textLabel.layer.borderWidth = 0.5
         self.textfieldViewLabel.textAlignment = .left
-        self.textfieldViewLabel.font = UIFont.boldSystemFont(ofSize: 15)
-        //self.textLabel.backgroundColor = .red
+        self.textfieldViewLabel.font = UIFont.systemFont(ofSize: 15)
+        self.textfieldViewLabel.backgroundColor = .clear
         self.textfieldViewLabel.layer.masksToBounds = true
         self.textfieldViewLabel.layer.cornerRadius = 8
-        
-
-        
-    }
+      }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupCollectionView() {
+           let layout = UICollectionViewFlowLayout()
+           layout.scrollDirection = .horizontal
+           collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+           collectionView.translatesAutoresizingMaskIntoConstraints = false
+           collectionView.backgroundColor = .white
+           collectionView.delegate = self
+           collectionView.dataSource = self
+           
+           
+           // Register your cell class here
+           collectionView.register(crashTypeCell.self, forCellWithReuseIdentifier: "crashTypeCell")
+           
+           contentView.addSubview(collectionView)
 
-
-    
+           // Constraints
+           NSLayoutConstraint.activate([
+               collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+               collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+               collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 5),
+               collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+           ])
+       }
+           
+        
+           
+           
+       
 
 }
 
 
 
 
-class addObservation: UITableViewController,UIPencilInteractionDelegate, imageData, saveDescription {
+class addObservation: UITableViewController,UIPencilInteractionDelegate, imageData, saveDescription, saveDescriptionRisk, saveDescriptionTag {
+
+
 
     
     var refData = String()
@@ -112,8 +188,15 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
     //var canvasView = PKCanvasView()
     var canvasData = PKDrawing()
     var siteDescription = String()
+    var riskDataArray : [String] = []
+    var tagDataArray : [String] = []
     
-    
+    let switchKey = ["Comment",
+                     "Risk",
+                     "Tag",
+                     "History"
+    ]
+    var switchKeySelection = String()
     
     let headingsItem =         ["Photo",
                                 "Comment",
@@ -129,26 +212,38 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
     let questionsListSection4 = [""]
     // this has been removed
     
-    
-    
-    
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         tableView.register(dataCell.self, forCellReuseIdentifier: "dataCell")
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
+    //Passing the Risk data
+    func saveRisk(text: [String]) {
+        print("riskTypeTo:\(text)")
+        self.riskDataArray = text
+       
+    }
+    
+    
+    func saveTag(text: [String]) {
+        print("TagTypeTo:\(text)")
+        self.tagDataArray = text
+    }
+    
+    
     //MARK: image edit here:
     func finishPassing_Image(saveImage: UIImage, saveCavnasView: PKDrawing, selectedImage: UIImage) {
-        //set image to show passed image
-        
+
         //merged iamge
         image = saveImage
         //canvas pallete
@@ -156,23 +251,16 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
         //origionalImage
         self.selectedImage = selectedImage
         
-        
-        
-        
     }
-    
-    
     
     func saveDescription(text: String) {
-        
         self.siteDescription = text
-        //self.descriptionTextfield.text = text
-        
+        print("siteDescriptionTo:\(siteDescription)")
     }
+
+
     
-    
-    
-    
+  
     
     // MARK: - section heading title
     
@@ -240,22 +328,28 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
         
         if indexPath.section == 0 {
             if indexPath.row == 0 {
+                //Photo
                 return 400.0 // Height for rows in section 0
             }else{
+                //Add Photo
                 return 50.0
             }
             
         }else if indexPath.section == 1 {
-            return 150.0 // Height for rows in section 0
+                //Comment
+                return 150.0 // Height for rows in section 0
         }else if indexPath.section == 2 {
-            return 50.0 // Height for rows in other sections
+                //Risk
+                return 50.0 // Height for rows in other sections
             
         }else if indexPath.section == 3 {
-            return 50.0 // Height for rows in other sections
+                //Tag
+                return 50.0 // Height for rows in other sections
             
         }
         else if indexPath.section == 4 {
-            return 50.0 // Height for rows in other sections
+                //History
+                return 50.0 // Height for rows in other sections
             
         }
         
@@ -300,6 +394,7 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath) as! dataCell
+       
         
         // Reset cell for reuse
         cell.siteImage.isHidden = true
@@ -314,6 +409,7 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
                 cell.siteImage.isHidden = false
                 cell.siteImage.image = image // Ensure 'image' is defined
                 cell.textfieldViewLabel.isHidden = true
+                cell.collectionView.isHidden = true
                 cell.accessoryType = .none
                 
        
@@ -323,6 +419,7 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
                 cell.siteImage.isHidden = true
                 cell.textfieldViewLabel.isHidden = true
                 cell.textfieldViewLabel.isEditable = false
+                cell.collectionView.isHidden = true
                 cell.textLabel?.text = "Add Photo 📷"
             }
         } else if indexPath.section == 1 {
@@ -330,32 +427,58 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
             if indexPath.row == 0 {
                 cell.siteImage.isHidden = true
                 cell.textfieldViewLabel.isHidden = false
+                cell.textfieldViewLabel.isEditable = false
+                cell.collectionView.isHidden = true
                 cell.textfieldViewLabel.setTextWithTypeAnimation(typedText: "\n\(siteDescription)", characterDelay:  1)
+                //cell.textfieldViewLabel.text = "\(siteDescription)"
                 cell.textLabel?.text = "" // Clear text label
+                
             }
         } else if indexPath.section == 2 {
             // First row in the third section
             if indexPath.row == 0 {
+                
                 cell.siteImage.isHidden = true
-                cell.textfieldViewLabel.isHidden = false
+                cell.textfieldViewLabel.isEditable = false
+                cell.textfieldViewLabel.isHidden = true
+                cell.collectionView.isHidden = false
                 cell.textfieldViewLabel.text = "risk"
                 cell.textLabel?.text = "" // Clear text label
+                cell.cellItems = riskDataArray
+                cell.collectionView.reloadData()
+                
+                return cell
+                
+           
+                
+                
             }
         } else if indexPath.section == 3 {
             // First row in the fourth section
             if indexPath.row == 0 {
+                
                 cell.siteImage.isHidden = true
-                cell.textfieldViewLabel.isHidden = false
+                cell.textfieldViewLabel.isEditable = false
+                cell.textfieldViewLabel.isHidden = true
+                cell.collectionView.isHidden = false
                 cell.textfieldViewLabel.text = "tag"
                 cell.textLabel?.text = "" // Clear text label
+                cell.cellItems = tagDataArray
+                cell.layer.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+                
+        
+                cell.collectionView.reloadData()
+               
             }
         }
         else if indexPath.section == 4 {
             // First row in the fourth section
             if indexPath.row == 0 {
                 cell.siteImage.isHidden = true
+                cell.textfieldViewLabel.isEditable = false
                 cell.textfieldViewLabel.isHidden = false
                 cell.textfieldViewLabel.text = "history"
+                cell.collectionView.isHidden = true
                 cell.textLabel?.text = "" // Clear text label
             }
         }
@@ -379,17 +502,47 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
         
             
         case 1:
-            self.performSegue(withIdentifier: "addDescription", sender: self)
-            print("")
+            print("Comment Selected")
+       
+            switchKeySelection = switchKey[0]
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.performSegue(withIdentifier: "addDescription", sender: self)
+ 
+            })
+
           
         case 2:
-            print("")
+            print("Risk Selected")
+     
+            switchKeySelection = switchKey[1]
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.performSegue(withIdentifier: "addDescription", sender: self)
+ 
+            })
+        
+            
        
         case 3:
-            print("")
+            print("Tag Selected")
+    
+            switchKeySelection = switchKey[2]
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.performSegue(withIdentifier: "addDescription", sender: self)
+ 
+            })
       
         default:
-            print("")
+            print("History Selected")
+          
+            switchKeySelection = switchKey[3]
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.performSegue(withIdentifier: "addDescription", sender: self)
+ 
+            })
        
        
         }
@@ -413,10 +566,44 @@ class addObservation: UITableViewController,UIPencilInteractionDelegate, imageDa
     
                 
              }else if let destination3 = segue.destination as? addSiteDetails {
+                 
                  destination3.delegate1 = self
-                 //destination3.delegate2 = self
-                 destination3.stringData = siteDescription
-                 //destination3.safetRiskValue = safetyRatingValue
+                 destination3.delegate2 = self
+                 destination3.delegate3 = self
+           
+                 
+        
+                 
+                 
+                 destination3.switchKey = switchKeySelection
+                                  
+                 switch switchKeySelection {
+                     
+                     case "Comment":
+                     destination3.stringData = siteDescription
+                     destination3.value_DataArray = riskDataArray
+                         
+                     case "Risk":
+                     destination3.stringData = siteDescription
+                     destination3.value_DataArray = riskDataArray
+                  
+                         
+                     case "Tag":
+                     destination3.stringData = siteDescription
+                     destination3.value_DataArray = tagDataArray
+                        
+                         
+                     case "history":
+                     print("")
+                         
+                  
+                         
+                     default:
+                         
+                 break
+                 }
+       
+
             }
         
         

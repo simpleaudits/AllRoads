@@ -521,10 +521,10 @@ class createSite: UITableViewController,UINavigationControllerDelegate, UITextFi
          if let destination3 = segue.destination as? locationView {
             destination3.delegate = self
            
-        }else if let destination4 = segue.destination as? addAuditSites {
-            destination4.siteID = siteID
-            destination4.auditID = auditID
-          
+//        }else if let destination4 = segue.destination as? addAuditSites {
+//            destination4.siteID = siteID
+//            destination4.auditID = auditID
+//          
         }else if let destination4 = segue.destination as? viewSiteSnaps {
             destination4.siteID = siteID
             destination4.auditID = auditID

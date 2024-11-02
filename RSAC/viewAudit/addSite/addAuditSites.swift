@@ -24,7 +24,14 @@ import PencilKit
 
 
 
-class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription,saveDescriptionRisk, UIPencilInteractionDelegate{
+class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextViewDelegate, UINavigationControllerDelegate,CLLocationManagerDelegate,MKMapViewDelegate, saveDescription, UIPencilInteractionDelegate, saveDescriptionRisk{
+    
+    func saveRisk(text: [String]) {
+        print("")
+    }
+    
+
+    
 
  
     //userdetails:
@@ -109,51 +116,51 @@ class addAuditSites: UIViewController,UIImagePickerControllerDelegate,UITextView
     
     }
     
-    func saveRisk(text: String) {
-        
-        switch text {
-        case "0":
-            
-            self.safetyRating.text = "No Risk"
-            self.safetyRating.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            safetyRatingValue = 0
-
-            
-            break
-        case "1":
-            
-            self.safetyRating.text = "Low Risk"
-            self.safetyRating.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
-            safetyRatingValue = 1
-            
-            break
-        case "2":
-            
-            self.safetyRating.text = "Medium Risk"
-            self.safetyRating.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-            safetyRatingValue = 2
-
-            
-            break
-            
-        case "3":
-            
-            self.safetyRating.text = "High Risk"
-            self.safetyRating.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-            safetyRatingValue = 3
-            
-            break
-            
-            
-            
-            
-        default:
-
-            
-            break
-        }
-  
-    }
+//    func saveRisk(text: String) {
+//        
+//        switch text {
+//        case "0":
+//            
+//            self.safetyRating.text = "No Risk"
+//            self.safetyRating.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//            safetyRatingValue = 0
+//
+//            
+//            break
+//        case "1":
+//            
+//            self.safetyRating.text = "Low Risk"
+//            self.safetyRating.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+//            safetyRatingValue = 1
+//            
+//            break
+//        case "2":
+//            
+//            self.safetyRating.text = "Medium Risk"
+//            self.safetyRating.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+//            safetyRatingValue = 2
+//
+//            
+//            break
+//            
+//        case "3":
+//            
+//            self.safetyRating.text = "High Risk"
+//            self.safetyRating.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+//            safetyRatingValue = 3
+//            
+//            break
+//            
+//            
+//            
+//            
+//        default:
+//
+//            
+//            break
+//        }
+//  
+//    }
   
     override func viewDidAppear(_ animated: Bool) {
         

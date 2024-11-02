@@ -201,7 +201,6 @@ struct reportContentsdataModel{
                 let q35 = value["q35"]as?String,
                 let q36 = value["q36"]as?String,
                 let q37 = value["q37"]as?String,
-
                 let q38 = value["q38"]as?String,
                 let q39 = value["q39"]as?String,
                 let q40 = value["q40"]as?String,
