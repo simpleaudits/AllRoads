@@ -220,7 +220,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
            
            SwiftLoader.show(title: "Loading Data", animated: true)
   
-               Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
+       Database.database().reference(withPath:"\(refData)/\(mainConsole.auditList!)")
                    .observe(.value, with: { [self] snapshot in
 
                 var listOfObservationData: [auditSiteData] = []
@@ -238,15 +238,10 @@ class Observation: UITableViewController,UISearchBarDelegate {
                        
                 self.tableView.reloadData()
                        
-                       
                 checkUserStatus()
-                       
-     
-                       
-                
+
                   
                })
-
 
        }
     
@@ -518,10 +513,7 @@ class Observation: UITableViewController,UISearchBarDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.firebaseConsole.updateObservationCount(count: "\(self.listOfObservationData.count)", auditID: self.auditID, siteID: self.siteID, userUID: uid!)
                     
-                    
- 
-                    
-                    print("updated and saved observation")
+              print("updated and saved observation")
                     SwiftLoader.hide()
                     
                 })
@@ -567,12 +559,10 @@ class Observation: UITableViewController,UISearchBarDelegate {
     
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     if let destination4 = segue.destination as? addAuditSites {
+     if let destination4 = segue.destination as? addObservation {
             destination4.siteID = siteID
             destination4.auditID = auditID
             destination4.userUID = userUID
-
- 
         
      }else if let destination6 = segue.destination as? buildReport {
           destination6.siteID = siteID

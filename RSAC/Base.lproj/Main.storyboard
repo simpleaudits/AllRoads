@@ -1006,20 +1006,20 @@
             </objects>
             <point key="canvasLocation" x="2662" y="3104"/>
         </scene>
-        <!--Add-->
+        <!--New Audit-->
         <scene sceneID="Jve-Qf-f2h">
             <objects>
                 <tableViewController id="f7u-en-qm3" customClass="addObservation" customModule="RSAC" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="H1I-9n-E1Z">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="H1I-9n-E1Z">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="6Lv-lW-gaE">
-                                <rect key="frame" x="0.0" y="38" width="393" height="43.666667938232422"/>
+                                <rect key="frame" x="20" y="38" width="353" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Lv-lW-gaE" id="76k-bs-gQ6">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1029,10 +1029,11 @@
                             <outlet property="delegate" destination="f7u-en-qm3" id="Zw5-RC-OGu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add" id="0Tr-Cs-naG"/>
+                    <navigationItem key="navigationItem" title="New Audit" id="0Tr-Cs-naG"/>
                     <connections>
                         <segue destination="BbQ-Pz-e4I" kind="show" identifier="editImage" id="DQ6-hI-ONi"/>
                         <segue destination="lL7-90-5Jt" kind="show" identifier="addDescription" id="lid-Kg-zm3"/>
+                        <segue destination="ytr-vm-7Ob" kind="show" identifier="location" id="SfW-29-ZK4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PHZ-Rp-NCu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1130,7 +1131,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="7zi-kZ-tes">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
                         <color key="tintColor" systemColor="tintColor"/>
                         <sections>
                             <tableViewSection id="aMN-ar-a6U">
@@ -1144,12 +1145,12 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28/07/2023" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zur-uo-3Zn">
                                                     <rect key="frame" x="20" y="7" width="333" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="11"/>
+                                                    <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="zur-uo-3Zn" firstAttribute="top" secondItem="1UO-iz-gQj" secondAttribute="top" constant="7" id="EZK-iJ-jSi"/>
                                                 <constraint firstItem="zur-uo-3Zn" firstAttribute="leading" secondItem="1UO-iz-gQj" secondAttribute="leading" constant="20" symbolic="YES" id="L5W-YB-Iv2"/>
@@ -1157,6 +1158,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="zur-uo-3Zn" secondAttribute="trailing" id="anX-UG-uOl"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1838,9 +1840,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2y7-dC-yeP"/>
+        <segue reference="FoG-pS-Knc"/>
         <segue reference="Ypc-0i-t4p"/>
-        <segue reference="Uv5-2R-2fq"/>
+        <segue reference="SfW-29-ZK4"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="All Roads Audit 1024x1024" width="1024" height="1024"/>
@@ -1873,8 +1875,14 @@
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

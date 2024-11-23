@@ -32,7 +32,6 @@ class crashTypes: UITableViewController {
     var commonElements: Set<String> {
           return Set(Array(crashType.keys)).intersection(crashDataArray)
       }
-
     
     //if multiple selection, i.e if they double table rear-end, it wil only show 1.
     func removeAllDuplicates<T: Hashable>(from array: [T]) -> [T] {
@@ -106,15 +105,7 @@ class crashTypes: UITableViewController {
         //create nav bar button:
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneBtn))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearAll))
-        
-        
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+
     }
     
     // MARK: - Table view data source
@@ -177,6 +168,8 @@ class crashTypes: UITableViewController {
         
         self.delegate?.finishPassing_crashType(savecrashType: crashDataArray)
         
+        
+        
         tableView.reloadData()
     }
     
@@ -190,8 +183,11 @@ class crashTypes: UITableViewController {
        
         let indexcrashType = Array(crashType.keys)[indexPath.row]
        
+
         //append each new did selected item
         crashDataArray.append(indexcrashType)
+        
+        
         
         //this allows us to select and deselect
         crashDataArray = removeAllDuplicates(from: crashDataArray)

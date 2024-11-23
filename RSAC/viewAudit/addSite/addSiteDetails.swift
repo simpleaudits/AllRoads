@@ -119,8 +119,8 @@ class addSiteDetails: UIViewController,UITextViewDelegate,UITextFieldDelegate,UI
                 
 
                 
-            case "history":
-                print("")
+            case "Title":
+                print("Title")
                 
          
                 

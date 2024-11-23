@@ -23,6 +23,7 @@ class locationView: UIViewController,UISearchBarDelegate,UITextFieldDelegate, MK
     //contents
     var locationLabel = UILabel()
     var mapViewUI = MKMapView()
+    var pinAnnotation: MKPointAnnotation!
     var buttonUI = UIButton()
     var delegate: locationDecriptionString?
     
@@ -41,9 +42,10 @@ class locationView: UIViewController,UISearchBarDelegate,UITextFieldDelegate, MK
      
         // Do any additional setup after loading the view.
         
-        locationLabel = UILabel(frame: CGRect(x: 0, y:  (navigationController?.navigationBar.frame.maxY)!, width: view.frame.width, height: 50))
+        locationLabel = UILabel(frame: CGRect(x: 0, y:  (navigationController?.navigationBar.frame.maxY)!, width: view.frame.width, height: 100))
         locationLabel.text = "Your location Here"
-        locationLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        locationLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        locationLabel.numberOfLines = 3
         self.view.addSubview(locationLabel)
         
         let x = Int(view.frame.height) - Int(locationLabel.frame.maxY) - Int((tabBarController?.tabBar.frame.size.height)!)
@@ -51,16 +53,22 @@ class locationView: UIViewController,UISearchBarDelegate,UITextFieldDelegate, MK
         mapViewUI.mapType = .satelliteFlyover
         self.view.addSubview(mapViewUI)
         
-//        buttonUI = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y:  mapViewUI.frame.maxY - 50 - 10, width: 200, height: 50))
-//        buttonUI.setTitleColor(UIColor.white, for: .normal)
-//        buttonUI.setTitle("My Location", for: .normal)
-//        buttonUI.backgroundColor = .systemBlue
-//        buttonUI.layer.cornerRadius = 25
-//        buttonUI.layer.masksToBounds = true
-//        buttonUI.addTarget(self, action: #selector(findMyLocation(_:)), for: .touchUpInside)
-//        self.view.addSubview(buttonUI)
-       
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleMapTap(_:)))
+        mapViewUI.addGestureRecognizer(tapGesture)
         
+        
+        //pre load location if the user returns to this page:
+        let initialLocation = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)) // San Francisco
+        let span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002) // Zoom level
+        let region = MKCoordinateRegion(center: initialLocation, span: span)
+        mapViewUI.setRegion(region, animated: true)
+        
+        pinAnnotation = MKPointAnnotation()
+        pinAnnotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long))
+        pinAnnotation.title = "You are here"
+        mapViewUI.addAnnotation(pinAnnotation)
+
     }
     
     func findMyLocation() {

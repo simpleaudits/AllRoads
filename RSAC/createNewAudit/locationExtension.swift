@@ -54,28 +54,78 @@ extension locationView {
                        error)
         }
     }
+    // Handle tap on the map
+     @objc func handleMapTap(_ gesture: UITapGestureRecognizer) {
+         let location = gesture.location(in: mapViewUI)
+         let coordinate = mapViewUI.convert(location, toCoordinateFrom: mapViewUI)
+         
+         // Update the pin's coordinate
+         movePinToNewLocation(coordinate)
+         
+         self.lat = Float(CLLocationDegrees(coordinate.latitude))
+         self.long = Float(CLLocationDegrees(coordinate.longitude))
+         
+
+         print(lat)
+         print(long)
+    
+     }
+    
+    // Move the pin to a new location
+    func movePinToNewLocation(_ coordinate: CLLocationCoordinate2D) {
+        // Update the pin's coordinate
+        pinAnnotation.coordinate = coordinate
+        
+        self.lat = Float(coordinate.latitude)
+        self.long = Float(coordinate.longitude)
+
+        
+        // Optionally animate the map to the new location
+        let region = MKCoordinateRegion(center: coordinate, span: mapViewUI.region.span)
+        mapViewUI.setRegion(region, animated: true)
+        
+        
+        
+        fetchCityAndCountry(from: CLLocation(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long))) { [self] city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            self.location = "\(city), \(country)"
+            
+            locationLabel.text = "\(self.location)\nLatitude:\(lat),\nLongitude:\(long)"
+            self.delegate?.finishPassing_location(saveLocation: locationLabel.text ?? "", lat: CGFloat(self.lat), long:CGFloat(self.long))
+  
+        
+        }
+    }
+    
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
         
         self.mapViewUI.setRegion(region, animated: true)
-        
+        // Create and add the pin
         
         self.lat = Float(region.center.latitude)
         self.long = Float(region.center.longitude)
-        let retrievedLocation = CLLocation(latitude:CLLocationDegrees(lat), longitude:CLLocationDegrees(long))
         
-        fetchCityAndCountry(from: retrievedLocation) { [self] city, country, error in
+        
+        pinAnnotation = MKPointAnnotation()
+        pinAnnotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long))
+        pinAnnotation.title = "You are here"
+        mapViewUI.addAnnotation(pinAnnotation)
+        
+        
+        fetchCityAndCountry(from: CLLocation(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long))) { [self] city, country, error in
             guard let city = city, let country = country, error == nil else { return }
             self.location = "\(city), \(country)"
             
-            locationLabel.text = self.location
-       
+            locationLabel.text = "\(self.location)\nLatitude:\(lat),\nLongitude:\(long)"
             self.delegate?.finishPassing_location(saveLocation: locationLabel.text ?? "", lat: CGFloat(self.lat), long:CGFloat(self.long))
-
-       
-            
+  
+        
         }
+   
         
     }
     

@@ -64,7 +64,7 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
     let picker = UIImagePickerController()
     var delegate: imageData?
     var ButtonPressed: Int = 0
-    
+    var actionSheetTitle = "Draw"
     
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -126,34 +126,91 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
 
    }
     
+    
+    
+  
+    
+    
+    
+    
     func showActionSheet() {
+        
         // Create the action sheet
         let actionSheet = UIAlertController(title: "Choose an Option", message: "", preferredStyle: .actionSheet)
 
         // Add actions
-        actionSheet.addAction(UIAlertAction(title: "Draw", style: .default, handler: { _ in
+        actionSheet.addAction(UIAlertAction(title: actionSheetTitle, style: .default, handler: { _ in
         
             self.canvasView.becomeFirstResponder()
             
             //animate scroll to the left
             self.ButtonPressed += 1
-            
+         
             self.canvasView.isUserInteractionEnabled = false
             
-            if self.ButtonPressed % 2 == 0  {
+                if self.ButtonPressed % 2 == 0  {
                 
-            }else{
+                self.actionSheetTitle = "Draw"
+                }else{
+                self.actionSheetTitle = "Stop Drawing"
+                self.canvasView.isUserInteractionEnabled = true
+                    
+                }
                 
-            self.canvasView.isUserInteractionEnabled = true
-                
-            }
-            
             
         }))
         
+
+        
+        
         actionSheet.addAction(UIAlertAction(title: "Clear drawing", style: .default, handler: { _ in
             
+           
+            let Alert = UIAlertController(title: "Warning!⚠️", message: "This will remove all edits", preferredStyle: .alert)
+            let action1 = UIAlertAction(title: "Continue",style: .default)
+            { (action:UIAlertAction!) in
+                
             self.canvasView.drawing = PKDrawing()
+               
+            }
+            let action2 = UIAlertAction(title: "Cancel",style: .cancel)
+            { (action:UIAlertAction!) in
+                
+    
+            }
+            
+            Alert.addAction(action1)
+            Alert.addAction(action2)
+            self.present(Alert, animated: true, completion: nil)
+            
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Change Photo", style: .default, handler: { _ in
+            
+            self.canvasView.becomeFirstResponder()
+            self.canvasView.drawing = PKDrawing()
+            self.canvasView.isUserInteractionEnabled = false
+            self.actionSheetTitle = "Draw"
+       
+            
+            let Alert = UIAlertController(title: "Warning!⚠️", message: "You will lose previous image contents including any edits", preferredStyle: .alert)
+            let action1 = UIAlertAction(title: "Continue",style: .default)
+            { (action:UIAlertAction!) in
+                
+                self.selectImageType()
+    
+               
+            }
+            let action2 = UIAlertAction(title: "Cancel",style: .cancel)
+            { (action:UIAlertAction!) in
+                
+    
+            }
+            
+            Alert.addAction(action1)
+            Alert.addAction(action2)
+            self.present(Alert, animated: true, completion: nil)
+      
         
             
         }))
@@ -249,8 +306,10 @@ class editImage: UIViewController,UIImagePickerControllerDelegate,UIPencilIntera
                 self.picker.cameraCaptureMode = .photo
                 self.present(self.picker, animated: true, completion: nil)
             }
+            
             let action1 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
                 print("Cancel button tapped");
+                self.navigationController?.popViewController(animated: true)
             }
             alertController.addAction(action1)
             alertController.addAction(action2)

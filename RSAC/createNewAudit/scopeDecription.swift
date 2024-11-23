@@ -78,9 +78,10 @@ class scopeDecription: UIViewController,UITextFieldDelegate,UITextViewDelegate{
            
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                
                 self.navigationController?.popViewController(animated: true)
                 
-                self.dismiss(animated: true, completion: nil)
+                //self.dismiss(animated: true, completion: nil)
                 
              
             })

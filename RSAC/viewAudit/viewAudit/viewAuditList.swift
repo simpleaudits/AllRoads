@@ -775,8 +775,6 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
     }
 
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             
              if let viewInfoView = segue.destination as? createSite{
@@ -789,7 +787,7 @@ class viewAuditList: UICollectionViewController,UICollectionViewDelegateFlowLayo
                      print("Failed to load data")
                  }
 
-             }else if let viewInfoView = segue.destination as? addAuditSites{
+             }else if let viewInfoView = segue.destination as? addObservation{
                  
                  if auditID != ""{
                      viewInfoView.auditID = auditID

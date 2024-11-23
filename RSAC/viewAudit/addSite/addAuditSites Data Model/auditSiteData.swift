@@ -24,8 +24,11 @@ struct auditSiteData{
     let ref: String
     let observationID: String
     let siteID: String
-    let riskRating: Int
+    let riskRating: String
+    let tag: String
     var status: String
+    let nest1: String
+    
     
     let userUploaded: String
     let userUploadedSignature: String
@@ -46,8 +49,13 @@ struct auditSiteData{
         ref: String,
         observationID: String,
         siteID: String,
-        riskRating: Int,
+        riskRating: String,
+        nest1: String,
+        tag: String,
         status: String,
+        
+        
+        
         
         userUploaded: String,
         userUploadedSignature: String,
@@ -67,6 +75,8 @@ struct auditSiteData{
         self.observationID = observationID
         self.siteID = siteID
         self.riskRating = riskRating
+        self.tag = tag
+        self.nest1 = nest1
         self.status = status
         
         self.userUploaded = userUploaded
@@ -87,7 +97,9 @@ struct auditSiteData{
             let lat = value["lat"] as? CGFloat,
             let long = value["long"] as? CGFloat,
             let ref = value["ref"] as? String,
-            let riskRating = value["riskRating"] as? Int,
+            let riskRating = value["riskRating"] as? String,
+            let tag = value["tag"] as? String,
+            let nest1 = value["nest1"] as? String,
             let observationID = value["observationID"] as? String,
             let siteID = value["siteID"] as? String,
             let userUploaded = value["userUploaded"] as? String,
@@ -106,6 +118,8 @@ struct auditSiteData{
         self.ref = ref
         self.observationID = observationID
         self.riskRating = riskRating
+        self.tag = tag
+        self.nest1 = nest1
         self.siteID = siteID
         self.status = status
         
@@ -122,6 +136,8 @@ struct auditSiteData{
             "auditDescription": auditDescription,
             "date": date,
             "riskRating": riskRating,
+            "tag": tag,
+            "nest1": nest1,
             "lat": lat,
             "long": long,
             "ref": ref,

@@ -43,12 +43,8 @@ class viewSiteSnaps: UICollectionViewController,UICollectionViewDelegateFlowLayo
 
       
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       if let destination4 = segue.destination as? addAuditSites {
-            destination4.siteID = siteID
-            destination4.auditID = auditID
-
-          
-       }else if let destination5 = segue.destination as? viewPDF {
+        
+        if let destination5 = segue.destination as? viewPDF {
            destination5.refData = refData
 
           }

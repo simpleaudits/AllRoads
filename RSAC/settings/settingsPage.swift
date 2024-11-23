@@ -1002,7 +1002,7 @@ class settingsPage: UITableViewController,UISearchBarDelegate,UIImagePickerContr
 
 
             override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if let destination4 = segue.destination as? addAuditSites {
+            if let destination4 = segue.destination as? addObservation {
             destination4.siteID = siteID
             destination4.auditID = auditID
 
